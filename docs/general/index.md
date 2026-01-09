@@ -1,8 +1,8 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
-# Developer Guide
+# General
 
 import DocCardList from '@theme/DocCardList';
 
