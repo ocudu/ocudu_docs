@@ -12,11 +12,11 @@ A Copyright License Agreement is a legal document in which you state you are ent
 
 The CLA also ensures that once you have provided a contribution, you cannot try to withdraw permission for its use at a later date. People and companies can therefore use that software, confident that they will not be asked to stop using pieces of the code at a later date.
 
-The agreements used by srsRAN Project are standard documents provided by Project Harmony, a community-centered group focused on contributor agreements for free and open source software (FOSS). For more information, see [here](www.harmonyagreements.org).
+The agreements used by srsRAN Project are standard documents provided by Project Harmony, a community-centered group focused on contributor agreements for free and open source software (FOSS). For more information, see [here](https://www.harmonyagreements.org/).
 
 ### 2. How do I complete and submit the CLA?
 
-The srsRAN Project CLA for Individual contributions can be found [`here`](srs_cla_individual.pdf). The srsRAN Project CLA for Entity contributions can be found [`here`](srs_cla_entity.pdf). Download the appropriate CLA, then print, sign and scan the document before sending by email to [licensing@srs.io](mailto:licensing@srs.io).
+The srsRAN Project CLA for Individual contributions can be found here. The srsRAN Project CLA for Entity contributions can be found here. Download the appropriate CLA, then print, sign and scan the document before sending by email to [licensing@srs.io](mailto:licensing@srs.io).
 
 ### 3. How will my contributions to srsRAN Project be used?
 

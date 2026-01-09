@@ -18,7 +18,7 @@ Comments have to be regarded as an essential part of the code, as they greatly f
 should describe what the code is trying to do and why, without getting into the implementation details at a micro level and, most importantly, targeting an
 audience that may not be as familiar as you are with the topic at hand.
 
-The following brief sections provide a very rough introduction to how developers are expected to comment code. A more thorough guide can be found [here](6_self_generating_docs.md#self-generating-docs).
+The following brief sections provide a very rough introduction to how developers are expected to comment code. A more thorough guide can be found [here](6_self_generating_docs.md).
 
 ### Comment Guidelines
 

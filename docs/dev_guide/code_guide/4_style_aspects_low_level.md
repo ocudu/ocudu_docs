@@ -2,7 +2,7 @@
 
 ## Naming Conventions
 
-Names should be coded following the [snake_case](https://en.wikipedia.org/wiki/Snake_case#:~:text=Snake%20case%20(stylized%20as%20snake_case,subroutine%20names%2C%20and%20for%20filenames.) pattern.
+Names should be coded following the [snake_case](https://en.wikipedia.org/wiki/Snake_case) pattern.
 For variables, functions and classes the name schema will always be lowercase and separate the words by an underscore. Exceptions are SI units and
 other common units with uppercase letters (dB, dBm) which should be kept in their original form.
 Names should be descriptive and easy to read and avoid abbreviations unless they are well known.
@@ -29,7 +29,8 @@ Names should follow these rules (always use snake_case):
 > - **Variable names** should be nouns (they represent state).
 > - **Function names** should be verb phrases (they represent actions) and command-like functions should be imperative.
 > - **Enum declarations** are types, so they should follow the naming conventions for types.
-> - **Enumerators** (eg: enum { red, green }) should follow the naming conventions for types. Enumerators that are convenience constants should be written in uppercase. For instance:
+> - **Enumerators** (eg: `enum { red, green }`) should follow the naming conventions for types. Enumerators that are convenience constants should be written in uppercase. For instance:
+>
 ```cpp
 enum {
   MAX_ELEMENTS = 32,
@@ -63,9 +64,11 @@ srsran_assert(v1.size() == v2.size() && "vector sizes must be identical!");
 ```
 
 #### NOTE
+
 If an error condition can be triggered by user input then do not use an assert, instead, use a recoverable error mechanism.
 
 #### WARNING
+
 which?
 
 Another nice side effect of using assertions is that you can apply the “design by contract” approach for many interfaces, helping to reduce a lot
@@ -95,6 +98,7 @@ srsran_assert(is_value_new && "The value shouldn't be in the set yet");
 ```
 
 #### WARNING
+
 write something about expect
 
 ## Do not use `using namespace std`
@@ -136,6 +140,7 @@ for (auto i = x.begin(), e = x.end(); i != e; ++i)
 ```
 
 #### NOTE
+
 These two loops have different semantics: if the container is being mutated inside the loop, `x.end()` may change its value every time through the loop,
 so the second form may not be correct. If you actually depend on this behavior, please write the loop in the first form and add a comment indicating you did
 it intentionally.
