@@ -1,0 +1,58 @@
+#
+# Copyright 2021-2026 Software Radio Systems Limited
+#
+# By using this file, you agree to the terms and conditions set
+# forth in the LICENSE file which can be found at the top level of
+# the distribution.
+#
+
+include:
+  - project: ocudu/ocudu
+    ref: dev
+    file: .gitlab/ci-shared/workflow.yml
+  - project: ocudu/ocudu
+    ref: dev
+    file: .gitlab/ci-shared/static.yml
+
+variables:
+  OCUDU_REGISTRY_URI: ${CI_TEMPLATE_REGISTRY_HOST}/ocudu/ocudu
+
+headers:
+  extends: .headers
+  stage: test
+
+build:
+  stage: test
+  image: node:20
+  rules:
+    - if: $ON_MR
+      variables:
+        BASE_URL: /-/$CI_PROJECT_NAME/-/jobs/$CI_JOB_ID/artifacts/public/
+  script:
+    - npm install
+    - npm run build
+    # Move built site to public folder
+    - mv build public
+  after_script:
+    - |
+      echo "*******************************************************************************************************************************"
+      echo "https://${CI_PROJECT_NAMESPACE_SLUG}.${CI_PAGES_DOMAIN}/-/$CI_PROJECT_NAME/-/jobs/$CI_JOB_ID/artifacts/public/index.html"
+      echo "*******************************************************************************************************************************"
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 day
+
+pages:
+  extends: build
+  stage: build
+  environment:
+    name: pages
+    url: $CI_PAGES_URL
+  rules:
+    - if: $ON_DEFAULT_BRANCH
+  after_script:
+    - |
+      echo "*******************************************************************************************************************************"
+      echo "Deployed to Pages: ${CI_PAGES_URL}"
+      echo "*******************************************************************************************************************************"
