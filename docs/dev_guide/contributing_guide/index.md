@@ -85,8 +85,8 @@ The issue lifecycle is mainly driven by the core maintainers, but is good inform
 contributing to OCUDU. All issue types follow the same general lifecycle. Differences are noted
 below.
 
-1. Issue creation
-2. Triage
+1. **Issue creation**
+2. **Triage**
     - The maintainer in charge of triaging will apply the proper labels for the issue. This includes
       labels for priority, type, and metadata (such as `good_first_issue`). The only issue priority
       we will be tracking is whether the issue is "critical." If additional levels are needed
@@ -96,7 +96,7 @@ below.
     - Add the issue to the correct milestone. If any questions come up, don't worry about adding the
       issue to a milestone until the questions are answered.
     - We attempt to do this process at least once per work day.
-3. Discussion
+3. **Discussion**
     - Issues that are labeled `feature` or `proposal` and do not all under the official roadmap
       must write a OCUDU Improvement Proposal (OIP).
       See [Proposing an Idea](#proposing-an-idea). Smaller quality-of-life enhancements are exempt.
@@ -107,7 +107,7 @@ below.
     - `proposal` and `question/support` issues should stay open until resolved or if they have not
       been active for more than 30 days. This will help keep the issue queue to a manageable size
       and reduce noise. Should the issue need to stay open, the `keep open` label can be added.
-4. Issue closure
+4. **Issue closure**
 
 
 ### Find an Issue
@@ -158,7 +158,7 @@ Coding conventions and standards are explained in the [official developer docs](
 
 ###  Lifecycle
 
-1. MR creation
+1. **MR creation**
     - MRs are usually created to add a feature or fix a particular issue.
     - It is preferred, but not required, to have a MR tied to a specific issue. There can be
       circumstances where if it is a quick fix then an issue might be overkill. The details provided
@@ -168,33 +168,33 @@ Coding conventions and standards are explained in the [official developer docs](
       important work that is in-flight, but useful for others to see. If a MR is a work in progress,
       it **must** be prefaced with "Draft: title". Once the MR is ready for review, remove "Draft:"
       from the title.
-2. Triage
+2. **Triage**
     - The maintainer in charge of triaging will apply the proper labels for the issue. This should
-      include at least a size label, `bug` or `feature`, and `awaiting review` once all labels are
+      include at least a size label, `bug` or `feature`, and `awaiting_review` once all labels are
       applied. See the [Labels section](#labels) for full details on the definitions of labels.
     - Add the MR to the correct milestone. This should be the same as the issue the MR closes.
-3. Assigning reviews
-    - Once a review has the `awaiting review` label, maintainers will review them as schedule
+3. **Assigning reviews**
+    - Once a review has the `awaiting_review` label, maintainers will review them as schedule
       permits. The maintainer who takes the issue should self-request a review.
     - MRs from a community member with the label `size/S` or larger requires 2 review approvals from
       maintainers before it can be merged. Those with `size/XS` are per the judgement of the
       maintainers. For more detail see the [Size Labels](#size-labels) section.
-4. Reviewing/Discussion
+4. **Reviewing/Discussion**
     - All reviews will be completed using Gitlab review tool.
     - A "Comment" review should be used when there are questions about the code that should be
       answered, but that don't involve code changes. This type of review does not count as approval.
     - A "Changes Requested" review indicates that changes to the code need to be made before they
       will be merged.
-    - Reviewers should update labels as needed (such as `needs rebase`)
-5. Address comments by answering questions or changing code
-6. LGTM (Looks good to me)
+    - Reviewers should update labels as needed (such as `needs_rebase`)
+5. **Address comments by answering questions or changing code**
+6. **LGTM (Looks good to me)**
     - Once a Reviewer has completed a review and the code looks ready to merge, an "Approve" review
       is used to signal to the contributor and to other maintainers that you have reviewed the code
       and feel that it is ready to be merged.
-7. Merge or close
+7. **Merge or close**
     - MRs should stay open until merged or if they have not been active for more than 30 days. This
       will help keep the MR queue to a manageable size and reduce noise. Should the MR need to stay
-      open (like in the case of a WIP), the `keep open` label can be added.
+      open (like in the case of a WIP), the `keep_open` label can be added.
     - Before merging a MR, refer to the topic on [Size Labels](#size-labels) below to determine if
       the MR requires more than one LGTM to merge.
     - If the owner of the MR is listed in the `OWNERS` file, that user **must** merge their own MRs
