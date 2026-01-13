@@ -6,16 +6,31 @@
 # the distribution.
 #
 
+spec:
+  inputs:
+    ocudu_path:
+      type: string
+      default: ocudu/ocudu
+      description: "OCUDU repository path."
+    ocudu_ref:
+      type: string
+      default: dev
+      description: "OCUDU reference branch or tag."
+    ocudu_oran_apps_path:
+      type: string
+      default: ocudu/ocudu_elements/ocudu_oran_apps
+      description: "OCUDU ORAN Apps reference branch or tag."
+---
 include:
-  - project: ocudu/ocudu
-    ref: dev
+  - project: $[[ inputs.ocudu_path ]]
+    ref: $[[ inputs.ocudu_ref ]]
     file: .gitlab/ci-shared/workflow.yml
-  - project: ocudu/ocudu
-    ref: dev
+  - project: $[[ inputs.ocudu_path ]]
+    ref: $[[ inputs.ocudu_ref ]]
     file: .gitlab/ci-shared/static.yml
 
 variables:
-  OCUDU_REGISTRY_URI: ${CI_TEMPLATE_REGISTRY_HOST}/ocudu/ocudu
+  OCUDU_REGISTRY_URI: ${CI_TEMPLATE_REGISTRY_HOST}/$[[ inputs.ocudu_path ]]
 
 headers:
   extends: .headers
@@ -32,10 +47,10 @@ build:
     # Setup
     - npm install
     ## Git clone OCUDU repos
-    - git clone https://gitlab.com/ocudu/ocudu.git docs/ocudu
+    - git clone -b $[[ inputs.ocudu_ref ]] ${CI_SERVER_URL}/$[[ inputs.ocudu_path ]].git docs/ocudu
     - mkdir -p docs/oran_apps
-    - git clone https://gitlab.com/ocudu/ocudu_elements/ocudu_oran_apps/ocudu_netconf.git oran_apps/ocudu_netconf
-    - git clone https://gitlab.com/ocudu/ocudu_elements/ocudu_oran_apps/ocudu_o1_adapter.git oran_apps/ocudu_o1_adapter
+    - git clone ${CI_SERVER_URL}/$[[ inputs.ocudu_oran_apps_path ]]/ocudu_netconf.git oran_apps/ocudu_netconf
+    - git clone ${CI_SERVER_URL}/$[[ inputs.ocudu_oran_apps_path ]]/ocudu_o1_adapter.git oran_apps/ocudu_o1_adapter
     - npm run build
     # Move built site to public folder
     - mv build public
