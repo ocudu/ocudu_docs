@@ -36,9 +36,32 @@ headers:
   extends: .headers
   stage: test
 
+get_ocudu_project_id:
+  stage: .pre
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache curl jq
+  rules:
+    - if: $ON_MR
+    - if: $ON_DEFAULT_BRANCH
+  script:
+    # Fetch project details using GitLab API and extract the project ID
+    - |
+      PROJECT_PATH_ENCODED=$(echo "$[[ inputs.ocudu_path ]]" | sed 's/\//%2F/g')
+      OCUDU_PROJECT_ID=$(curl --silent --fail --show-error \
+        "${CI_API_V4_URL}/projects/${PROJECT_PATH_ENCODED}" | jq -r '.id')
+      echo "OCUDU_PROJECT_ID=${OCUDU_PROJECT_ID}" >> build.env
+      echo "OCUDU Project ID: ${OCUDU_PROJECT_ID}"
+  artifacts:
+    reports:
+      dotenv: build.env
+
 build:
   stage: test
   image: node:20
+  needs:
+    - job: get_ocudu_project_id
+      artifacts: true
   rules:
     - if: $ON_MR
       variables:
@@ -51,6 +74,17 @@ build:
     - mkdir -p docs/oran_apps
     - git clone ${CI_SERVER_URL}/$[[ inputs.ocudu_oran_apps_path ]]/ocudu_netconf.git oran_apps/ocudu_netconf
     - git clone ${CI_SERVER_URL}/$[[ inputs.ocudu_oran_apps_path ]]/ocudu_o1_adapter.git oran_apps/ocudu_o1_adapter
+    ## Static
+    - mkdir -p static/coverage static/doxygen
+    - |
+      curl --header "JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/coverage_html/latest/coverage_html.tar.gz -o coverage_html.tar.gz
+      tar -xzf coverage_html.tar.gz -C static/coverage --strip-components=1
+      rm -f coverage_html.tar.gz
+    - |
+      curl --header "JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/doxygen/latest/doxygen.tar.gz -o doxygen.tar.gz
+      tar -xzf doxygen.tar.gz -C static/doxygen --strip-components=4
+      rm -f doxygen.tar.gz
+    # Build the Docusaurus site
     - npm run build
     # Move built site to public folder
     - mv build public

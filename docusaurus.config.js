@@ -68,6 +68,18 @@ module.exports = {
           ],
         },
         {
+          type: 'dropdown',
+          label: 'CI Results',
+          position: 'left',
+          items: [
+            {
+              href: '/coverage/index.html',
+              target: "_blank",
+              label: 'Code Coverage',
+            }
+          ],
+        },
+        {
           href: 'https://ocudu.org',
           label: 'Website',
           position: 'right',
@@ -127,7 +139,7 @@ module.exports = {
             '**/ccache/**',
             '**/.git/**',
           ],
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve('./sidebars_extended.js'),
         },
         blog: false,
         theme: {
@@ -163,5 +175,25 @@ module.exports = {
     ],
     // Link filter plugin - removes broken links to non-markdown files
     require('./plugins/link-filter-plugin.js'),
+    // Custom webpack config to ignore changes in static folders during live reload in local
+    function (context, options) {
+      return {
+        name: 'custom-webpack-config',
+        configureWebpack(config, isServer, utils) {
+          return {
+            watchOptions: {
+              ignored: /static[\\/](doxygen|coverage|cppcheck)/,
+              poll: 1000,
+            },
+            snapshot: {
+              managedPaths: [/^(.+?[\\/]node_modules[\\/])/],
+            },
+          };
+        },
+        getPathsToWatch() {
+          return [];
+        },
+      };
+    },
   ]
 };

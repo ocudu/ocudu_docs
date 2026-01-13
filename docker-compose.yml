@@ -21,6 +21,8 @@ services:
       # OCUDU repositories
       - ${OCUDU_GROUP_PATH}/ocudu:/builds/ocudu/ocudu_docs/docs/ocudu:ro
       - ${OCUDU_GROUP_PATH}/ocudu_elements/ocudu_oran_apps/:/builds/ocudu/ocudu_docs/oran_apps:ro
+      # Static documentation from other OCUDU repositories
+      - ${OCUDU_GROUP_PATH}/ocudu/build_doxygen/docs/doxygen/html:/builds/ocudu/ocudu_docs/static/doxygen:ro
     ports:
       - "3000:3000"
     stop_grace_period: 1s
