@@ -33,6 +33,9 @@ build:
     - npm install
     ## Git clone OCUDU repos
     - git clone https://gitlab.com/ocudu/ocudu.git docs/ocudu
+    - mkdir -p docs/oran_apps
+    - git clone https://gitlab.com/ocudu/ocudu_elements/ocudu_oran_apps/ocudu_netconf.git oran_apps/ocudu_netconf
+    - git clone https://gitlab.com/ocudu/ocudu_elements/ocudu_oran_apps/ocudu_o1_adapter.git oran_apps/ocudu_o1_adapter
     - npm run build
     # Move built site to public folder
     - mv build public

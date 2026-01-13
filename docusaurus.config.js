@@ -53,6 +53,21 @@ module.exports = {
           label: 'Documentation',
         },
         {
+          type: 'dropdown',
+          label: 'ORAN Apps',
+          position: 'left',
+          items: [
+            {
+              to: '/oran_apps/ocudu_netconf',
+              label: 'Netconf',
+            },
+            {
+              to: '/oran_apps/ocudu_o1_adapter',
+              label: 'O1 Adapter',
+            }
+          ],
+        },
+        {
           href: 'https://ocudu.org',
           label: 'Website',
           position: 'right',
@@ -122,6 +137,20 @@ module.exports = {
     ],
   ],
   plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'oran_apps',
+        path: 'oran_apps',
+        routeBasePath: 'oran_apps',
+        sidebarPath: require.resolve('./sidebars.js'),
+        include: ['**/*.md', '**/*.mdx'],
+        exclude: [
+          '**/.git/**',
+          '**/node_modules/**',
+        ],
+      }
+    ],
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
