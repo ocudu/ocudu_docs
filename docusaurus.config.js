@@ -103,6 +103,15 @@ module.exports = {
         docs: {
           path: 'docs',
           routeBasePath: '/',
+          include: ['**/*.md', '**/*.mdx'],
+          exclude: [
+            '**/node_modules/**',
+            '**/.gitlab/**',
+            '**/.tox/**',
+            '**/build/**',
+            '**/ccache/**',
+            '**/.git/**',
+          ],
           sidebarPath: require.resolve('./sidebars.js'),
         },
         blog: false,

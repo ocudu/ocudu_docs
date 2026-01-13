@@ -29,7 +29,10 @@ build:
       variables:
         BASE_URL: /-/$CI_PROJECT_NAME/-/jobs/$CI_JOB_ID/artifacts/public/
   script:
+    # Setup
     - npm install
+    ## Git clone OCUDU repos
+    - git clone https://gitlab.com/ocudu/ocudu.git docs/ocudu
     - npm run build
     # Move built site to public folder
     - mv build public

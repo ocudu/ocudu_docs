@@ -6,12 +6,20 @@
 # the distribution.
 #
 
+# Docker Compose file for building and serving the OCUDU documentation site using Docusaurus.
+
+# Before running, ensure that the OCUDU_GROUP_PATH environment variable is set to the path
+# where the OCUDU repositories are located on your host machine.
+# OCUDU_GROUP_PATH=/builds/ocudu docker compose up
+
 services:
   docusaurus:
     image: node:20
-    working_dir: /workdir/
+    working_dir: /builds/ocudu/ocudu_docs
     volumes:
-      - ./:/workdir
+      - ./:/builds/ocudu/ocudu_docs
+      # OCUDU repositories
+      - ${OCUDU_GROUP_PATH}/ocudu:/builds/ocudu/ocudu_docs/docs/ocudu:ro
     ports:
       - "3000:3000"
     stop_grace_period: 1s
