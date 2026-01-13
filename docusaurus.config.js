@@ -161,5 +161,7 @@ module.exports = {
         docsRouteBasePath: '/',
       },
     ],
+    // Link filter plugin - removes broken links to non-markdown files
+    require('./plugins/link-filter-plugin.js'),
   ]
 };
