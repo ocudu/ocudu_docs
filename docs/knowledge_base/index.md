@@ -1,0 +1,25 @@
+<a id="knowledge-base"></a>
+
+# Knowledge Base
+
+* [O-RAN gNB Overview](oran_gnb/source/index.md)
+  * [Introduction](oran_gnb/source/index.md#introduction)
+  * [Split 7.2x Architecture](oran_gnb/source/index.md#split-7-2x-architecture)
+  * [srsRAN Project](oran_gnb/source/index.md#project-name)
+  * [Further Reading](oran_gnb/source/index.md#further-reading)
+* [O-RAN gNB Components](gnb_components/source/index.md)
+  * [Centralized Unit (CU)](gnb_components/source/index.md#centralized-unit-cu)
+  * [Distributed Unit (DU)](gnb_components/source/index.md#distributed-unit-du)
+* [gNB Interfaces](gnb_interfaces/source/index.md)
+  * [E1](gnb_interfaces/source/index.md#e1)
+  * [E2](gnb_interfaces/source/index.md#e2)
+  * [F1](gnb_interfaces/source/index.md#f1)
+  * [FAPI](gnb_interfaces/source/index.md#fapi)
+  * [NG](gnb_interfaces/source/index.md#ng)
+  * [O1](gnb_interfaces/source/index.md#o1)
+  * [Open FrontHaul](gnb_interfaces/source/index.md#open-fronthaul)
+* [COTS UEs](cots_ues/source/index.md)
+  * [Tested COTS UEs](cots_ues/source/index.md#tested-cots-ues)
+  * [User reported working UEs](cots_ues/source/index.md#user-reported-working-ues)
+  * [UE Capability Messages](cots_ues/source/index.md#ue-capability-messages)
+  * [References](cots_ues/source/index.md#references)
