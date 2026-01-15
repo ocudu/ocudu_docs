@@ -117,6 +117,7 @@ pages:
     url: $CI_PAGES_URL
   rules:
     - if: $ON_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SCHEDULE_DESCRIPTION =~ /Nightly/
   after_script:
     - |
       echo "*******************************************************************************************************************************"
