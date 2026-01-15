@@ -109,7 +109,6 @@ platform. The following Fault, Configuration, Accounting, Performance and Securi
 O1 provisioning operations use NETCONF for communication using YANG files for data exchange, while for CM notifications a RESTFUL HTTP-based solution is
 used. O1 is the communication protocol to support OAM.
 
----
 
 ## Open FrontHaul
 
@@ -144,12 +143,35 @@ The Management plane, not included in the previous figure, uses a similar interf
 
 The following tables show the protocol architecture for each plane:
 
-| Control Plane   | User Plane     | Sync Plane   |
-|-----------------|----------------|--------------|
-| eCPRI / ROE     | eCPRI / ROE    |              |
-| UDP (optional)  | UDP (optional) |              |
-| IP (optional)   | IP (optional)  | PTP          |
-| Eth L2 + VLAN   | Eth L2 + VLAN  | ETH L2       |
-| ETH L1          | ETH L1         | ETH L1       |
+<table>
+<thead>
+<tr><th><p>Control Plane</p></th>
+<th><p>User Plane</p></th>
+<th colspan="2"><p>Sync Plane</p></th>
+</tr>
+</thead>
+<tbody>
+<tr"><td><p>eCPRI / ROE</p></td>
+<td><p>eCPRI / ROE</p></td>
+<td colspan="2" rowspan="2"></td>
+</tr>
+<tr><td><p>UDP (optional)</p></td>
+<td><p>UDP (optional)</p></td>
+</tr>
+<tr><td><p>IP (optional)</p></td>
+<td><p>IP (optional)</p></td>
+<td><p>PTP</p></td>
+<td><p>SyncE</p></td>
+</tr>
+<tr><td><p>Eth L2 + VLAN</p></td>
+<td><p>Eth L2 + VLAN</p></td>
+<td colspan="2"><p>ETH L2</p></td>
+</tr>
+<tr><td><p>ETH L1</p></td>
+<td><p>ETH L1</p></td>
+<td colspan="2"><p>ETH L1</p></td>
+</tr>
+</tbody>
+</table>
 
 We can see that for user and control planes we can choose, for transport purposes, between eCPRI or IEEE 1914.3 (Radio over Ethernet).
