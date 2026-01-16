@@ -151,7 +151,7 @@ The following tables show the protocol architecture for each plane:
 </tr>
 </thead>
 <tbody>
-<tr"><td><p>eCPRI / ROE</p></td>
+<tr><td><p>eCPRI / ROE</p></td>
 <td><p>eCPRI / ROE</p></td>
 <td colspan="2" rowspan="2"></td>
 </tr>
