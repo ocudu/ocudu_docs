@@ -145,29 +145,35 @@ The following tables show the protocol architecture for each plane:
 
 <table>
 <thead>
-<tr><th><p>Control Plane</p></th>
+<tr>
+<th><p>Control Plane</p></th>
 <th><p>User Plane</p></th>
 <th colspan="2"><p>Sync Plane</p></th>
 </tr>
 </thead>
 <tbody>
-<tr><td><p>eCPRI / ROE</p></td>
+<tr>
+<td><p>eCPRI / ROE</p></td>
 <td><p>eCPRI / ROE</p></td>
 <td colspan="2" rowspan="2"></td>
 </tr>
-<tr><td><p>UDP (optional)</p></td>
+<tr>
+<td><p>UDP (optional)</p></td>
 <td><p>UDP (optional)</p></td>
 </tr>
-<tr><td><p>IP (optional)</p></td>
+<tr>
+<td><p>IP (optional)</p></td>
 <td><p>IP (optional)</p></td>
 <td><p>PTP</p></td>
 <td><p>SyncE</p></td>
 </tr>
-<tr><td><p>Eth L2 + VLAN</p></td>
+<tr>
+<td><p>Eth L2 + VLAN</p></td>
 <td><p>Eth L2 + VLAN</p></td>
 <td colspan="2"><p>ETH L2</p></td>
 </tr>
-<tr><td><p>ETH L1</p></td>
+<tr>
+<td><p>ETH L1</p></td>
 <td><p>ETH L1</p></td>
 <td colspan="2"><p>ETH L1</p></td>
 </tr>
