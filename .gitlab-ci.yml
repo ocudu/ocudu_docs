@@ -55,6 +55,7 @@ get_ocudu_project_id:
   rules:
     - if: $ON_MR
     - if: $ON_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SCHEDULE_DESCRIPTION =~ /Nightly/
   script:
     # Fetch project details using GitLab API and extract the project ID
     - |
