@@ -1,3 +1,7 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+
 # Installation Guide
 
 The following steps need to be taken in order to download and build srsRAN Project:
@@ -10,8 +14,9 @@ The following steps need to be taken in order to download and build srsRAN Proje
 
 ---
 
-#### NOTE
+:::note
 srsRAN Project requires a Linux-based OS, we recommend Ubuntu (22.04 or later).
+:::
 
 
 ## Build Tools and Dependencies
@@ -31,23 +36,25 @@ srsRAN Project has the following necessary dependencies:
 
 You can install the required build tools and dependencies for various distributions as follows:
 
-Ubuntu 22.04 (or later)
 
+<Tabs>
+  <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
 ```bash
 sudo apt-get install cmake make gcc g++ pkg-config libfftw3-dev libmbedtls-dev libsctp-dev libyaml-cpp-dev libgtest-dev
 ```
-
-Fedora
-
+  </TabItem>
+  <TabItem value="fedora" label="Fedora">
 ```bash
 sudo yum install cmake make gcc gcc-c++ fftw-devel lksctp-tools-devel yaml-cpp-devel mbedtls-devel gtest-devel
 ```
-
-Arch Linux
-
+  </TabItem>
+  <TabItem value="arch" label="Arch Linux">
 ```bash
 sudo pacman -S cmake make base-devel fftw mbedtls yaml-cpp lksctp-tools gtest
 ```
+  </TabItem>
+</Tabs>
+
 
 It is also recommended users install the following (although they are not required):
 
@@ -58,8 +65,9 @@ It is also recommended users install the following (although they are not requir
 
 ## RF-drivers
 
-#### NOTE
+:::note
 UHD and/or ZMQ are only required for Split 8 deployments, if you are planning on using a Split 7.2 deployment you may skip this step.
+:::
 
 srsRAN Project uses RF drivers to support different radio types. Currently, only UHD and ZMQ are supported:
 
@@ -73,8 +81,8 @@ srsRAN Project uses RF drivers to support different radio types. Currently, only
 
 srsRAN Project can be built with certain features enabled or disabled. This is done during the build process by using CMake flags and/or by downloading third party dependencies prior to building the code. The following sections outline these various build options.
 
-Vanilla Installation
-
+<Tabs>
+  <TabItem value="vanilla" label="Vanilla Installation" default>
 First, clone srsRAN Project repository:
 
 ```bash
@@ -120,11 +128,14 @@ You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to in
 ```bash
 sudo make install
 ```
+</TabItem>
 
-Split 7.2 Only Configuration
+<TabItem value="split72" label="Split 7.2 Only Configuration">
 
-#### NOTE
+
+:::note
 srsRAN Project allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, srsRAN Project builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
+:::
 
 First, clone srsRAN Project repository:
 
@@ -149,8 +160,9 @@ You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to in
 sudo make install
 ```
 
-#### NOTE
+:::note
 srsRAN Project allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, srsRAN Project builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
+:::
 
 First, clone srsRAN Project repository:
 
@@ -175,10 +187,13 @@ You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to in
 sudo make install
 ```
 
-Split 8 Only Configuration
+</TabItem>
 
-#### NOTE
+<TabItem value="split8" label="Split 8 Only Configuration">
+
+:::note
 srsRAN Project allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, srsRAN Project builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
+:::
 
 First, clone srsRAN Project repository:
 
@@ -203,8 +218,9 @@ You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to in
 sudo make install
 ```
 
-#### NOTE
+:::note
 srsRAN Project allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, srsRAN Project builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
+:::
 
 First, clone srsRAN Project repository:
 
@@ -229,11 +245,12 @@ You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to in
 sudo make install
 ```
 
-ZMQ Enabled Installation
+</TabItem>
 
+<TabItem value="zmq" label="ZMQ Enabled Installation">
 On Ubuntu, ZeroMQ development libraries can be installed with:
 
-```default
+```bash
 sudo apt-get install libzmq3-dev
 ```
 
@@ -241,7 +258,7 @@ Alternatively, ZeroMQ can also be built from source.
 
 First, one needs to install libzmq:
 
-```default
+```bash
 git clone https://github.com/zeromq/libzmq.git
 cd libzmq
 ./autogen.sh
@@ -253,7 +270,7 @@ sudo ldconfig
 
 Second, install czmq:
 
-```default
+```bash
 git clone https://github.com/zeromq/czmq.git
 cd czmq
 ./autogen.sh
@@ -265,12 +282,13 @@ sudo ldconfig
 
 Finally, you need to compile srsRAN Project (assuming you have already installed all the required dependencies).
 
-#### NOTE
+:::note
 If you have already built and installed srsRAN Project prior to installing ZMQ and other dependencies you will have to re-build to ensure the ZMQ drivers have been recognized correctly.
+:::
 
 The following commands can be used to clone and build from source:
 
-```default
+```bash
 git clone https://github.com/srsran/srsRAN_Project.git
 cd srsRAN_Project
 mkdir build
@@ -279,12 +297,13 @@ cmake ../ -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON
 make -j`nproc`
 ```
 
-#### WARNING
+:::warning
 ZeroMQ is disabled by default, this is enabled when running `cmake` by including `-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON`.
+:::
 
 Pay extra attention to the cmake console output. Make sure you read the following line to ensure ZMQ has been correctly detected by srsRAN:
 
-```default
+```bash
 ...
 -- FINDING ZEROMQ.
 -- Checking for module 'ZeroMQ'
@@ -295,7 +314,7 @@ Pay extra attention to the cmake console output. Make sure you read the followin
 
 On Ubuntu, ZeroMQ development libraries can be installed with:
 
-```default
+```bash
 sudo apt-get install libzmq3-dev
 ```
 
@@ -303,7 +322,7 @@ Alternatively, ZeroMQ can also be built from source.
 
 First, one needs to install libzmq:
 
-```default
+```bash
 git clone https://github.com/zeromq/libzmq.git
 cd libzmq
 ./autogen.sh
@@ -315,7 +334,7 @@ sudo ldconfig
 
 Second, install czmq:
 
-```default
+```bash
 git clone https://github.com/zeromq/czmq.git
 cd czmq
 ./autogen.sh
@@ -327,12 +346,13 @@ sudo ldconfig
 
 Finally, you need to compile srsRAN Project (assuming you have already installed all the required dependencies).
 
-#### NOTE
+:::note
 If you have already built and installed srsRAN Project prior to installing ZMQ and other dependencies you will have to re-build to ensure the ZMQ drivers have been recognized correctly.
+:::
 
 The following commands can be used to clone and build from source:
 
-```default
+```bash
 git clone https://github.com/srsran/srsRAN_Project.git
 cd srsRAN_Project
 mkdir build
@@ -341,12 +361,13 @@ cmake ../ -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON
 make -j`nproc`
 ```
 
-#### WARNING
+:::warning
 ZeroMQ is disabled by default, this is enabled when running `cmake` by including `-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON`.
+:::
 
 Pay extra attention to the cmake console output. Make sure you read the following line to ensure ZMQ has been correctly detected by srsRAN:
 
-```default
+```bash
 ...
 -- FINDING ZEROMQ.
 -- Checking for module 'ZeroMQ'
@@ -354,6 +375,13 @@ Pay extra attention to the cmake console output. Make sure you read the followin
 -- Found libZEROMQ: /usr/local/include, /usr/local/lib/libzmq.so
 ...
 ```
+
+</TabItem>
+
+
+</Tabs>
+
+
 
 The [Running srsRAN](running.md#manual-running) section of the documentation further discusses how to configure and run the gNB application.
 
@@ -363,8 +391,8 @@ The [Running srsRAN](running.md#manual-running) section of the documentation fur
 
 srsRAN Project is available to download directly from packages for various linux distributions. Users looking for a simple installation who do not wish to edit the source code should use the package installation.
 
-Ubuntu
-
+<Tabs>
+  <TabItem value="ubuntu" label="Ubuntu" default>
 Ubuntu users can download srsRAN Project packages using the following commands:
 
 ```bash
@@ -372,14 +400,17 @@ sudo add-apt-repository ppa:softwareradiosystems/srsran-project
 sudo apt-get update
 sudo apt-get install srsran-project -y
 ```
-
-Arch Linux
-
+  </TabItem>
+<TabItem value="arch" label="Arch Linux">
 Arch Linux users can download srsRAN Project packages using an AUR helper, e.g. ‘yay’, using the following command:
 
 ```bash
 yay -Sy srsran-project-git
 ```
+</TabItem>
+      
+</Tabs>
+
 
 This will install the latest version of srsRAN Project from git.
 
