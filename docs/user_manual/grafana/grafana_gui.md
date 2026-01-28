@@ -1,10 +1,11 @@
 # Grafana Metrics GUI
 
-#### NOTE
-The GrafanaGUI works with both the monolithic gNB and srsDU applications. The configuration changes required are the same for both applications.
+:::info
+The GrafanaGUI works with both the monolithic gNB and the DU application. The configuration changes required are the same for both applications.
+:::
 
-srsRAN Project allows the reporting and visualization of the CU/DU metrics to a [Grafana](https://grafana.com/oss/grafana/) WebUI. This is done through the use
-of a [Docker](https://www.docker.com/) container that comes as standard with the srsRAN code base, located in the `docker/` folder. This container allows users
+OCUDU allows the reporting and visualization of the CU/DU metrics to a [Grafana](https://grafana.com/oss/grafana/) WebUI. This is done through the use
+of a [Docker](https://www.docker.com/) container that comes as standard with the OCUDU code base, located in the `docker/` folder. This container allows users
 to bring up the Grafana dashboard in a single command.
 
 **Further Reading:**
@@ -20,7 +21,7 @@ reporting of the metrics to the necessary JSON format for use in the webUI.
 
 ### Docker
 
-Using the Docker Containers included with srsRAN requires `docker compose` to be installed on your system. You can read about `docker compose` [here](https://docs.docker.com/compose/).  There
+Using the Docker Containers included with OCUDU requires `docker compose` to be installed on your system. You can read about `docker compose` [here](https://docs.docker.com/compose/).  There
 are multiple ways to install this, but the most basic way to do so is to install Docker Desktop. For installing Docker Desktop on linux, take a look at
 the [Docker documentation](https://docs.docker.com/desktop/install/linux-install/).
 
@@ -38,7 +39,7 @@ The `addr` and `port` values defined above mirror those set in the `docker-compo
 
 ## Launching GUI
 
-To launch the docker image for the Grafana UI, run the following command from the main folder containing srsRAN:
+To launch the docker image for the Grafana UI, run the following command from the main folder containing OCUDU:
 
 ```bash
 sudo docker compose -f docker/docker-compose.yml up grafana
@@ -65,6 +66,6 @@ UE on the network.
 
 A sample of the UI output can be seen here:
 
-![image](user_manuals/source/.imgs/grafana_cots.png)
+![image](grafana_cots.png)
 
 The above figure shows a single COTS UE connected to the network, with different traffic bursts of varying bandwidth being generated using iPerf. The cell bandwidth is 20 MHz.

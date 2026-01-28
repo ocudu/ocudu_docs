@@ -1,6 +1,9 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Configuration Reference
 
-srsRAN Project uses a YAML (.yml) configuration file.
+OCUDU uses a YAML (.yml) configuration file.
 
 The gNB comes with a number of example configuration files, these can be found in the `configs/` folder in the source files.
 
@@ -13,7 +16,7 @@ These include sample supplementary configuration files for:
 - Specific QOS configurations for voice, video, IMS, live-streaming and buffered video streaming
 - Slicing support
 
-srsRAN Project allows configuration files to be used in concatenated with other configuration files, using the `-c` between configuration file. For example you might want to use both the n310 and MIMO example configs together as follows:
+OCUDU allows configuration files to be used in concatenated with other configuration files, using the `-c` between configuration file. For example you might want to use both the n310 and MIMO example configs together as follows:
 
 ```bash
 sudo ./gnb -c gnb_rf_n310_fdd_n3_20mhz.yml -c mimo.yml
@@ -34,11 +37,11 @@ All configuration parameters are presented here below in the following format:
 ```yaml
 parameter: default_value         # Optional/Required TYPE (default value). Parameter description. Format: <format description> OR Supported: <supported values>.
 ```
-
-gNB
+<Tabs>
+  <TabItem value="gnb" label="gNodeB" default>
 
 ```yaml
-ran_node_name: srsgnb01             # Required TEXT (cu_cp_01). Sets the text ID associated with the gNB. Format: string without spaces.
+ran_node_name: gnb01             # Required TEXT (cu_cp_01). Sets the text ID associated with the gNB. Format: string without spaces.
 gnb_id: 411                         # Required UINT (411). Sets the numerical ID associated with the gNB.
 gnb_id_bit_length: 22               # Required UINT (22). Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
 gnb_cu_up_id: 0                     # Optional UINT (0). Sets the gNB CU-UP ID. Supported: [0 - 68719476735].
@@ -773,11 +776,12 @@ trace:
     du_high_enable: false               # Optional BOOLEAN (false). Enables tracing for DU-high executors.
     phy_enable: false                   # Optional BOOLEAN (false). Enables tracing for physical layer executors.
 ```
+</TabItem>
 
-srsCU
+<TabItem value="cu" label="CU">
 
 ```yaml
-ran_node_name: srscucp01            # Required TEXT (cu_cp_01). Sets the text ID associated with the gNB. Format: string without spaces.
+ran_node_name: cucp01            # Required TEXT (cu_cp_01). Sets the text ID associated with the gNB. Format: string without spaces.
 gnb_id: 411                         # Required UINT (411). Sets the numerical ID associated with the gNB.
 gnb_id_bit_length: 22               # Required UNIT (22). Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
 
@@ -1000,8 +1004,9 @@ trace:
   max_tracing_events_per_file: 1000000  # Optional UINT (1000000). Maximum number of events per file. Set to zero for no limit.
   nof_tracing_events_after_severe: 0    # Optional UINT (0). Number of events to write prior to a severe event. Set to zero for writing all events.
 ```
+</TabItem>
 
-srsDU
+<TabItem value="du" label="DU">
 
 ```yaml
 
@@ -1608,14 +1613,15 @@ trace:
     du_high_enable: false               # Optional BOOLEAN (false). Enables tracing for DU-high executors.
     phy_enable: false                   # Optional BOOLEAN (false). Enables tracing for physical layer executors.
 ```
-
+</TabItem>
+</Tabs>
 ---
 
 ## Antenna Configuration
 
-srsRAN Project supports SISO, codebook-based MIMO, and TX/RX diversity. These options can be configured in the `cell_cfg` section via the `nof_antennas_dl` and `nof_antennas_ul` parameters.
+OCUDU supports SISO, codebook-based MIMO, and TX/RX diversity. These options can be configured in the `cell_cfg` section via the `nof_antennas_dl` and `nof_antennas_ul` parameters.
 
 When you configure `nof_antennas_dl` and `nof_antennas_ul`, it informs the gNB about the number of antennas available for downlink (DL) and uplink (UL) transmissions, respectively. By default, a
 single physical antenna is used for both DL and UL, meaning the values of `nof_antennas_dl` and `nof_antennas_ul` are not additive.
 
-As shown above, an example of a MIMO configuration file can be found in the example configuration files provided with srsRAN Project source files.
+As shown above, an example of a MIMO configuration file can be found in the example configuration files provided with OCUDU source files.
