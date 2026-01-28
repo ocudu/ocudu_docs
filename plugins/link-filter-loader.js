@@ -23,8 +23,13 @@ module.exports = function linkFilterLoader(source) {
             return match;
         }
 
-        // Keep links to markdown files
-        if (/\.mdx?$/i.test(link)) {
+        // Keep image links (png, jpg, jpeg, gif, svg, etc.)
+        if (/\.(png|jpe?g|gif|svg|webp|bmp|ico)$/i.test(link)) {
+            return match;
+        }
+
+        // Keep links to markdown files (including with anchors like file.md#section)
+        if (/\.mdx?(#|$)/i.test(link)) {
             return match;
         }
 
@@ -34,6 +39,7 @@ module.exports = function linkFilterLoader(source) {
         }
 
         // Remove link to non-markdown file, keep only the text
+        console.log(`[link-filter-loader] Filtering out link: ${link} in ${filePath}`);
         return text;
     });
 
