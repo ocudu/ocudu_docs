@@ -1,32 +1,34 @@
-# Running srsRAN Project
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-#### NOTE
-This guide outlines running srsRAN Project applications in a Split 8 deployment with a USRP, for Split 7.2 deployments see [here](../../tutorials/source/oranRU/source/index.md#oran-ru-tutorial).
+# Running
+
+:::info
+This guide outlines how to *manually* run OCUDU applications in a Split 8 deployment with a USRP. For Split 7.2 deployments and/or Kubernetes execution see [here](../../tutorials/source/oranRU/source/index.md#oran-ru-tutorial).
+:::
 
 ## Baseline Requirements
 
-To successfully run an end-to-end network srsRAN Project applications you will need the following:
+To successfully run an end-to-end network OCUDU applications you will need the following:
 
 - A PC with a Linux based OS (Ubuntu 22.04 or later)
 - A USRP device
-- srsRAN Project (see the [Installation Guide](installation.md#manual-installation-build))
+- OCUDU (see the [Installation Guide](installation.md#manual-installation-build))
 - A 3rd-party 5G core (we recommend [Open5GS](https://github.com/open5gs/open5gs))
 - A 3rd-party 5G UE
 
-Recommended:
-
-- External clock source
-
-If you plan to connect the gNB to a COTS UE we recommend that you use an external clock source such as an Octoclock or GPSDO that is compatible with your RF-frontend, as the on-board clock within the USRP may not be accurate enough to enable a connection with the UE.
+:::tip
+If you plan to connect the gNB to a COTS UE best performance is achieved using an external clock source such as an Octoclock or GPSDO that is compatible with your RF-frontend, as the on-board clock within the USRP may not be accurate enough to enable a connection with the UE.
 This is discussed further in the relevant tutorial.
+:::
 
 ---
 
 ## System Preparation
 
-Before running any of srsRAN Project applications, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
+Before running any of OCUDU applications, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
 
-- [srsRAN performance script](https://github.com/srsran/srsRAN_Project/tree/main/scripts/srsran_performance)
+- [OCUDU performance script](https://gitlab.com/ocudu/ocudu/-/blob/dev/scripts/ocudu_performance?ref_type=heads)
 
 The script does the following:
 
@@ -37,18 +39,19 @@ The script does the following:
 Run the script as follows from the main project folder:
 
 ```bash
-sudo ./scripts/srsran_performance
+sudo ./scripts/ocudu_performance
 ```
 
 ---
 
-## Running srsRAN Project
+## Running OCUDU
 
-srsGNB
 
-If srsRAN Project has been installed using `sudo make install` or installed from packages then you will be able to run the gNB from anywhere on your machine.
+<Tabs>
+  <TabItem value="gnb" label="gNodeB" default>
+If OCUDU has been installed using `sudo make install` or installed from packages then you will be able to run the gNB from anywhere on your machine.
 
-If you have built srsRAN Project from source and have not installed it, then you can run the gNB from: `/srsRAN_Project/build/apps/gnb`. In this folder you will find the gNB application binary.
+If you have built OCUDU from source and have not installed it, then you can run the gNB from: `/ocudu/build/apps/gnb`. In this folder you will find the gNB application binary.
 
 Run the gNB as follows, passing the YAML configuration file:
 
@@ -58,14 +61,14 @@ sudo ./gnb -c gnb_rf_b200_tdd_n78_10mhz.yml
 
 Run the gNB with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in srsRAN Project codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
 
 When running, the gNB should generate the following console output:
 
 ```bash
 Available radio types: uhd.
 
---== srsRAN gNB (commit 77be7d339) ==--
+--== OCUDU gNB (commit 77be7d339) ==--
 
 [INFO] [UHD] linux; GNU C++ version 9.4.0; Boost_107100; UHD_4.2.0.HEAD-0-g197cdc4f
 Making USRP object with args 'type=b200'
@@ -83,9 +86,9 @@ Configuration parameters can also be passed on the command line. To see the list
 ./gnb --help
 ```
 
-If srsRAN Project has been installed using `sudo make install` or installed from packages then you will be able to run the gNB from anywhere on your machine.
+If OCUDU has been installed using `sudo make install` or installed from packages then you will be able to run the gNB from anywhere on your machine.
 
-If you have built srsRAN Project from source and have not installed it, then you can run the gNB from: `/srsRAN_Project/build/apps/gnb`. In this folder you will find the gNB application binary.
+If you have built OCUDU from source and have not installed it, then you can run the gNB from: `/ocudu/build/apps/gnb`. In this folder you will find the gNB application binary.
 
 Run the gNB as follows, passing the YAML configuration file:
 
@@ -95,14 +98,14 @@ sudo ./gnb -c gnb_rf_b200_tdd_n78_10mhz.yml
 
 Run the gNB with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in srsRAN Project codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
 
 When running, the gNB should generate the following console output:
 
 ```bash
 Available radio types: uhd.
 
---== srsRAN gNB (commit 77be7d339) ==--
+--== OCUDU gNB (commit 77be7d339) ==--
 
 [INFO] [UHD] linux; GNU C++ version 9.4.0; Boost_107100; UHD_4.2.0.HEAD-0-g197cdc4f
 Making USRP object with args 'type=b200'
@@ -119,86 +122,24 @@ Configuration parameters can also be passed on the command line. To see the list
 ```bash
 ./gnb --help
 ```
+  </TabItem>
 
-srsCU
+<TabItem value="odu" label="O-DU">
+If OCUDU has been installed using `sudo make install` or installed from packages then you will be able to run DU from anywhere on your machine.
 
-If srsRAN Project has been installed using `sudo make install` or installed from packages then you will be able to run srsCU from anywhere on your machine.
+If you have built OCUDU from source and have not installed it, then you can run the DU from: `/ocudu/build/apps/du/odu`. In this folder you will find the DU application binary.
 
-If you have built srsRAN Project from source and have not installed it, then you can run srsCU from: `/srsRAN_Project/build/apps/cu`. In this folder you will find the srsCU application binary.
-
-Run srsCU as follows, passing the YAML configuration file:
-
-```bash
-sudo ./srsCU -c cu.yml
-```
-
-Run srsCU with `sudo` to ensure threads are configured with the correct priority.
-
-Example configuration files can be found in the `configs/` folder in srsRAN Project codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
-
-When running, srsCU should generate the following console output:
+Run the DU as follows, passing the YAML configuration file:
 
 ```bash
-N2: Connection to AMF on 127.0.1.100:38412 completed
-F1-C: Listening for new connections on 127.0.10.1:38471...
-
-==== CU started ===
-Type <h> to view help
+sudo ./odu -c du.yml
 ```
 
-Configuration parameters can also be passed on the command line. To see the list of options, use:
+Run the DU with `sudo` to ensure threads are configured with the correct priority.
 
-```bash
-./srscu --help
-```
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
 
-If srsRAN Project has been installed using `sudo make install` or installed from packages then you will be able to run srsCU from anywhere on your machine.
-
-If you have built srsRAN Project from source and have not installed it, then you can run srsCU from: `/srsRAN_Project/build/apps/cu`. In this folder you will find the srsCU application binary.
-
-Run srsCU as follows, passing the YAML configuration file:
-
-```bash
-sudo ./srsCU -c cu.yml
-```
-
-Run srsCU with `sudo` to ensure threads are configured with the correct priority.
-
-Example configuration files can be found in the `configs/` folder in srsRAN Project codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
-
-When running, srsCU should generate the following console output:
-
-```bash
-N2: Connection to AMF on 127.0.1.100:38412 completed
-F1-C: Listening for new connections on 127.0.10.1:38471...
-
-==== CU started ===
-Type <h> to view help
-```
-
-Configuration parameters can also be passed on the command line. To see the list of options, use:
-
-```bash
-./srscu --help
-```
-
-srsDU
-
-If srsRAN Project has been installed using `sudo make install` or installed from packages then you will be able to run srsDU from anywhere on your machine.
-
-If you have built srsRAN Project from source and have not installed it, then you can run srsDU from: `/srsRAN_Project/build/apps/du`. In this folder you will find the srsDU application binary.
-
-Run srsDU as follows, passing the YAML configuration file:
-
-```bash
-sudo ./srsDU -c du.yml
-```
-
-Run srsDU with `sudo` to ensure threads are configured with the correct priority.
-
-Example configuration files can be found in the `configs/` folder in srsRAN Project codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
-
-When running, srsDU should generate the following console output:
+When running, the DU should generate the following console output:
 
 ```bash
 Cell pci=1, bw=20 MHz, 1T1R, dl_arfcn=650000 (n78), dl_freq=3750.0 MHz, dl_ssb_arfcn=649632, ul_freq=3750.0 MHz
@@ -232,24 +173,24 @@ Entering `t` will enable the console trace, see [here](console_ref.md#manual-con
 Configuration parameters can also be passed on the command line. To see the list of options, use:
 
 ```bash
-./srsdu --help
+./odu --help
 ```
 
-If srsRAN Project has been installed using `sudo make install` or installed from packages then you will be able to run srsDU from anywhere on your machine.
+If OCUDU has been installed using `sudo make install` or installed from packages then you will be able to run the DU from anywhere on your machine.
 
-If you have built srsRAN Project from source and have not installed it, then you can run srsDU from: `/srsRAN_Project/build/apps/du`. In this folder you will find the srsDU application binary.
+If you have built OCUDU from source and have not installed it, then you can run the DU from: `/ocudu/build/apps/du`. In this folder you will find the DU application binary.
 
-Run srsDU as follows, passing the YAML configuration file:
+Run the DU as follows, passing the YAML configuration file:
 
 ```bash
-sudo ./srsDU -c du.yml
+sudo ./odu -c du.yml
 ```
 
-Run srsDU with `sudo` to ensure threads are configured with the correct priority.
+Run the DU with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in srsRAN Project codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
 
-When running, srsDU should generate the following console output:
+When running, the DU should generate the following console output:
 
 ```bash
 Cell pci=1, bw=20 MHz, 1T1R, dl_arfcn=650000 (n78), dl_freq=3750.0 MHz, dl_ssb_arfcn=649632, ul_freq=3750.0 MHz
@@ -283,7 +224,75 @@ Entering `t` will enable the console trace, see [here](console_ref.md#manual-con
 Configuration parameters can also be passed on the command line. To see the list of options, use:
 
 ```bash
-./srsdu --help
+./odu --help
 ```
 
-For more information on running srsRAN Project, and configuring for various use-cases see the [full list of tutorials](../../tutorials/source/index.md#tutorials).
+</TabItem>
+
+<TabItem value="ocu" label="O-CU">
+
+If OCUDU has been installed using `sudo make install` or installed from packages then you will be able to run the CU from anywhere on your machine.
+
+If you have built OCUDU from source and have not installed it, then you can run the CU from: `/ocudu/build/apps/cu`. In this folder you will find the CU application binary.
+
+Run the CU as follows, passing the YAML configuration file:
+
+```bash
+sudo ./ocu -c cu.yml
+```
+
+Run the CU with `sudo` to ensure threads are configured with the correct priority.
+
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
+
+When running, the CU should generate the following console output:
+
+```bash
+N2: Connection to AMF on 127.0.1.100:38412 completed
+F1-C: Listening for new connections on 127.0.10.1:38471...
+
+==== CU started ===
+Type <h> to view help
+```
+
+Configuration parameters can also be passed on the command line. To see the list of options, use:
+
+```bash
+./ocu --help
+```
+
+If OCUDU has been installed using `sudo make install` or installed from packages then you will be able to run the CU from anywhere on your machine.
+
+If you have built OCUDU from source and have not installed it, then you can run the CU from: `/srsRAN_Project/build/apps/cu`. In this folder you will find the the CU application binary.
+
+Run the CU as follows, passing the YAML configuration file:
+
+```bash
+sudo ./ocu -c cu.yml
+```
+
+Run the CU with `sudo` to ensure threads are configured with the correct priority.
+
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
+
+When running, the CU should generate the following console output:
+
+```bash
+N2: Connection to AMF on 127.0.1.100:38412 completed
+F1-C: Listening for new connections on 127.0.10.1:38471...
+
+==== CU started ===
+Type <h> to view help
+```
+
+Configuration parameters can also be passed on the command line. To see the list of options, use:
+
+```bash
+./srscu --help
+```
+
+</TabItem>
+
+</Tabs>
+
+For more information on running OCUDU, and configuring for various use-cases see the [full list of tutorials](../../tutorials/source/index.md#tutorials).

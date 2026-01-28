@@ -1,7 +1,6 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-
 # Installation Guide
 
 The following steps need to be taken in order to download and build OCUDU:
