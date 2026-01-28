@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 
 # Installation Guide
 
-The following steps need to be taken in order to download and build srsRAN Project:
+The following steps need to be taken in order to download and build OCUDU:
 
 1. Install dependencies
 2. Install RF driver (only required for Split 8 deployments)
@@ -15,18 +15,18 @@ The following steps need to be taken in order to download and build srsRAN Proje
 ---
 
 :::note
-srsRAN Project requires a Linux-based OS, we recommend Ubuntu (22.04 or later).
+OCUDU requires a Linux-based OS, we recommend Ubuntu (22.04 or later).
 :::
 
 
 ## Build Tools and Dependencies
 
-srsRAN Project uses CMake and C++17. We recommend the following build tools:
+OCUDU uses CMake and C++17. We recommend the following build tools:
 
 - [cmake](https://cmake.org/)
 - [gcc](https://gcc.gnu.org/) (v11.4.0 or later) **OR** [Clang](https://clang.llvm.org/) (v14.0.0 or later)
 
-srsRAN Project has the following necessary dependencies:
+OCUDU has the following necessary dependencies:
 
 - [libfftw](https://www.fftw.org/)
 - [libsctp](https://github.com/sctp/lksctp-tools)
@@ -69,7 +69,7 @@ It is also recommended users install the following (although they are not requir
 UHD and/or ZMQ are only required for Split 8 deployments, if you are planning on using a Split 7.2 deployment you may skip this step.
 :::
 
-srsRAN Project uses RF drivers to support different radio types. Currently, only UHD and ZMQ are supported:
+OCUDU uses RF drivers to support different radio types. Currently, only UHD and ZMQ are supported:
 
 * [UHD](https://github.com/EttusResearch/uhd) (We recommended the LTS version of UHD, i.e. either 3.15 or 4.0.)
 * [ZMQ](https://zeromq.org/)
@@ -79,14 +79,14 @@ srsRAN Project uses RF drivers to support different radio types. Currently, only
 
 ## Clone and Build
 
-srsRAN Project can be built with certain features enabled or disabled. This is done during the build process by using CMake flags and/or by downloading third party dependencies prior to building the code. The following sections outline these various build options.
+OCUDU can be built with certain features enabled or disabled. This is done during the build process by using CMake flags and/or by downloading third party dependencies prior to building the code. The following sections outline these various build options.
 
 <Tabs>
   <TabItem value="vanilla" label="Vanilla Installation" default>
-First, clone srsRAN Project repository:
+First, clone OCUDU repository:
 
 ```bash
-git clone https://github.com/srsRAN/srsRAN_Project.git
+git clonn https://gitlab.com/ocudu/ocudu.git
 ```
 
 Then build the code-base:
@@ -100,13 +100,13 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install srsRAN Project, you can use the following command:
+You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
 ```
 
-First, clone srsRAN Project repository:
+First, clone OCUDU repository:
 
 ```bash
 git clone https://github.com/srsRAN/srsRAN_Project.git
@@ -123,7 +123,7 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install srsRAN Project, you can use the following command:
+You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
@@ -134,10 +134,10 @@ sudo make install
 
 
 :::note
-srsRAN Project allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, srsRAN Project builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
+OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
 :::
 
-First, clone srsRAN Project repository:
+First, clone OCUDU repository:
 
 ```bash
 git clone https://github.com/srsRAN/srsRAN_Project.git
@@ -154,17 +154,17 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install srsRAN Project, you can use the following command:
+You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
 ```
 
 :::note
-srsRAN Project allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, srsRAN Project builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
+OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
 :::
 
-First, clone srsRAN Project repository:
+First, clone OCUDU repository:
 
 ```bash
 git clone https://github.com/srsRAN/srsRAN_Project.git
@@ -181,7 +181,7 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install srsRAN Project, you can use the following command:
+You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
@@ -192,10 +192,10 @@ sudo make install
 <TabItem value="split8" label="Split 8 Only Configuration">
 
 :::note
-srsRAN Project allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, srsRAN Project builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
+OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
 :::
 
-First, clone srsRAN Project repository:
+First, clone OCUDU repository:
 
 ```bash
 git clone https://github.com/srsRAN/srsRAN_Project.git
@@ -212,17 +212,17 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install srsRAN Project, you can use the following command:
+You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
 ```
 
 :::note
-srsRAN Project allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, srsRAN Project builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
+OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
 :::
 
-First, clone srsRAN Project repository:
+First, clone OCUDU repository:
 
 ```bash
 git clone https://github.com/srsRAN/srsRAN_Project.git
@@ -239,7 +239,7 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install srsRAN Project, you can use the following command:
+You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
@@ -280,10 +280,10 @@ sudo make install
 sudo ldconfig
 ```
 
-Finally, you need to compile srsRAN Project (assuming you have already installed all the required dependencies).
+Finally, you need to compile OCUDU (assuming you have already installed all the required dependencies).
 
 :::note
-If you have already built and installed srsRAN Project prior to installing ZMQ and other dependencies you will have to re-build to ensure the ZMQ drivers have been recognized correctly.
+If you have already built and installed OCUDU prior to installing ZMQ and other dependencies you will have to re-build to ensure the ZMQ drivers have been recognized correctly.
 :::
 
 The following commands can be used to clone and build from source:
@@ -344,10 +344,10 @@ sudo make install
 sudo ldconfig
 ```
 
-Finally, you need to compile srsRAN Project (assuming you have already installed all the required dependencies).
+Finally, you need to compile OCUDU (assuming you have already installed all the required dependencies).
 
 :::note
-If you have already built and installed srsRAN Project prior to installing ZMQ and other dependencies you will have to re-build to ensure the ZMQ drivers have been recognized correctly.
+If you have already built and installed OCUDU prior to installing ZMQ and other dependencies you will have to re-build to ensure the ZMQ drivers have been recognized correctly.
 :::
 
 The following commands can be used to clone and build from source:
@@ -389,11 +389,11 @@ The [Running srsRAN](running.md#manual-running) section of the documentation fur
 
 ## Packages
 
-srsRAN Project is available to download directly from packages for various linux distributions. Users looking for a simple installation who do not wish to edit the source code should use the package installation.
+OCUDU is available to download directly from packages for various linux distributions. Users looking for a simple installation who do not wish to edit the source code should use the package installation.
 
 <Tabs>
   <TabItem value="ubuntu" label="Ubuntu" default>
-Ubuntu users can download srsRAN Project packages using the following commands:
+Ubuntu users can download OCUDU packages using the following commands:
 
 ```bash
 sudo add-apt-repository ppa:softwareradiosystems/srsran-project
@@ -402,7 +402,7 @@ sudo apt-get install srsran-project -y
 ```
   </TabItem>
 <TabItem value="arch" label="Arch Linux">
-Arch Linux users can download srsRAN Project packages using an AUR helper, e.g. ‘yay’, using the following command:
+Arch Linux users can download OCUDU packages using an AUR helper, e.g. ‘yay’, using the following command:
 
 ```bash
 yay -Sy srsran-project-git
@@ -412,9 +412,9 @@ yay -Sy srsran-project-git
 </Tabs>
 
 
-This will install the latest version of srsRAN Project from git.
+This will install the latest version of OCUDU from git.
 
-When installed from packages, example configs for srsRAN Project can be found in `/usr/share/srsran`. For info on these config files, see [here](config_ref.md#manual-config-ref)
+When installed from packages, example configs for OCUDU can be found in `/usr/share/srsran`. For info on these config files, see [here](config_ref.md#manual-config-ref)
 
 The application can then be run using:
 
@@ -436,10 +436,10 @@ The following steps are required to enable them:
 tar -xf phy_testvectors.tar -C /path_to_your_local_repository/srsRAN_Project
 ```
 
-1. Enable the use of the PHY testvectors by regenerating the CMake build system:
+3. Enable the use of the PHY testvectors by regenerating the CMake build system:
 
 ```bash
 cmake -B build -DUSE_PHY_TESTVECTORS=ON
 ```
 
-1. Rebuild srsRAN Project.
+4. Rebuild OCUDU.
