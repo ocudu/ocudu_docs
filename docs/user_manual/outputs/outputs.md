@@ -2,12 +2,12 @@
 
 ## Console Reference
 
-srsRAN Project can output metrics to command line while running, to enable this, type `t` in the console.
+OCUDU can output metrics to command line while running, to enable this, type `t` in the console.
 
-A sample output showing bi-directional traffic can be seen here:
+A sample output from the gNB/DU showing bi-directional traffic can be seen here:
 
 ```bash
-         |--------------------DL---------------------|-------------------------UL------------------------------
+         |--------------------DL---------------------|-------------------------UL----------------------------------
 pci rnti | cqi  ri  mcs  brate   ok  nok  (%)  dl_bs | pusch  rsrp  ri  mcs  brate   ok  nok  (%)    bsr    ta  phr
   1 4601 |  15   1   28    17M  908    0   0%    44k |  26.7 -21.2   1   28    17M  545    0   0%  39.8k   0us   18
   1 4601 |  15   1   28    18M  966    0   0%      0 |  26.8 -21.3   1   28    17M  547    0   0%      0   0us   18
@@ -60,23 +60,25 @@ Metrics are provided on a per-UE basis. The following metrics are provided:
 
 ## Logs
 
-srsRAN Project provides users with a highly configurable logging mechanism, with per-layer and per-component log levels. Set the log file path and log levels in the gNB config
-file. See the [Configuration Reference](config_ref.md#manual-config-ref) for more details.
+OCUDU provides users with a highly configurable logging mechanism, with per-layer and per-component log levels. Set the log file path and log levels in the gNB config
+file. See the [Configuration Reference](../config_reference/config_ref.md) for more details.
 
 The format used for all log messages is as follows:
 
-> *Timestamp [Layer] [Level] [TTI] message*
+```bash
+*Timestamp [Layer] [Level] [TTI] message*
+```
 
 Where the fields are:
 
-> * Timestamp in *YYYY-MM-DDTHH:MM:SS.UUUUUU* format at which log message was generated
-> * Layer can be one of *MAC/RLC/PDCP/RRC/SDAP/NGAP/GTPU/RADIO/FAPI/F1U/DU/CU/LIB*. PHY layers are specified as downlink or uplink and with executor number e.g. *DL-PHY1*.
-> * Level can be one of *E/W/I/D* for error, warning, info and debug respectively.
-> * TTI is only shown for PHY or MAC messages and is in the format *SFN.sn* where SFN is System Frame Number and sn is slot number.
+* Timestamp in *YYYY-MM-DDTHH:MM:SS.UUUUUU* format at which log message was generated
+* Layer can be one of *MAC/RLC/PDCP/RRC/SDAP/NGAP/GTPU/RADIO/FAPI/F1U/DU/CU/LIB*. PHY layers are specified as downlink or uplink and with executor number e.g. *DL-PHY1*.
+* Level can be one of *E/W/I/D* for error, warning, info and debug respectively.
+* TTI is only shown for PHY or MAC messages and is in the format *SFN.sn* where SFN is System Frame Number and sn is slot number.
 
 An example log file excerpt can be seen below:
 
-```default
+```bash
 2023-03-15T18:29:25.142200 [MAC     ] [I] [  276.14] UL PDU rnti=0x4601 ue=0 subPDUs: [lcid=1: len=96, SBSR: lcg=0 bs=0, SE_PHR: total_len=3, PAD: len=424]
 2023-03-15T18:29:25.142204 [RLC     ] [I] ue=0 SRB1 UL: RX PDU. pdu_len=96 dc=data p=1 si=full sn=0 so=0
 2023-03-15T18:29:25.142226 [PDCP    ] [I] ue=0 SRB1 UL: RX PDU. type=data pdu_len=94 sn=0 count=0
@@ -109,89 +111,86 @@ An example log file excerpt can be seen below:
 2023-03-15T18:29:25.142263 [NGAP    ] [I] ue=0 Sending InitialUeMessage (ran_ue_id=0)
 ```
 
----
-
-<a id="pcaps"></a>
 
 ## PCAPs
 
-srsRAN Project can output PCAPs at the following layers:
+OCUDU can output PCAPs at the following layers:
 
-> - MAC
-> - RLC
-> - NGAP
-> - N3
-> - E1AP
-> - F1AP
-> - E2AP
+- MAC
+- RLC
+- NGAP
+- N3
+- E1AP
+- F1AP
+- E2AP
 
-To output these PCAPs, they must first be enabled on a per-layer basis in the gNB configuration file. See the [Configuration Reference](config_ref.md#manual-config-ref) for more details.
+To output these PCAPs, they must first be enabled on a per-layer basis in the gNB configuration file. See the [Configuration Reference](../config_reference/config_ref.md) for more details.
 
 ### MAC
 
 To analyze a MAC-layer PCAP using Wireshark, you will need to configure User DLT 149 for UDP and enable the mac_nr_udp protocol:
 
-> 1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=149 and Payload protocol=udp.
-> 2. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=157 and Payload protocol=mac-nr-framed.
-> 3. Go to Analyze->Enabled Protocols->MAC-NR and enable mac_nr_udp
-> 4. Go to Edit->Preferences->Protocols->MAC-NR: Enable both checkboxes “Attempt to…”; Set LCID->DRB mapping to “From configuration protocol”.
-![image](user_manuals/source/.imgs/mac_pcap.png)
+1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=149 and Payload protocol=udp.
+2. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=157 and Payload protocol=mac-nr-framed.
+3. Go to Analyze->Enabled Protocols->MAC-NR and enable mac_nr_udp
+4. Go to Edit->Preferences->Protocols->MAC-NR: Enable both checkboxes “Attempt to…”; Set LCID->DRB mapping to “From configuration protocol”.
+![image](assets/mac_pcap.png)
 
 ### RLC
 
-#### NOTE
+:::info
 To correctly view the RLC PCAPs you will need Wireshark v4.3.x or later.
+:::
 
 To analyze a RLC-layer PCAP using Wireshark, you will need to configure User DLT 149 for UDP and enable the rlc_nr_udp protocol:
 
-> 1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=149 and Payload protocol=udp.
-> 2. Go to Analyze->Enabled Protocols->RLC-NR and enable rlc_nr_udp
-> 3. Go to Edit->Preferences->Protocols->RLC-NR and configure according to your needs.
-![image](user_manuals/source/.imgs/rlc_pcap.png)
+1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=149 and Payload protocol=udp.
+2. Go to Analyze->Enabled Protocols->RLC-NR and enable rlc_nr_udp
+3. Go to Edit->Preferences->Protocols->RLC-NR and configure according to your needs.
+![image](assets/rlc_pcap.png)
 
 ### NGAP
 
 To analyze an NGAP-layer PCAP using Wireshark, you will need to configure User DLT 152 for NGAP and enable detection and decoding 5G-EA0 ciphered messages:
 
-> 1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=152 and Payload protocol=ngap.
-> 2. Go to Edit->Preferences->Protocols->NAS-5GS and enable “Try to detect and decode 5G-EA0 ciphered messages”.
-![image](user_manuals/source/.imgs/ngap_pcap.png)
+1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=152 and Payload protocol=ngap.
+2. Go to Edit->Preferences->Protocols->NAS-5GS and enable “Try to detect and decode 5G-EA0 ciphered messages”.
+![image](assets/ngap_pcap.png)
 
 ### N3
 
 To analyze a N3 PCAP using Wireshark, you will need to configure User DLT 156 for GTP:
 
-> 1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=156 and Payload Protocol=gtp.
-![image](user_manuals/source/.imgs/gtpu_pcap.png)
+1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=156 and Payload Protocol=gtp.
+![image](assets/gtpu_pcap.png)
 
 ### E1AP
 
 To analyze an E1AP PCAP using Wireshark, you will need to configure User DLT 153 for E1AP:
 
-> 1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=153 and Payload Protocol=e1ap.
-![image](user_manuals/source/.imgs/e1ap_pcap.png)
+1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=153 and Payload Protocol=e1ap.
+![image](assets/e1ap_pcap.png)
 
 ### F1AP
 
 To analyze an F1AP PCAP using Wireshark, you will need to configure User DLT 154 for F1AP:
 
 > 1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=154 and Payload Protocol=f1ap.
-![image](user_manuals/source/.imgs/f1ap_pcap.png)
+![image](assets/f1ap_pcap.png)
 
-<a id="e2ap-pcap"></a>
 
 ### E2AP
 
 To analyze an E2AP PCAP using Wireshark, you will need to configure User DLT 155 for E2AP:
 
-> 1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=155 and Payload Protocol=e2ap.
-![image](user_manuals/source/.imgs/e2ap_pcap.png)
+1. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=155 and Payload Protocol=e2ap.
+![image](assets/e2ap_pcap.png)
 
 ---
 
 ## JSON Metrics
 
-srsRAN Project supports the reporting of the console metrics to JSON data format over websocket. This is used to generate the output seen in the [GrafanaGUI](grafana_gui.md#grafana-gui).
+OCUDU supports the reporting of the console metrics to JSON data format over websocket. This is used to generate the output seen in the [Grafana GUI](../grafana/grafana_gui.md).
 
 The metrics can be received and printed to `stdout` using a Python script.
 
@@ -244,7 +243,7 @@ WS_URL="127.0.0.1:8001" ./metrics_ws_receiver.py
 
 This script will need to be run in parallel with the gNB to successfully print the metrics. The metrics will be written to `stdout`.
 
-You can download the source-code for the above Python script [`here`](.scripts/metrics_ws_receiver.py).
+You can download the source-code for the above Python script [here](assets/metrics_ws_receiver.py).
 
 The metrics are generated on a layer basis, and each layer can be enabled through the configuration file.
 
@@ -264,18 +263,16 @@ metrics:
     enable_ru: true          # false to disable
 ```
 
-<a id="mac-metrics"></a>
-
 ### MAC metrics
 
 The MAC metrics are encapsulated in the DU metric object, which contains the following keys:
 
-> - `du`: Includes the DU high metrics under the `du_high` key, which contains the `mac` metrics, which in turn contains `dl` metrics, which is a list of cells with specific MAC dowlink metrics. Each entry in the `dl` list corresponds to a cell configured in the DU.
-> - `timestamp`: Date and time at which the metrics were generated.
+- `du`: Includes the DU high metrics under the `du_high` key, which contains the `mac` metrics, which in turn contains `dl` metrics, which is a list of cells with specific MAC dowlink metrics. Each entry in the `dl` list corresponds to a cell configured in the DU.
+- `timestamp`: Date and time at which the metrics were generated.
 
 and is structured as shown below.
 
-```default
+```json
 {
   "du": {
     "du_high": {
@@ -304,15 +301,15 @@ The table below describes the MAC metrics reported in the DU metrics JSON output
 | `cpu_usage_percent`                | Average CPU usage percentage of the MAC handling slot indications.                |
 | `min_latency_us`, `max_latency_us` | Minimum/Maximum latency of the MAC at handling slot indications, in microseconds. |
 
-<a id="scheduler-metrics"></a>
 
 ### Scheduler metrics
 
 The scheduler metrics object contains 2 keys:
 
-> - `cells`: List of cell metrics objects, one per cell configured in the DU; this list is accessed through the key `cells`, which is structured similarly as shown below:
-> - `timestamp`: Date and time at which the metrics were generated.
-```default
+- `cells`: List of cell metrics objects, one per cell configured in the DU; this list is accessed through the key `cells`, which is structured similarly as shown below:
+- `timestamp`: Date and time at which the metrics were generated.
+
+```json
 {
   "cells": [   # List of cells, one metric object per cell.
     {
@@ -343,11 +340,10 @@ The scheduler metrics object contains 2 keys:
 
 Each element of the `cells` list contains the metrics of the cell, which can be accessed through the following keys:
 
-> - `cell_metrics`: reports the cell metrics for a given cell; refer to [Scheduler cell metrics](#scheduler-cell-metrics) for details.
-> - `event_list`: list of events reported in this cell metric report. Refer to [Cell events](#cell-events) for details.
-> - `ue_list`: reports the list of UEs connected to this cell; each UE entry contains the UE metrics described in [Scheduler UE metrics](#scheduler-ue-metrics).
+- `cell_metrics`: reports the cell metrics for a given cell; refer to [Scheduler cell metrics](#scheduler-cell-metrics) for details.
+- `event_list`: list of events reported in this cell metric report. Refer to [Cell events](#cell-events) for details.
+- `ue_list`: reports the list of UEs connected to this cell; each UE entry contains the UE metrics described in [Scheduler UE metrics](#scheduler-ue-metrics).
 
-<a id="scheduler-cell-metrics"></a>
 
 ### Scheduler cell metrics
 
@@ -367,7 +363,6 @@ Each element of the `cells` list contains the metrics of the cell, which can be 
 | `pdsch_prbs_used_per_tdd_slot_idx` | Sum of the number of RBs per slot used for PDSCH grants. Each entry in the array corresponds to a TDD slot index.                                                                                                                             |
 | `ue_list`                          | List of UE metrics reported in this cell metric report. Refer to [Scheduler UE metrics](#scheduler-ue-metrics) for details.                                                                                                                   |
 
-<a id="cell-events"></a>
 
 ### Cell events
 
@@ -377,7 +372,6 @@ Each element of the `cells` list contains the metrics of the cell, which can be 
 | `rnti`       | RNTI of the UE for which the event occured.                                                              |
 | `slot`       | Slot at which the creation/reconfiguration/removal procedure was completed in the scheduler.             |
 
-<a id="scheduler-ue-metrics"></a>
 
 ### Scheduler UE metrics
 
@@ -420,7 +414,6 @@ Each element of the `cells` list contains the metrics of the cell, which can be 
 | `avg_pucch_harq_delay`, `max_pucch_harq_delay`   | Average/Maximum PUCCH HARQ delay in ms: it measures the time between the slot when the PUCCH is received and the slot when the UCI carrying HARQ-ACK bits for that PUCCH decoding is completed. |
 | `avg_sr_to_pusch_delay`, `max_sr_to_pusch_delay` | Average/Maximum SR to PUSCH delay in ms: it measures the time between the slot when the SR is received and the slot when the first PUSCH (following the SR) is allocated for this UE.           |
 
-<a id="ofh-metrics"></a>
 
 ### OFH metrics
 
@@ -669,18 +662,17 @@ The Transmitter statistics for Downlink is described in the following table:
 | `late_up_dl_messages`                                   | Number of late User-Plane downlink messages, i.e., messages that were not transmitted.    |
 | `late_cp_ul_messages`                                   | Number of late Control-Plane uplink messages, i.e., messages that were not transmitted.   |
 
-<a id="ngap-metrics"></a>
 
 ### NGAP metrics
 
 The NGAP metrics are encapsulated in the CU-CP metric object, which contains the following keys:
 
-> - `cu-cp`: Includes the CU-CP ID under the `id` key, NGAP metrics under the `ngaps` key, and RRC metrics under the `rrcs` key.
-> - `timestamp`: Date and time at which the metrics were generated.
+- `cu-cp`: Includes the CU-CP ID under the `id` key, NGAP metrics under the `ngaps` key, and RRC metrics under the `rrcs` key.
+- `timestamp`: Date and time at which the metrics were generated.
 
 and is structured as shown below.
 
-```default
+```json
 {
   "cu-cp": {
     "id": "srs-cu-cp",
@@ -705,7 +697,7 @@ and is structured as shown below.
 
 The NGAP metrics are structured as shown below.
 
-```default
+```json
 {
   "ngaps": {
     "ngap": [
@@ -824,18 +816,17 @@ The `ngap` list contains one object per connected AMF, structured as shown below
 | `pdu_session_management` | Contains:<br/>: * number of PDU sessions requested to setup, see TS 128.552 section 5.1.1.5.1<br/>  * number of PDU sessions successfully setup, see TS 128.552 section 5.1.1.5.2<br/>  * number of PDU Sessions failed to setup, see TS 128.552 section 5.1.1.5.3<br/>  * the S-NSSAI associated with the PDU sessions. |
 | `supported_plmns`        | Contains a list of supported PLMNs for the AMF.                                                                                                                                                                                                                                                                          |
 
-<a id="rrc-metrics"></a>
 
 ### RRC metrics
 
 The RRC metrics are encapsulated in the CU-CP metric object, which contains the following keys:
 
-> - `cu-cp`: Includes the CU-CP ID under the `id` key, NGAP metrics under the `ngaps` key, and RRC metrics under the `rrcs` key.
-> - `timestamp`: Date and time at which the metrics were generated.
+- `cu-cp`: Includes the CU-CP ID under the `id` key, NGAP metrics under the `ngaps` key, and RRC metrics under the `rrcs` key.
+- `timestamp`: Date and time at which the metrics were generated.
 
 and is structured as shown below.
 
-```default
+```json
 {
   "cu-cp": {
     "id": "srs-cu-cp",
@@ -860,7 +851,7 @@ and is structured as shown below.
 
 The RRC metrics are structured as shown below.
 
-```default
+```json
 {
   "rrcs": {
     "du": [
