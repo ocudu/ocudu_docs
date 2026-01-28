@@ -2,8 +2,8 @@
 
 * [O-RAN gNB Overview](oran_gnb/index.md)
   * [Introduction](oran_gnb/index.md#introduction)
-  * [Split 7.2x Architecture](oran_gnb/index.md#split-7-2x-architecture)
-  * [srsRAN Project](oran_gnb/index.md#project-name)
+  * [Split 7.2x Architecture](oran_gnb/index.md#split-72x-architecture)
+  * [OCUDU](oran_gnb/index.md#ocudu)
   * [Further Reading](oran_gnb/index.md#further-reading)
 * [O-RAN gNB Components](gnb_components/index.md)
   * [Centralized Unit (CU)](gnb_components/index.md#centralized-unit-cu)

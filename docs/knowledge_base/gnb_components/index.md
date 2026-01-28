@@ -1,6 +1,6 @@
 # O-RAN gNodeB Components
 
-As outlined in the [O-RAN gNB Overview](../oran_gnb/index.md#oran-gnb-overview) the 5G NR gNB introduces a flexible architecture. Splitting the gNB into the CU, DU and RU.
+As outlined in the [O-RAN gNB Overview](../oran_gnb/index.md) the 5G NR gNB introduces a flexible architecture. Splitting the gNB into the CU, DU and RU.
 
 This section of our knowledge base aims to go through these components in further detail. Outlining the main functions of each, their layers and the interfaces between them.
 

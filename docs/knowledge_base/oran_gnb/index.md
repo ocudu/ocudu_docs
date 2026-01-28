@@ -19,8 +19,6 @@ gNB further, into the DU-low, DU-high, CU-CP and CU-UP
 
 The aim of O-RAN is to promote virtualized and disaggregated RANs, with a highly interoperable, multi-vendor approach.
 
-<a id="split"></a>
-
 ## Split 7.2x Architecture
 
 As outlined in the introduction, Release 15 introduces the “Functional Split” to the 5G gNB. This separates the gNB into the CU and DU. A
@@ -75,10 +73,7 @@ and the RU and RU.
 
 ## OCUDU
 
-OCUDU is fully O-RAN compliant. While users will still be able to stand up a monolithic gNodeB on a single machine in minutes, our new gNB also 
-allows users to distribute the RAN functionality across the machines and geography of their choice. All of the elements in the blue shaded area
-above are implemented in OCUDU, along with all of the interfaces. This allows users to easily use third party RICs, PHY solutions and other O-RAN compliant
-hardware and applications with the gNB.
+OCUDU is fully O-RAN compliant. While users will still be able to stand up a monolithic gNodeB on a single machine in minutes, our new gNB also allows users to distribute the RAN functionality across the machines and geography of their choice. All of the elements in the blue shaded area above are implemented in OCUDU, along with all of the interfaces. This allows users to easily use third party RICs, PHY solutions and other O-RAN compliant hardware and applications with the gNB.
 
 ## Further Reading
 

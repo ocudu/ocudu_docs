@@ -1,6 +1,6 @@
 # gNodeB Interfaces
 
-As outlined in the [O-RAN gNB Overview](../oran_gnb/index.md#oran-gnb-overview) the 5G NR gNB introduces a flexible architecture. Splitting the gNB and introducing multiple new interfaces.
+As outlined in the [O-RAN gNB Overview](../oran_gnb/index.md) the 5G NR gNB introduces a flexible architecture. Splitting the gNB and introducing multiple new interfaces.
 
 This section of our knowledge base aims to go through these interfaces in further detail. Outlining the components they connect, the types of messages they carry and their purpose.
 
