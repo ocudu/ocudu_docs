@@ -1,6 +1,7 @@
 # Troubleshooting
 
-For support and help using srsRAN Project, check out the community driven [discussion forum](https://github.com/srsran/srsRAN_Project/discussions).
+For support and help using OCUDU, check out the [issues](https://gitlab.com/ocudu/ocudu/-/issues) section.
+Also the srsRAN Project [discussion forum](https://github.com/srsran/srsRAN_Project/discussions) is a rich source of general information.
 
 ## Performance Tuning
 
@@ -20,7 +21,7 @@ It is also recommended that users running on a laptop keep the PC connected to a
 
 Before running the gNB application, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
 
-> - [srsran_performance](https://github.com/srsran/srsRAN_Project/tree/main/scripts/srsran_performance)
+- [OCUDU performance script](https://gitlab.com/ocudu/ocudu/-/blob/dev/scripts/ocudu_performance?ref_type=heads)
 
 The script does the following:
 
@@ -31,7 +32,7 @@ The script does the following:
 Run the script as follows from the main project folder:
 
 ```bash
-sudo ./scripts/srsran_performance
+sudo ./scripts/ocudu_performance
 ```
 
 ## USRP Configuration
