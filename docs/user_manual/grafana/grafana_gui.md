@@ -66,6 +66,6 @@ UE on the network.
 
 A sample of the UI output can be seen here:
 
-![image](grafana_cots.png)
+![image](../outputs/assets/grafana_cots.png)
 
 The above figure shows a single COTS UE connected to the network, with different traffic bursts of varying bandwidth being generated using iPerf. The cell bandwidth is 20 MHz.
