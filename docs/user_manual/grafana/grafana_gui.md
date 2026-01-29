@@ -28,7 +28,7 @@ the [Docker documentation](https://docs.docker.com/desktop/install/linux-install
 #### NOTE
 We recommend using a Docker Compose V2 or later.
 
-### srsRAN Project
+### OCUDU
 
 To enable the correct reporting of metrics to the Grafana UI, the gNB or DU configuration files needs to be updated to allow the metrics to be output in the correct JSON format and then sent through a udp-socket to the metrics-server,
 where it can be parsed and displayed correctly by the GUI.
@@ -57,7 +57,7 @@ Attaching to grafana
 
 Navigating to [http://localhost:3300/](http://localhost:3300/) in your preferred web browser will allow you to view the UI.
 
-You can then run srsRAN Project as normal. As the UE(s) connect to the network you will begin to see an output for each. These figures and graphics will update automatically during runtime, showing plots for each
+You can then run OCUDU as normal. As the UE(s) connect to the network you will begin to see an output for each. These figures and graphics will update automatically during runtime, showing plots for each
 UE on the network.
 
 ---
