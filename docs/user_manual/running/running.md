@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 # Running
 
 :::info
-This guide outlines how to *manually* run OCUDU applications in a Split 8 deployment with a USRP. For Split 7.2 deployments and/or Kubernetes execution see [here](../../tutorials/source/oranRU/source/index.md#oran-ru-tutorial).
+This guide outlines how to *manually* run OCUDU applications in a Split 8 deployment with a USRP. For Split 7.2 deployments and/or Kubernetes execution see [here](../tutorials/index.md).
 :::
 
 ## Baseline Requirements
@@ -13,7 +13,7 @@ To successfully run an end-to-end network OCUDU applications you will need the f
 
 - A PC with a Linux based OS (Ubuntu 22.04 or later)
 - A USRP device
-- OCUDU (see the [Installation Guide](installation.md#manual-installation-build))
+- OCUDU (see the [Installation Guide](../installation/installation.md)
 - A 3rd-party 5G core (we recommend [Open5GS](https://github.com/open5gs/open5gs))
 - A 3rd-party 5G UE
 
@@ -61,7 +61,7 @@ sudo ./gnb -c gnb_rf_b200_tdd_n78_10mhz.yml
 
 Run the gNB with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
 
 When running, the gNB should generate the following console output:
 
@@ -168,7 +168,7 @@ F1-C: Connection to CU-CP on 127.0.10.1:38471 completed
 Type <h> to view help
 ```
 
-Entering `t` will enable the console trace, see [here](console_ref.md#manual-console-ref) for more details.
+Entering `t` will enable the console trace, see [here](../config_reference/config_ref.md) for more details.
 
 Configuration parameters can also be passed on the command line. To see the list of options, use:
 
@@ -188,7 +188,7 @@ sudo ./odu -c du.yml
 
 Run the DU with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
 
 When running, the DU should generate the following console output:
 
@@ -219,7 +219,7 @@ F1-C: Connection to CU-CP on 127.0.10.1:38471 completed
 Type <h> to view help
 ```
 
-Entering `t` will enable the console trace, see [here](console_ref.md#manual-console-ref) for more details.
+Entering `t` will enable the console trace, see [here](../config_reference/config_ref.md) for more details.
 
 Configuration parameters can also be passed on the command line. To see the list of options, use:
 
@@ -243,7 +243,7 @@ sudo ./ocu -c cu.yml
 
 Run the CU with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
 
 When running, the CU should generate the following console output:
 
@@ -273,7 +273,7 @@ sudo ./ocu -c cu.yml
 
 Run the CU with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
 
 When running, the CU should generate the following console output:
 
@@ -295,4 +295,4 @@ Configuration parameters can also be passed on the command line. To see the list
 
 </Tabs>
 
-For more information on running OCUDU, and configuring for various use-cases see the [full list of tutorials](../../tutorials/source/index.md#tutorials).
+For more information on running OCUDU, and configuring for various use-cases see the [full list of tutorials](../tutorials/index.md).

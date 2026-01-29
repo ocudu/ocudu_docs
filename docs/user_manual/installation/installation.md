@@ -382,7 +382,7 @@ Pay extra attention to the cmake console output. Make sure you read the followin
 
 
 
-The [Running srsRAN](running.md#manual-running) section of the documentation further discusses how to configure and run the gNB application.
+The [Running OCUDU](../running/running.md) section of the documentation further discusses how to configure and run the gNB application.
 
 ---
 
@@ -413,7 +413,7 @@ yay -Sy srsran-project-git
 
 This will install the latest version of OCUDU from git.
 
-When installed from packages, example configs for OCUDU can be found in `/usr/share/srsran`. For info on these config files, see [here](config_ref.md#manual-config-ref)
+When installed from packages, example configs for OCUDU can be found in `/usr/share/srsran`. For info on these config files, see [here](../config_reference/config_ref.md)
 
 The application can then be run using:
 
