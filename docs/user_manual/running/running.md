@@ -78,7 +78,7 @@ Cell pci=1, bw=10 MHz, dl_arfcn=632628 (n78), dl_freq=3489.42 MHz, dl_ssb_arfcn=
 Type <t> to view trace
 ```
 
-Entering `t` will enable the console trace, see [here](console_ref.md#manual-console-ref) for more details.
+Entering `t` will enable the console trace, see [here](../outputs/outputs.md) for more details.
 
 Configuration parameters can also be passed on the command line. To see the list of options, use:
 
@@ -98,7 +98,7 @@ sudo ./gnb -c gnb_rf_b200_tdd_n78_10mhz.yml
 
 Run the gNB with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
 
 When running, the gNB should generate the following console output:
 
@@ -115,7 +115,7 @@ Cell pci=1, bw=10 MHz, dl_arfcn=632628 (n78), dl_freq=3489.42 MHz, dl_ssb_arfcn=
 Type <t> to view trace
 ```
 
-Entering `t` will enable the console trace, see [here](console_ref.md#manual-console-ref) for more details.
+Entering `t` will enable the console trace, see [here](../outputs/outputs.md) for more details.
 
 Configuration parameters can also be passed on the command line. To see the list of options, use:
 
@@ -137,7 +137,7 @@ sudo ./odu -c du.yml
 
 Run the DU with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](config_ref.md#manual-config-ref).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
 
 When running, the DU should generate the following console output:
 
