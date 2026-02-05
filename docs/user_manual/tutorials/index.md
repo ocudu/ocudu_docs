@@ -1,3 +1,7 @@
+import TOCInline from '@theme/TOCInline';
+
 # Tutorials
 
-Add ToC
+tdb
+
+<TOCInline toc={toc} />
