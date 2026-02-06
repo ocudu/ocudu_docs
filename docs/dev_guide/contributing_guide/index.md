@@ -201,6 +201,15 @@ Coding conventions and standards are explained in the [official developer docs](
       or explicitly request another OWNER do that for them.
     - If the owner of a MR is _not_ listed in `OWNERS`, any core maintainer may merge the MR.
 
+### GitLab CI
+
+All merge requests must pass CI/CD pipeline checks before they can be merged into OCUDU. The pipeline automatically runs tests, builds, and validation checks to ensure code quality.
+
+After forking the repository, you need to enable CI/CD runners:
+
+1. Go to your fork's **Settings → CI/CD → Runners**
+2. Under the **Instance** tab, enable instance runners (free GitLab Shared Runners)
+3. If you encounter issues enabling runners or see a banner stating `Identity verification is required in order to run CI jobs`, follow the [account verification instructions](https://docs.gitlab.com/ci/debugging/#error-identity-verification-is-required-in-order-to-run-ci-jobs)
 
 ### Sign Your Commits
 
