@@ -35,9 +35,6 @@ include:
       ocudu_path: $[[ inputs.ocudu_path ]]
       ocudu_ref: $[[ inputs.ocudu_ref ]]
 
-variables:
-  OCUDU_REGISTRY_URI: ${CI_TEMPLATE_REGISTRY_HOST}/$[[ inputs.ocudu_path ]]
-
 stages:
   - ci
   - test
@@ -49,7 +46,7 @@ headers:
 
 get_ocudu_project_id:
   stage: .pre
-  image: alpine:latest
+  image: alpine:3
   before_script:
     - apk add --no-cache curl jq
   rules:
