@@ -1,0 +1,65 @@
+cu_cp:
+  amf:
+    addr: 127.0.1.100                                           # The address or hostname of the AMF.
+    bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
+    supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
+      - tac: 7                        
+        plmn_list:
+          - plmn: "00101"
+            tai_slice_support_list:
+              - sst: 1    
+
+ru_ofh:
+  t1a_max_cp_dl: 350
+  t1a_min_cp_dl: 200
+  t1a_max_cp_ul: 350
+  t1a_min_cp_ul: 200
+  t1a_max_up: 300
+  t1a_min_up: 0
+  ta4_max: 500
+  ta4_min: 0
+  is_prach_cp_enabled: true
+  ignore_ecpri_payload_size: false
+  ignore_ecpri_seq_id: true
+  compr_method_ul: bfp
+  compr_bitwidth_ul: 9
+  compr_method_dl: bfp
+  compr_bitwidth_dl: 9
+  compr_method_prach: bfp
+  compr_bitwidth_prach: 9
+  enable_ul_static_compr_hdr: true
+  enable_dl_static_compr_hdr: true
+  iq_scaling: 5.0
+  cells:
+  - network_interface: enp1s0f1
+    ru_mac_addr: e8:c7:4f:25:7f:xx
+    du_mac_addr: 80:61:5f:0d:df:xx
+    prach_port_id: [0]
+    dl_port_id: [0, 1]
+    ul_port_id: [0]
+
+cell_cfg:
+  dl_arfcn: 649980
+  band: 78
+  channel_bandwidth_MHz: 100
+  common_scs: 30
+  plmn: "00101"
+  tac: 7
+  pci: 1
+  nof_antennas_dl: 2
+  nof_antennas_ul: 1
+  prach:
+    prach_config_index: 159
+    prach_root_sequence_index: 1
+    zero_correlation_zone: 0
+    prach_frequency_start: 2
+
+log:
+  filename: /tmp/gnb.log
+  all_level: info
+
+pcap:
+  mac_enable: false
+  mac_filename: /tmp/gnb_mac.pcap
+  ngap_enable: false
+  ngap_filename: /tmp/gnb_ngap.pcap
