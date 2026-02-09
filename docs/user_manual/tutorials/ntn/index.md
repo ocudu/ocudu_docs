@@ -21,7 +21,7 @@ For more information, you can read the the following documents:
 Our NTN implementation supports a comprehensive range of NTN scenarios, including GEO, MEO, and LEO.
 However, MEO and LEO scenarios require advanced NTN channel emulators capable of simulating variable link delays and Doppler frequency shifts.
 
-In this tutorial, we will focus on the GEO scenario, where the NTN link can be simplified to a constant delay between the gNB and UE. This approach is sufficient to demonstrate the key NTN features for the srsRAN-Project gNB.
+In this tutorial, we will focus on the GEO scenario, where the NTN link can be simplified to a constant delay between the gNB and UE.
 We have implemented a basic GEO NTN channel emulator using GNU Radio, where signal samples are transmitted via ZMQ-based virtual RF devices between all components (gNB, channel emulator, and UE).
 
 The following diagram presents the setup used in this application note:
@@ -35,7 +35,7 @@ Since we are using a very simple NTN Channel Emulator, the tutorial has the foll
 - **ZeroMQ-based Setup Only:** the NTN Channel Emulator is implemented in GNU Radio using ZMQ sockets to transfer signal samples. Running the setup over-the-air would require a real RF NTN Channel Emulator.
 - **GEO NTN Scenario Only:** the current NTN Channel Emulator only introduces a fixed delay between the gNB and UE. Implementing an LEO scenario would require an NTN Channel Emulator that simulates both delay and Doppler frequency.
 
-Additionally, the current srsRAN-Project gNB implementation has the following limitations:
+Additionally, the current OCUDU gNB implementation has the following limitations:
 
 - **Satellite-based gNB Placement:** The tutorial only covers scenarios where the gNB is located on the satellite, meaning there is no feeder link.
 - **Disabled HARQ Retransmissions:** HARQ retransmissions are currently disabled. Note that this is a valid option as specified in NTN standards.
@@ -65,7 +65,7 @@ For further details, please refer to the [Amarisoft website](https://www.amariso
 For this example, we are using Open5GS as the 5G Core.
 
 Open5GS is a C-language Open Source implementation for 5G Core and EPC. The following links will provide you
-with the information needed to download and set-up Open5GS so that it is ready to use with srsRAN:
+with the information needed to download and set-up Open5GS so that it is ready to use with OCUDU:
 
 - [GitHub](https://github.com/open5gs/open5gs)
 - [Quickstart Guide](https://open5gs.org/open5gs/docs/guide/01-quickstart/)
@@ -88,22 +88,22 @@ However, due to the relatively slow movement of these satellites, the Doppler Fr
 
 ### ZeroMQ
 
-First thing is to install ZeroMQ and build srsRAN. On Ubuntu, ZeroMQ development libraries can be installed
+First thing is to install ZeroMQ and build OCUDU. On Ubuntu, ZeroMQ development libraries can be installed
 with:
 
 ```bash
 sudo apt-get install libzmq3-dev
 ```
 
-### srsRAN Project
+### OCUDU
 
-Then, you need to compile srsRAN Project (assuming you have already installed all the required dependencies).
+Then, you need to compile OCUDU (assuming you have already installed all the required dependencies).
 Note that ZeroMQ is initially deactivated, and activation occurs during the execution of the `cmake` command, with the inclusion of the flags `-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON`.
-Speficially, the following commands can be used to download and build srsRAN Project from source:
+Speficially, the following commands can be used to download and build OCUDU from source:
 
 ```default
-git clone https://github.com/srsran/srsRAN_Project.git
-cd srsRAN_Project
+git clone https://gitlab.com/ocudu/ocudu.git
+cd ocudu
 mkdir build
 cd build
 cmake ../ -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON
@@ -120,8 +120,9 @@ Pay extra attention to the cmake console output. Make sure you read the followin
 -- Found libZEROMQ: /usr/local/include, /usr/local/lib/libzmq.so
 ...
 ```
-
-Note, if you have already built and installed srsRAN Project prior to installing ZMQ and other dependencies you will have to re-build both to ensure the ZMQ drivers have been recognized correctly.
+:::info
+Note, if you have already built and installed OCUDU prior to installing ZMQ and other dependencies you will have to re-build both to ensure the ZMQ drivers have been recognized correctly.
+:::
 
 ### Amarisoft UE
 
@@ -132,19 +133,19 @@ This tutorial uses version 2023-12-15 of Amarisoft UE, but it can be any version
 ### ZeroMQ driver for Amarisoft UE
 
 :::info
-These steps should only be completed **after** compiling OCUDU as mentioned above, as they require the build files of srsRAN Project and Amarisoft UHD RF frontend driver.
+These steps should only be completed **after** compiling OCUDU as mentioned above, as they require the build files of OCUDU and Amarisoft UHD RF frontend driver.
 :::
 
-Interfacing the Amarisoft UE with OCUDU requires a custom TRX driver implemented by SRS, which can be found in srsRAN Project source files in `ocudu/utils/trx_srsran`.
+Interfacing the Amarisoft UE with OCUDU requires a custom TRX driver implemented by SRS, which can be found in OCUDU source files in `ocudu/utils/trx_srsran`.
 
 The Amarisoft UE release folder, `amarisoft.2023-12-15.tar.gz`, should contain a file called `trx_uhd-linux-2023-12-15.tar.gz`. The release folder and the sub-file in question should be uncompressed before proceeding.
 
-First, the driver needs to be compiled, do this by running the following commands from `srsRAN_Project/build` :
+First, the driver needs to be compiled, do this by running the following commands from `ocudu/build` :
 
 ```bash
 cmake ../ -DENABLE_EXPORT=TRUE -DENABLE_ZEROMQ=TRUE -DENABLE_TRX_DRIVER=TRUE -DTRX_DRIVER_DIR=<PATH TO trx_uhd-linux-2023-12-15>
-make trx_srsran_test
-ctest -R trx_srsran_test
+make trx_ocudu_test
+ctest -R trx_ocudu_test
 ```
 
 Make sure CMake finds the file `trx_driver.h` in the specified folder. CMake should print the following:
@@ -156,7 +157,7 @@ Make sure CMake finds the file `trx_driver.h` in the specified folder. CMake sho
 A symbolic link must be done for the UE application to load the driver. From the Amarisoft UE build folder run the following command:
 
 ```bash
-ln -s srsRAN_Project/build/utils/trx_srsran/libtrx_srsran.so trx_srsran.so
+ln -s ocudu/build/utils/trx_ocudu/libtrx_ocudu.so trx_ocudu.so
 ```
 
 ### GNU-Radio Companion
@@ -173,19 +174,19 @@ sudo apt-get install gnuradio
 
 The following config files are prepared for this tutorial:
 
-> * [`gNB config`](.config/gnb_zmq.yml)
-> * [`gNB NTN config`](.config/geo_ntn.yml)
-> * [`AmarisoftUE config`](.config/ue-nr-ntn-geo.cfg)
-> * [`AmarisoftUE ue-ifup script`](.config/ue-ifup)
+* [gNB config](assets/gnb_zmq.yml)
+* [gNB NTN config](assets/geo_ntn.yml)
+* [AmarisoftUE config](assets/ue-nr-ntn-geo.cfg)
+* [AmarisoftUE ue-ifup script](assets/ue-ifup)
 
-Important details of the modifications made are outlined in the following sections. The description of the remaining config parameters is available in [Configuration Reference](../../../../user_manuals/source/config_ref.md#manual-config-ref).
-Moreover, details of the ZMQ-based setup are explained in the [srsRAN gNB with Amarisoft UE](../../amariUE/source/index.md#amariue-tutorial) application note.
+Important details of the modifications made are outlined in the following sections. The description of the remaining config parameters is available in [Configuration Reference](../../config_reference/config_ref.md).
+Moreover, details of the ZMQ-based setup are explained in the [OCUDU with Amarisoft UE](../../amariUE/source/index.md#amariue-tutorial) application note.
 
 It is recommended you use these files to avoid errors while changing configs manually. Any configuration files not included here do not require modification from the default settings.
 
 ### gNB
 
-When using the ZMQ-based RF driver in the srsRAN-Project gNB, the **ru_sdr** sections of the config file has to be as follows:
+When using the ZMQ-based RF driver in the OCUDU gNB, the **ru_sdr** sections of the config file has to be as follows:
 
 ```default
 ru_sdr:
@@ -264,7 +265,7 @@ cell_cfg:
       ta_target: 0                               # Sets the timing advance target in units of TA.
 ```
 
-Note that [`gnb_zmq.yml`](.config/gnb_zmq.yml) file contains the basic (i.e., generic) gNB config, while the NTN-related parameters are defined in a separate [`geo_ntn.yml`](.config/geo_ntn.yml) file.
+Note that [gnb_zmq.yml](assets/gnb_zmq.yml) file contains the basic (i.e., generic) gNB config, while the NTN-related parameters are defined in a separate [geo_ntn.yml](assets/geo_ntn.yml) file.
 
 ### AmarisoftUE
 
@@ -272,8 +273,8 @@ When using the ZMQ-based RF driver in the AmarisoftUE, the **rf_driver** section
 
 ```default
 rf_driver: {
-    /* srsRAN-Project zmq RF device */
-    name: "srsran",
+    /* OCUDU zmq RF device */
+    name: "ocudu",
     log_level: "info",
     tx_port0:  "tcp://*:2101",
     rx_port0:  "tcp://localhost:2100",
@@ -316,20 +317,19 @@ cell_groups: [{
 
 The simple GEO NTN Channel Emulator can be downloaded here:
 
-> * [`GNU-Radio Flow-graph`](.config/geo_ntn_channel_emulator.grc)
-> * [`Python script`](.config/geo_ntn_channel_emulator.py)
+* [`GNU-Radio Flow-graph`](assets/geo_ntn_channel_emulator.grc)
+* [`Python script`](assets/geo_ntn_channel_emulator.py)
 
 The following figure shows the GNU-Radio flowgraph of the GEO NTN Channel Emulator:
 
-![image](tutorials/source/ntn/source/.imgs/geo_ntn_channel_emulator_grc.png)
+![image](assets/geo_ntn_channel_emulator_grc.png)
 
 The upper graph is responsible for handling Downlink signal samples, while the lower graph for Uplink signal samples.
 
 The emulator work as follows:
-
-> * the DL (UL) signal is received from gNB (UE) over ZMQ socket
-> * the signal delayed by the duration of the NTN link delay
-> * the signal is transmitted to the UE (gNB) over ZMQ socket
+* the DL (UL) signal is received from gNB (UE) over ZMQ socket
+* the signal delayed by the duration of the NTN link delay
+* the signal is transmitted to the UE (gNB) over ZMQ socket
 
 Please note that we provide a simple GEO NTN Channel Emulator that introduces only the link delay between the gNB and UE, which is sufficient to demonstrate the NTN operation of our gNB.
 
@@ -341,21 +341,21 @@ Other channel effects, such as Doppler frequency shift, delay variation, and pat
 
 The following order should be used when running the network:
 
-> 1. Open5gs
-> 2. GEO NTN Channel Emulator
-> 3. gNB
-> 4. AmarisoftUE
+1. Open5gs
+2. GEO NTN Channel Emulator
+3. gNB
+4. AmarisoftUE
 
 ### Open5GS Core
 
-srsRAN Project provides a dockerized version of the Open5GS. It is a convenient and quick way to start the core network. You can run it as follows:
+OCUDU provides a dockerized version of the Open5GS. It is a convenient and quick way to start the core network. You can run it as follows:
 
 ```bash
-cd ./srsRAN_Project/docker
+cd ./ocudu/docker
 docker compose up --build 5gc
 ```
 
-Note that we have already configured Open5GS to operate correctly with srsRAN Project. Moreover, the UE database is populated with the credentials used by the AmarisoftUE.
+Note that we have already configured Open5GS to operate correctly with OCUDU. Moreover, the UE database is populated with the credentials used by the AmarisoftUE.
 
 ### GEO NTN Channel Emulator
 
@@ -409,7 +409,7 @@ To start AmarisoftUE run:
 sudo ./lteue ./ue-nr-ntn-geo.cfg
 ```
 
-Note that the [`if-up script`](.config/ue-ifup) should be located in the same directory, so the simulator can create a network namespace for the UE. Also, verify that the script is executable by running::
+Note that the [if-up script](assets/ue-ifup) should be located in the same directory, so the simulator can create a network namespace for the UE. Also, verify that the script is executable by running::
 
 ```default
 chmod +x ./ue-ifup
@@ -613,17 +613,19 @@ Specifically, if the NTN channel emulator runs on the same PC as gNB, the follow
      device_driver: zmq
      device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001
    ```
+
 2. IP addresses in GNU-Radio channel emulator have to be updated as follows:
 
 | Description   | Old value            | New value          |
 |---------------|----------------------|--------------------|
 | Tx DL to UE   | tcp://127.0.0.1:2100 | tcp://0.0.0.0:2100 |
 | Rx UL from UE | tcp://127.0.0.1:2101 | tcp://<UE_IP>:2101 |
-1. The `rf_driver` section in the AmarisoftUE config file has to be changed as follows:
+
+3. The `rf_driver` section in the AmarisoftUE config file has to be changed as follows:
    ```default
    rf_driver: {
-       /* srsRAN-Project zmq RF device */
-       name: "srsran",
+       /* OCUDU zmq RF device */
+       name: "ocudu",
        log_level: "info",
        tx_port0:  "tcp://*:2101",
        rx_port0:  "tcp://<GNB_IP>:2100",
