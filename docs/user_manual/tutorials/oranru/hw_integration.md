@@ -1,8 +1,6 @@
-<a id="hw-integration"></a>
-
-These documents aim to show the specific steps needed to configure RUs and Switches for use with the srsRAN CU/DU in
+These documents aim to show the specific steps needed to configure RUs and Switches for use with OCUDU in
 an O-RAN Split 7.2 compliant network. For information on the overall network configuration and architecture, see
-the [O-RAN 7.2 Guide](index.md#oran-ru-tutorial).
+the [O-RAN 7.2 Guide](index.md).
 
 The following guides contain sample configuration and the necessary supplementary files where relevant. These documents
 are intended to be used as guides, users should always refer back to the manufacturer’s documentation for specific
