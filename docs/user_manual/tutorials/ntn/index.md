@@ -619,7 +619,7 @@ Specifically, if the NTN channel emulator runs on the same PC as gNB, the follow
 | Description   | Old value            | New value          |
 |---------------|----------------------|--------------------|
 | Tx DL to UE   | tcp://127.0.0.1:2100 | tcp://0.0.0.0:2100 |
-| Rx UL from UE | tcp://127.0.0.1:2101 | tcp://<UE_IP>:2101 |
+| Rx UL from UE | tcp://127.0.0.1:2101 | tcp://$UE_IP:2101 |
 
 3. The `rf_driver` section in the AmarisoftUE config file has to be changed as follows:
    ```default
@@ -628,6 +628,6 @@ Specifically, if the NTN channel emulator runs on the same PC as gNB, the follow
        name: "ocudu",
        log_level: "info",
        tx_port0:  "tcp://*:2101",
-       rx_port0:  "tcp://<GNB_IP>:2100",
+       rx_port0:  "tcp://$GNB_IP:2100",
    },
    ```
