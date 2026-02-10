@@ -61,7 +61,7 @@ sudo ./gnb -c gnb_rf_b200_tdd_n78_10mhz.yml
 
 Run the gNB with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_reference.md).
 
 When running, the gNB should generate the following console output:
 
@@ -98,7 +98,7 @@ sudo ./gnb -c gnb_rf_b200_tdd_n78_10mhz.yml
 
 Run the gNB with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_reference.md).
 
 When running, the gNB should generate the following console output:
 
@@ -137,7 +137,7 @@ sudo ./odu -c du.yml
 
 Run the DU with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_reference.md).
 
 When running, the DU should generate the following console output:
 
@@ -168,7 +168,7 @@ F1-C: Connection to CU-CP on 127.0.10.1:38471 completed
 Type <h> to view help
 ```
 
-Entering `t` will enable the console trace, see [here](../config_reference/config_ref.md) for more details.
+Entering `t` will enable the console trace, see [here](../config_reference/config_reference.md) for more details.
 
 Configuration parameters can also be passed on the command line. To see the list of options, use:
 
@@ -188,7 +188,7 @@ sudo ./odu -c du.yml
 
 Run the DU with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_reference.md).
 
 When running, the DU should generate the following console output:
 
@@ -219,7 +219,7 @@ F1-C: Connection to CU-CP on 127.0.10.1:38471 completed
 Type <h> to view help
 ```
 
-Entering `t` will enable the console trace, see [here](../config_reference/config_ref.md) for more details.
+Entering `t` will enable the console trace, see [here](../config_reference/config_reference.md) for more details.
 
 Configuration parameters can also be passed on the command line. To see the list of options, use:
 
@@ -243,7 +243,7 @@ sudo ./ocu -c cu.yml
 
 Run the CU with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_reference.md).
 
 When running, the CU should generate the following console output:
 
@@ -273,7 +273,7 @@ sudo ./ocu -c cu.yml
 
 Run the CU with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_ref.md).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_reference.md).
 
 When running, the CU should generate the following console output:
 

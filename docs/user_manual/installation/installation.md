@@ -413,7 +413,7 @@ yay -Sy srsran-project-git
 
 This will install the latest version of OCUDU from git.
 
-When installed from packages, example configs for OCUDU can be found in `/usr/share/srsran`. For info on these config files, see [here](../config_reference/config_ref.md)
+When installed from packages, example configs for OCUDU can be found in `/usr/share/srsran`. For info on these config files, see [here](../config_reference/config_reference.md)
 
 The application can then be run using:
 
