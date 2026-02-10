@@ -1,3 +1,5 @@
+# Hardware Integration
+
 These documents aim to show the specific steps needed to configure RUs and Switches for use with OCUDU in
 an O-RAN Split 7.2 compliant network. For information on the overall network configuration and architecture, see
 the [O-RAN 7.2 Guide](index.md).
@@ -9,7 +11,7 @@ Questions relating to hardware specific issues should be directed to the manufac
 
 ---
 
-# RUs
+## Radio Units
 
 * [Foxconn RPQN-(48/78)00(E/I)](rus/foxconn.md)
 * [Picocom](rus/picocom.md)
@@ -17,6 +19,6 @@ Questions relating to hardware specific issues should be directed to the manufac
 * [VVDN](rus/vvdn.md)
 * [Benetel RAN550/RAN650](rus/benetel.md)
 
-# Switches
+## Switches
 
 * [Falcon-RX Switch](switches/falcon.md)
