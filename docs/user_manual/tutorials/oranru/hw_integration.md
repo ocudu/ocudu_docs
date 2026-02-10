@@ -15,7 +15,7 @@ Questions relating to hardware specific issues should be directed to the manufac
 * [Picocom](rus/picocom.md)
 * [LITEON FlexFi](rus/liteon.md)
 * [VVDN](rus/vvdn.md)
-* [Benetel RAN550/RAN650](rus/r550.md)
+* [Benetel RAN550/RAN650](rus/benetel.md)
 
 # Switches
 
