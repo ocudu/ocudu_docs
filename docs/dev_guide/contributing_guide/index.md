@@ -136,6 +136,8 @@ Vetting an idea publicly before going as
 far as writing a proposal is meant to save the potential author time. Many ideas have been proposed;
 it's quite likely there are others in the community who may be working on a similar proposal, or a
 similar proposal may have already been written.
+You can simply post your proposal as a Gitlab issue and start the discussion there.
+We currently don't have an official process in place but that might change as the community grows.
 
 After your proposal has been approved, follow the [developer's guide](https://ocudu.org) to get started.
 
@@ -217,8 +219,10 @@ Licensing is important to open source projects. It provides some assurances that
 the software will continue to be available based under the terms that the
 author(s) desired. We require that contributors sign off on commits submitted to
 our project's repositories. The [Developer Certificate of Origin
-(DCO)](https://probot.github.io/apps/dco/) is a way to certify that you wrote and
-have the right to contribute the code you are submitting to the project.
+(DCO)](https://developercertificate.org/) is a way to certify that you wrote and
+have the right to contribute the code you are submitting to OCUDU.
+See also [here](https://en.wikipedia.org/wiki/Developer_Certificate_of_Origin) for some
+additional reading.
 
 You sign-off by adding the following to your commit messages. Your sign-off must
 match the git user and email associated with the commit.
