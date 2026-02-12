@@ -1,3 +1,5 @@
+# Example config for NTN gNB, with extended RRC timers and SI window length, and satellite ephemeris in ECEF format.
+
 cell_cfg:
   sib:
     t300: 2000                      # Extend the RRC Connection Establishment timer in ms.
