@@ -1,8 +1,13 @@
+# Example config for LiteOn RU in TDD mode, band n78, 100 MHz bandwidth.
+# The main section of intereset is ru_ofh, which contains the configuration of the RU OFH application.
+# Should the config not start as expected, please refer to the documentation for more details on the configuration options:
+# https://docs.ocudu.org/user_manual/config_reference/
+
 cu_cp:
   amf:
-    addr: 127.0.1.100                                           # The address or hostname of the AMF.
-    bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
-    supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
+    addr: 127.0.1.100
+    bind_addr: 127.0.0.1
+    supported_tracking_areas:
       - tac: 7                        
         plmn_list:
           - plmn: "00101"
