@@ -5,6 +5,7 @@
 # forth in the LICENSE file which can be found at the top level of
 # the distribution.
 #
+
 . /usr/lib/tuned/functions
 
 start() {
