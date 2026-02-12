@@ -43,6 +43,8 @@ stages:
 headers:
   stage: ci
   extends: .headers
+  variables:
+    IGNORE_PATH: docs/user_manual
 
 get_ocudu_project_id:
   stage: .pre
