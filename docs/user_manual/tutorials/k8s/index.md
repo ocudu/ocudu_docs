@@ -138,7 +138,7 @@ For performance tuning using TuneD, refer to the [OCUDU Tuning Guide](../tuning/
 
 ### 4. Install DPDK
 
-For DPDK installation instructions, refer to the [DPDK guide](../../dpdk/source/index.md#dpdk-tutorial).
+For DPDK installation instructions, refer to the [DPDK guide](../dpdk/index.md).
 
 ---
 

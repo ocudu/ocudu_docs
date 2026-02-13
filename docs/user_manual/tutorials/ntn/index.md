@@ -179,7 +179,7 @@ The following config files are prepared for this tutorial:
 * [AmarisoftUE config](assets/ue-nr-ntn-geo.cfg)
 * [AmarisoftUE ue-ifup script](assets/ue-ifup)
 
-Important details of the modifications made are outlined in the following sections. The description of the remaining config parameters is available in [Configuration Reference](../../config_reference/config_ref.md).
+Important details of the modifications made are outlined in the following sections. The description of the remaining config parameters is available in [Configuration Reference](../../config_reference/config_reference.md).
 Moreover, details of the ZMQ-based setup are explained in the [OCUDU with Amarisoft UE](../../amariUE/source/index.md#amariue-tutorial) application note.
 
 It is recommended you use these files to avoid errors while changing configs manually. Any configuration files not included here do not require modification from the default settings.
