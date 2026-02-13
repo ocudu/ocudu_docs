@@ -1,17 +1,16 @@
 # OCUDU Documentation
 
 This directory contains the documentation infrastructure for the OCUDU project.
-This also includes automated API documentation generation (Doxygen) and a markdown-based documentation site (Docusaurus). The software architecture documentation as well as the Doxygen content is imported
-from the main OCUDU repository.
+This also includes automated API documentation generation (Doxygen) and a markdown-based documentation site (Docusaurus). The software architecture documentation as well as the Doxygen content is imported from the main OCUDU repository.
 
 ## Structure
 
 ```txt
-docs/
+ocudu_docs/
 ├── .env                     # env file for docker-compose
 ├── docker-compose.yml       # Docker services for documentation
-├── docusaurus/              # Docusaurus site configuration
-├── doxygen/                 # Doxygen project
+├── docusaurus.config.js     # Docusaurus site configuration
+├── docs/                    # Markdown files for documentation
 └── README.md                # This file
 ```
 
@@ -26,12 +25,6 @@ docker compose -f docs/docker-compose.yml up
 ```
 
 **Access:** [http://localhost:3000/ocudu](http://localhost:3000/ocudu)
-
-### Environment Variables
-
-To run the docker-compose, you may need to adjust the variables defined in the .env file.
-
-- `UID`/`GID`: Your user/group IDs for file permissions in Docker
 
 ## Docusaurus
 
