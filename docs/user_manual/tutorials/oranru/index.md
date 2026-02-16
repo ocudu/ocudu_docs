@@ -209,7 +209,7 @@ Network devices using using kernel driver
 
 In the above example, we can see that the VF has been created and is using the `iavf` driver in the line *Adaptive Virtual Function*. Note, this is **only** for the Intel E810 NIC, other NICs may have different drivers.
 
-Next, you will need to bind the VF to the `vfio-pci` driver, you can do this by running the following command. Before running this command, make sure that `vfio-pci` is enabled, see the [DPDK Guide](../../dpdk/source/index.md#dpdk-tutorial) for more information on how to enable it.
+Next, you will need to bind the VF to the `vfio-pci` driver, you can do this by running the following command. Before running this command, make sure that `vfio-pci` is enabled, see the [DPDK Guide](../dpdk/index.md) for more information on how to enable it.
 
 ```bash
 sudo dpdk-devbind.py --bind=vfio-pci 0000:51:01.0
@@ -307,7 +307,7 @@ The following sections will outline two different approaches for connecting to t
 
 ### COTS UE
 
-For full details on configuring and connecting a COTS UE to OCUDU see [this tutorial](../cotsue/index.md).
+For full details on configuring and connecting a COTS UE to OCUDU see [this tutorial](../cots_ue/index.md).
 
 For this setup a OnePlus 9 5G UE was used to connect to the network. The set-up and configuration of the device is the same as in the above tutorial.
 
@@ -315,7 +315,7 @@ For this setup a OnePlus 9 5G UE was used to connect to the network. The set-up 
 
 Additionally, third party UEs, such as AmariUE can be used to connect to the network.
 
-For full details on configuring and connecting AmariUE to srsRAN Project see [this tutorial](../../amariUE/source/index.md#amariue-radios).
+For full details on configuring and connecting AmariUE to srsRAN Project see [this tutorial](../amari_ue/index.md).
 
 #### Sending Traffic
 
@@ -348,6 +348,6 @@ The [Integration Guide](hw_integration.md#hw-integration) aims to show the speci
   * [Picocom](rus/picocom.md)
   * [LITEON FlexFi](rus/liteon.md)
   * [VVDN](rus/vvdn.md)
-  * [Benetel RAN550/RAN650](rus/r550.md)
+  * [Benetel RAN550/RAN650](rus/benetel.md)
 * [Switches](hw_integration.md#switches)
   * [Falcon-RX Switch](switches/falcon.md)
