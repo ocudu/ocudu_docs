@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # O-RAN NearRT-RIC and xApp
 
 ## Overview
