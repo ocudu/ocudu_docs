@@ -177,7 +177,8 @@ The following config files are prepared for this tutorial:
 * [gNB config](assets/gnb_zmq.yml)
 * [gNB NTN config](assets/geo_ntn.yml)
 * [AmarisoftUE config](assets/ue-nr-ntn-geo.cfg)
-* [AmarisoftUE ue-ifup script](assets/ue-ifup)
+
+Furthermore the tutorial requires the `ue-ifup` script that comes with Amarisoft UE and is located in the `config` folder of the UE application.
 
 Important details of the modifications made are outlined in the following sections. The description of the remaining config parameters is available in [Configuration Reference](../../config_reference/config_reference.md).
 Moreover, details of the ZMQ-based setup are explained in the [OCUDU with Amarisoft UE](../amari_ue/index.md) application note.
@@ -409,7 +410,7 @@ To start AmarisoftUE run:
 sudo ./lteue ./ue-nr-ntn-geo.cfg
 ```
 
-Note that the [if-up script](assets/ue-ifup) should be located in the same directory, so the simulator can create a network namespace for the UE. Also, verify that the script is executable by running::
+Note that the `up-ifup` script should be located in the same directory, so the simulator can create a network namespace for the UE. Also, verify that the script is executable by running:
 
 ```default
 chmod +x ./ue-ifup
