@@ -10,6 +10,8 @@ Most of the time, when you find a bug in OCUDU, it should be reported using [Git
 However, if you are reporting a _security vulnerability_, please email a report to [security@ocudu.org](mailto:security@ocudu.org).
 This will give us a chance to try to fix the issue before it is exploited in the wild.
 
+We welcome vulnerability reports and fixes, but do not accept contributions derived from unauthorized access or data exfiltration.
+
 ## Outline
 
 * New Contributor Guide
@@ -245,6 +247,15 @@ repository, you can amend your commit with the sign-off by running:
 ```bash
 git commit --amend -s
 ```
+
+We encourage contributors to use their normal, publicly recognized name in the DCO sign-off to ensure clear attribution, traceability, and long-term accountability of contributions. 
+For example something like `Preferred Firstname Lastname <stable email>`.
+Using a consistent real-world identity helps maintain transparency in the project’s history and simplifies compliance, auditing, and collaboration across a broad community.
+
+That said, we understand that security researchers or contributors in sensitive situations may have legitimate reasons not to disclose their full legal name. In such cases, a consistent and professional pseudonym may be used, provided the contributor can validly certify the DCO and maintain a stable contact email.
+
+Please note that the project maintains the right to reject contributions - especially security-related changes - if the source cannot be reasonably trusted or verified. Please
+also review our requirements for submitting security related fixes [here](https://docs.ocudu.org/dev_guide/contributing_guide/#reporting-a-security-issue).
 
 ## Labels
 
