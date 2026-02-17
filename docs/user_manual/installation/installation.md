@@ -85,13 +85,13 @@ OCUDU can be built with certain features enabled or disabled. This is done durin
 First, clone OCUDU repository:
 
 ```bash
-git clonn https://gitlab.com/ocudu/ocudu.git
+git clone https://gitlab.com/ocudu/ocudu.git
 ```
 
 Then build the code-base:
 
 ```bash
-cd srsRAN_Project
+cd ocudu
 mkdir build
 cd build
 cmake ../
@@ -99,7 +99,7 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
+You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
@@ -108,13 +108,13 @@ sudo make install
 First, clone OCUDU repository:
 
 ```bash
-git clone https://github.com/srsRAN/srsRAN_Project.git
+git clone https://gitlab.com/ocudu/ocudu.git
 ```
 
 Then build the code-base:
 
 ```bash
-cd srsRAN_Project
+cd ocudu
 mkdir build
 cd build
 cmake ../
@@ -122,7 +122,7 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
+You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
@@ -139,13 +139,13 @@ OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration.
 First, clone OCUDU repository:
 
 ```bash
-git clone https://github.com/srsRAN/srsRAN_Project.git
+git clone https://gitlab.com/ocudu/ocudu.git
 ```
 
 Then build the code-base, making sure to pass the correct CMake flag:
 
 ```bash
-cd srsRAN_Project
+cd ocudu
 mkdir build
 cd build
 cmake -DDU_SPLIT_TYPE=SPLIT_7_2  ../
@@ -153,7 +153,7 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
+You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
@@ -166,13 +166,13 @@ OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration.
 First, clone OCUDU repository:
 
 ```bash
-git clone https://github.com/srsRAN/srsRAN_Project.git
+git clone https://gitlab.com/ocudu/ocudu.git
 ```
 
 Then build the code-base, making sure to pass the correct CMake flag:
 
 ```bash
-cd srsRAN_Project
+cd ocudu
 mkdir build
 cd build
 cmake -DDU_SPLIT_TYPE=SPLIT_7_2  ../
@@ -180,7 +180,7 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
+You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
@@ -197,13 +197,13 @@ OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration.
 First, clone OCUDU repository:
 
 ```bash
-git clone https://github.com/srsRAN/srsRAN_Project.git
+git clone https://gitlab.com/ocudu/ocudu.git
 ```
 
 Then build the code-base, making sure to pass the correct CMake flag:
 
 ```bash
-cd srsRAN_Project
+cd ocudu
 mkdir build
 cd build
 cmake -DDU_SPLIT_TYPE=SPLIT_8  ../
@@ -211,7 +211,7 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
+You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
@@ -224,13 +224,13 @@ OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration.
 First, clone OCUDU repository:
 
 ```bash
-git clone https://github.com/srsRAN/srsRAN_Project.git
+git clone https://gitlab.com/ocudu/ocudu.git
 ```
 
 Then build the code-base, making sure to pass the correct CMake flag:
 
 ```bash
-cd srsRAN_Project
+cd ocudu
 mkdir build
 cd build
 cmake -DDU_SPLIT_TYPE=SPLIT_8  ../
@@ -288,8 +288,8 @@ If you have already built and installed OCUDU prior to installing ZMQ and other 
 The following commands can be used to clone and build from source:
 
 ```bash
-git clone https://github.com/srsran/srsRAN_Project.git
-cd srsRAN_Project
+git clone https://gitlab.com/ocudu/ocudu.git
+cd ocudu
 mkdir build
 cd build
 cmake ../ -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON
@@ -300,7 +300,7 @@ make -j`nproc`
 ZeroMQ is disabled by default, this is enabled when running `cmake` by including `-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON`.
 :::
 
-Pay extra attention to the cmake console output. Make sure you read the following line to ensure ZMQ has been correctly detected by srsRAN:
+Pay extra attention to the cmake console output. Make sure you read the following line to ensure ZMQ has been correctly detected by OCUDU:
 
 ```bash
 ...
@@ -352,8 +352,8 @@ If you have already built and installed OCUDU prior to installing ZMQ and other 
 The following commands can be used to clone and build from source:
 
 ```bash
-git clone https://github.com/srsran/srsRAN_Project.git
-cd srsRAN_Project
+git clone https://gitlab.com/ocudu/ocudu.git
+cd ocudu
 mkdir build
 cd build
 cmake ../ -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON
@@ -364,7 +364,7 @@ make -j`nproc`
 ZeroMQ is disabled by default, this is enabled when running `cmake` by including `-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON`.
 :::
 
-Pay extra attention to the cmake console output. Make sure you read the following line to ensure ZMQ has been correctly detected by srsRAN:
+Pay extra attention to the cmake console output. Make sure you read the following line to ensure ZMQ has been correctly detected by OCUDU:
 
 ```bash
 ...
