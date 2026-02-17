@@ -217,6 +217,7 @@ module.exports = {
         ],
       }
     ],
+    'docusaurus-plugin-drawio',
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
