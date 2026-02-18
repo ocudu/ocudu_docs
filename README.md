@@ -21,7 +21,7 @@ ocudu_docs/
 1. Start services
 
 ```bash
-docker compose -f docs/docker-compose.yml up
+docker compose -f docker-compose.yml up
 ```
 
 **Access:** [http://localhost:3000/ocudu](http://localhost:3000/ocudu)
@@ -31,13 +31,12 @@ docker compose -f docs/docker-compose.yml up
 ### Automatically rendering of .md files in the repository
 
 1. It collects all markdown files anywhere in the repository (except excluded paths)
-2. A custom Docusaurus plugin [frontmatter-loader](./docusaurus/plugins/frontmatter-loader.js) automatically adds the required Docusaurus header (frontmatter).
-3. Files appear in the sidebar and are searchable
-4. README.md files become index pages for their directory
+2. Files appear in the sidebar and are searchable
+3. README.md files become index pages for their directory
 
 ### Static Pages
 
-Static HTML reports (like doxygen) are placed in `docusaurus/static/` and served as static files in the corresponding path. F.e. `docusaurus/static/doxygen/index.html` will be accessible via `baseUrl/doxygen/index.html`.
+Static HTML reports (like doxygen) will be accessible via `baseUrl/doxygen/index.html`.
 
 ### More Features
 
