@@ -1,7 +1,6 @@
-import TOCInline from '@theme/TOCInline';
+import DocCardList from '@theme/DocCardList';
+import { useCurrentSidebarCategory } from '@docusaurus/theme-common';
 
 # Tutorials
 
-tdb
-
-<TOCInline toc={toc} />
+<DocCardList items={useCurrentSidebarCategory().items} />
