@@ -19,6 +19,7 @@ We welcome vulnerability reports and fixes, but do not accept contributions deri
   * [Issues](#issues)
   * [Proposing an Idea](#proposing-an-idea)
   * [Merge Requests](#merge-requests)
+  * [Licensing](#licensing)
   * [Labels](#labels)
 
 As you get started, you are in the best position to give us feedback on areas of
@@ -215,7 +216,7 @@ After forking the repository, you need to enable CI/CD runners:
 2. Under the **Instance** tab, enable instance runners (free GitLab Shared Runners)
 3. If you encounter issues enabling runners or see a banner stating `Identity verification is required in order to run CI jobs`, follow the [account verification instructions](https://docs.gitlab.com/ci/debugging/#error-identity-verification-is-required-in-order-to-run-ci-jobs)
 
-### Sign Your Commits
+## Licensing
 
 Licensing is important to open source projects. It provides some assurances that
 the software will continue to be available based under the terms that the
@@ -225,6 +226,35 @@ our project's repositories. The [Developer Certificate of Origin
 have the right to contribute the code you are submitting to OCUDU.
 See also [here](https://en.wikipedia.org/wiki/Developer_Certificate_of_Origin) for some
 additional reading.
+
+Any contribution requiring a patent license beyond what is already required under relevant
+3GPP standards must be disclosed with the contribution. Contributions requiring additional
+license requirements must be approved by the TSC committee or a designated subcommittee
+of the TSC prior to acceptance into any OCUDU codebase.
+
+### SPDX License Identifiers
+
+All new OCUDU project source code files must have an SPDX License Identifier in the header.
+SPDX license identifiers provide a standardized, machine-readable way to declare a file's license,
+making it easy for automated tools to detect, audit, and verify licensing across large codebases. 
+This improves legal clarity, reduces ambiguity, and simplifies compliance for developers, companies,
+and downstream users.
+Reference OCUDU SPDX license identifiers are included below.
+Files incorporated into OCUDU from other existing open source licensed projects will require using
+an appropriate license identifier based on that project's license.
+
+For files not implementing 3GPP specifications the following file header shall be used:
+```default
+// SPDX-License-Identifier: BSD-3-Clause-Open-MPI
+```
+
+For files implementing 3GPP specifications the following file header shall be used:
+```default
+// SPDX-License-Identifier: BSD-3-Clause-Open-MPI
+// Portions of this file may implement 3GPP specifications, which may be subject to additional licensing requirements.
+```
+
+### Sign Your Commits
 
 You sign-off by adding the following to your commit messages. Your sign-off must
 match the git user and email associated with the commit.
