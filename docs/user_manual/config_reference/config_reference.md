@@ -655,6 +655,8 @@ expert_execution:
                                               # number of the accelerator queues.
     lower_phy:
       execution_profile: triple               # Optional TEXT (triple). Sets the lower physical layer executor profile. Supported: [single, dual, triple].
+    ofh:
+      enable_busy_waiting: false              # Optional BOOLEAN (false). Enables or disables the OFH busy waiting.
   main_pool:
     nof_threads: 0                            # Optional UINT (0). Number of threads for processing upper PHY and upper layers.
     task_queue_size: 2048                     # Optional UINT (2048). Main thread pool task queue size.
@@ -1503,6 +1505,8 @@ expert_execution:
                                               # number of the accelerator queues.
     lower_phy:
       execution_profile: triple               # Optional TEXT (triple). Sets the lower physical layer executor profile. Supported: [single, dual, triple].
+    ofh:
+      enable_busy_waiting: false              # Optional BOOLEAN (false). Enables or disables the OFH busy waiting.
   main_pool:
     nof_threads: 0                            # Optional UINT (0). Number of threads for processing upper PHY and upper layers.
     task_queue_size: 2048                     # Optional UINT (2048). Main thread pool task queue size.
