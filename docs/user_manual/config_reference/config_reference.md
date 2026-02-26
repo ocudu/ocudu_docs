@@ -585,9 +585,6 @@ ru_dummy:
   dl_processing_delay: 1                # Optional UINT (1). Sets the downlink processing delay in number of slots.
   time_scaling: 1                       # Optional NONNEGATIVE FLOAT (1). Sets the time scaling factor applied to the slot duration. Must be greater than zero. A value greater than one slows down the RU, while a value between zero and one speeds it up. Supported [0 - inf].
 
-fapi:
-  l2_nof_slots_ahead: 0                 # Optional UINT (0). Sets the number of slots the L2 is running ahead of the L1. Supported: [0 - 5].
-
 hal:
   eal_args:                             # Optional TEXT. EAL configuration parameters used to initialize DPDK.
   bbdev_hwacc:
@@ -1351,9 +1348,6 @@ cell_cfg:
     retx_timer_dl: 0                        # Optional UINT (0). Maximum duration in slots until a DL ReTX is received by the UE, when DRX is configured. Supported: {0,1,2,4,6,8,16,24,33,40,64,80,96,112,128,160,320}
     retx_timer_ul: 0                        # Optional UINT (0). Maximum duration in slots until a grant for UL ReTX is received by the UE, when DRX is configured. Supported: {0,1,2,4,6,8,16,24,33,40,64,80,96,112,128,160,320}
     long_cycle: 0                           # Optional UINT (0). Duration in milliseconds between UE DRX long cycles. The value 0 is used to disable DRX. Supported: {10,20,32,40,60,64,70,80,128,160,256,320,512,640,1024,1280,2048,2560,5120,10240} OR {0}
-
-fapi:
-  l2_nof_slots_ahead: 0                 # Optional UINT (0). Sets the number of slots the L2 is running ahead of the L1. Supported: [0 - 5].
 
 ru_ofh:
 # Many of the following values are optional as they have default values. In practice, all of the following parameters should be defined by the user, as they will need
