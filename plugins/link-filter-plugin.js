@@ -25,6 +25,7 @@ module.exports = function linkFilterPlugin(context, options) {
 
         configureWebpack(config) {
             const loaderPath = path.resolve(__dirname, 'link-filter-loader.js');
+            const versionUrl = context.siteConfig.customFields?.versionUrl || null;
 
             return {
                 module: {
@@ -34,7 +35,13 @@ module.exports = function linkFilterPlugin(context, options) {
                             include: path.resolve(__dirname, '..'),
                             exclude: /node_modules/,
                             enforce: 'pre',
-                            use: [loaderPath],
+                            use: [{
+                                loader: loaderPath,
+                                options: {
+                                    versionUrl: versionUrl,
+                                    docsPath: path.resolve(context.siteDir, './'),
+                                }
+                            }],
                         },
                     ],
                 },

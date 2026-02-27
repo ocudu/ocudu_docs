@@ -59,6 +59,9 @@ module.exports = {
   favicon: 'https://srs.io/wp-content/uploads/ocudu_color.png',
   organizationName: gitlab_namespace,
   projectName: gitlab_project,
+  customFields: {
+    versionUrl: `${ocudu_docs_repo_url}/-/tree/${ocuduDocsCommitSha}`,
+  },
   markdown: {
     mermaid: true,
     hooks: {

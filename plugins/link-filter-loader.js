@@ -1,17 +1,25 @@
+/*
+ *
+ * Copyright 2021-2026 Software Radio Systems Limited
+ *
+ * By using this file, you agree to the terms and conditions set
+ * forth in the LICENSE file which can be found at the top level of
+ * the distribution.
+ *
+ */
+
 const path = require('path');
 
 module.exports = function linkFilterLoader(source) {
     const filePath = this.resourcePath;
+    const options = this.getOptions();
+    const versionUrl = options?.versionUrl;
+    const docsPath = options?.docsPath;
 
     // Filter out links to non-markdown files (keep only links to .md/.mdx files and directories)
     // This regex matches markdown links: [text](path)
     // Note: This preserves HTML anchor tags like <a id="..."></a> which are used for linking within documents
     const filteredSource = source.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, link) => {
-
-        // Custom exception for files without extension
-        if (link === './LICENSE') {
-            return text;
-        }
 
         // Keep external links (http://, https://, mailto:, etc.)
         if (/^[a-z]+:/i.test(link)) {
@@ -34,11 +42,25 @@ module.exports = function linkFilterLoader(source) {
         }
 
         // Keep links to directories (no extension or ends with /)
-        if (!path.extname(link) || link.endsWith('/')) {
+        if ((!path.extname(link) && link !== './LICENSE') || link.endsWith('/')) {
             return match;
         }
 
-        // Remove link to non-markdown file, keep only the text
+        if (versionUrl && docsPath) {
+            // Resolve the absolute path of the linked file
+            const currentDir = path.dirname(filePath);
+            const absoluteTargetPath = path.resolve(currentDir, link);
+
+            // Get relative path from docs root
+            const relativePath = path.relative(docsPath, absoluteTargetPath);
+
+            // Create GitLab blob URL (assuming main branch)
+            const gitlabLink = `${versionUrl}/${relativePath}`;
+
+            console.log(`[link-filter-loader] Converting link: ${link} -> ${gitlabLink} in ${filePath}`);
+            return `[${text}](${gitlabLink})`;
+        }
+
         console.log(`[link-filter-loader] Filtering out link: ${link} in ${filePath}`);
         return text;
     });
