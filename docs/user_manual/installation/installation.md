@@ -10,13 +10,11 @@ The following steps need to be taken in order to download and build OCUDU:
 3. Clone the repository
 4. Build the codebase
 
-
 ---
 
 :::note
 OCUDU requires a Linux-based OS, we recommend Ubuntu (22.04 or later).
 :::
-
 
 ## Build Tools and Dependencies
 
@@ -27,33 +25,32 @@ OCUDU uses CMake and C++17. We recommend the following build tools:
 
 OCUDU has the following necessary dependencies:
 
-- [libfftw](https://www.fftw.org/)
 - [libsctp](https://github.com/sctp/lksctp-tools)
 - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - [mbedTLS](https://www.trustedfirmware.org/projects/mbed-tls/)
-- [googletest](https://github.com/google/googletest/)
+- [A FFT library](#fft-library)
+- Optional requirement: [googletest](https://github.com/google/googletest/)
+  - GoogleTest is only mandatory when building with tests. You can enable test building by using the cmake option -DBUILD_TESTING=On.
 
 You can install the required build tools and dependencies for various distributions as follows:
-
 
 <Tabs>
   <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
 ```bash
-sudo apt-get install cmake make gcc g++ pkg-config libfftw3-dev libmbedtls-dev libsctp-dev libyaml-cpp-dev libgtest-dev
+sudo apt-get install cmake make gcc g++ pkg-config libmbedtls-dev libsctp-dev libyaml-cpp-dev libgtest-dev
 ```
   </TabItem>
   <TabItem value="fedora" label="Fedora">
 ```bash
-sudo yum install cmake make gcc gcc-c++ fftw-devel lksctp-tools-devel yaml-cpp-devel mbedtls-devel gtest-devel
+sudo yum install cmake make gcc gcc-c++ lksctp-tools-devel yaml-cpp-devel mbedtls-devel gtest-devel
 ```
   </TabItem>
   <TabItem value="arch" label="Arch Linux">
 ```bash
-sudo pacman -S cmake make base-devel fftw mbedtls yaml-cpp lksctp-tools gtest
+sudo pacman -S cmake make base-devel mbedtls yaml-cpp lksctp-tools gtest
 ```
   </TabItem>
 </Tabs>
-
 
 It is also recommended users install the following (although they are not required):
 
@@ -61,6 +58,97 @@ It is also recommended users install the following (although they are not requir
 - [backward-cpp](https://github.com/bombela/backward-cpp): This library helps to generate more informative backtraces in the stdout if an error occurs during runtime
 
 ---
+
+## FFT Library
+
+OCUDU requires one of the following libraries for FFT calculation:
+
+- [libfftw](https://www.fftw.org/)
+- [oneMKL](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html)
+- [AOCL-FFTZ](https://www.amd.com/en/developer/aocl/fftz.html)
+- [Arm Performance Libraries](https://developer.arm.com/Tools%20and%20Software/Arm%20Performance%20Libraries#Downloads)
+
+### libfftw
+
+<Tabs>
+  <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
+```bash
+sudo apt-get install libfftw3-dev
+```
+  </TabItem>
+  <TabItem value="fedora" label="Fedora">
+```bash
+sudo yum install fftw-devel
+```
+  </TabItem>
+  <TabItem value="arch" label="Arch Linux">
+```bash
+sudo pacman -S fftw
+```
+  </TabItem>
+</Tabs>
+
+### oneMKL
+
+<Tabs>
+  <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
+```bash
+sudo apt update
+sudo apt install -y gpg-agent wget
+wget -O- <https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB> | gpg --dearmor | sudo tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
+echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] <https://apt.repos.intel.com/oneapi> all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
+sudo apt update
+sudo apt install intel-oneapi-mkl-devel libomp-dev
+```
+  </TabItem>
+</Tabs>
+
+#### AOCL-FFTZ
+
+<Tabs>
+  <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
+```bash
+AOCL_FFTW_VERSION="5.2"
+sudo apt update
+sudo apt install -y wget autoconf automake make libtool
+pushd /tmp
+wget --no-check-certificate "https://github.com/amd/amd-fftw/archive/refs/tags/5.2.tar.gz" -O "amd-fftw-5.2.tar.gz"
+tar -xzf amd-fftw-5.2.tar.gz
+rm -f amd-fftw-5.2.tar.gz
+cd amd-fftw-5.2
+./configure --enable-sse2 --enable-avx --enable-avx2 --enable-avx512 \
+  --enable-openmp --enable-shared --enable-amd-opt \
+  --enable-dynamic-dispatcher --prefix=/usr/local
+make -j"$(nproc)"
+make install
+popd
+rm -rf /tmp/amd-fftw-5.2
+ldconfig
+```
+  </TabItem>
+</Tabs>
+
+### ARMPL
+
+<Tabs>
+  <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
+```bash
+sudo apt update
+sudo apt install -y environment-modules wget
+pushd /tmp
+wget <https://developer.arm.com/-/cdn-downloads/permalink/Arm-Performance-Libraries/Version_24.10/arm-performance-libraries_24.10_deb_gcc.tar>
+tar -xf arm-performance-libraries_24.10_deb_gcc.tar
+cd arm-performance-libraries_24.10_deb/
+./arm-performance-libraries_24.10_deb.sh --accept
+popd
+rm -Rf /tmp/arm-performance-libraries_24.10_deb
+source /usr/share/modules/init/bash
+export MODULEPATH=$MODULEPATH:/opt/arm/modulefiles
+module avail
+module load armpl/24.10.0_gcc
+```
+  </TabItem>
+</Tabs>
 
 ## RF-drivers
 
@@ -70,11 +158,10 @@ UHD and/or ZMQ are only required for Split 8 deployments, if you are planning on
 
 OCUDU uses RF drivers to support different radio types. Currently, only UHD and ZMQ are supported:
 
-* [UHD](https://github.com/EttusResearch/uhd) (We recommended the LTS version of UHD, i.e. either 3.15 or 4.0.)
-* [ZMQ](https://zeromq.org/)
+- [UHD](https://github.com/EttusResearch/uhd) (We recommended the LTS version of UHD, i.e. either 3.15 or 4.0.)
+- [ZMQ](https://zeromq.org/)
 
 ---
-
 
 ## Clone and Build
 
@@ -127,10 +214,10 @@ You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCU
 ```bash
 sudo make install
 ```
+
 </TabItem>
 
 <TabItem value="split72" label="Split 7.2 Only Configuration">
-
 
 :::note
 OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
@@ -377,10 +464,7 @@ Pay extra attention to the cmake console output. Make sure you read the followin
 
 </TabItem>
 
-
 </Tabs>
-
-
 
 The [Running OCUDU](../running/running.md) section of the documentation further discusses how to configure and run the gNB application.
 
@@ -399,6 +483,7 @@ sudo add-apt-repository ppa:softwareradiosystems/srsran-project
 sudo apt-get update
 sudo apt-get install srsran-project -y
 ```
+
   </TabItem>
 <TabItem value="arch" label="Arch Linux">
 Arch Linux users can download OCUDU packages using an AUR helper, e.g. ‘yay’, using the following command:
@@ -406,10 +491,10 @@ Arch Linux users can download OCUDU packages using an AUR helper, e.g. ‘yay’
 ```bash
 yay -Sy srsran-project-git
 ```
-</TabItem>
-      
-</Tabs>
 
+</TabItem>
+
+</Tabs>
 
 This will install the latest version of OCUDU from git.
 
