@@ -1,10 +1,15 @@
-# OCUDU with Ella Core
+# Ella Core
 
 ## Overview
 
-[Ella Core](https://github.com/ellanetworks/core) is an open-source 5G Core designed for private networks. OCUDU can either be co-hosted with Ella Core for an all-in-one 5G network, or installed on a different machine. This guide outlines how-to co-host OCUDU and Ella Core.
+[Ella Core](https://github.com/ellanetworks/core) is an open-source 5G Core designed for private networks. It ships as a single binary, supports both amd64 and arm64 architectures, and leverages eBPF for high-performance packet processing. Ella Core includes a built-in UI and HTTP API for management and monitoring. OCUDU can either be co-hosted with Ella Core for an all-in-one 5G network, or installed on a different machine. This guide outlines how-to co-host OCUDU and Ella Core.
 
 ![OCUDU and Ella Core co-hosted network architecture](assets/co_host_network.svg)
+
+### Resources
+
+- [Ella Core Documentation](https://docs.ellanetworks.com/)
+- [Ella Core GitHub Repository](https://github.com/ellanetworks/core)
 
 ---
 
