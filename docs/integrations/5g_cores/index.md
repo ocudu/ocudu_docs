@@ -1,7 +1,3 @@
----
-sidebar_position: 1
----
-
 # 5G Cores
 
 OCUDU connects to a 5G Core Network (5GC) over the NG interface, supporting both N2 (control plane) and N3 (user plane) connections. The following 5G Cores have been validated for use with OCUDU.
@@ -16,4 +12,4 @@ OCUDU connects to a 5G Core Network (5GC) over the NG interface, supporting both
 
 - [Ella Core Documentation](https://docs.ellanetworks.com/)
 - [Ella Core GitHub Repository](https://github.com/ellanetworks/core)
-- [OCUDU with Ella Core Tutorial](../user_manual/tutorials/ella_core/index.md)
+- [OCUDU with Ella Core Tutorial](ella_core/index.md)
