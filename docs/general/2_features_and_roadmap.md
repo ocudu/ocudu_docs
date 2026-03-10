@@ -72,6 +72,7 @@ and collaborative contributions, priorities and timelines can be adjusted. If th
 * SRS aperiodic and narrowband
 * CSI-RS based RL monitoring
 * M-plane
+* Hardware accelerator support through DPDK BBDEV
 
 ### Coming in 26.10
 
