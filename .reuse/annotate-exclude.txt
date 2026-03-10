@@ -1,0 +1,5 @@
+/\.git/
+/\.reuse/
+/REUSE\.toml$
+\.md$
+\.mdx$
