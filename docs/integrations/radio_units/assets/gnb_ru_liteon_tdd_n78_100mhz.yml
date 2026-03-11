@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (C) 2021-2026 Software Radio Systems Limited
+# SPDX-License-Identifier: BSD-3-Clause-Open-MPI
+
 # Example config for LiteOn RU in TDD mode, band n78, 100 MHz bandwidth.
 # The main section of intereset is ru_ofh, which contains the configuration of the RU OFH application.
 # Should the config not start as expected, please refer to the documentation for more details on the configuration options:
