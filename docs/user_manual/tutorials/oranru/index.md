@@ -1,13 +1,12 @@
 # O-RAN 7.2 RU Guide
 
 :::info
-This guide covers the hardware-agnostic setup and configuration steps for connecting an O-RU via split 7.2. Hardware-specific details, including sample configuration files, for individual RU models can be found in the [Radio Units](../../../integrations/radio_units) section under Integrations.
+This guide covers the hardware-agnostic setup and configuration steps for connecting an O-RU via split 7.2. Hardware-specific details, including sample configuration files, for individual RU models can be found in the [Radio Units](../../../integrations/index.md) section under integrations.
 :::
 
 ## Overview
 
-OCUDU supports both split 7.2 and split 8 fronthaul interfaces to Radio Units (RUs). This tutorial outlines the general steps required to interface an RU with the OCUDU CU/DU via split 7.2. For more detailed instructions
-on specific O-RUs select an RU from the [Radio Units](../../../integrations/radio_units) section under Integrations.
+OCUDU supports both split 7.2 and split 8 fronthaul interfaces to Radio Units (RUs). This tutorial outlines the general steps required to interface an RU with the OCUDU CU/DU via split 7.2.
 
 [Split 7.2](../../../knowledge_base/oran_gnb/index.md) is an open specification published by the O-RAN Alliance aiming to ensure interoperability between different DU and RU solutions.
 
@@ -22,7 +21,7 @@ and configuration burden associated with using OCUDU with 3rd-party O-RUs.
 
 This tutorial uses the following hardware:
 
-- Server (Running srsRAN Project  CU/DU)
+- Server (Running OCUDU CU/DU)
   - CPU: AMD Ryzen 7 5700G
   - MEM: 64GB
   - NIC: Intel Corporation E810 NIC
@@ -45,7 +44,7 @@ The CU/DU is provided by this project. The Open Fronthaul (OFH) Library provides
 ### RU
 
 Users should chose the RU that best suits their usecase and specific requirements. There are various O-RUs available with specific implementations for indoor and outdoor use, various price points, and various hardware capabilities. A list of tested O-RUs
-can be found in the [Radio Units](../../../integrations/radio_units) section under Integrations, along with details on using them with OCUDU.
+can be found in the [Radio Units](../../../integrations/index.md) section under integrations, along with details on using them with OCUDU.
 
 For all set-ups the RU should be connected to the fronthaul switch via SFP+ fiber cable through the main fronthaul interface.
 
@@ -66,8 +65,9 @@ The split 7.2 interface requires tight timing synchronization between the DU and
 In this setup we use LLS-C3. The LLS-C3 configuration enables the distribution of network timing between central sites and remote sites from PRTC/T-GM to RU. In simpler terms, it allows the synchronization of one or more PRTC/T-GM devices (serving as PTP master) in the fronthaul network to transmit network timing signals to DU and RU components as seen in the figure above.
 In our setup the fronthaul switch is acting as the PTP grandmaster (which is synchronized via GPS), providing timing to the RU and the DU. These are connected to the SFP+ 10G ports on the switch via Ethernet.
 
-#### NOTE
+:::info
 The OFH library supports all of the defined clock model and synchronization topologies defined by O-RAN WG4. The use of LLS-C3 is specific to this example.
+:::
 
 #### Switch
 
@@ -81,7 +81,7 @@ The chosen switch should be a timing-aware O-RAN switch & PTP grandmaster. This 
 
 Refer to the specific Switch documentation to correctly configure it. Specifically any timing and routing options that may need to be configured.
 
-We recommend using the manufacturers documentation as well as the specific switch guide from SRS if it is available in the [Switches and Timing](../../../integrations/index.md) section under integrations.
+We recommend using the manufacturers documentation as well as the specific switch guide if it is available in the [Switches and Timing](../../../integrations/index.md) section under integrations.
 
 ### CU/DU
 
@@ -240,19 +240,19 @@ Network devices using kernel driver
 0000:51:00.3 'Ethernet Controller E810-C for SFP 1593' if=enp81s0f3 drv=ice unused=vfio-pci
 ```
 
-#### srsRAN configuration
+#### OCUDU configuration
 
-Sample configuration files for the CU/DU can be found in the `configs` folder of the srsRAN source files. There is an associated configuration file for each of the tested RUs.
+Sample configuration files for the CU/DU can be found in the `configs` folder of the OCUDU source files. There is an associated configuration file for each of the tested RUs.
 
 The main configuration steps for the CU/DU occur in the `ru_ofh` field. Here the CU/DU is configured to match the capabilities of the RU being used. All parameters should be configured specifically for each RU.
 
-See the specific RU guides in the [Radio Units](../../../integrations/radio_units) section under Integrations for more information on configuring the CU/DU.
+See the specific RU guides in the [Radio Units](../../../integrations/index.md) section under Integrations for more information on configuring the CU/DU.
 
 ### RU
 
 Refer to the specific RU documentation to correctly configure the RU. Ensure the RU is running before trying to make any configuration changes.
 
-We recommend using the manufacturers documentation as well as the specific RU guide from SRS if it is available in the [Radio Units](../../../integrations/radio_units) section under Integrations.
+We recommend using the manufacturers documentation as well as the specific RU guide if it is available in the [Radio Units](../../../integrations/index.md) section under Integrations.
 
 ### Core
 
@@ -280,7 +280,7 @@ These exact steps will vary depend on the RU being used.
 
 Before running the CU/DU, make sure you have used the commands outlined in the configuration section above to confirm the PTP sync between the DU and the fronthaul switch.
 
-We can now run the CU/DU. First, navigate to *srsRAN_Project/build/apps/gnb*, and then run the gNB with the following command:
+We can now run the CU/DU. First, navigate to *ocudu/build/apps/gnb*, and then run the gNB with the following command:
 
 ```bash
 sudo ./gnb -c <RU_CONFIG>
@@ -319,7 +319,7 @@ For this setup a OnePlus 9 5G UE was used to connect to the network. The set-up 
 
 Additionally, third party UEs, such as AmariUE can be used to connect to the network.
 
-For full details on configuring and connecting AmariUE to srsRAN Project see [this tutorial](../amari_ue/index.md).
+For full details on configuring and connecting AmariUE to OCUDU see [this tutorial](../amari_ue/index.md).
 
 #### Sending Traffic
 
