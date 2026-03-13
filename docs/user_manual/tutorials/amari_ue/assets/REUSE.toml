@@ -1,0 +1,11 @@
+version = 1
+
+[[annotations]]
+path = [
+    "*.cfg",
+]
+SPDX-FileCopyrightText = [
+    "2019-2023 Amarisoft",
+    "2021-2026 Software Radio Systems Limited",
+]
+SPDX-License-Identifier = "BSD-3-Clause-Open-MPI"

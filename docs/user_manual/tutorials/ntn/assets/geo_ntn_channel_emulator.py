@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-#
-# SPDX-License-Identifier: GPL-3.0
-#
 # GNU Radio Python Flow Graph
 # Title: GEO NTN Channel Emulator
 # GNU Radio version: 3.10.1.1
