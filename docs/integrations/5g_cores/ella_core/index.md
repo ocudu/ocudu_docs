@@ -105,7 +105,7 @@ Navigate to the Subscribers tab and create a new subscriber. You can click “Ge
 
 ## 4. Install OCUDU
 
-Install OCUDU using the [OCUDU installation guide](../../installation/installation.md).
+Install OCUDU using the [OCUDU installation guide](../../../user_manual/installation/installation.md).
 
 In the OCUDU configuration file, use the addresses we defined when creating the `n3ns` namespace and the same PLMN ID configured in Ella Core. For example:
 

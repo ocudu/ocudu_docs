@@ -81,7 +81,7 @@ The chosen switch should be a timing-aware O-RAN switch & PTP grandmaster. This 
 
 Refer to the specific Switch documentation to correctly configure it. Specifically any timing and routing options that may need to be configured.
 
-We recommend using the manufacturers documentation as well as the specific switch guide from SRS if it is available in the [Switches and Timing](../../../integrations/switches_and_timing) section under Integrations.
+We recommend using the manufacturers documentation as well as the specific switch guide from SRS if it is available in the [Switches and Timing](../../../integrations/index.md) section under integrations.
 
 ### CU/DU
 
@@ -345,4 +345,4 @@ pci rnti  cqi  mcs  brate   ok  nok  (%) | pusch  mcs  brate   ok  nok  (%)    b
 
 ## Integration Guide
 
-Hardware-specific guides for O-RUs and switches tested with OCUDU in an O-RAN split 7.2 compliant network can be found in the [Integrations](../../../integrations) section. All of the hardware items listed there have been tested in-house.
+Hardware-specific guides for O-RUs and switches tested with OCUDU in an O-RAN split 7.2 compliant network can be found in the [Integrations](../../../integrations/index.md) section. All of the hardware items listed there have been tested in-house.
