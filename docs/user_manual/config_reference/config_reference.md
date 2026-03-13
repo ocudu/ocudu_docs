@@ -366,7 +366,8 @@ cell_cfg:
     target_sinr_f3: 1                       # Optional FLOAT (1). Sets the target SINR for PUCCH F3 in dB. Supported: [-15 - 10].
 
   srs:
-    period_ms:                          # Optional FLOAT. Sets the periodic SRS period in ms. The SRS period needs to be compatible with the subcarrier spacing. Supported: {1,2,2.5,4,5,8,10,16,20,32,40,64,80,160,320,640,1280,2560}.
+    type_enabled: disabled              # Optional TEXT (disabled). Enables/disables SRS and set resource type. Supported: [disabled,periodic,aperiodic].
+    period_ms: 20                       # Optional FLOAT. Sets the periodic SRS period in ms. For aperiodic SRS, it indicates a tentative timing, and should not be interpreted as a precise period. The SRS period needs to be compatible with the subcarrier spacing. Supported: {1,2,2.5,4,5,8,10,16,20,32,40,64,80,160,320,640,1280,2560}.
     max_nof_sym_per_slot: 2             # Optional UINT (2). Sets the number of symbols for UL slot that are reserved for the SRS cell resources. Supprted: [1 - 6].
     nof_sym_per_resource: 1             # Optional UINT (2). Sets the number of symbols per SRS resource. Supported: {1,2,4}.
     c_srs: 0                            # Optional UINT (0). If set, indicates the C_SRS parameter for SRS. Supported [0, 63].
