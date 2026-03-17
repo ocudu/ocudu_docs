@@ -333,16 +333,15 @@ cell_cfg:
     p0_nominal: -90                         # Optional UINT (-90). Sets the power control parameter P0 for PUCCH transmissions in dBm. Supported: multiples of 2 and within the [-202, 24] interval.
     pucch_resource_common: 11               # Optional UINT (11). Index of PUCCH resource set for the common configuration. Supported: [0 - 15].
     sr_period_ms: 20                        # Optional UINT (20). Sets the SR period in milliseconds. Supported: [1,2,4,8,10,16,20,40,80,160,320].
-    use_format_0: false                     # Optional BOOLEAN (false). Enables the use of Format 0 for PUCCH resources from resource set 0. Supported: [false, true].
-    pucch_set1_format: 2                    # Optional UINT (2). Sets the PUCCH format for PUCCH resource set 1. Supported: [2, 3, 4].
-    nof_ue_res_harq_per_set: 8              # Optional UINT (8). Sets the number of PUCCH resources available per UE for HARQ for each PUCCH resource set. Supported: [1 - 8].
-    f0_or_f1_nof_cell_res_sr: 8             # Optional UINT (8). Sets the number of PUCCH F0 or F1 resources available per cell for SR. Supported: [1 - 50].
+    formats: f1_and_f2                      # Optional TEXT (f1_and_f2). Sets the PUCCH format combinations to use. Supported: [f0_and_f2,f1_and_f2,f1_and_f3,f1_and_f4].
+    resource_set_size: 8                    # Optional UINT (8). Sets the number of PUCCH resources available per UE for HARQ for each PUCCH resource set. Supported: [1 - 8].
+    nof_cell_res_set_configs: 2             # Optional UINT (2). Sets Number of PUCCH Resource Set configurations that are available per cell. The higher the number of sets, the lower the chances UEs have to share the same PUCCH resources. Supported: [1 - 10].
+    nof_cell_sr_res : 8                     # Optional UINT (8). Sets the number of PUCCH F0 or F1 resources available per cell for SR. Supported: [1 - 100].
+    nof_cell_csi_res: 8                     # Optional UINT (8). Sets the number of PUCCH F2, F3 or F4 resources available per cell for CSI. Supported: [0 - 100].
     f0_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F0. Supported: [false, true].
     f1_enable_occ: false                    # Optional BOOLEAN (false). Enables OCC for PUCCH F1. Supported: [false, true].
     f1_nof_cyclic_shifts: 2                 # Optional UINT (2). Sets the number of possible cyclic shifts available for PUCCH F1 resources. Supported: [1,2,3,4,6,12].
     f1_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F1. Supported: [false, true].
-    nof_cell_harq_pucch_res_sets: 2         # Optional UINT (2). Sets the number of separate PUCCH resource sets for HARQ-ACK that are available in the cell. The higher the number of sets, the lower the chances UEs have to share the same PUCCH resources. Supported: [1 - 10].
-    f2_or_f3_or_f4_nof_cell_res_csi: 8      # Optional UINT (8). Sets the number of PUCCH F2, F3 or F4 resources available per cell for CSI. Supported: [0 - 100].
     f2_max_nof_rbs: 1                       # Optional UINT (1). Sets the max number of RBs for PUCCH F2 resources. Supported: [1 - 16].
     f2_max_payload:                         # Optional INT. Sets the max number of payload bits for PUCCH F2 resources. Supported [1 - 11].
     f2_max_code_rate: dot35                 # Optional TEXT (dot35). Sets the PUCCH F2 max code rate. Supported: [dot08, dot15, dot25, dot35, dot45, dot60, dot80].
@@ -358,6 +357,7 @@ cell_cfg:
     f4_additional_dmrs: false               # Optional BOOLEAN (false). Enables additional DMRS for PUCCH F4. Supported: [false, true].
     f4_pi2_bpsk: false                      # Optional BOOLEAN (false). Enables pi/2 BPSK for PUCCH F4. Supported: [false, true].
     f4_occ_length: 2                        # Optional UINT (2). Sets the OCC length for PUCCH F4. Supported: [1 - 4].
+    f4_enable_occ: false                    # Optional BOOLEAN (false). Enables OCC multiplexing for PUCCH F4. Supported: [false, true].
     min_k1: 4                               # Optional UINT (4). Sets the minimum value of K1 (difference in slots between PDSCH and HARQ-ACK). Lower k1 values will reduce latency, but place a stricter requirement on the UE decode latency. Supported: [1 - 4].
     max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive undecoded PUCCH F2 for CSI before an Radio Link Failure is reported.
     enable_cl_loop_pw_control: false        # Optional BOOLEAN (false). Enables the closed-loop power control for PUCCH. Supported: [false, true].
