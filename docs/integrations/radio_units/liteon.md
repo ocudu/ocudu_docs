@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide provides further details on connecting the srsRAN CU/DU to an RU using the the ORAN 7.2 split. Specifically, the [LITEON FlexFi](https://www.liteon.com/en-us/product/714).
+This guide provides further details on connecting the OCUDU CU/DU to an RU using the the ORAN 7.2 split. Specifically, the [LITEON FlexFi](https://www.liteon.com/en-us/product/714).
 We’ve tested with a model FF-RFI078I4 with firmware version 02.00.09.
 
 ---

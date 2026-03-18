@@ -1,6 +1,6 @@
 # Commit Formatting
 
-When committing code to srsRAN Project codebase it is important that commit messages are clear and succinct. This means having clear guidelines for
+When committing code to OCUDU codebase it is important that commit messages are clear and succinct. This means having clear guidelines for
 how commits should be structured, both in the title and body of the commit messages.
 
 The preferred commit message style is as follows:
@@ -37,7 +37,7 @@ lines if necessary, but keep it as succinct as possible.
 
 Note that all words in the subject line are lower case and there is no trailing period.
 
-To summarize, here are a few brief points to follow when committing to the srsRAN codebase:
+To summarize, here are a few brief points to follow when committing to the OCUDU codebase:
 
 - Each commit should have a `component` and a `brief outline`
 - Commit subject lines should be limited to 50 characters in total

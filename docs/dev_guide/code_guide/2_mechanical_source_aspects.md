@@ -2,7 +2,7 @@
 
 ## Source Code Formatting
 
-The srsRAN Project project uses a defined set of formatting rules, and heavily relies on clang-format for automatic source code formatting.
+The OCUDU project uses a defined set of formatting rules, and heavily relies on clang-format for automatic source code formatting.
 You must use the custom clang-format file in the root of the repository, see [here](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)
 for more information about the options found in this file.
 
@@ -128,7 +128,7 @@ the example below.
 ## Header Guards
 
 All header files should have an include guard to prevent double inclusion.
-The srsRAN Project codebase uses the `#pragma once` directive, which is widely supported by common compilers.
+The OCUDU codebase uses the `#pragma once` directive, which is widely supported by common compilers.
 Unlike conventional include guards (via `#ifndef` and `#define`), neither a unique identifier nor a closing expression (`#endif`) is required.
 
 The following example shows this:
@@ -161,7 +161,7 @@ Include files should be listed in the following order:
 
 1. Main module header.
 2. Local and private headers.
-3. srsRAN Project or subproject headers (srsgnb/…, srsue/…, srsran/…, etc).
+3. OCUDU or subproject headers (srsgnb/…, srsue/…, srsran/…, etc).
 4. System library includes.
 
 Keep each category sorted lexicographically by the full path and avoid adding newlines between categories or include directives.

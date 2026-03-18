@@ -3,7 +3,7 @@
 To ensure consistency in the formatting of the log entries, some rules should be followed by the developers.
 This allows both users and developers to be able to easily read and parse the logs, accelerating problem discovery.
 
-This document describes the logging rules and reasoning behind them in srsRAN Project.
+This document describes the logging rules and reasoning behind them in OCUDU.
 
 ## Rule 1: Lists of fields only need to be separated by a whitespace “   “
 

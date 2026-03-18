@@ -6,7 +6,7 @@ This document is intended to be used as a guide. Variances in firmware and softw
 
 ## Overview
 
-This guide provides further details on connecting the srsRAN CU/DU to an RU using the OFH Lib. Specifically the [RAN550](https://benetel.com/ran550/) and [RAN650](https://benetel.com/ran650/) RU from Benetel. Those are Split 7.2a indoor and outdoor RUs, respectivly.
+This guide provides further details on connecting the OCUDU CU/DU to an RU using the OFH Lib. Specifically the [RAN550](https://benetel.com/ran550/) and [RAN650](https://benetel.com/ran650/) RU from Benetel. Those are Split 7.2a indoor and outdoor RUs, respectivly.
 
 :::info
 Please refer to the [Benetel](https://www.benetel.com/) User Guide Documentation for up-to-date configuration and usage guidelines, along with disclaimer and warranty information. Contact Benetel ([sales@benetel.com](mailto:sales@benetel.com)) for more information.
@@ -23,7 +23,7 @@ In earlier versions we’ve provided config examples for long and short PRACH fo
 This is not longer required and all default configs now use the short PRACH format.
 :::
 
-Sample configuration files for the DU can be found in the `configs` folder of the srsRAN source files.
+Sample configuration files for the DU can be found in the `configs` folder of the OCUDU source files.
 
 These configurations are **specific** to the firmware version of the RU. For this guide we’ve used:
 

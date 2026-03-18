@@ -1,6 +1,6 @@
 # Self Generating Documentation
 
-The srsRAN Project repository uses **Doxygen** to generate API documentation directly from the annotated C++ source files. In order to contribute to the API
+The OCUDU repository uses **Doxygen** to generate API documentation directly from the annotated C++ source files. In order to contribute to the API
 documentation with an homogeneous style, the following sections provide some general guidelines focusing on the most common code elements. Please refer to
 the [Doxygen Documentation](https://www.doxygen.nl/manual/) for a complete overview of the Doxygen commands and features.
 
@@ -12,7 +12,7 @@ For all editorial matters (e.g., acronyms, plurals, capitalization, equations), 
 
 All code entities are documented with a comment block just before the declaration of the entity. Placing the documentation block on the same line as
 the code element is not allowed, even for short, one-line comments. As mentioned [here](2_mechanical_source_aspects.md#comments), all lines of a documentation comment
-block start with a triple slash. Also, srsRAN Project documentation prefers the `\command` form of Doxygen commands (as opposed to
+block start with a triple slash. Also, OCUDU documentation prefers the `\command` form of Doxygen commands (as opposed to
 `@command`).
 
 Generally, a documentation block consists of a brief description (ideally, not more than one line) that starts with the command `\brief` and one or

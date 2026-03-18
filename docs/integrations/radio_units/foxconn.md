@@ -6,7 +6,7 @@ This document is intended to be used as a guide. Variances in firmware and softw
 
 ## Overview
 
-This guide provides further details on connecting the srsRAN CU/DU to an RU using the the ORAN 7.2 split. Specifically, we discus the Foxconn RPQN family of devices.
+This guide provides further details on connecting the OCUDU CU/DU to an RU using the the ORAN 7.2 split. Specifically, we discus the Foxconn RPQN family of devices.
 They are available in various flavors, hence different model numbers:
 
 - With and without external antenna (the E letter at the end stands for external antenna and the I for internal).

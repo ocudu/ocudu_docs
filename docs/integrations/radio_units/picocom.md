@@ -6,7 +6,7 @@ This document is intended to be used as a guide. Variances in firmware and softw
 
 ## Overview
 
-This guide provides further details on connecting the srsRAN CU/DU to an RU using the the ORAN 7.2 split. Specifically, we discuss the Picocom PC802SCB.
+This guide provides further details on connecting the OCUDU CU/DU to an RU using the the ORAN 7.2 split. Specifically, we discuss the Picocom PC802SCB.
 
 The RU is based on a PC802 Small Cell Development Board (PC802SCB) and an ADI ADRV9029BBCZ 4T4R RFIC subsystem, it is capable of up to 100MHz 4T4R. The PC802SCB is a flexible 5G NR development platform for evaluating the PC802 for different
 small cell use cases, including as a split 7.2 O-RU. You can read more about it [here](https://picocom.com/products/boards/).
@@ -178,7 +178,7 @@ Also pay attention to the `sync_scheme_params` property:
 
 Property `sync_source` should be configured to use PTP.
 
-If the RSRP detected by the UE is low, is possible to increase it by updating `dl_amplitude_scale` property. Check Picocom documentation for valid values. For reference, srsRAN Project uses the following by default:
+If the RSRP detected by the UE is low, is possible to increase it by updating `dl_amplitude_scale` property. Check Picocom documentation for valid values. For reference, OCUDU uses the following by default:
 
 ```json
 "dl_amplitude_scale" : 65535.
