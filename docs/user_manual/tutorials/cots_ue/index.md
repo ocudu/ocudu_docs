@@ -30,14 +30,14 @@ Optionally you can also use of an external clock source such as an Octoclock or 
 For this example we are using Open5GS as the 5G Core.
 
 Open5GS is a C-language Open Source implementation for 5G Core and EPC. The following links will provide you
-with the information needed to download and set-up Open5GS so that it is ready to use with srsRAN Project:
+with the information needed to download and set-up Open5GS so that it is ready to use with OCUDU:
 
 - [GitHub](https://github.com/open5gs/open5gs)
 - [Quickstart Guide](https://open5gs.org/open5gs/docs/guide/01-quickstart/)
 
 ### COTS UE
 
-You should make sure your device is capable of operating in 5G SA mode and that it operates in the bands supported by srsRAN Project.
+You should make sure your device is capable of operating in 5G SA mode and that it operates in the bands supported by OCUDU.
 
 ### External Clock
 

@@ -51,7 +51,7 @@ This tutorial assumes that the 5G Core Network is running on a different machine
 
 ### ZeroMQ
 
-To install ZMQ, and build srsRAN Project such that it is recognized, see the [installation guide](../../installation/installation.md).
+To install ZMQ, and build OCUDU such that it is recognized, see the [installation guide](../../installation/installation.md).
 
 ### Amarisoft UE
 
@@ -65,7 +65,7 @@ This tutorial uses version `2023-02-06` of Amarisoft UE, but it can be any versi
 These steps should only be completed **after** compiling OCUDU as mentioned above, as they require the build files of OCUDU and of the Amarisoft UHD RF frontend driver.
 :::
 
-Interfacing the Amarisoft UE with OCUDU over ZMQ requires a custom TRX driver implemented by SRS, which can be found in srsRAN Project source files in `ocudu/utils/trx_ocudu`.
+Interfacing the Amarisoft UE with OCUDU over ZMQ requires a custom TRX driver implemented by SRS, which can be found in OCUDU source files in `ocudu/utils/trx_ocudu`.
 
 The Amarisoft UE release folder, `amarisoft.2023-02-06.tar.gz`, should contain a file called `trx_uhd-linux-2023-02-06.tar.gz`. The release folder and the sub-file in question should be uncompressed before proceeding.
 
@@ -230,7 +230,7 @@ The console output should be similar to the following:
 ```bash
 Available radio types: uhd and zmq.
 
---== srsRAN gNB (commit 05beac11e) ==--
+--== OCUDU gNB (commit 2c67c80) ==--
 
 Connecting to AMF on 172.22.0.10:38412
 Cell pci=1, bw=10 MHz, dl_arfcn=536020 (n7), dl_freq=2680.1 MHz, dl_ssb_arfcn=535930, ul_freq=2560.1 MHz

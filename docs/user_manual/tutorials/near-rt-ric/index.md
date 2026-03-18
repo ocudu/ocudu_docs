@@ -140,12 +140,12 @@ Press <enter> to keep the current choice[*], or type selection number:
 For this example we are using Open5GS as the 5G Core.
 
 Open5GS is a C-language Open Source implementation for 5G Core and EPC. The following links will provide you
-with the information needed to download and set-up Open5GS so that it is ready to use with srsRAN:
+with the information needed to download and set-up Open5GS so that it is ready to use with OCUDU:
 
 - [GitHub](https://github.com/open5gs/open5gs)
 - [Quickstart Guide](https://open5gs.org/open5gs/docs/guide/01-quickstart/)
 
-For the purpose of this application note, we will use a dockerized Open5GS version provided in srsRAN Project at `srsgnb/docker`.
+For the purpose of this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`.
 
 ### ZeroMQ
 
@@ -184,7 +184,7 @@ sudo ldconfig
 Finally, you need to compile OCUDU and srsRAN 4G (assuming you have already installed all the required dependencies).
 
 :::info
-If you have already built and installed srsRAN 4G and srsRAN Project prior to installing ZMQ and other dependencies you will have to re-build both to ensure the ZMQ drivers have been recognized correctly.
+If you have already built and installed srsRAN 4G and OCUDU prior to installing ZMQ and other dependencies you will have to re-build both to ensure the ZMQ drivers have been recognized correctly.
 :::
 
 ### OCUDU
@@ -223,9 +223,9 @@ Please check our srsRAN 4G [ZeroMQ Application Note](https://docs.srsran.com/pro
 
 ## Configuration
 
-Here, we use ZMQ-based setup, and hence the configuration files are based on those introduced in [srsRAN gNB with srsUE](../srsue/index.md) application note.
+Here, we use ZMQ-based setup, and hence the configuration files are based on those introduced in [OCUDU gNB with srsUE](../srsue/index.md) application note.
 
-The following config files were modified to use ZMQ-based RF driver and enable E2 interface in srsRAN Project gNodeB:
+The following config files were modified to use ZMQ-based RF driver and enable E2 interface in OCUDU gNodeB:
 
 * [gNB config](assets/gnb_zmq.yaml)
 * [UE config](assets/ue_zmq.conf)
@@ -285,14 +285,14 @@ The following order should be used when running the network:
 
 ### Open5GS Core
 
-srsRAN Project provides a dockerized version of the Open5GS. It is a convenient and quick way to start the core network. You can run it as follows:
+OCUDU provides a dockerized version of the Open5GS. It is a convenient and quick way to start the core network. You can run it as follows:
 
 ```bash
 cd ./ocudu/docker
 docker compose up 5gc
 ```
 
-Note that we have already configured Open5GS to operate correctly with srsRAN Project. Moreover, the UE database is populated with the credentials used by our srsUE.
+Note that we have already configured Open5GS to operate correctly with OCUDU. Moreover, the UE database is populated with the credentials used by our srsUE.
 
 ### NearRT-RIC
 
@@ -698,7 +698,7 @@ You can enable E2AP PCAPs by following [this guide](../../outputs/outputs.md).
 
 ### Live capture
 
-Wireshark can be used to collect E2AP packets exchanged between E2 agent (located in srsRAN gNB) and NearRT-RIC at runtime. This requires the following steps to be executed:
+Wireshark can be used to collect E2AP packets exchanged between E2 agent (located in OCUDU gNB) and NearRT-RIC at runtime. This requires the following steps to be executed:
 
 1. Start sniffing on the loopback interface.
 2. Set filter to sctp.port == 36421.

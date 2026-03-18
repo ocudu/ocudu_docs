@@ -122,7 +122,7 @@ If the DU connects to the RU successfully, you will see the following output:
 ```bash
 The PRACH detector will not meet the performance requirements with the configuration {Format 0, ZCZ 0, SCS 1.25kHz, Rx ports 1}.
 
---== srsRAN gNB (commit 96f185389) ==--
+--== OCUDU gNB (commit 2c67c80) ==--
 
 Connecting to AMF on 127.0.0.5:38412
 Initializing the Open Fronthaul Interface for sector#0: ul_compr=[BFP,9], dl_compr=[BFP,9], prach_compr=[BFP,9], prach_cp_enabled=false, downlink_broadcast=false

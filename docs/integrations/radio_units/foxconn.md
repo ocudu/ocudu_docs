@@ -23,7 +23,7 @@ Please refer to the Foxconn User Guide provided by the distributor for up-to-dat
 
 ### CU/DU
 
-A sample configuration file for the DU can be downloaded from [here](https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_rpqn4800e_tdd_n78_20mhz.yml). This configuration is **specific** to the firmware version of the RU (v3_1_13q_551p1)
+A sample configuration file for the DU can be downloaded from [here](https://gitlab.com/ocudu/ocudu/-/blob/dev/configs/gnb_ru_rpqn4800e_tdd_n78_20mhz_2x2.yml). This configuration is **specific** to the firmware version of the RU (v3_1_13q_551p1)
 being used for this guide. As a result, you may need to modify this slightly for your local setup.
 
 The following excerpt shows how the DU is configured to communicate with the RU:
@@ -111,7 +111,7 @@ The following steps should be taken to initialize the network:
 If the DU connects to the RU successfully, you will see the following output:
 
 ```bash
---== srsRAN gNB (commit 96f185389) ==--
+--== OCUDU gNB (commit 2c67c80) ==--
 
 Connecting to AMF on 127.0.0.5:38412
  Initializing the Open Fronthaul Interface for sector#0: ul_compr=[BFP,9], dl_compr=[BFP,9], prach_compr=[BFP,9], prach_cp_enabled=true, downlink_broadcast=false

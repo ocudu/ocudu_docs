@@ -34,7 +34,7 @@ echo "export tuned_params"
 ### Tuning profile
 
 Custom profiles can be created to optimize the system performance according to user-specific requirements. It is advised to base those on
-pre-existing real-time profiles (e.g., `/usr/lib/tuned/realtime/tuned.conf`). As part of this tutorial you can download a custom srsRAN tuning profile,
+pre-existing real-time profiles (e.g., `/usr/lib/tuned/realtime/tuned.conf`). As part of this tutorial you can download a custom OCUDU tuning profile,
 aimed at optimizing the gNB performance:
 
 * [Tuning profile](assets/tuned.conf)
@@ -48,7 +48,7 @@ added to explain the selected choices. Once the files are copied, please make su
 sudo chmod +x /usr/lib/tuned/ocudu/startup.sh
 ```
 
-Before activating the srsRAN tuning profile you need to make sure that (in case it is installed) the `power-profiles-daemon` is disabled:
+Before activating the OCUDU tuning profile you need to make sure that (in case it is installed) the `power-profiles-daemon` is disabled:
 
 ```bash
 sudo systemctl stop power-profiles-daemon.service

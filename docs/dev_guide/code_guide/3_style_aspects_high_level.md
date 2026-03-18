@@ -35,14 +35,14 @@ function definition matches the new declaration.
 
 ```cpp
 // foo.h
-namespace srsran {
+namespace ocudu {
 int foo(const char *s);
 }
 
 // foo.cpp
 #include "foo.h"
-using namespace srsran;
-int srsran::foo(const char *s) {
+using namespace ocudu;
+int ocudu::foo(const char *s) {
   // ...
 }
 ```
@@ -53,14 +53,14 @@ int srsran::foo(const char *s) {
 // foo.cpp
 
 #include "foo.h"
-namespace srsran { // Namespace block.
+namespace ocudu { // Namespace block.
 int foo(char *s) { // Mismatch between "const char *" and "char *"
     // ...
 }
-} // end namespace srsran
+} // end namespace ocudu
 ```
 
-The above code snippet will add a new overload of srsran::foo instead of providing a definition of the existing function declared in the header.
+The above code snippet will add a new overload of ocudu::foo instead of providing a definition of the existing function declared in the header.
 To make things a bit worse, this error will be detected by the linker towards the end of the build, instead of being detected instantly by the compiler.
 
 A final word about namespace qualification: when you need to call a C library or system function like `read()`, `socket()`, etc,

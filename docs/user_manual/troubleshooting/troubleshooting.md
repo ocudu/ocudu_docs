@@ -1,7 +1,7 @@
 # Troubleshooting
 
 For support and help using OCUDU, check out the [issues](https://gitlab.com/ocudu/ocudu/-/issues) section.
-Also the srsRAN Project [discussion forum](https://github.com/srsran/srsRAN_Project/discussions) is a rich source of general information.
+Also the OCUDU [issue tracker](https://gitlab.com/ocudu/ocudu/-/issues) is a rich source of general information.
 
 ## Performance Tuning
 

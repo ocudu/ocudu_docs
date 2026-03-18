@@ -31,7 +31,7 @@ This is a list of COTS UEs that have been confirmed to be working with OCUDU tes
 
 ## User reported working UEs
 
-This is a list of COTS UEs that have been reported to be working with srsRAN Project by users.
+This is a list of COTS UEs that have been reported to be working with OCUDU by users.
 
 #### User reported COTS UEs
 

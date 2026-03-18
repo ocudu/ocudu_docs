@@ -2,7 +2,7 @@
 
 ## Overview
 
-This tutorial demonstrates how to configure and run a 5G NR SA Non-Terrestrial Network (NTN) using srsRAN Project and Amarisoft UE with NTN extensions.
+This tutorial demonstrates how to configure and run a 5G NR SA Non-Terrestrial Network (NTN) using OCUDU and Amarisoft UE with NTN extensions.
 NTN is a network deployment where communication between the gNB and UE is relayed via non-terrestrial components, such as satellites.
 
 Deploying NTN introduces unique challenges due to the different link dynamics and characteristics compared to traditional terrestrial networks. To address these challenges, 3GPP introduced several enhancements and features in the 5G NR specifications (Release 17). Key features and enhancements include:
@@ -382,7 +382,7 @@ The console output should be similar to:
 The PRACH detector will not meet the performance requirements with the configuration {Format 1, ZCZ 0, SCS 1.25kHz, Rx ports 1}.
 Lower PHY in executor blocking mode.
 
---== srsRAN gNB (commit 5a9e9f1ffb) ==--
+--== OCUDU gNB (commit 2c67c80) ==--
 
 Connecting to AMF on 10.53.1.2:38412
 Available radio types: zmq.

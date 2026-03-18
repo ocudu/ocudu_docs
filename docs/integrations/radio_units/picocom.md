@@ -21,7 +21,7 @@ The PC802SCB is not a deployment ready commercial grade O-RU, but many commercia
 
 ### CU/DU
 
-A sample configuration file for the DU can be downloaded from [here](https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_picocom_scb_tdd_n78_20mhz.yml).
+A sample configuration file for the DU can be downloaded from [here](https://gitlab.com/ocudu/ocudu/-/blob/dev/configs/gnb_ru_picocom_scb_tdd_n78_20mhz.yml).
 
 The following excerpt shows how the DU is configured to communicate with the RU:
 
@@ -400,7 +400,7 @@ sudo ./gnb -c gnb_ru_picocom_scb_tdd_n78_20mhz.yml
 If the DU connects to the RU successfully, you will see the following output:
 
 ```bash
---== srsRAN gNB (commit 78238fd) ==--
+--== OCUDU gNB (commit 2c67c80) ==--
 
 Connecting to AMF on 127.0.0.5:38412
 Initializing the Open Fronthaul Interface for sector#0: ul_compr=[BFP,9], dl_compr=[BFP,9], prach_compr=[BFP,9], prach_cp_enabled=false, downlink_broadcast=false

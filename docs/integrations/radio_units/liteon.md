@@ -87,7 +87,7 @@ The following steps should be taken to initialize the network:
    ```bash
    The PRACH detector will not meet the performance requirements with the configuration {Format B4, ZCZ 0, SCS 30kHz, Rx ports 1}.
 
-   --== srsRAN gNB (commit 61bce3657a) ==--
+   --== OCUDU gNB (commit 2c67c80) ==--
 
    Connecting to AMF on 10.12.1.105:38412
    Initializing the Open Fronthaul Interface for sector#0: ul_compr=[BFP,9], dl_compr=[BFP,9], prach_compr=[BFP,9], prach_cp_enabled=true, downlink_broadcast=false

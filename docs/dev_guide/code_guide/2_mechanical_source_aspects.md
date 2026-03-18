@@ -143,9 +143,9 @@ The following example shows this:
 #include "foo.h"
 #include <file.h>
 
-namespace srsgnb {
+namespace ocudu {
 // ...
-} // srsgnb
+} // ocudu
 ```
 
 ---
@@ -161,17 +161,17 @@ Include files should be listed in the following order:
 
 1. Main module header.
 2. Local and private headers.
-3. OCUDU or subproject headers (srsgnb/…, srsue/…, srsran/…, etc).
+3. OCUDU or subproject headers (ocudu/…, etc).
 4. System library includes.
 
 Keep each category sorted lexicographically by the full path and avoid adding newlines between categories or include directives.
-The main module header should be always the first in the list. Sub-project headers should be included before srsran headers (from most specific to least specific eg:srsgnb before srsran).
+The main module header should be always the first in the list. Sub-project headers should be included before ocudu headers (from most specific to least specific eg: more specific ocudu subfolders first).
 
 ```cpp
 #include "my_class_header.h"            // category 1
 #include "private_module_utils.h"       // category 2
 #include "srsenb/hdr/public_header.h"   // category 3
-#include "srsran/adt/bounded_vector.h"  // category 3
+#include "ocudu/adt/bounded_vector.h"   // category 3
 #include <string>                       // category 4
 #include <vector>                       // category 4
 ```

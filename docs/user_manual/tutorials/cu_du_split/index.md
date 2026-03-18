@@ -33,7 +33,7 @@ This example uses a USRP B210, it must be connected to the PC via USB 3.0. The u
 For this example, Open5GS is running bare metal on the host machine.
 
 Open5GS is a C-language Open Source implementation for 5G Core and EPC. The following links will provide you
-with the information needed to download and set-up Open5GS so that it is ready to use with srsRAN:
+with the information needed to download and set-up Open5GS so that it is ready to use with OCUDU:
 
 - [GitHub](https://github.com/open5gs/open5gs)
 - [Quickstart Guide](https://open5gs.org/open5gs/docs/guide/01-quickstart/)
@@ -79,7 +79,7 @@ cu_up:
         bind_addr: 127.0.10.1                  # Sets the address that the F1-U socket will bind to.
 ```
 
-The `amf` parameters are specific to the local configuration of the core. If you are running Open5GS via the docker scripts provided with srsRAN Project, your configuration will be different. The same is true if you have
+The `amf` parameters are specific to the local configuration of the core. If you are running Open5GS via the docker scripts provided with OCUDU, your configuration will be different. The same is true if you have
 made any other local changes to how Open5GS has been configured.
 
 ### OCUDU DU

@@ -225,7 +225,7 @@ cd ./ocudu/docker
 docker compose up --build 5gc
 ```
 
-Note that we have already configured Open5GS to operate correctly with srsRAN OCUDU. Moreover, the UE database is populated with the credentials used by our srsUE.
+Note that we have already configured Open5GS to operate correctly with OCUDU. Moreover, the UE database is populated with the credentials used by our srsUE.
 
 #### gNB
 

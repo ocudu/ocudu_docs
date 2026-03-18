@@ -365,11 +365,11 @@ sudo gnb -c <config file>
 A number of PHY tests are based on MATLAB generated testvectors. By default, those tests are disabled.
 The following steps are required to enable them:
 
-1. Download the latest [PHY testvector set](https://github.com/srsran/srsRAN_Project/releases).
-2. Extract the PHY testvectors to their location within the srsRAN working directory:
+1. Download the latest [PHY testvector set](https://gitlab.com/ocudu/ocudu/-/releases).
+2. Extract the PHY testvectors to their location within the OCUDU working directory:
 
 ```bash
-tar -xf phy_testvectors.tar -C /path_to_your_local_repository/srsRAN_Project
+tar -xf phy_testvectors.tar -C /path_to_your_local_repository/ocudu
 ```
 
 3. Enable the use of the PHY testvectors by regenerating the CMake build system:

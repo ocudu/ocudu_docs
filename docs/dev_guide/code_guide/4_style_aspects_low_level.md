@@ -40,7 +40,7 @@ enum {
 
 ## Assert and expect
 
-srsRAN Project provides a custom assert macro called `srsran_assert`.
+OCUDU provides a custom assert macro called `ocudu_assert`.
 Use it as much as you can to check all your preconditions and assumptions. This will help to reduce debugging times as
 the assert may be triggered by your code or even by external faulty code.
 
@@ -49,7 +49,7 @@ For example:
 
 ```cpp
 char *get(unsigned idx) {
-  srsran_assert(idx < v.size() && "get() out of range!");
+  ocudu_assert(idx < v.size() && "get() out of range!");
   return v[idx];
 }
 ```
@@ -57,10 +57,10 @@ char *get(unsigned idx) {
 Other additional examples:
 
 ```cpp
-srsran_assert(buffer->is_valid() && "Buffer should always be valid!");
-srsran_assert((channel == DLSCH || channel == ULSCH) && "Channel type is invalid!");
-srsran_assert(idx < get_num_ues() && "UE index value is out of range!");
-srsran_assert(v1.size() == v2.size() && "vector sizes must be identical!");
+ocudu_assert(buffer->is_valid() && "Buffer should always be valid!");
+ocudu_assert((channel == DLSCH || channel == ULSCH) && "Channel type is invalid!");
+ocudu_assert(idx < get_num_ues() && "UE index value is out of range!");
+ocudu_assert(v1.size() == v2.size() && "vector sizes must be identical!");
 ```
 
 #### NOTE
@@ -80,21 +80,21 @@ When using assertions you may get warnings for  *“unused value”* if assertio
 
 ```cpp
 unsigned size = v.size();
-srsran_assert(size > 42 && "Vector smaller than it should be");
+ocudu_assert(size > 42 && "Vector smaller than it should be");
 
 bool is_value_new = set.insert(x);
-srsran_assert(is_value_new && "The value shouldn't be in the set yet");
+ocudu_assert(is_value_new && "The value shouldn't be in the set yet");
 ```
 
 In the first case, the call to `v.size()` is only useful in the assert, and we don’t want it executed if assertions are disabled. In this case the code should be moved inside the assertion.
 In the second case, the side effects of the call must happen whether the assert is enabled or not. In this case, the value should be cast to void to disable the warning.
 
 ```cpp
-srsran_assert(v.size() > 42 && "Vector smaller than it should be");
+ocudu_assert(v.size() > 42 && "Vector smaller than it should be");
 
 bool is_value_new = set.insert(x);
 (void)is_new_value;
-srsran_assert(is_value_new && "The value shouldn't be in the set yet");
+ocudu_assert(is_value_new && "The value shouldn't be in the set yet");
 ```
 
 #### WARNING
@@ -106,8 +106,8 @@ write something about expect
 When you need to refer to identifiers in the standard library then prefer to explicitly use a `std::` prefix rather than relying in `using namespace std;`.
 In header files, adding a using namespace directive will pollute the namespace of any source file that includes this header, causing maintenance issues.
 
-The exception to this rule (not for the `std` namespace) is for implementation files (`.cpp`). For example, all the code in srsRAN Project implements code that lives in the
-srsran namespace. In this case, it is clearer for the .cpp files to have a using namespace srsran directive at the top of the file, just after the include list.
+The exception to this rule (not for the `std` namespace) is for implementation files (`.cpp`). For example, all the code in OCUDU implements code that lives in the
+ocudu namespace. In this case, it is clearer for the .cpp files to have a using namespace ocudu directive at the top of the file, just after the include list.
 This will reduce indentation in the body of the file.
 
 The general form of this rule is that any .cpp file that implement code in any namespace may use that namespace, including its parents, but should not use any others.
