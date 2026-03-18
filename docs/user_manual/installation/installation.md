@@ -185,59 +185,9 @@ You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCU
 sudo make install
 ```
 
-First, clone OCUDU repository:
-
-```bash
-git clone https://gitlab.com/ocudu/ocudu.git
-```
-
-Then build the code-base:
-
-```bash
-cd ocudu
-mkdir build
-cd build
-cmake ../
-make -j $(nproc)
-make test -j $(nproc)
-```
-
-You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
-
-```bash
-sudo make install
-```
-
 </TabItem>
 
 <TabItem value="split72" label="Split 7.2 Only Configuration">
-
-:::note
-OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
-:::
-
-First, clone OCUDU repository:
-
-```bash
-git clone https://gitlab.com/ocudu/ocudu.git
-```
-
-Then build the code-base, making sure to pass the correct CMake flag:
-
-```bash
-cd ocudu
-mkdir build
-cd build
-cmake -DDU_SPLIT_TYPE=SPLIT_7_2  ../
-make -j $(nproc)
-make test -j $(nproc)
-```
-
-You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
-
-```bash
-sudo make install
-```
 
 :::note
 OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
@@ -297,100 +247,9 @@ You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCU
 sudo make install
 ```
 
-:::note
-OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
-:::
-
-First, clone OCUDU repository:
-
-```bash
-git clone https://gitlab.com/ocudu/ocudu.git
-```
-
-Then build the code-base, making sure to pass the correct CMake flag:
-
-```bash
-cd ocudu
-mkdir build
-cd build
-cmake -DDU_SPLIT_TYPE=SPLIT_8  ../
-make -j $(nproc)
-make test -j $(nproc)
-```
-
-You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
-
-```bash
-sudo make install
-```
-
 </TabItem>
 
 <TabItem value="zmq" label="ZMQ Enabled Installation">
-On Ubuntu, ZeroMQ development libraries can be installed with:
-
-```bash
-sudo apt-get install libzmq3-dev
-```
-
-Alternatively, ZeroMQ can also be built from source.
-
-First, one needs to install libzmq:
-
-```bash
-git clone https://github.com/zeromq/libzmq.git
-cd libzmq
-./autogen.sh
-./configure
-make
-sudo make install
-sudo ldconfig
-```
-
-Second, install czmq:
-
-```bash
-git clone https://github.com/zeromq/czmq.git
-cd czmq
-./autogen.sh
-./configure
-make
-sudo make install
-sudo ldconfig
-```
-
-Finally, you need to compile OCUDU (assuming you have already installed all the required dependencies).
-
-:::note
-If you have already built and installed OCUDU prior to installing ZMQ and other dependencies you will have to re-build to ensure the ZMQ drivers have been recognized correctly.
-:::
-
-The following commands can be used to clone and build from source:
-
-```bash
-git clone https://gitlab.com/ocudu/ocudu.git
-cd ocudu
-mkdir build
-cd build
-cmake ../ -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON
-make -j`nproc`
-```
-
-:::warning
-ZeroMQ is disabled by default, this is enabled when running `cmake` by including `-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON`.
-:::
-
-Pay extra attention to the cmake console output. Make sure you read the following line to ensure ZMQ has been correctly detected by OCUDU:
-
-```bash
-...
--- FINDING ZEROMQ.
--- Checking for module 'ZeroMQ'
---   No package 'ZeroMQ' found
--- Found libZEROMQ: /usr/local/include, /usr/local/lib/libzmq.so
-...
-```
-
 On Ubuntu, ZeroMQ development libraries can be installed with:
 
 ```bash
