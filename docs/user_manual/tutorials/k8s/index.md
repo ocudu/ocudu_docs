@@ -549,7 +549,7 @@ helm uninstall ocudu-gnb -n ocudu
 To delete the linuxptp deployment:
 
 ```bash
-helm uninstall linuxptp -n socudun
+helm uninstall linuxptp -n ocudu
 ```
 
 To delete the Open5GS deployment:

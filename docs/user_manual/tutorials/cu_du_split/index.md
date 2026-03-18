@@ -135,7 +135,7 @@ If the Open5GS documentation has been followed correctly, then the core should a
 First, navigate to the CU application folder. This can be done with the following command:
 
 ```bash
-cd ~/ocudu/build/apps/cu
+cd ~/ocudu/build/apps/ocu
 ```
 
 To run the CU the following command can be used (assuming the configuration file is also located in the same folder):
