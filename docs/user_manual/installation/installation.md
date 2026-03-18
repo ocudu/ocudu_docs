@@ -95,34 +95,30 @@ sudo pacman -S fftw
 ```bash
 sudo apt update
 sudo apt install -y gpg-agent wget
-wget -O- <https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB> | gpg --dearmor | sudo tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
-echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] <https://apt.repos.intel.com/oneapi> all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
+wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | gpg --dearmor | sudo tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
+echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
 sudo apt update
 sudo apt install intel-oneapi-mkl-devel libomp-dev
 ```
   </TabItem>
 </Tabs>
 
-#### AOCL-FFTZ
+### AOCL-FFTZ
 
 <Tabs>
   <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
 ```bash
 AOCL_FFTW_VERSION="5.2"
-sudo apt update
-sudo apt install -y wget autoconf automake make libtool
-pushd /tmp
-wget --no-check-certificate "https://github.com/amd/amd-fftw/archive/refs/tags/5.2.tar.gz" -O "amd-fftw-5.2.tar.gz"
-tar -xzf amd-fftw-5.2.tar.gz
-rm -f amd-fftw-5.2.tar.gz
-cd amd-fftw-5.2
+sudo apt update && sudo apt install -y wget autoconf automake make libtool
+cd /tmp
+wget --no-check-certificate -O - "https://github.com/amd/amd-fftw/archive/refs/tags/${AOCL_FFTW_VERSION}.tar.gz" | tar -xz
+cd amd-fftw-${AOCL_FFTW_VERSION}
 ./configure --enable-sse2 --enable-avx --enable-avx2 --enable-avx512 \
   --enable-openmp --enable-shared --enable-amd-opt \
   --enable-dynamic-dispatcher --prefix=/usr/local
 make -j"$(nproc)"
 make install
-popd
-rm -rf /tmp/amd-fftw-5.2
+cd ~ && rm -rf /tmp/amd-fftw-${AOCL_FFTW_VERSION}
 ldconfig
 ```
   </TabItem>
@@ -133,15 +129,12 @@ ldconfig
 <Tabs>
   <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
 ```bash
-sudo apt update
-sudo apt install -y environment-modules wget
-pushd /tmp
-wget <https://developer.arm.com/-/cdn-downloads/permalink/Arm-Performance-Libraries/Version_24.10/arm-performance-libraries_24.10_deb_gcc.tar>
-tar -xf arm-performance-libraries_24.10_deb_gcc.tar
+sudo apt update && sudo apt install -y environment-modules wget
+cd /tmp
+wget https://developer.arm.com/-/cdn-downloads/permalink/Arm-Performance-Libraries/Version_24.10/arm-performance-libraries_24.10_deb_gcc.tar | tar -xz
 cd arm-performance-libraries_24.10_deb/
 ./arm-performance-libraries_24.10_deb.sh --accept
-popd
-rm -Rf /tmp/arm-performance-libraries_24.10_deb
+cd ~ && rm -Rf /tmp/arm-performance-libraries_24.10_deb
 source /usr/share/modules/init/bash
 export MODULEPATH=$MODULEPATH:/opt/arm/modulefiles
 module avail
@@ -325,7 +318,7 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `srsRAN_Project/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
+You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
 
 ```bash
 sudo make install
