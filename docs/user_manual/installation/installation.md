@@ -111,15 +111,10 @@ sudo apt install intel-oneapi-mkl-devel libomp-dev
 AOCL_FFTW_VERSION="5.2"
 sudo apt update && sudo apt install -y wget autoconf automake make libtool
 cd /tmp
-wget --no-check-certificate -O - "https://github.com/amd/amd-fftw/archive/refs/tags/${AOCL_FFTW_VERSION}.tar.gz" | tar -xz
-cd amd-fftw-${AOCL_FFTW_VERSION}
-./configure --enable-sse2 --enable-avx --enable-avx2 --enable-avx512 \
-  --enable-openmp --enable-shared --enable-amd-opt \
-  --enable-dynamic-dispatcher --prefix=/usr/local
-make -j"$(nproc)"
-make install
-cd ~ && rm -rf /tmp/amd-fftw-${AOCL_FFTW_VERSION}
-ldconfig
+wget --no-check-certificate -O - "https://github.com/amd/aocl-fftz/archive/refs/tags/${AOCL_FFTW_VERSION}.tar.gz" | tar -xz
+cd aocl-fftz-${AOCL_FFTW_VERSION}
+cmake -B buildFFTZ
+cmake --build buildFTTZ --target install -j"${nproc}"
 ```
   </TabItem>
 </Tabs>
