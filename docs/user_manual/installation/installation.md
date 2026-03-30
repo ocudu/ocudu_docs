@@ -108,11 +108,11 @@ sudo apt install intel-oneapi-mkl-devel libomp-dev
 <Tabs>
   <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
 ```bash
-AOCL_FFTW_VERSION="5.2"
+AOCL_FFTZ_VERSION="5.2"
 sudo apt update && sudo apt install -y wget autoconf automake make libtool
 cd /tmp
-wget --no-check-certificate -O - "https://github.com/amd/aocl-fftz/archive/refs/tags/${AOCL_FFTW_VERSION}.tar.gz" | tar -xz
-cd aocl-fftz-${AOCL_FFTW_VERSION}
+wget --no-check-certificate -O - "https://github.com/amd/aocl-fftz/archive/refs/tags/${AOCL_FFTZ_VERSION}.tar.gz" | tar -xz
+cd aocl-fftz-${AOCL_FFTZ_VERSION}
 cmake -B buildFFTZ
 cmake --build buildFTTZ --target install -j"${nproc}"
 ```
