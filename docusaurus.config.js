@@ -120,14 +120,6 @@ module.exports = {
         },
       ],
     },
-    announcementBar: {
-      id: 'wip',
-      content:
-        'This documentation is a work in progress!',
-      backgroundColor: '#ddc36fff',
-      textColor: '#091E42',
-      isCloseable: false,
-    },
     footer: {
       style: 'dark',
       links: [
