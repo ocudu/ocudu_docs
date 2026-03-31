@@ -56,7 +56,7 @@ If you have built OCUDU from source and have not installed it, then you can run 
 Run the gNB as follows, passing the YAML configuration file:
 
 ```bash
-sudo ./gnb -c gnb_rf_b200_tdd_n78_10mhz.yml
+sudo ./gnb -c gnb_rf_b200_tdd_n78_20mhz.yml
 ```
 
 Run the gNB with `sudo` to ensure threads are configured with the correct priority.
