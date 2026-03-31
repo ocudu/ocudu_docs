@@ -165,9 +165,6 @@ that the affected code needs special treatment and careful handling.
 Notice that all 32-bit architectures and above define `int` and `unsigned int` to be of 32-bits, so it is safe to use the generic
 types safely unless you know you will need a wider type.
 
-#### WARNING
-discussion - bring this point up
-
 ```cpp
 for (uint32_t cc_idx = 0; cc_idx != num_cc; ++cc_idx)
     // here we know we're never going to exceed 4 billion cc's - safe to use a generic unsigned int (32 bits)

@@ -63,13 +63,9 @@ ocudu_assert(idx < get_num_ues() && "UE index value is out of range!");
 ocudu_assert(v1.size() == v2.size() && "vector sizes must be identical!");
 ```
 
-#### NOTE
-
+:::info
 If an error condition can be triggered by user input then do not use an assert, instead, use a recoverable error mechanism.
-
-#### WARNING
-
-which?
+:::
 
 Another nice side effect of using assertions is that you can apply the “design by contract” approach for many interfaces, helping to reduce a lot
 of error checks and error handling clutter. As software is usually layered, you may validate user inputs in a certain layer, keeping it centralized in a single place
@@ -96,10 +92,6 @@ bool is_value_new = set.insert(x);
 (void)is_new_value;
 ocudu_assert(is_value_new && "The value shouldn't be in the set yet");
 ```
-
-#### WARNING
-
-write something about expect
 
 ## Do not use `using namespace std`
 
@@ -138,8 +130,6 @@ The problem is that it evaluates `x.end()` on each iteration. Instead, use loops
 for (auto i = x.begin(), e = x.end(); i != e; ++i)
   ... use i ...
 ```
-
-#### NOTE
 
 These two loops have different semantics: if the container is being mutated inside the loop, `x.end()` may change its value every time through the loop,
 so the second form may not be correct. If you actually depend on this behavior, please write the loop in the first form and add a comment indicating you did

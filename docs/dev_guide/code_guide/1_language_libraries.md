@@ -13,10 +13,6 @@ OCUDU is compiled and tested using the following toolchains with the following m
 * GCC v11.4.0 (or later)
 * Clang v14.0.0 (or later)
 
-### NOTE
-
-We recommend using Ubuntu 22.04, with GCC 11.4.0 and Clang 14.0.0
-
 ## Use of the C++ standard library
 
 It is really encouraged to use the C++ standard library to avoid reinventing the wheel for many common programming tasks and utilities.
