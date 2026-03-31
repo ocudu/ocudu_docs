@@ -36,22 +36,27 @@ feature development, community feedback integration, and long-term sustainabilit
 
 ## Current Features
 
-* 3GPP release 17 aligned
-* FDD/TDD supported, all FR1 bands
-* All bandwidths (e.g. 100 MHz TDD, 50 MHz FDD)
-* 15/30 kHz subcarrier spacing
+* 3GPP release 18 aligned
+* FDD/TDD supported, all FR1 and FR2 bands
+* All bandwidths (e.g. 100 MHz TDD, 50 MHz FDD) in FR1 and up to 400 MHz in FR2
+* 15/30/120 kHz subcarrier spacing
 * All physical channels
 * Highly optimized LDPC and Polar encoder/decoder for ARM Neon and x86 AVX2/AVX512
 * All RRC procedures
 * All MAC procedures
-* Intra-DU/Intra-CU and Intra-CU handover over the NG interface
+* Intra-DU/Intra-CU and Intra-CU handover over the NG and Xn interface (including Conditional HO)
 * Split 7.2a support using in-house open-fronthaul (OFH) library
 * Support for QAM-256
-* 4x4 MIMO in the Downlink
-* SSB-based radio link monitoring
+* 4x4 MIMO in the Downlink and Uplink
+* SSB-based and CSI-RS based radio link monitoring
+* Robust Header Compression (RoHC)
+* Support for RRC_INACTIVE
 * Slicing
 * NTN GEO support
+* NRPPa using RSRP and SRS
 * CU/DU and CU-CP/CU-UP separation
+* M-plane (through helper components)
+* Hardware accelerator support through DPDK BBDEV
 
 The features above are fully implemented and available today.
 
@@ -59,20 +64,6 @@ The features above are fully implemented and available today.
 
 The roadmap items listed below are currently planned with allocated engineering resources and a defined delivery timeline. However, this roadmap is not fixed. With additional engineering capacity
 and collaborative contributions, priorities and timelines can be adjusted. If there are features within the OCUDU scope that are not currently listed but are important to you or your organization, we welcome discussions on accelerating, expanding, or (re-)prioritizing development through resource support and joint contribution.
-
-### Coming in 26.04
-
-* UL MIMO
-* NRPPa using RSRP and SRS
-* Xn and Conditional HO
-* FR2 120 KHz
-* PRACH formats A3, C0 and C2
-* Robust Header Compression (RoHC)
-* Support for RRC_INACTIVE
-* SRS aperiodic and narrowband
-* CSI-RS based RL monitoring
-* M-plane
-* Hardware accelerator support through DPDK BBDEV
 
 ### Coming in 26.10
 
