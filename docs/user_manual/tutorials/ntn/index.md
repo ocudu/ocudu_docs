@@ -136,7 +136,7 @@ This tutorial uses version 2023-12-15 of Amarisoft UE, but it can be any version
 These steps should only be completed **after** compiling OCUDU as mentioned above, as they require the build files of OCUDU and Amarisoft UHD RF frontend driver.
 :::
 
-Interfacing the Amarisoft UE with OCUDU requires a custom TRX driver implemented by SRS, which can be found in OCUDU source files in `ocudu/utils/trx_srsran`.
+Interfacing the Amarisoft UE with OCUDU requires a custom TRX driver implemented by SRS, which can be found in OCUDU source files in `ocudu/utils/trx_ocudu`.
 
 The Amarisoft UE release folder, `amarisoft.2023-12-15.tar.gz`, should contain a file called `trx_uhd-linux-2023-12-15.tar.gz`. The release folder and the sub-file in question should be uncompressed before proceeding.
 
@@ -242,28 +242,28 @@ cell_cfg:
 The `ntn` section is as follows:
 
 ```default
-ntn:
-  cell_specific_koffset:  239       # Cell-specific k-offset.
-  ta_common:  0                     # TA common offset.
-  ephemeris_info_ecef:              # Satellite ephemeris in position and velocity state vector format.
-    pos_x:  -28105880
-    pos_y:  31509747
-    pos_z:  -1691895
-    vel_x:  34
-    vel_y:  9
-    vel_z:  -385
+cell_cfg:
+  ntn:
+    cell_specific_koffset:  239       # Cell-specific k-offset.
+    ta_common:  0                     # TA common offset.
+    ephemeris_info_ecef:              # Satellite ephemeris in position and velocity state vector format.
+      pos_x:  -28105880
+      pos_y:  31509747
+      pos_z:  -1691895
+      vel_x:  34
+      vel_y:  9
+      vel_z:  -385
 ```
 
 Finally, the Timing Advance (TA) Scheduler configuration must be updated to account for the large propagation delays in GEO NTN. Specifically, it is important to avoid measuring and issuing new TA commands before the previous command has been applied by the UE. The `ta_sched_cfg` section is as follows:
 
 ```default
 cell_cfg:
-  sched_expert_cfg:
-    ta_sched_cfg:
-      ta_cmd_offset_threshold: 1                 # Sets the timing Advance Command (T_A) offset threshold above which Timing Advance Command is triggered.
-      ta_measurement_slot_period: 80             # Sets the measurements periodicity in nof. slots over which the new Timing Advance Command is computed.
-      ta_measurement_slot_prohibit_period: 250   # Sets the delay in number of slots between issuing the TA_CMD and starting TA measurements.
-      ta_target: 0                               # Sets the timing advance target in units of TA.
+  ta:
+    ta_cmd_offset_threshold: 1                 # Sets the timing Advance Command (T_A) offset threshold above which Timing Advance Command is triggered.
+    ta_measurement_slot_period: 80             # Sets the measurements periodicity in nof. slots over which the new Timing Advance Command is computed.
+    ta_measurement_slot_prohibit_period: 250   # Sets the delay in number of slots between issuing the TA_CMD and starting TA measurements.
+    ta_target: 0                               # Sets the timing advance target in units of TA.
 ```
 
 Note that [gnb_zmq.yml](assets/gnb_zmq.yml) file contains the basic (i.e., generic) gNB config, while the NTN-related parameters are defined in a separate [geo_ntn.yml](assets/geo_ntn.yml) file.
