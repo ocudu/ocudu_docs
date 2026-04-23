@@ -17,7 +17,7 @@ We welcome vulnerability reports and fixes, but do not accept contributions deri
 * New Contributor Guide
   * [Ways to Contribute](#ways-to-contribute)
   * [Issues](#issues)
-  * [Proposing an Idea](#proposing-an-idea)
+  * [Proposing an Idea](#proposing-an-idea) (Tier 1: GitLab issue · Tier 2: OIP)
   * [Merge Requests](#merge-requests)
   * [Licensing](#licensing)
   * [Labels](#labels)
@@ -100,9 +100,10 @@ below.
       issue to a milestone until the questions are answered.
     - We attempt to do this process at least once per work day.
 3. **Discussion**
-    - Issues that are labeled `feature` or `proposal` and do not all under the official roadmap
-      must write a OCUDU Improvement Proposal (OIP).
-      See [Proposing an Idea](#proposing-an-idea). Smaller quality-of-life enhancements are exempt.
+    - Issues that are labeled `feature` or `proposal` and fall outside the official roadmap
+      may require a formal OCUDU Improvement Proposal (OIP) depending on scope.
+      See [Proposing an Idea](#proposing-an-idea) for when an OIP is needed. Smaller
+      quality-of-life enhancements are exempt.
     - Issues that are labeled as `feature` or `bug` should be connected to the MR that resolves it.
     - Whoever is working on a `feature` or `bug` issue (whether a maintainer or someone from the
       community), should either assign the issue to themselves or make a comment in the issue saying
@@ -129,18 +130,39 @@ that you want to work on it. Something like "I want to work on this" is fine.
 
 ## Proposing an Idea
 
-Before proposing a new idea to the OCUDU project, please make sure to write up a "OCUDU Improvement
-Proposal". A OCUDU Improvement Proposal is a
-design document that describes a new feature for the OCUDU project. The proposal should provide a
-concise technical specification and rationale for the feature.
+OCUDU uses a two-tier process for proposing new ideas, scaled to the size of the change.
 
-It is also worth considering vetting your idea with the community via Gitlab discussions.
-Vetting an idea publicly before going as
-far as writing a proposal is meant to save the potential author time. Many ideas have been proposed;
-it's quite likely there are others in the community who may be working on a similar proposal, or a
-similar proposal may have already been written.
-You can simply post your proposal as a Gitlab issue and start the discussion there.
-We currently don't have an official process in place but that might change as the community grows.
+### Tier 1 — Lightweight proposal (most changes)
+
+Open a GitLab issue in the main [ocudu](https://gitlab.com/ocudu/ocudu/-/issues) repository
+with the `proposal` label and start the discussion there. A maintainer will triage it within
+5 business days. If the scope is small enough the issue is converted directly to a `feature`
+and no further process is required.
+
+### Tier 2 — OCUDU Improvement Proposal (significant changes)
+
+A formal **OCUDU Improvement Proposal (OIP)** is required when a change:
+
+- introduces or modifies a public API or wire protocol
+- adds a new major subsystem or component
+- has cross-layer or cross-team impact
+- involves a breaking change for existing users
+- requires a TSC decision before work begins
+
+OIPs live in the dedicated [ocudu/community/oips](https://gitlab.com/ocudu/community/oips)
+repository. The process is:
+
+```
+1. Discuss informally    →  GitLab issue (label: proposal) in the main repo
+2. Write an OIP          →  copy the template, open an MR in community/oips
+3. Community review      →  minimum 2-week discussion window on the MR
+4. Decision              →  TSC/maintainers accept, reject, or request changes
+5. Implementation        →  accepted OIP is linked to the code MR(s)
+6. Close out             →  OIP moved to accepted/ or rejected/ with rationale
+```
+
+The OIP template and full process details are in the
+[community/oips README](https://gitlab.com/ocudu/community/oips).
 
 After your proposal has been approved, follow the [developer's guide](https://ocudu.org) to get started.
 
