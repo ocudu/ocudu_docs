@@ -20,6 +20,7 @@ We welcome vulnerability reports and fixes, but do not accept contributions deri
   * [Proposing an Idea](#proposing-an-idea) (Tier 1: GitLab issue · Tier 2: OIP)
   * [Merge Requests](#merge-requests)
   * [Licensing](#licensing)
+  * [Use of AI Coding Assistants](#use-of-ai-coding-assistants)
   * [Labels](#labels)
 
 As you get started, you are in the best position to give us feedback on areas of
@@ -308,6 +309,49 @@ That said, we understand that security researchers or contributors in sensitive 
 
 Please note that the project maintains the right to reject contributions - especially security-related changes - if the source cannot be reasonably trusted or verified. Please
 also review our requirements for submitting security related fixes [here](https://docs.ocudu.org/dev_guide/contributing_guide/#reporting-a-security-issue).
+
+## Use of AI Coding Assistants
+
+OCUDU follows the same pragmatic stance as the Linux kernel
+([Kernel AI Coding Assistants ](https://docs.kernel.org/process/coding-assistants.html)):
+AI coding tools are permitted, but their use must be disclosed and the human contributor
+remains fully responsible for every line submitted.
+
+### Disclosure
+
+If any part of a contribution was written or materially shaped by an AI tool, add an
+`Assisted-by:` trailer to the commit message:
+
+```bash
+Assisted-by: GitHub Copilot
+```
+
+```bash
+Assisted-by: Claude Sonnet (Anthropic)
+```
+
+Use one trailer per tool. Place it alongside the other trailers (`Signed-off-by:`,
+`Co-developed-by:`, etc.) at the bottom of the commit message.
+
+### Human responsibility
+
+The `Signed-off-by:` tag certifies the
+[Developer Certificate of Origin (DCO)](https://developercertificate.org/). AI tools
+cannot sign off - only the human submitting the patch can. By signing off you take full
+responsibility for the correctness, security, and licensing of the contribution,
+regardless of how it was produced.
+
+This means:
+- Review AI-generated code as carefully as you would review anyone else's patch.
+- Do not submit code you do not understand simply because a tool produced it.
+- Security-sensitive changes receive extra scrutiny; the origin of the code does not
+  reduce that bar.
+
+### What does not need disclosure
+
+Routine autocomplete suggestions, grammar fixes in documentation, or one-line
+completions do not require an `Assisted-by:` tag. The intent is transparency about
+substantive AI involvement, not accounting for every keystroke.
 
 ## Labels
 
