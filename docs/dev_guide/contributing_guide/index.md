@@ -149,7 +149,7 @@ A formal **OCUDU Improvement Proposal (OIP)** is required when a change:
 - involves a breaking change for existing users
 - requires a TSC decision before work begins
 
-OIPs live in the dedicated [ocudu/community/oips](https://gitlab.com/ocudu/community/oips)
+OIPs live in the dedicated [OIPs](https://gitlab.com/ocudu/community/oips)
 repository. The process is:
 
 ```
@@ -164,7 +164,7 @@ repository. The process is:
 The OIP template and full process details are in the
 [community/oips README](https://gitlab.com/ocudu/community/oips).
 
-After your proposal has been approved, follow the [developer's guide](https://ocudu.org) to get started.
+After your proposal has been approved, follow the [developer's guide](https://docs.ocudu.org/dev_guide/) to get started.
 
 
 ## Merge Requests
