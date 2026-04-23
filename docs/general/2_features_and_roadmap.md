@@ -44,11 +44,11 @@ feature development, community feedback integration, and long-term sustainabilit
 * Highly optimized LDPC and Polar encoder/decoder for ARM Neon and x86 AVX2/AVX512
 * All RRC procedures
 * All MAC procedures
-* Intra-DU/Intra-CU and Intra-CU handover over the NG and Xn interface (including Conditional HO)
+* All handover/mobility flavors over the NG and Xn interface (including Conditional HO)
 * Split 7.2a support using in-house open-fronthaul (OFH) library
 * Support for QAM-256
 * 4x4 MIMO in the Downlink and Uplink
-* SSB-based and CSI-RS based radio link monitoring
+* SSB-based and CSI-RS-based radio link monitoring
 * Robust Header Compression (RoHC)
 * Support for RRC_INACTIVE
 * Slicing
@@ -72,7 +72,7 @@ and collaborative contributions, priorities and timelines can be adjusted. If th
 * NR Positioning: Angle-based and DL-PRS
 * ORAN Split 7.2b support
 * 2-step RACH
-* Non-standalone (NSA) with third-party eNodeB
+* Enhanced fault-tolerance and resilience
 * NTN Release 17
 
 ### Coming in 27.04
@@ -99,6 +99,7 @@ and collaborative contributions, priorities and timelines can be adjusted. If th
 * UL Tx switching
 * S-NPN and NPI-NPN
 * Support for non-3GPP Access Technologies
+* Non-standalone (NSA) with third-party eNodeB
 
 ### Coming in 28.10
 
