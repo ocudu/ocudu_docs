@@ -12,8 +12,8 @@ The guide is structured in three parts:
 
 - **[Design Principles](./2_principles/index.md)** - the engineering principles that shape every class and interface:
   - [Clean Architecture](./2_principles/1_clean_architecture.md) - layered dependency model; arrows always point inward.
-  - [Object Oriented Programming](./2_principles/2_oop.md) - encapsulation, polymorphism, composition over inheritance, ownership rules.
-  - [Clean Code - SOLID](./2_principles/3_solid.md) - the five SOLID principles with OCUDU-specific guidance and violation patterns.
+  - [Clean Code - SOLID](./2_principles/2_solid.md) - the five SOLID principles with OCUDU-specific guidance and violation patterns.
+  - [Object Oriented Programming](./2_principles/3_oop.md) - encapsulation, polymorphism, composition over inheritance, ownership rules.
   - [Software Design Patterns](./2_principles/4_design_patterns.md) - the patterns used consistently across the codebase.
 
 - **[Realization](./3_realization/index.md)** - how the principles above are concretely expressed in the implementation:
@@ -24,7 +24,7 @@ The guide is structured in three parts:
   - [Real-Time Safety](./3_realization/5_realtime_safety.md) - timing constraints, forbidden operations, and CI enforcement.
   - [Use of C++](./3_realization/6_cpp_language.md) - C++17/20/23 features, specialised containers, executors, and SIMD.
   - [Testing](./3_realization/7_testing.md) - unit, component, integration, and E2E test strategy.
-  - [Plugins](./3_realization/8_plugins.md) - extending or replacing OCUDU components with third-party implementations.
+  - [Plugins](./3_realization/8_plugins/index.md) - extending or replacing OCUDU components with third-party implementations.
 
 - **[References](./4_references.md)** - books and online resources for further reading on Clean Architecture, SOLID, C++ software design, and design patterns.
 
