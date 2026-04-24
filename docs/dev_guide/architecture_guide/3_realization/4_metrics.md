@@ -15,17 +15,17 @@ Every protocol layer in OCUDU reports its own performance and KPI metrics indepe
 
 ## Reporting interface
 
-Each layer that produces metrics depends on an `IMetricsReporter` interface injected at construction time. The layer calls `report()` with a typed metrics struct; it does not know - and must not assume - where the data goes. The wiring layer connects the reporter interface to the active backend (log file, Prometheus endpoint, in-memory ring buffer for testing, or a null-object no-op).
+Each layer that produces metrics depends on a `mac_metrics_notifier` interface injected at construction time. The layer calls `on_new_metrics_report()` with a typed metrics struct; it does not know - and must not assume - where the data goes. The wiring layer connects the notifier interface to the active backend (log file, Prometheus endpoint, in-memory ring buffer for testing, or a null-object no-op).
 
 This design means:
 
-- Adding a new metrics backend requires only a new implementation of `IMetricsReporter` - no protocol code changes.
-- In unit tests, a `NullMetricsReporter` or a capturing test double is injected; no real backend is needed.
+- Adding a new metrics backend requires only a new implementation of `mac_metrics_notifier` - no protocol code changes.
+- In unit tests, a `null_mac_metrics_notifier` or a capturing test double is injected; no real backend is needed.
 - Metrics collection can be disabled at zero runtime cost by injecting the null object.
 
 ## Per-layer ownership
 
-Each layer owns the definition of its own metrics struct. The MAC defines `MacMetrics`; the RLC defines `RlcMetrics`; and so on. This avoids a monolithic metrics schema that every layer must update whenever any other layer changes. Consumers that want a combined view aggregate the per-layer structs at the wiring layer.
+Each layer owns the definition of its own metrics struct. The MAC defines `mac_metric_report`; the RLC defines `rlc_metrics`; and so on. This avoids a monolithic metrics schema that every layer must update whenever any other layer changes. Consumers that want a combined view aggregate the per-layer structs at the wiring layer.
 
 ## Relationship to instrumentation
 

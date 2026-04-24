@@ -17,7 +17,7 @@ Expressing this logic with callbacks or explicit state machines produces code th
 OCUDU uses **C++ coroutines** to express asynchronous procedures as sequential code. A coroutine can suspend at an `await` point - waiting for a timer, a response, or an event - and resume automatically when the condition is met. From the outside, the coroutine is just a callable; from the inside, it reads like a straightforward sequence of steps.
 
 ```cpp
-async_task<void> handle_rrc_setup(UeContext& ue)
+async_task<void> handle_rrc_setup(ue_context& ue)
 {
   auto response = co_await send_rrc_setup_request(ue);
   if (!response) {

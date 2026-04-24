@@ -7,10 +7,10 @@ A PHY TAP plugin requires three pieces: the processor class, the factory class, 
 Create a class that inherits from `external_ul_processor` and implements all three callbacks.
 
 ```cpp
-class my_ul_processor : public external_ul_processor
+class iq_tap_processor : public external_ul_processor
 {
 public:
-  my_ul_processor(unsigned nof_rb, unsigned nof_ports) :
+  iq_tap_processor(unsigned nof_rb, unsigned nof_ports) :
     nof_ports(nof_ports),
     // Pre-allocate the working buffer in the constructor.
     // Dynamic allocation inside process() is forbidden.
@@ -66,16 +66,16 @@ private:
 The factory is responsible for constructing the processor with its configuration. OCUDU calls `create()` once per active cell at startup.
 
 ```cpp
-class my_ul_processor_factory : public external_ul_processor_factory
+class iq_tap_processor_factory : public external_ul_processor_factory
 {
 public:
-  my_ul_processor_factory(unsigned nof_rb, unsigned nof_ports) :
+  iq_tap_processor_factory(unsigned nof_rb, unsigned nof_ports) :
     nof_rb(nof_rb), nof_ports(nof_ports)
   {}
 
   std::unique_ptr<external_ul_processor> create() override
   {
-    return std::make_unique<my_ul_processor>(nof_rb, nof_ports);
+    return std::make_unique<iq_tap_processor>(nof_rb, nof_ports);
   }
 
 private:
@@ -95,7 +95,7 @@ create_phy_tap_factory(unsigned           nof_rb,
                        const std::string& processor_arguments)
 {
   // Parse processor_arguments here if your plugin needs configuration.
-  auto ext_factory = std::make_shared<my_ul_processor_factory>(nof_rb, nof_ports);
+  auto ext_factory = std::make_shared<iq_tap_processor_factory>(nof_rb, nof_ports);
   return std::make_shared<phy_tap_factory_impl>(std::move(ext_factory));
 }
 ```

@@ -18,10 +18,10 @@ Typical layer boundaries:
 
 | Boundary | Interface direction |
 |---|---|
-| MAC ↔ PHY | MAC holds `IPhyDownlinkProcessor` and `IPhyUplinkProcessor`; PHY calls into `IMacSlotHandler` |
-| RLC ↔ MAC | RLC holds `IMacUlScheduler`; MAC calls into `IRlcUlReceiver` |
-| PDCP ↔ RLC | PDCP holds `IRlcTxDataHandler`; RLC calls into `IPdcpRxDataHandler` |
-| RRC ↔ PDCP | RRC holds `IPdcpSrbControl`; PDCP calls into `IRrcMessageHandler` |
+| MAC ↔ PHY | MAC holds `lower_phy_downlink_handler` and `lower_phy_uplink_handler`; PHY calls into `mac_cell_slot_handler` |
+| RLC ↔ MAC | RLC holds `mac_rlc_ul_scheduler`; MAC calls into `rlc_rx_lower_layer_interface` |
+| PDCP ↔ RLC | PDCP holds `rlc_tx_lower_layer_interface`; RLC calls into `pdcp_rx_lower_notifier` |
+| RRC ↔ PDCP | RRC holds `pdcp_entity_control`; PDCP calls into `rrc_ul_dcch_pdu_handler` |
 
 Each interface is defined in the header of the layer that depends on it, not in the header of the layer that implements it - this is what keeps the dependency pointing inward.
 

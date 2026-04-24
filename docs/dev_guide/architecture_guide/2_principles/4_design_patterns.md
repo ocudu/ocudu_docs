@@ -14,10 +14,10 @@ The patterns below are grouped by category and annotated with where and why they
 
 **Problem:** A component needs to create objects without knowing their concrete type.
 
-**In OCUDU:** Protocol entities are constructed through factory functions or factory classes that read configuration and return the right concrete implementation behind an interface pointer. This keeps construction logic out of business logic and makes it straightforward to return a different implementation (e.g. a stub or a test double) by swapping the factory.
+**In OCUDU:** Protocol entities are constructed through factory functions or factory classes that read configuration and return the right concrete implementation behind an interface pointer. This keeps construction logic out of business logic and makes it straightforward to return a different implementation (e.g., a stub or a test double) by swapping the factory.
 
 ```cpp
-std::unique_ptr<IUlScheduler> make_ul_scheduler(const SchedConfig& cfg);
+std::unique_ptr<mac_scheduler> make_mac_scheduler(const scheduler_expert_config& cfg);
 ```
 
 ### Builder
@@ -32,7 +32,7 @@ std::unique_ptr<IUlScheduler> make_ul_scheduler(const SchedConfig& cfg);
 
 **Problem:** Two components have incompatible interfaces; one must be wrapped to look like the other.
 
-**In OCUDU:** Layer boundaries regularly require adapters. When connecting OCUDU to a third-party PHY, an adapter class wraps the external API and presents the `IPhyDownlinkProcessor` interface that the MAC expects. The MAC never knows the adapter exists. This is one of the most heavily used patterns in the codebase.
+**In OCUDU:** Layer boundaries regularly require adapters. When connecting OCUDU to a third-party PHY, an adapter class wraps the external API and presents the `lower_phy_downlink_handler` interface that the MAC expects. The MAC never knows the adapter exists. This is one of the most heavily used patterns in the codebase.
 
 ### Decorator
 
@@ -42,7 +42,7 @@ std::unique_ptr<IUlScheduler> make_ul_scheduler(const SchedConfig& cfg);
 
 ```cpp
 // Wraps a real scheduler and records scheduling metrics around every call.
-class MetricsDecoratorScheduler : public IScheduler { ... };
+class scheduler_metrics_decorator : public mac_scheduler { ... };
 ```
 
 ## Behavioural patterns
@@ -75,7 +75,7 @@ class MetricsDecoratorScheduler : public IScheduler { ... };
 
 **Problem:** A component requires a collaborator, but in some configurations that collaborator does nothing.
 
-**In OCUDU:** Rather than littering code with `if (reporter != nullptr) reporter->report(...)`, OCUDU uses null-object implementations that conform to the full interface but do nothing. The `NullMetricsReporter` is a typical example. This keeps calling code clean and makes the "no-op" case explicit.
+**In OCUDU:** Rather than littering code with `if (reporter != nullptr) reporter->report(...)`, OCUDU uses null-object implementations that conform to the full interface but do nothing. The `null_mac_metrics_notifier` is a typical example. This keeps calling code clean and makes the "no-op" case explicit.
 
 ## Pattern selection guide
 

@@ -31,7 +31,7 @@ Each class does one thing and does it well. If a class changes because the sched
 
 Adding new behaviour should be possible by implementing a new class that conforms to an existing interface, not by editing existing classes. Editing an existing, tested class risks introducing regressions and spreads the cost of a change to every caller.
 
-**In OCUDU:** Adding a new scheduling policy means implementing `IScheduler` and wiring it in - not adding another `if/else` branch inside the existing scheduler. Adding a new radio device means implementing the radio plugin interface - not modifying the radio abstraction layer.
+**In OCUDU:** Adding a new scheduling policy means implementing `mac_scheduler` and wiring it in - not adding another `if/else` branch inside the existing scheduler. Adding a new radio device means implementing the radio plugin interface - not modifying the radio abstraction layer.
 
 **Common violation to watch for:** Long `switch` or `if/else` chains that grow every time a new variant is added. Each new case is a signal that an interface and a set of implementations are missing.
 
@@ -41,7 +41,7 @@ Adding new behaviour should be possible by implementing a new class that conform
 
 Any concrete implementation of an interface must honour the full contract of that interface - not just its method signatures, but its pre-conditions, post-conditions, and invariants. A mock used in tests must behave like a real implementation would, or the tests prove nothing.
 
-**In OCUDU:** If `IUlScheduler::schedule()` guarantees it will never return an allocation that exceeds the configured bandwidth, every implementation - including mocks - must uphold that guarantee. Callers are allowed to rely on it.
+**In OCUDU:** If `mac_cell_slot_handler::handle_slot_indication()` guarantees it will never emit a grant that exceeds the configured bandwidth, every implementation - including mocks - must uphold that guarantee. Callers are allowed to rely on it.
 
 **Common violation to watch for:** Implementations that override a method to throw `not_implemented` or silently do nothing. If the full interface is not implementable, the interface is too large (see ISP below).
 
@@ -51,7 +51,7 @@ Any concrete implementation of an interface must honour the full contract of tha
 
 Interfaces must be narrow and focused. A component that only needs to read metrics should not be given an interface that also exposes write and reset methods. Large interfaces couple unrelated callers and make mocking harder.
 
-**In OCUDU:** Layer boundaries are crossed via small, purpose-built interfaces. A component that produces downlink grants exposes an `IDlGrantProducer` interface; a component that consumes them depends on that interface alone. It does not receive a handle to the entire scheduler.
+**In OCUDU:** Layer boundaries are crossed via small, purpose-built interfaces. A component that produces downlink grants exposes a `pdcch_resource_allocator` interface; a component that consumes them depends on that interface alone. It does not receive a handle to the entire scheduler.
 
 **Common violation to watch for:** Interface files that grow long as new callers request new methods. When a method is added to an interface "because caller X needs it," check first whether a separate, narrower interface for X's use case is the right solution.
 
@@ -61,7 +61,7 @@ Interfaces must be narrow and focused. A component that only needs to read metri
 
 This is the principle that directly enforces Clean Architecture's dependency rule in C++. Inner-layer classes hold references to interfaces. Outer-layer classes implement those interfaces and are injected at construction time. The inner layer never `#include`s a concrete outer-layer type.
 
-**In OCUDU:** The MAC layer defines `IPhyDownlinkProcessor`. The PHY layer implements it. The MAC entity is constructed with a reference to `IPhyDownlinkProcessor` - it never instantiates a PHY object directly. This is what makes it possible to test the MAC without a PHY.
+**In OCUDU:** The MAC layer defines `lower_phy_downlink_handler`. The PHY layer implements it. The MAC entity is constructed with a reference to `lower_phy_downlink_handler` - it never instantiates a PHY object directly. This is what makes it possible to test the MAC without a PHY.
 
 **Common violation to watch for:** Constructors that `new` their own collaborators instead of receiving them as arguments. Any use of `new ConcreteType()` inside a class body (rather than a factory) is a dependency inversion violation unless the class itself owns the concrete type as an implementation detail.
 

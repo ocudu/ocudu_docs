@@ -42,15 +42,16 @@ When a class needs a capability, inject it as a collaborator rather than inherit
 
 ```cpp
 // Prefer this:
-class MacScheduler {
+class cell_scheduler {
 public:
-  explicit MacScheduler(IMetricsReporter& reporter) : reporter(reporter) {}
+  explicit cell_scheduler(mac_metrics_notifier& metrics_notifier) :
+    metrics_notifier(metrics_notifier) {}
 private:
-  IMetricsReporter& reporter;
+  mac_metrics_notifier& metrics_notifier;
 };
 
 // Over this:
-class MacScheduler : public MetricsReporterBase { ... };
+class cell_scheduler : public mac_metrics_notifier_base { ... };
 ```
 
 Composition keeps classes focused, makes dependencies explicit, and means each collaborator can be mocked independently in tests.

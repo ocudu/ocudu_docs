@@ -9,7 +9,7 @@ A compile definition (`OCUDU_HAS_PHY_TAP`) is set on the OCUDU upper PHY target 
 ## Repository layout
 
 ```
-my_plugin/
+phy_tap_plugin/
 ├── CMakeLists.txt                    ← top-level: sets source root, adds subdirectory
 ├── include/
 │   ├── external_ul_processor.h       ← core processing interface (implement this)
@@ -21,7 +21,7 @@ my_plugin/
     └── external_processors/
         ├── CMakeLists.txt
         ├── external_processor_factories.cpp  ← factory chain construction
-        ├── my_ul_processor_impl.cpp          ← your processor implementation
+        ├── iq_tap_processor_impl.cpp          ← your processor implementation
         └── ...                               ← additional stages / decorators
 ```
 
@@ -29,7 +29,7 @@ my_plugin/
 
 ```cmake
 cmake_minimum_required(VERSION 3.14)
-project(my_ocudu_plugin)
+project(phy_tap_plugin)
 
 # Expose the include directory to the lib subtree.
 set(OCUDU_PLUGIN_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -64,13 +64,13 @@ add_subdirectory(external_processors)
 # All processor implementations go in this library.
 add_library(external_processors
     external_processor_factories.cpp
-    my_ul_processor_impl.cpp)
+    iq_tap_processor_impl.cpp)
 
 target_include_directories(external_processors PRIVATE
     ${OCUDU_PLUGIN_INCLUDE_DIR})
 
 target_link_libraries(external_processors
-    my_dsp_library      # any third-party DSP dependency
+    dsp_lib      # any third-party DSP dependency
     zmq                 # only if using the ZMQ telemetry decorator
     ocudu_support)      # OCUDU utility types (span, task_worker, …)
 ```
@@ -83,7 +83,7 @@ The plugin repository is added to the OCUDU source tree via `add_subdirectory()`
 option(OCUDU_ENABLE_PHY_TAP "Build the PHY TAP plugin" OFF)
 
 if(OCUDU_ENABLE_PHY_TAP)
-  add_subdirectory(path/to/my_plugin)
+  add_subdirectory(path/to/phy_tap_plugin)
 endif()
 ```
 
