@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 680 510"
+   font-family="Arial, Helvetica, sans-serif"
+   version="1.1"
+   id="svg287"
+   sodipodi:docname="clean_arch_simple.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview289"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.3971154"
+     inkscape:cx="402.2574"
+     inkscape:cy="372.55334"
+     inkscape:window-width="1452"
+     inkscape:window-height="1233"
+     inkscape:window-x="1258"
+     inkscape:window-y="218"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg287" />
+  <!-- ==================== CONCENTRIC RINGS ==================== -->
+  <!-- Outermost: Frameworks & Drivers -->
+  <circle
+     cx="263"
+     cy="262"
+     fill="#B8DCF0"
+     stroke="#5888B8"
+     stroke-width="1.5"
+     id="circle168"
+     r="232" />
+  <!-- Interface Adapters -->
+  <circle
+     cx="263"
+     cy="262"
+     fill="#A8DCA0"
+     stroke="#509050"
+     stroke-width="1.5"
+     id="circle170"
+     r="178" />
+  <!-- Application Business Rules: Use Cases -->
+  <circle
+     cx="263"
+     cy="262"
+     fill="#F4A8BC"
+     stroke="#C06080"
+     stroke-width="1.5"
+     id="circle172"
+     r="123" />
+  <!-- Enterprise Business Rules: Entities -->
+  <circle
+     cx="263"
+     cy="262"
+     fill="#FFFFC0"
+     stroke="#B0A820"
+     stroke-width="1.5"
+     id="circle174"
+     r="68" />
+  <!-- ==================== TEXT LABELS ==================== -->
+  <!-- Diagram title -->
+  <!-- Entities -->
+  <text
+     x="264.75812"
+     y="265.75012"
+     text-anchor="middle"
+     font-size="13px"
+     font-weight="bold"
+     fill="#333333"
+     id="text178">Entities</text>
+  <!-- Use Cases -->
+  <text
+     x="262.78"
+     y="173.95815"
+     text-anchor="middle"
+     font-size="12px"
+     font-weight="bold"
+     fill="#555555"
+     id="text180">Use Cases</text>
+  <!-- Interface Adapters items (all verified within r=123..178 from center) -->
+  <text
+     x="261.987"
+     y="117.0247"
+     text-anchor="middle"
+     font-size="11px"
+     fill="#333333"
+     id="text182"><tspan
+       style="font-weight:bold"
+       id="tspan697">Controllers</tspan></text>
+  <text
+     x="129.56479"
+     y="334.27872"
+     text-anchor="middle"
+     font-size="11px"
+     fill="#333333"
+     id="text184"><tspan
+       style="font-weight:bold"
+       id="tspan701">Gateways</tspan></text>
+  <text
+     x="345.63013"
+     y="388.20898"
+     text-anchor="middle"
+     font-size="11px"
+     fill="#333333"
+     id="text186"><tspan
+       style="font-weight:bold"
+       id="tspan691">Presenters</tspan></text>
+  <!-- Frameworks & Drivers items (all verified within r=178..232 from center) -->
+  <text
+     x="336.46576"
+     y="74.624031"
+     text-anchor="middle"
+     font-size="11px"
+     fill="#333333"
+     id="text188"><tspan
+       style="font-weight:bold"
+       id="tspan695">Web</tspan></text>
+  <text
+     x="104.89423"
+     y="138.35611"
+     text-anchor="middle"
+     font-size="11px"
+     fill="#333333"
+     id="text190"><tspan
+       style="font-weight:bold"
+       id="tspan631">Devices</tspan></text>
+  <text
+     x="86.770012"
+     y="371.29434"
+     text-anchor="middle"
+     font-size="11px"
+     fill="#333333"
+     id="text192"><tspan
+       style="font-weight:bold"
+       id="tspan685">DB</tspan></text>
+  <text
+     x="419.40689"
+     y="399.35934"
+     text-anchor="middle"
+     font-size="11px"
+     fill="#333333"
+     id="text194"><tspan
+       style="font-weight:bold"
+       id="tspan693">UI</tspan></text>
+  <text
+     x="266.18893"
+     y="465.18161"
+     text-anchor="middle"
+     font-size="10px"
+     fill="#333333"
+     id="text196"><tspan
+       style="font-weight:bold"
+       id="tspan689">External</tspan></text>
+  <text
+     x="266.18893"
+     y="477.18161"
+     text-anchor="middle"
+     font-size="10px"
+     fill="#333333"
+     id="text198"><tspan
+       style="font-weight:bold"
+       id="tspan687">Interfaces</tspan></text>
+  <!-- ==================== DEPENDENCY ARROWS ==================== -->
+  <!-- Arrows point INWARD - outer layers depend on inner layers, never the reverse -->
+  <defs
+     id="defs209">
+    <marker
+       id="arrowIn"
+       markerWidth="8"
+       markerHeight="6"
+       refX="7"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0 0, 8 3, 0 6"
+         fill="#555"
+         id="polygon200" />
+    </marker>
+    <marker
+       id="arrowIn-3"
+       markerWidth="8"
+       markerHeight="6"
+       refX="7"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="8,3 0,6 0,0 "
+         fill="#555555"
+         id="polygon200-6" />
+    </marker>
+    <marker
+       id="arrowIn-5"
+       markerWidth="8"
+       markerHeight="6"
+       refX="7"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="8,3 0,6 0,0 "
+         fill="#555555"
+         id="polygon200-3" />
+    </marker>
+  </defs>
+  <!-- Top (Web → inward) -->
+  <!-- Left (Devices → inward) -->
+  <line
+     x1="72.954338"
+     y1="262.18881"
+     x2="104.30373"
+     y2="262.18881"
+     stroke="#555555"
+     stroke-width="2.09964"
+     marker-end="url(#arrowIn)"
+     id="line213" />
+  <line
+     x1="129.94269"
+     y1="261.76315"
+     x2="161.29207"
+     y2="261.76315"
+     stroke="#555555"
+     stroke-width="2.09964"
+     marker-end="url(#arrowIn-3)"
+     id="line213-7"
+     style="marker-end:url(#arrowIn-3)" />
+  <line
+     x1="184.35036"
+     y1="263.26572"
+     x2="215.69975"
+     y2="263.26572"
+     stroke="#555555"
+     stroke-width="2.09964"
+     marker-end="url(#arrowIn-5)"
+     id="line213-5"
+     style="marker-end:url(#arrowIn-5)" />
+  <!-- Lower-right (External Interfaces → inward) -->
+  <!-- ==================== LEGEND ==================== -->
+  <rect
+     x="480.62625"
+     y="26.265732"
+     width="16"
+     height="14"
+     fill="#ffffc0"
+     stroke="#b0a820"
+     stroke-width="1"
+     id="rect219" />
+  <text
+     x="502.62625"
+     y="37.265732"
+     font-size="11px"
+     fill="#333333"
+     id="text221">Enterprise Business Rules</text>
+  <rect
+     x="480.62625"
+     y="48.265732"
+     width="16"
+     height="14"
+     fill="#f4a8bc"
+     stroke="#c06080"
+     stroke-width="1"
+     id="rect223" />
+  <text
+     x="502.62625"
+     y="59.265732"
+     font-size="11px"
+     fill="#333333"
+     id="text225">Application Business Rules</text>
+  <rect
+     x="480.62625"
+     y="70.265732"
+     width="16"
+     height="14"
+     fill="#a8dca0"
+     stroke="#509050"
+     stroke-width="1"
+     id="rect227" />
+  <text
+     x="502.62625"
+     y="81.265732"
+     font-size="11px"
+     fill="#333333"
+     id="text229">Interface Adapters</text>
+  <rect
+     x="480.62625"
+     y="92.265732"
+     width="16"
+     height="14"
+     fill="#b8dcf0"
+     stroke="#5888b8"
+     stroke-width="1"
+     id="rect231" />
+  <text
+     x="502.62625"
+     y="103.26573"
+     font-size="11px"
+     fill="#333333"
+     id="text233">Frameworks &amp; Drivers</text>
+  <!-- ==================== COMPONENT / FLOW DIAGRAM ==================== -->
+  <!-- Shows how the Dependency Inversion Principle is applied at the use-case boundary -->
+  <!-- Presenter box -->
+  <!-- Use Case Output Port box -->
+  <!-- Use Case Interactor box -->
+  <!-- Use Case Input Port box -->
+  <!-- Controller box -->
+  <!-- Presenter → Output Port (uses interface) -->
+  <!-- Interactor implements Output Port (dashed open arrowhead = implements/realises) -->
+  <!-- Interactor calls → Input Port interface -->
+  <!-- Controller → Input Port (uses interface) -->
+  <!-- Flow of control: vertical dashed arrow between the left column boxes -->
+  <!-- Arrow key -->
+</svg>
