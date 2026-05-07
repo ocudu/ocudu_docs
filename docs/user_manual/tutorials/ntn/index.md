@@ -234,7 +234,7 @@ cell_cfg:
         sib_mapping: 19             # Enable SIB19.
         si_window_position: 2       # Set SIB19 position.
   pucch:
-    sr_period_ms: 320               # Set Scheduling Request period.
+    sr_period_ms: 80               # Set Scheduling Request period.
   csi:
     csi_rs_period: 80               # Set CSI-RS report period.
 ```
@@ -244,7 +244,7 @@ The `ntn` section is as follows:
 ```default
 cell_cfg:
   ntn:
-    cell_specific_koffset:  239       # Cell-specific k-offset.
+    cell_specific_koffset:  240       # Cell-specific k-offset.
     ta_common:  0                     # TA common offset.
     ephemeris_info_ecef:              # Satellite ephemeris in position and velocity state vector format.
       pos_x:  -28105880
@@ -261,7 +261,7 @@ Finally, the Timing Advance (TA) Scheduler configuration must be updated to acco
 cell_cfg:
   ta:
     ta_cmd_offset_threshold: 1                 # Sets the timing Advance Command (T_A) offset threshold above which Timing Advance Command is triggered.
-    ta_measurement_slot_period: 80             # Sets the measurements periodicity in nof. slots over which the new Timing Advance Command is computed.
+    ta_measurement_slot_period: 40             # Sets the measurements periodicity in nof. slots over which the new Timing Advance Command is computed.
     ta_measurement_slot_prohibit_period: 250   # Sets the delay in number of slots between issuing the TA_CMD and starting TA measurements.
     ta_target: 0                               # Sets the timing advance target in units of TA.
 ```
