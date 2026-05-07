@@ -11,7 +11,7 @@ sidebar_position: 2
 | **S**ingle Responsibility | Each class does one thing. |
 | **O**pen/Closed | Extend behaviour through interfaces, not by modifying existing code. |
 | **L**iskov Substitution | Implementations are substitutable for their interface. |
-| **I**nterface Segregation | Prefer small, focused interfaces over large, general ones. |
+| **I**nterface Segregation | Prefer small, cohesive interfaces over large, general ones. |
 | **D**ependency Inversion | Depend on abstractions, not concrete types. |
 
 
@@ -47,9 +47,9 @@ Any concrete implementation of an interface must honour the full contract of tha
 
 ## Interface Segregation Principle (ISP)
 
-> *Clients should not be forced to depend on interfaces they do not use.*
+> *Clients should not be forced to depend on methods they do not use.*
 
-Interfaces must be narrow and focused. A component that only needs to read metrics should not be given an interface that also exposes write and reset methods. Large interfaces couple unrelated callers and make mocking harder.
+Interfaces must be narrow and cohesive. A component that only needs to read metrics should not be given an interface that also exposes write and reset methods. Large interfaces couple unrelated callers and make mocking harder.
 
 **In OCUDU:** Layer boundaries are crossed via small, purpose-built interfaces. A component that produces downlink grants exposes a `pdcch_resource_allocator` interface; a component that consumes them depends on that interface alone. It does not receive a handle to the entire scheduler.
 
@@ -74,5 +74,5 @@ This is the principle that directly enforces Clean Architecture's dependency rul
 | **SRP** | One reason to change | Class with unrelated methods; "and also" in descriptions |
 | **OCP** | Extend via new types, not edits | Growing `if/switch` chains per new variant |
 | **LSP** | Implementations honour full contract | `not_implemented` overrides; mocks that lie |
-| **ISP** | Small, focused interfaces | Callers ignoring most of an interface's methods |
+| **ISP** | Small, cohesive interfaces | Callers ignoring most of an interface's methods |
 | **DIP** | Depend on abstractions | `new ConcreteType()` inside a class body |
