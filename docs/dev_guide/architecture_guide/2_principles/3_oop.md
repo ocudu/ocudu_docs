@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Object Oriented Programming
 
-OCUDU is written in C++ and uses Object Oriented Programming (OOP) as its fundamental building block. OOP is not just a language feature here - it is the mechanism that makes the layered architecture, interface-based design, and testability strategy work in practice.
+OCUDU is written in C++ and uses Object Oriented Programming (OOP) as its main programming paradigm. OOP is not just a language feature here - it is the mechanism that makes the layered architecture, interface-based design, and testability strategy work in practice. There are, however, more specialised use cases where other paradigms are more suitable, and these are applied selectively alongside OOP where they improve clarity or performance.
 
 ## Core concepts and how they apply
 
@@ -42,16 +42,16 @@ When a class needs a capability, inject it as a collaborator rather than inherit
 
 ```cpp
 // Prefer this:
-class cell_scheduler {
+class mac_entity {
 public:
-  explicit cell_scheduler(mac_metrics_notifier& metrics_notifier) :
-    metrics_notifier(metrics_notifier) {}
+  explicit mac_entity(std::unique_ptr<mac_scheduler> sched) :
+    scheduler(std::move(sched)) {}
 private:
-  mac_metrics_notifier& metrics_notifier;
+  std::unique_ptr<mac_scheduler> scheduler;
 };
 
 // Over this:
-class cell_scheduler : public mac_metrics_notifier_base { ... };
+class mac_entity : public mac_scheduler_base { ... };
 ```
 
 Composition keeps classes focused, makes dependencies explicit, and means each collaborator can be mocked independently in tests.
