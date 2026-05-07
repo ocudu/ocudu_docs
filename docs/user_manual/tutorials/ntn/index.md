@@ -138,12 +138,12 @@ These steps should only be completed **after** compiling OCUDU as mentioned abov
 
 Interfacing the Amarisoft UE with OCUDU requires a custom TRX driver implemented by SRS, which can be found in OCUDU source files in `ocudu/utils/trx_ocudu`.
 
-The Amarisoft UE release folder, `amarisoft.2023-12-15.tar.gz`, should contain a file called `trx_uhd-linux-2023-12-15.tar.gz`. The release folder and the sub-file in question should be uncompressed before proceeding.
+The Amarisoft UE release folder, `amarisoft.2026-03-13.tar.gz`, should contain a file called `trx_uhd-2026-03-13.tar.gz`. The release folder and the sub-file in question should be uncompressed before proceeding.
 
 First, the driver needs to be compiled, do this by running the following commands from `ocudu/build` :
 
 ```bash
-cmake ../ -DENABLE_EXPORT=TRUE -DENABLE_ZEROMQ=TRUE -DENABLE_TRX_DRIVER=TRUE -DTRX_DRIVER_DIR=<PATH TO trx_uhd-linux-2023-12-15>
+cmake ../ -DENABLE_EXPORT=TRUE -DENABLE_ZEROMQ=TRUE -DENABLE_TRX_DRIVER=TRUE -DTRX_DRIVER_DIR=<PATH TO trx_uhd-2026-03-13>
 make trx_ocudu_test
 ctest -R trx_ocudu_test
 ```
@@ -151,7 +151,7 @@ ctest -R trx_ocudu_test
 Make sure CMake finds the file `trx_driver.h` in the specified folder. CMake should print the following:
 
 ```bash
--- Found trx_driver.h in TRX_DRIVER_DIR=/home/user/amarisoft/2021-03-15/trx_uhd-linux-2021-03-15/trx_driver.h
+-- Found trx_driver.h in TRX_DRIVER_DIR=/home/user/amarisoft/2026-03-13/trx_uhd-2026-03-13/trx_driver.h
 ```
 
 A symbolic link must be done for the UE application to load the driver. From the Amarisoft UE build folder run the following command:
