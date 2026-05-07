@@ -65,6 +65,77 @@ async_task<void> launch_rrc_setup_procedure(ue_context& ue);
 
 `eager_async_task<R>` starts executing immediately upon creation. It is used for fire-and-forget or top-level procedures that must begin without being awaited.
 
+## Message passing and thread isolation
+
+Coroutines handle async sequencing *within* an execution context. For communication *across* execution contexts — between a UE strand and a cell strand, or between a protocol layer and a worker pool - OCUDU uses message passing rather than shared mutable state.
+
+The rule is: **post work to the owner's execution context instead of reaching into it from another thread.** This eliminates mutex contention, prevents priority inversion, and keeps latency bounded.
+
+### task_executor
+
+`task_executor` is the interface used to post work across strand and thread boundaries:
+
+```cpp
+class task_executor
+{
+public:
+  // Dispatches a task; may run inline if safe. Returns false if queue is full.
+  [[nodiscard]] virtual bool execute(unique_task task) = 0;
+
+  // Always enqueues for later execution. Returns false if queue is full.
+  [[nodiscard]] virtual bool defer(unique_task task) = 0;
+};
+```
+
+`unique_task` is a move-only callable with a small-buffer optimisation that avoids heap allocation for typical closures.
+
+Use `defer()` when the caller must not run the task inline (for example when strict ordering matters or the caller is on a different thread). Use `execute()` when inline execution is acceptable to reduce dispatch latency.
+
+### Strands
+
+A *strand* wraps a `task_executor` and adds one guarantee: tasks posted to the same strand always run one at a time, regardless of how many producer threads are posting. This gives a component a safe, single-owner execution context without any locking - multiple external threads can safely drive a single-owner component by posting tasks to its strand.
+
+### The cross-strand pattern
+
+Instead of protecting shared state with a mutex:
+
+```cpp
+// Avoid: lock on shared state
+{
+    std::lock_guard lock(ue_mutex);
+    ue.apply_config(new_config);
+}
+```
+
+Post the mutation to the component's own strand:
+
+```cpp
+// Prefer: deliver the mutation as a task
+ue_exec.defer([this, new_config]() {
+    ue.apply_config(new_config);
+});
+```
+
+All access to `ue` flows through its strand, so there is nothing to lock.
+
+### Switching execution context inside a coroutine
+
+When a coroutine needs to continue on a different executor, `try_execute_on` provides an awaitable that suspends and resumes in the target context:
+
+```cpp
+// Suspend and resume in other_exec's context.
+// Returns false if the target queue was full.
+bool ok;
+CORO_AWAIT_VALUE(ok, try_execute_on(other_exec));
+```
+
+For compute-heavy work that should not block the control strand, `try_offload_to_executor` dispatches a callable to a worker executor and resumes the coroutine back on the original strand once the work completes:
+
+```cpp
+result_t result;
+CORO_AWAIT_VALUE(result, try_offload_to_executor(worker_exec, ctrl_exec, []{ return compute(); }));
+```
+
 ## Transactions: the standard request/response pattern
 
 Most 3GPP procedures follow a request/response pattern with a timeout. OCUDU models this with `protocol_transaction<ResponseType>`:
