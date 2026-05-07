@@ -8,7 +8,7 @@ OCUDU structures its codebase as a set of concentric layers. Dependencies always
 
 - Protocol logic is testable in isolation, without radio hardware or a running network.
 - Adding a new radio or deployment scenario touches only the outermost layer.
-- NR protocol layers (MAC, RLC, PDCP, …) are completely decoupled from each other.
+- NR protocol layers (MAC, RLC, PDCP, etc.) are completely decoupled from each other.
 
 See [Clean Architecture](./1_clean_architecture.md) for a full explanation with diagrams.
 
@@ -26,22 +26,9 @@ Code review will flag SOLID violations. See [Clean Code - SOLID](./2_solid.md) f
 
 ## Object Oriented Programming
 
-OCUDU uses OOP as its fundamental building block - not just as a language feature, but as the mechanism that makes layering, interface contracts, and testability work in practice. The key disciplines are encapsulation (hide implementation details), composition over inheritance (inject collaborators rather than inheriting behaviour), and polymorphism through pure-virtual interfaces (the concrete mechanism behind every swappable component).
+OCUDU uses OOP as its main paradigm - not just as a language feature, but as the mechanism that makes layering, interface contracts, and testability work in practice. The key disciplines are encapsulation (hide implementation details), composition over inheritance (inject collaborators rather than inheriting behaviour), and polymorphism through pure-virtual interfaces (the concrete mechanism behind every swappable component).
 
 See [Object Oriented Programming](./3_oop.md) for the full breakdown including ownership rules.
-
-## Software Design Patterns
-
-OCUDU uses a curated set of well-known patterns consistently. Recognising them when reading code - and reaching for the right one when writing new code - is an important part of contributing effectively. The most common are:
-
-- **Adapter / Gateway** - wrapping incompatible interfaces at layer boundaries.
-- **Strategy** - selecting scheduling policies, HARQ strategies, and algorithms at runtime.
-- **Observer** - decoupling cross-layer event producers from consumers.
-- **Factory** - constructing protocol entities without binding to concrete types.
-- **Decorator** - adding instrumentation without touching protocol logic.
-- **Null Object** - safe "do nothing" defaults that keep calling code clean.
-
-See [Software Design Patterns](./4_design_patterns.md) for the full catalogue with OCUDU-specific context.
 
 ---
 

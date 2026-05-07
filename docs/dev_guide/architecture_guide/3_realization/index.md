@@ -38,6 +38,12 @@ The entire codebase is C++17 compliant with selective use of C++20 and C++23 fea
 
 See [Use of C++](./6_cpp_language.md).
 
+## Software Design Patterns
+
+OCUDU uses a curated set of well-known patterns consistently throughout the codebase. Recognising them when reading code - and reaching for the right one when writing new code - is an important part of contributing effectively. The most common are Adapter, Strategy, Observer, Factory, Decorator, and Null Object.
+
+See [Software Design Patterns](./9_design_patterns.md) for the full catalogue with OCUDU-specific context.
+
 ---
 
 import DocCardList from '@theme/DocCardList';
