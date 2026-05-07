@@ -51,4 +51,4 @@ The codebase must remain easy to change over time. This means keeping technical 
 
 ### Interoperability
 
-OCUDU must be easy to extend to operate with third-party hardware and software - radio units, accelerators, external PHYs, and external libraries. Interfaces are designed to be narrow and stable so that third-party integrations do not require changes to the core stack.
+OCUDU must be easy to extend to operate with third-party hardware and software - radio units, accelerators, external PHYs, and external libraries. External interfaces, like Open Fronthaul, F1, E2, NGAP, etc., are stable and standard-compliant, so that third-party integrations do not require changes to the core stack.
