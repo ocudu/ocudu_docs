@@ -1,23 +1,27 @@
+---
+displayed_sidebar: knowledgeBaseSidebar
+description: "5G NR and O-RAN architecture concepts underpinning OCUDU: gNB structure, components, and interfaces."
+---
+
+import DocCard from '@theme/DocCard';
+
 # Knowledge Base
 
-* [O-RAN gNB Overview](oran_gnb/index.md)
-  * [Introduction](oran_gnb/index.md#introduction)
-  * [Split 7.2x Architecture](oran_gnb/index.md#split-72x-architecture)
-  * [OCUDU](oran_gnb/index.md#ocudu)
-  * [Further Reading](oran_gnb/index.md#further-reading)
-* [O-RAN gNB Components](gnb_components/index.md)
-  * [Centralized Unit (CU)](gnb_components/index.md#centralized-unit-cu)
-  * [Distributed Unit (DU)](gnb_components/index.md#distributed-unit-du)
-* [gNB Interfaces](gnb_interfaces/index.md)
-  * [E1](gnb_interfaces/index.md#e1)
-  * [E2](gnb_interfaces/index.md#e2)
-  * [F1](gnb_interfaces/index.md#f1)
-  * [FAPI](gnb_interfaces/index.md#fapi)
-  * [NG](gnb_interfaces/index.md#ng)
-  * [O1](gnb_interfaces/index.md#o1)
-  * [Open FrontHaul](gnb_interfaces/index.md#open-fronthaul)
-* [COTS UEs](cots_ues/index.md)
-  * [Tested COTS UEs](cots_ues/index.md#tested-cots-ues)
-  * [User reported working UEs](cots_ues/index.md#user-reported-working-ues)
-  * [UE Capability Messages](cots_ues/index.md#ue-capability-messages)
-  * [References](cots_ues/index.md#references)
+This section covers the 5G NR and O-RAN architecture concepts that underpin OCUDU: how a gNB is structured, how its components interact, and how the interfaces between them are defined.
+
+If you are new to the architecture, start with the O-RAN gNB Overview. The other articles build on that foundation.
+
+<section className="row">
+  <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/knowledge_base/oran_gnb/', label: 'O-RAN Overview', description: 'The architecture of an O-RAN compliant gNB, the split 7.2x functional split, and how OCUDU implements it.'}} />
+  </article>
+  <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/knowledge_base/gnb_components/', label: 'CU/DU Components', description: 'The roles and protocol layers of the CU, DU, and RU, and the boundaries between them.'}} />
+  </article>
+  <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/knowledge_base/gnb_interfaces/', label: 'O-RAN Interfaces', description: 'The purpose, message types, and connected components for the E1, E2, F1, FAPI, NG, O1, and Open FrontHaul interfaces.'}} />
+  </article>
+  <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/knowledge_base/cots_ues/', label: 'COTS UEs', description: 'Commercial UEs tested with OCUDU, with confirmed bands, configurations, and user-reported working devices.'}} />
+  </article>
+</section>
