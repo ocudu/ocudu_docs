@@ -34,6 +34,13 @@ Strands are the primary tool for protecting component-internal state without exp
 
 Inter-component communication on the critical path uses lock-free queues to avoid priority inversion and unbounded blocking. Lock-free queues are used at the boundaries where a non-real-time producer hands work to a real-time consumer (e.g. passing downlink data from the L2 scheduler to the L1 modem).
 
+OCUDU provides two lock-free queue variants, both expressed as specialisations of the `concurrent_queue<T, Policy, BlockingPolicy>` template:
+
+- **SPSC** (`concurrent_queue_policy::lockfree_spsc`) - single-producer, single-consumer. Backed by rigtorp's `SPSCQueue`. Use this when ownership of each end of the queue is fixed to one thread; it has the lowest overhead of any queue type. Header: `ocudu/adt/spsc_queue.h`.
+- **MPMC** (`concurrent_queue_policy::lockfree_mpmc`) - multi-producer, multi-consumer. Backed by rigtorp's `MPMCQueue` (bounded) or moodycamel's `ConcurrentQueue` (unbounded). Use this when multiple threads may push or pop concurrently. Headers: `ocudu/adt/mpmc_queue.h`, `ocudu/adt/moodycamel_mpmc_queue.h`.
+
+Both variants support a `non_blocking` and a `sleep` wait policy, selected as the third template parameter.
+
 ### Fork limiters
 
 A fork limiter caps the degree of parallelism for a set of tasks. This prevents a burst of parallel work from monopolising pool threads and starving other components with tighter timing requirements.
