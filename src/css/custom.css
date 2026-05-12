@@ -3,33 +3,431 @@
  * SPDX-License-Identifier: BSD-3-Clause-Open-MPI
  */
 
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
+/* ── Brand tokens ───────────────────────────────────────────────────── */
 
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ocudu-gradient: linear-gradient(90deg, #52B8F5 0%, #6B7EEF 50%, #9F35F2 100%);
+  --ocudu-blue:   #52B8F5;
+  --ocudu-mid:    #6B7EEF;
+  --ocudu-violet: #9F35F2;
+  --ocudu-navy:   #001842;
+  --ocudu-cyan:   #02C0DD;
+
+  /* Docusaurus Infima primary scale */
+  --ifm-color-primary:         #6B7EEF;
+  --ifm-color-primary-dark:    #5265E8;
+  --ifm-color-primary-darker:  #4355E2;
+  --ifm-color-primary-darkest: #2E3FCB;
+  --ifm-color-primary-light:   #8497F2;
+  --ifm-color-primary-lighter: #95A6F4;
+  --ifm-color-primary-lightest:#B4BEF8;
+
+  --ifm-navbar-background-color: #182536;
+  --ifm-navbar-link-color:       rgba(255, 255, 255, 0.75);
+  --ifm-navbar-link-hover-color: #ffffff;
+
+  --ifm-footer-background-color: #001842;
+  --ifm-footer-color:            rgba(255, 255, 255, 0.55);
+  --ifm-footer-link-color:       rgba(255, 255, 255, 0.65);
+  --ifm-footer-link-hover-color: #52B8F5;
+
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-link-color:       #52B8F5;
+  --ifm-link-hover-color: #6B7EEF;
+
+  --docusaurus-highlighted-code-line-bg: rgba(82, 184, 245, 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* ── Dark mode ──────────────────────────────────────────────────────── */
+
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary:          #84A0F3;
+  --ifm-color-primary-dark:     #6B87F0;
+  --ifm-color-primary-darker:   #5E7BEE;
+  --ifm-color-primary-darkest:  #3D5CE8;
+  --ifm-color-primary-light:    #9DB8F6;
+  --ifm-color-primary-lighter:  #AABFF7;
+  --ifm-color-primary-lightest: #CDDAFB;
+
+  --ifm-background-color:         #0F1B2D;
+  --ifm-background-surface-color: #182536;
+  --ifm-footer-background-color:  #0B1624;
+
+  --ifm-link-color:       #84A0F3;
+  --ifm-link-hover-color: #9DB8F6;
+
+  --docusaurus-highlighted-code-line-bg: rgba(82, 184, 245, 0.15);
+}
+
+/* ── Navbar ─────────────────────────────────────────────────────────── */
+
+.navbar {
+  border-bottom: 1px solid rgba(82, 184, 245, 0.12);
+  box-shadow: none;
+}
+
+[data-theme='dark'] .navbar {
+  border-bottom-color: rgba(82, 184, 245, 0.12);
+}
+
+.navbar__link--active {
+  color: #ffffff;
+  position: relative;
+}
+
+.navbar__link--active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--ocudu-gradient);
+  border-radius: 2px;
+}
+
+/* Toggle button and hamburger are <button> elements — not covered by --ifm-navbar-link-color */
+.navbar__toggle,
+.navbar [class*='colorModeToggle'] {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.navbar [class*='colorModeToggle']:hover {
+  color: #ffffff;
+}
+
+/* ── Tables ─────────────────────────────────────────────────────────── */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+table thead tr {
+  background: rgba(82, 184, 245, 0.08);
+  border-bottom: 2px solid rgba(82, 184, 245, 0.3);
+}
+
+table thead th {
+  color: var(--ifm-color-content);
+  font-weight: 600;
+  padding: 0.65rem 1rem;
+  text-align: left;
+}
+
+table tbody tr:nth-child(even) {
+  background: rgba(107, 126, 239, 0.04);
+}
+
+table tbody tr:hover {
+  background: rgba(82, 184, 245, 0.06);
+}
+
+table tbody td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  vertical-align: top;
+}
+
+[data-theme='dark'] table thead tr {
+  background: rgba(82, 184, 245, 0.1);
+  border-bottom-color: rgba(82, 184, 245, 0.25);
+}
+
+[data-theme='dark'] table tbody tr:nth-child(even) {
+  background: rgba(107, 126, 239, 0.06);
+}
+
+[data-theme='dark'] table tbody tr:hover {
+  background: rgba(82, 184, 245, 0.08);
+}
+
+/* ── Sidebar ────────────────────────────────────────────────────────── */
+
+.menu__link--active:not(.menu__link--sublist) {
+  background: rgba(82, 184, 245, 0.08);
+  color: #52B8F5;
+  border-left: 2px solid #52B8F5;
+}
+
+[data-theme='dark'] .menu__link--active:not(.menu__link--sublist) {
+  background: rgba(82, 184, 245, 0.1);
+}
+
+.menu__link:hover {
+  color: #6B7EEF;
+  background: rgba(107, 126, 239, 0.06);
+}
+
+/* Color the SVG button chevron via currentColor */
+.menu__caret {
+  color: var(--ifm-color-primary);
+  opacity: 0.8;
+  transition: opacity 150ms ease;
+}
+
+.menu__caret:hover {
+  opacity: 1;
+}
+
+/* Smooth ease on the expand/collapse rotation (Docusaurus default is linear) */
+.menu__link--sublist-caret::after {
+  transition: transform 200ms ease !important;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────── */
+
+.button--primary {
+  background: var(--ocudu-gradient);
+  border: none;
+  color: #ffffff;
+}
+
+.button--primary:hover {
+  background: linear-gradient(90deg, #6B7EEF 0%, #9F35F2 100%);
+  color: #ffffff;
+}
+
+.button--secondary {
+  border-color: #52B8F5;
+  color: #52B8F5;
+}
+
+.button--secondary:hover {
+  background: rgba(82, 184, 245, 0.08);
+  border-color: #6B7EEF;
+  color: #6B7EEF;
+}
+
+/* ── Code blocks ────────────────────────────────────────────────────── */
+
+[class*='codeBlockContainer'] {
+  border: 1px solid rgba(82, 184, 245, 0.18);
+  border-top: 2px solid rgba(82, 184, 245, 0.45);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='dark'] [class*='codeBlockContainer'] {
+  border-color: rgba(82, 184, 245, 0.15);
+  border-top-color: rgba(82, 184, 245, 0.4);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+[class*='codeBlockTitle'] {
+  background: rgba(82, 184, 245, 0.07);
+  border-bottom: 1px solid rgba(82, 184, 245, 0.18);
+  color: #52B8F5;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+[data-theme='dark'] [class*='codeBlockTitle'] {
+  background: rgba(82, 184, 245, 0.1);
+  border-bottom-color: rgba(82, 184, 245, 0.15);
+}
+
+/* Language badge — top-right of the code block, fades on hover to clear copy button */
+pre[class*='language-'] {
+  position: relative;
+}
+
+pre[class*='language-']::before {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(82, 184, 245, 0.55);
+  font-family: var(--ifm-font-family-monospace);
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+[class*='codeBlockContainer']:hover pre[class*='language-']::before {
+  opacity: 0;
+}
+
+pre.language-bash::before    { content: 'bash'; }
+pre.language-shell::before   { content: 'shell'; }
+pre.language-yaml::before    { content: 'yaml'; }
+pre.language-json::before    { content: 'json'; }
+pre.language-cpp::before     { content: 'c++'; }
+pre.language-c::before       { content: 'c'; }
+pre.language-cmake::before   { content: 'cmake'; }
+pre.language-python::before  { content: 'python'; }
+pre.language-text::before    { content: 'text'; }
+pre.language-diff::before    { content: 'diff'; }
+pre.language-mermaid::before { content: 'mermaid'; }
+
+/* ── Inline code ────────────────────────────────────────────────────── */
+
+code {
+  border: 1px solid rgba(82, 184, 245, 0.2);
+  background: rgba(82, 184, 245, 0.06);
+  color: #52B8F5;
+}
+
+[data-theme='dark'] code {
+  background: rgba(82, 184, 245, 0.08);
+  border-color: rgba(82, 184, 245, 0.15);
+}
+
+/* ── Admonitions ────────────────────────────────────────────────────── */
+
+.alert--info {
+  --ifm-alert-border-color:      #52B8F5;
+  --ifm-alert-background-color:  rgba(82, 184, 245, 0.06);
+}
+
+.alert--warning {
+  --ifm-alert-border-color:      #F59E0B;
+  --ifm-alert-background-color:  rgba(245, 158, 11, 0.06);
+}
+
+.alert--danger {
+  --ifm-alert-border-color:      #EF4444;
+  --ifm-alert-background-color:  rgba(239, 68, 68, 0.06);
+}
+
+.alert--success {
+  --ifm-alert-border-color:      #10B981;
+  --ifm-alert-background-color:  rgba(16, 185, 129, 0.06);
+}
+
+.alert--secondary {
+  --ifm-alert-border-color:      #9F35F2;
+  --ifm-alert-background-color:  rgba(159, 53, 242, 0.06);
+}
+
+/* ── Breadcrumbs ────────────────────────────────────────────────────── */
+
+.breadcrumbs__link {
+  color: var(--ifm-color-content-secondary);
+  transition: color 150ms ease;
+}
+
+.breadcrumbs__link:hover {
+  color: #52B8F5;
+  background: none;
+  text-decoration: none;
+}
+
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--ifm-color-content);
+  font-weight: 500;
+  background: none;
+}
+
+/* Tint the separator chevron to brand blue */
+.breadcrumbs__item:not(:last-child)::after {
+  filter: invert(65%) sepia(67%) saturate(500%) hue-rotate(173deg) brightness(103%) contrast(92%);
+  opacity: 0.6;
+}
+
+[data-theme='dark'] .breadcrumbs__item:not(:last-child)::after {
+  filter: invert(65%) sepia(67%) saturate(500%) hue-rotate(173deg) brightness(103%) contrast(92%);
+  opacity: 0.5;
+}
+
+/* ── Table of contents ──────────────────────────────────────────────── */
+
+/* "On this page" heading injected above the ToC */
+.table-of-contents::before {
+  content: 'On this page';
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ifm-color-content-secondary);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+/* Brand the container left border */
+.table-of-contents__left-border {
+  border-left-color: rgba(82, 184, 245, 0.2);
+}
+
+/* Consistent padding on all links so the hover/active pill has shape */
+.table-of-contents__link {
+  border-radius: 4px;
+  padding: 2px 6px;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.table-of-contents__link--active {
+  color: #52B8F5;
+  font-weight: 600;
+  background: rgba(82, 184, 245, 0.1);
+}
+
+.table-of-contents__link:hover {
+  color: #6B7EEF;
+  background: rgba(107, 126, 239, 0.06);
+}
+
+/* ── Pagination ─────────────────────────────────────────────────────── */
+
+.pagination-nav__link:hover {
+  border-color: #52B8F5;
+}
+
+/* ── Hero ───────────────────────────────────────────────────────────── */
+
+.hero--primary {
+  background: #001842;
+  background-image: radial-gradient(ellipse 70% 60% at 60% 50%, rgba(82, 184, 245, 0.12) 0%, transparent 70%);
+  color: #ffffff;
+}
+
+.hero__title {
+  background: var(--ocudu-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero__subtitle {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── DocCards ───────────────────────────────────────────────────────── */
+
+/* Equal-height columns */
+article.col {
+  display: flex;
+  flex-direction: column;
+}
+
+article.col .card {
+  flex: 1;
+  border-top: 3px solid transparent;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-top-color 150ms ease;
+}
+
+article.col .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(82, 184, 245, 0.12);
+  border-top-color: #52B8F5;
+}
+
+[data-theme='dark'] article.col .card:hover {
+  box-shadow: 0 4px 20px rgba(82, 184, 245, 0.2);
+}
+
+/* Allow full description text without truncation */
+article.col .card p {
+  -webkit-line-clamp: unset;
+  display: block;
+  overflow: visible;
+  white-space: normal;
+  word-wrap: break-word;
 }
