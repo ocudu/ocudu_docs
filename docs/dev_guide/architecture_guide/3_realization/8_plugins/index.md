@@ -55,7 +55,7 @@ A well-written plugin:
 
 - includes only the interface headers provided by OCUDU (`external_ul_processor.h`, `external_processor_factories.h`),
 - never includes internal OCUDU headers outside of those interfaces,
-- pre-allocates all memory in constructors - never inside processing callbacks,
+- pre-allocates all memory in constructors - never inside processing callbacks (if it's executed in the critical path),
 - defers any I/O (network, disk) to a background thread so the critical path is not blocked.
 
 ---

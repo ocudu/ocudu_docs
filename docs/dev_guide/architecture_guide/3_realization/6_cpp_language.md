@@ -56,4 +56,4 @@ OCUDU abstracts the execution model through an executor framework so that busine
 
 ## SIMD abstraction
 
-An abstraction layer wraps architecture-specific SIMD intrinsics (SSE, AVX, NEON, …). Inner-layer algorithm code calls the abstraction; the correct instruction set is selected at compile time or runtime without changes to the algorithm implementation.
+An abstraction layer wraps architecture-specific SIMD intrinsics (SSE, AVX2/512, NEON). Inner-layer algorithm code calls the abstraction; the correct instruction set is selected at compile time or runtime without changes to the algorithm implementation.

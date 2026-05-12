@@ -23,7 +23,7 @@ The design goals below translate this vision into concrete engineering requireme
 
 ### Readability
 
-OCUDU is open-first software. Writing easy-to-read and easy-to-understand code is a first-class design goal. Clear naming, consistent style, and thorough documentation are not optional - they are what allow a global contributor community to work on the same codebase without constant coordination overhead.
+Writing easy-to-read and easy-to-understand code is a first-class design goal. Clear naming, consistent style, and thorough documentation are not optional - they are what allow a global contributor community to work on the same codebase without constant coordination overhead.
 
 ### Modularity
 
