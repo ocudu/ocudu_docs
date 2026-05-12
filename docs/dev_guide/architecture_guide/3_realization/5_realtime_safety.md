@@ -22,12 +22,9 @@ Pre-allocated memory pools, lock-free queues, and non-blocking ring buffers are 
 
 ## Coding discipline
 
-Real-time safety is enforced through code review and tooling, not solely by convention:
-
-- **Static analysis** flags calls to allocating STL containers and known non-RT-safe APIs on paths annotated as real-time.
-- **RTSAN (real-time sanitizer)** runs daily in CI and reports any allocation, system call, or blocking primitive reached from a real-time-annotated call stack.
-- **TSAN (thread sanitizer)** runs daily and catches data races that could cause non-deterministic timing.
-- **ASAN (address sanitizer)** runs daily and catches memory errors that could cause latency spikes from corruption-induced retries.
+Real-time safety is enforced through code review and tooling primarily.
+We primarily use **RTSan (real-time sanitizer)**.
+RTSan runs daily in CI and reports any allocation, system call, or blocking primitive reached from a real-time-annotated call stack. OCUDU uses the `OCUDU_RTSAN_NONBLOCKING` macro to annotate any code that must not violate RT requirements.
 
 When contributing code to a real-time path, annotate it with the appropriate marker so the sanitizer can enforce the constraint automatically.
 
