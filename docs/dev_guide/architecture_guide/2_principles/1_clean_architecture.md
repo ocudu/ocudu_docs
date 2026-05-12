@@ -23,18 +23,21 @@ The single most important rule is: **source code dependencies must point inward 
 
 OCUDU maps the Clean Architecture rings directly onto the 5G NR protocol stack, from highest to lowest abstraction:
 
-| Abstraction | Layer | What lives here |
-|---|---|---|
-| Highest | **Business entities** | NR protocol layer implementations (MAC, RLC, PDCP, …) |
-| ↑ | **Business logic** | 3GPP TS procedures and state machines |
-| ↓ | **Adaptors** | Layer adaptors, interface glue |
-| Lowest | **Frameworks & drivers** | Device drivers, I/O, build-system integrations |
+| Abstraction | Layer | What lives here | OCUDU folders |
+|---|---|---|---|
+| Highest | **Protocol entities** | Pure 3GPP TS implementations: protocol state machines, data plane processing, radio resource scheduling | `mac/`, `rlc/`, `pdcp/`, `rrc/`, `sdap/`, `scheduler/`, upper `phy/` |
+| ↑ | **Functional units** | gNB component orchestration: coordinates protocol entities, manages UE contexts, drives cell bring-up and tear-down | `cu_cp/`, `cu_up/`, `du/` |
+| ↓ | **Interface adaptors** | 3GPP signalling stacks and boundary glue: adapts internal interfaces to wire protocols and external systems | `f1ap/`, `ngap/`, `e1ap/`, `e2/`, `fapi_adaptor/`, `gateways/`, `ofh/` |
+| Lowest | **Infrastructure** | Platform utilities, radio drivers, DSP primitives, observability: everything the upper layers are built on but do not depend on directly | `adt/`, `support/`, `ran/`, `hal/`, `radio/`, `ocuduvec/`, `ocudulog/`, `asn1/`, `security/`, `pcap/` |
 
-The key constraint: **lower abstraction modules depend on higher abstraction modules, not the reverse**. A device driver does not import a MAC-layer header; the MAC layer defines an interface and the driver implements it.
+`apps/` sits above all layers as the composition root — it creates and wires the functional units, adaptors, and infrastructure together at startup.
+
+The key constraint: **lower abstraction modules depend on higher abstraction modules, not the reverse**.
 
 ## Separation of concerns
 
-Mixing code from different abstraction layers is actively avoided:
+Mixing code from different abstraction layers (and also between
+blocks within the same abstraction layer) is actively avoided:
 
 - Keep abstraction layer boundaries and interfaces clean and narrow.
 - Minimise coupling between modules at different abstraction levels.
@@ -42,22 +45,22 @@ Mixing code from different abstraction layers is actively avoided:
 
 ## Dependency inversion at the boundary
 
-When the direction of control flow would force an inner layer to call outward, the **Dependency Inversion Principle** is applied. The inner layer defines an interface; the outer layer implements it. This keeps the dependency arrow pointing inward even when control flows outward. The component diagram in the figure above illustrates this at the use-case boundary:
+When the direction of control flow would force an inner layer to call outward, the **Dependency Inversion Principle** is applied. The inner layer defines an interface; the outer layer implements it. This keeps the dependency arrow pointing inward even when control flows outward.
 
-1. `Controller` calls the `Use Case Input Port` interface (defined by the inner layer).
-2. `Use Case Interactor` (inner layer) implements that interface and drives the logic.
-3. `Use Case Interactor` calls the `Use Case Output Port` interface (also defined by the inner layer).
-4. `Presenter` (outer layer) implements the output port interface.
+A concrete example from OCUDU: when the RLC AM entity exhausts its retransmission budget (`max_retx`), it must tell the DU-high to initiate a UE release. RLC is an inner layer; DU-high is an outer layer. RLC must never hold a pointer to DU-high — that would be an outward dependency.
 
-At runtime control flows Controller → Interactor → Presenter; at compile time all dependency arrows point inward.
+Instead, RLC defines the `rlc_tx_upper_layer_control_notifier` interface (in `include/ocudu/rlc/rlc_tx.h`) with an `on_max_retx()` method. The DU-high implements this interface through `rlc_tx_control_notifier` (in `du/du_high/du_manager/du_ue/du_ue_adapters.h`) and passes it into the RLC entity at construction time.
+
+At runtime, control flows inward-to-outward: RLC → `on_max_retx()` → DU-high. At compile time, the dependency arrow still points inward: DU-high includes the RLC header to implement the interface; RLC includes nothing from DU-high.
 
 ## What this means for contributors
 
 When adding a feature, decide which layer it belongs to before writing any code:
 
-- **New hardware support** → touch only the lowest layer (device drivers / frameworks).
-- **New deployment scenario** → touch the adaptor layer and possibly the driver layer.
-- **New protocol behaviour** → touch only the business logic or business entity layers.
+- **New radio hardware** → touch only the infrastructure layer (`hal/`, `radio/`, `ofh/`). The protocol stack above never changes.
+- **New full L1 (third-party or custom)** → implement the `split6_o_du_low_plugin` interface (`apps/units/flexible_o_du/split_6/o_du_low/split6_o_du_low_plugin.h`). Your L1 exposes FAPI P5/P7 adaptors; OCUDU's DU-high connects to them without knowing what is behind the interface. No changes to MAC or above.
+- **New PHY algorithm (e.g. channel estimator)** → implement the `port_channel_estimator` or `dmrs_pusch_estimator` interface (`include/ocudu/phy/upper/signal_processors/channel_estimator/`), register it via the factory, and add your implementation under `lib/phy/upper/signal_processors/channel_estimator/`. The PUSCH pipeline that calls `compute()` is unchanged.
+- **New protocol behaviour** → touch only the protocol entities or functional units (`mac/`, `rlc/`, `cu_cp/`, etc.). Infrastructure and adaptors are unaffected.
 
 Keeping changes scoped to the correct layer is what allows the codebase to stay portable, testable, and maintainable as it grows.
 
