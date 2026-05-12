@@ -22,14 +22,20 @@ std::unique_ptr<mac_scheduler> make_mac_scheduler(const scheduler_expert_config&
 **Problem:** Constructing a complex object requires many optional parameters and a specific assembly order.
 
 **In OCUDU:** Configuration objects and test harness setups use a builder pattern to avoid multi-argument constructors that are easy to call incorrectly. The builder validates the configuration before constructing the final object.
+Have a look at the FAPI message builders for an example of this pattern, and check the unit tests [here](https://gitlab.com/ocudu/ocudu/-/blob/dev/tests/unittests/fapi/p7/builders/dl_pdsch_pdu_test.cpp?ref_type=heads) as well.
 
 ## Structural patterns
 
-### Adapter (Gateway)
+### Adapter
 
 **Problem:** Two components have incompatible interfaces; one must be wrapped to look like the other.
 
-**In OCUDU:** Layer boundaries regularly require adapters. When connecting OCUDU to a third-party PHY, an adapter class wraps the external API and presents the `lower_phy_downlink_handler` interface that the MAC expects. The MAC never knows the adapter exists. This is one of the most heavily used patterns in the codebase.
+**In OCUDU:** Layer boundaries regularly require adapters. The F1AP layer is a clear example. The DU-high holds a pointer to an `f1ap_message_handler` interface and calls it to send F1AP messages upward. Two concrete adapters implement that same interface:
+
+- **`f1ap_sctp_adapter`** — wraps a real SCTP association. It serialises the ASN.1 message and hands the byte stream to the transport layer. This is the adapter used in a deployed system where the DU and CU run as separate network nodes.
+- **`f1ap_local_adapter`** (fast path) — skips serialisation and SCTP entirely. It passes the already-decoded message object directly to the CU-CP handler in the same process. This is used when DU and CU are co-located, eliminating unnecessary encode/decode round-trips and loopback overhead.
+
+The DU-high is never aware of which adapter is active. Swapping between split and co-located deployments is purely a wiring decision made at startup. This is one of the most heavily used patterns in the codebase.
 
 ### Decorator
 
@@ -48,7 +54,7 @@ class scheduler_metrics_decorator : public mac_scheduler { ... };
 
 **Problem:** An algorithm needs to be selectable at runtime or configuration time.
 
-**In OCUDU:** Scheduling policies, HARQ retransmission strategies, and link adaptation algorithms are all strategies. Each variant implements a common interface; the containing component holds a pointer to the interface and calls it without knowing which concrete strategy is active. Adding a new variant is adding a new class - no existing code changes.
+**In OCUDU:** The strategy pattern is the default way components interact. Every handler interface (`mac_scheduler`, `f1ap_message_handler`, `lower_phy_downlink_handler`, etc.) is a strategy contract: the holder knows only the interface, not the concrete type behind it. This means any component can be replaced - with a real implementation, a stub, a decorator, or an adapter - without touching its caller. Scheduling policies, HARQ retransmission strategies, and link adaptation algorithms are specific examples of this, but the pattern is pervasive across all layer boundaries.
 
 ### Observer (Notifier / Event dispatcher)
 

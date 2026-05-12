@@ -34,7 +34,7 @@ Polymorphism through virtual functions is the backbone of OCUDU's interface-base
 - replace the built-in PHY with a third-party one via a plugin,
 - select a CPU-optimised algorithm at startup without changing call sites.
 
-The dependency rule of Clean Architecture is enforced directly through this mechanism: inner layers hold pointers to interface classes defined in the same layer; outer layers provide the concrete implementations.
+The dependency rule of [Clean Architecture](../2_principles/1_clean_architecture.md) is enforced directly through this mechanism: inner layers hold pointers to interface classes defined in the same layer; outer layers provide the concrete implementations.
 
 ## Composition over inheritance
 
