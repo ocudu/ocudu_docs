@@ -57,7 +57,7 @@ For the purpose of this application note, we will use a dockerized Open5GS versi
 
 ### ZeroMQ
 
-For a guide on installing ZMQ and building OCUDU correctly, see [here](../../installation/installation.md).
+For a guide on installing ZMQ and building OCUDU correctly, see [here](../../user_manual/installation/installation.md).
 
 ---
 

@@ -180,7 +180,7 @@ The following config files are prepared for this tutorial:
 
 Furthermore the tutorial requires the `ue-ifup` script that comes with Amarisoft UE and is located in the `config` folder of the UE application.
 
-Important details of the modifications made are outlined in the following sections. The description of the remaining config parameters is available in [Configuration Reference](../../config_reference/config_reference.md).
+Important details of the modifications made are outlined in the following sections. The description of the remaining config parameters is available in [Configuration Reference](../../user_manual/config_reference/config_reference.md).
 Moreover, details of the ZMQ-based setup are explained in the [OCUDU with Amarisoft UE](../amari_ue/index.md) application note.
 
 It is recommended you use these files to avoid errors while changing configs manually. Any configuration files not included here do not require modification from the default settings.

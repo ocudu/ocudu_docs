@@ -15,7 +15,7 @@ function emulates single or multiple UEs, simulating traffic  across layers such
 builds beyond the gNB.
 
 Detailed explanations of these scenarios are provided in the following sections. For detailed information on specific configuration parameters and usage of these modes, refer to the
-OCUDU [Configuration Reference](../../config_reference/config_reference.md).
+OCUDU [Configuration Reference](../../user_manual/config_reference/config_reference.md).
 
 ---
 
@@ -180,4 +180,4 @@ pci rnti | cqi  ri  mcs  brate   ok  nok  (%)  dl_bs | pusch  rsrp  mcs  brate  
   1 0x44 |  15 1.0   28   1.0G 1548    0   0%    10M |  99.9 -99.9   28    76M  401    0   0%  81.5M      0  n/a
 ```
 
-For more information about the test mode please refer to the OCUDU [Configuration Reference](../../config_reference/config_reference.md).
+For more information about the test mode please refer to the OCUDU [Configuration Reference](../../user_manual/config_reference/config_reference.md).

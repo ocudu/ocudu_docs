@@ -30,7 +30,7 @@ For this application note, the following hardware and software are used:
 
 ### OCUDU
 
-If you have not already done so, install the latest version of OCUDU and all of its dependencies. This is outlined in the [Installation Guide](../../installation/installation.md).
+If you have not already done so, install the latest version of OCUDU and all of its dependencies. This is outlined in the [Installation Guide](../../user_manual/installation/installation.md).
 
 ### X310 USRP
 
@@ -50,7 +50,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
 
 ### COTS UE
 
-A 5G SA capable COTS UE is used for this tutorial, specifically the [Fairphone 5](https://shop.fairphone.com/fairphone-5#section5). A detailed list of COTS UEs that have been tested with OCUD can be found [here](../../../knowledge_base/cots_ues/index.md).
+A 5G SA capable COTS UE is used for this tutorial, specifically the [Fairphone 5](https://shop.fairphone.com/fairphone-5#section5). A detailed list of COTS UEs that have been tested with OCUD can be found [here](../../knowledge_base/cots_ues/index.md).
 
 For more information on connecting a COTS UEs to OCUDU, see the [full tutorial](../cots_ue/index.md).
 
@@ -251,7 +251,7 @@ configuring a hysteresis value.
 
 ### Grafana Output
 
-Using the [Grafana GUI](../../grafana/grafana.md) the handover process, and it’s impact on certain metrics, can be clearly observed. The following image shows an example scenario where a UE is moving between two cells. In this scenario the UE is being physically moved
+Using the [Grafana GUI](../../user_manual/grafana/grafana.md) the handover process, and it’s impact on certain metrics, can be clearly observed. The following image shows an example scenario where a UE is moving between two cells. In this scenario the UE is being physically moved
 between the cells to trigger handover.
 
 ![image](assets/grafana_handover.png)

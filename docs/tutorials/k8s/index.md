@@ -58,7 +58,7 @@ the required interface between the DU and the RU.
 ### RU
 
 For this tutorial, you can use any of the RUs supported by OCUDU. For more information on
-supported O-RUs, see the [Radio Units](../../../integrations/index.md) section under integrations.
+supported O-RUs, see the [Radio Units](../../integrations/index.md) section under integrations.
 
 ### 5G Core
 

@@ -675,4 +675,4 @@ The smartphone stores these setting persistently across reboots on a per-IMSI ba
 
 ## Tested Devices
 
-You can find a list of all of the devices that have been tested by the SRS team and reported by the community [here](../../../knowledge_base/cots_ues/index.md). This list contains information about the devices being used, and the configuration of the network.
+You can find a list of all of the devices that have been tested by the SRS team and reported by the community [here](../../knowledge_base/cots_ues/index.md). This list contains information about the devices being used, and the configuration of the network.

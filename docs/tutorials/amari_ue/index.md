@@ -51,7 +51,7 @@ This tutorial assumes that the 5G Core Network is running on a different machine
 
 ### ZeroMQ
 
-To install ZMQ, and build OCUDU such that it is recognized, see the [installation guide](../../installation/installation.md).
+To install ZMQ, and build OCUDU such that it is recognized, see the [installation guide](../../user_manual/installation/installation.md).
 
 ### Amarisoft UE
 

@@ -694,7 +694,7 @@ The following (or similar) will be displayed on the NearRT-RIC console:
 
 ### Enable E2AP PCAP
 
-You can enable E2AP PCAPs by following [this guide](../../outputs/outputs.md).
+You can enable E2AP PCAPs by following [this guide](../../user_manual/outputs/outputs.md).
 
 ### Live capture
 

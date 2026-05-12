@@ -22,7 +22,7 @@ For this application note, the following hardware and software are used:
 
 ### OCUDU
 
-If you have not already done so, install the latest version of OCUDU and all of its dependencies. This is outlined in the [Installation Guide](../../installation/installation.md).
+If you have not already done so, install the latest version of OCUDU and all of its dependencies. This is outlined in the [Installation Guide](../../user_manual/installation/installation.md).
 
 ### B210
 
@@ -40,7 +40,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
 
 ### COTS UE
 
-A 5G SA capable COTS UE is used for this tutorial, specifically the [Xiaomi 12 5G](https://www.mi.com/es/product/xiaomi-12/specs/). A detailed list of COTS UEs that have been tested with OCUDU can be found [here](../../../knowledge_base/cots_ues/index.md).
+A 5G SA capable COTS UE is used for this tutorial, specifically the [Xiaomi 12 5G](https://www.mi.com/es/product/xiaomi-12/specs/). A detailed list of COTS UEs that have been tested with OCUDU can be found [here](../../knowledge_base/cots_ues/index.md).
 
 For more information on connecting a COTS UEs to OCUDU, see the [full tutorial](../cots_ue/index.md).
 
@@ -48,7 +48,7 @@ For more information on connecting a COTS UEs to OCUDU, see the [full tutorial](
 
 ## Configuration
 
-For the CU-DU split two configuration files are needed, one for CU and one for DU. These configuration files are explained in detail [here](../../config_reference/config_reference.md).
+For the CU-DU split two configuration files are needed, one for CU and one for DU. These configuration files are explained in detail [here](../../user_manual/config_reference/config_reference.md).
 
 ### Core
 

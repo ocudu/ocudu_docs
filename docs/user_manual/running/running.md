@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 # Running
 
 :::info
-This guide outlines how to *manually* run OCUDU applications in a Split 8 deployment with a USRP. For Split 7.2 deployments and/or Kubernetes execution see [here](../tutorials/index.md).
+This guide outlines how to *manually* run OCUDU applications in a Split 8 deployment with a USRP. For Split 7.2 deployments and/or Kubernetes execution see [here](../../tutorials/index.md).
 :::
 
 ## Baseline Requirements
@@ -177,4 +177,4 @@ Configuration parameters can also be passed on the command line. To see the list
 
 </Tabs>
 
-For more information on running OCUDU, and configuring for various use-cases see the [full list of tutorials](../tutorials/index.md).
+For more information on running OCUDU, and configuring for various use-cases see the [full list of tutorials](../../tutorials/index.md).
