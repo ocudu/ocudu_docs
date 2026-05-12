@@ -79,21 +79,3 @@ class scheduler_metrics_decorator : public mac_scheduler { ... };
 **Problem:** A component requires a collaborator, but in some configurations that collaborator does nothing.
 
 **In OCUDU:** Rather than littering code with `if (reporter != nullptr) reporter->report(...)`, OCUDU uses null-object implementations that conform to the full interface but do nothing. The `null_mac_metrics_notifier` is a typical example. This keeps calling code clean and makes the "no-op" case explicit.
-
-## Pattern selection guide
-
-When deciding which pattern to apply, use this rough guide:
-
-| Situation | Pattern to consider |
-|---|---|
-| Need to create objects without knowing their type | Factory |
-| Need to build a complex object step by step | Builder |
-| Need to make an incompatible interface fit | Adapter |
-| Need to add behaviour without changing a class | Decorator |
-| Need to select an algorithm at runtime | Strategy |
-| Need to decouple event producers from consumers | Observer |
-| Need to queue or defer an operation | Command |
-| Need a fixed procedure with variable steps | Template Method |
-| Need a safe "do nothing" default | Null Object |
-
-Patterns are tools, not targets. If the straightforward solution is simpler than any pattern, use the straightforward solution.

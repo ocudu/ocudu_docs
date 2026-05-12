@@ -22,8 +22,6 @@ Five principles, one consistent codebase. SOLID shapes every class and interface
 - **Interface Segregation** - small, focused interfaces; callers depend only on what they use.
 - **Dependency Inversion** - depend on abstractions; outer layers are injected into inner layers, never the reverse.
 
-Code review will flag SOLID violations. See [Clean Code - SOLID](./2_solid.md) for per-principle guidance and common violation patterns.
-
 ## Object Oriented Programming
 
 OCUDU uses OOP as its main paradigm - not just as a language feature, but as the mechanism that makes layering, interface contracts, and testability work in practice. The key disciplines are encapsulation (hide implementation details), composition over inheritance (inject collaborators rather than inheriting behaviour), and polymorphism through pure-virtual interfaces (the concrete mechanism behind every swappable component).

@@ -32,7 +32,9 @@ Strands are the primary tool for protecting component-internal state without exp
 
 ### Lock-free queues
 
-Inter-component communication on the critical path uses lock-free queues to avoid priority inversion and unbounded blocking. Lock-free queues are used at the boundaries where a non-real-time producer hands work to a real-time consumer (e.g. passing downlink data from the L2 scheduler to the L1 modem).
+Inter-component communication on the critical path uses lock-free queues to avoid priority inversion and unbounded blocking. Lock-free queues are the standard tool at any boundary where a non-real-time producer must hand work to a real-time consumer.
+
+A typical example: an RRC reconfiguration procedure runs on a non-real-time executor and decides to update the UE's bearer configuration. The MAC slot handler runs on a hard-deadline thread that fires every 500 µs. The reconfiguration cannot take a mutex that the slot handler might also hold — that would risk priority inversion and a missed slot deadline. Instead, the reconfiguration procedure pushes a configuration update command into a lock-free queue. The slot handler drains the queue at the start of each slot and applies any pending updates to the UE object before scheduling begins. Neither side ever blocks waiting for the other.
 
 OCUDU provides two lock-free queue variants, both expressed as specialisations of the `concurrent_queue<T, Policy, BlockingPolicy>` template:
 
