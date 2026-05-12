@@ -12,9 +12,13 @@ The benefits are consistent:
 
 ## Stack layer interfaces
 
-NR protocol layers (PHY, MAC, RLC, PDCP, RRC, …) communicate exclusively through C++ interfaces. A layer holds a reference to its neighbour's interface; it never instantiates the neighbour directly. The direction of the reference respects the Clean Architecture dependency rule: upper layers define what they need from lower layers; lower layers implement it.
+Any two components that communicate across a significant boundary do so through a pure-virtual interface. This includes 3GPP protocol layers (PHY, MAC, RLC, PDCP, RRC), functional splits (DU-high to DU-low, CU to DU), infrastructure services (timers, executors, metrics reporters), and any plugin or third-party integration point.
 
-Typical layer boundaries:
+The critical consequence is that **no layer object holds a direct pointer to another layer object**. RLC does not know that MAC exists as a concrete class; MAC does not know that RLC exists as a concrete class. What they hold are pointers to interfaces. The wiring - creating both objects and connecting them through their interfaces - happens in the application or test harness, not inside the protocol components themselves.
+
+Adapter objects are what make this work in practice. When two layers need to communicate but their interfaces do not match exactly, an adapter sits between them, implementing the interface one side expects while delegating to the other side. The adapter is instantiated in the wiring layer; neither protocol component is aware of its existence. This is described further in the [Adapter design pattern](9_design_patterns.md#adapter).
+
+Typical 3GPP layer boundaries:
 
 | Boundary | Interface direction |
 |---|---|
@@ -29,8 +33,8 @@ Each interface is defined in the header of the layer that depends on it, not in 
 
 The **FAPI (Functional Application Platform Interface)** is the standardised interface between the L2 (MAC) and L1 (PHY). OCUDU implements FAPI as the primary mechanism for PHY-MAC communication. Using a standardised interface at this boundary means:
 
-- The built-in OCUDU PHY can be swapped for a third-party PHY without any changes to the MAC.
-- A third-party MAC can be connected below OCUDU's RLC/PDCP/RRC stack via the DU LO plugin interface, which exposes FAPI externally.
+- The built-in OCUDU PHY can be swapped for a third-party PHY without any changes to the MAC. This is the `du_high` plugin.
+- A third-party DU-high (L2 and above) can drive OCUDU's L1 via the `du_low` plugin interface, which exposes the FAPI boundary upward so external schedulers and MAC implementations can plug in above it.
 - Integration with commercial small-cell PHYs, SDR frameworks, and FPGA-based modems is possible without modifying the core stack.
 
 ## Functional splits
