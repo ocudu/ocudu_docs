@@ -8,16 +8,16 @@ The table below lists every in-house implementation and every vendored library, 
 
 | Feature / library | In-house or external |
 |---|---|
-| Coroutines (`async_task`, `CORO_*` macros) | In-house — custom C++17 stackless coroutine framework |
-| `span<T>` | In-house — contiguous view type |
-| `flat_map<K, V>` | In-house — sorted-vector associative container |
-| Executor and strand framework | In-house — `task_executor`, `strand_executor`, priority strands |
-| SIMD abstraction | In-house — architecture-portable wrapper over SSE/AVX/NEON intrinsics |
-| Memory pools and object pools | In-house — fixed-size, lock-free allocators for real-time paths |
-| Custom containers | In-house — ring buffers, static vectors, concurrent queues built on the primitives below |
-| ASN.1 code generator | In-house — generates strongly-typed C++ from 3GPP ASN.1 schemas |
-| `expected<T, E>` | External: [TartanLlama/expected](https://github.com/TartanLlama/expected) — C++23 `std::expected` backport; re-exported as `ocudu::expected` |
-| String formatting | External: [{fmt}](https://fmt.dev) — C++20 `std::format` backport; used directly as `fmt::format` |
+| Coroutines (`async_task`, `CORO_*` macros) | In-house - custom C++17 stackless coroutine framework |
+| `span<T>` | In-house - contiguous view type |
+| `flat_map<K, V>` | In-house - sorted-vector associative container |
+| Executor and strand framework | In-house - `task_executor`, `strand_executor`, priority strands |
+| SIMD abstraction | In-house - architecture-portable wrapper over SSE/AVX/NEON intrinsics |
+| Memory pools and object pools | In-house - fixed-size, lock-free allocators for real-time paths |
+| Custom containers | In-house - ring buffers, static vectors, concurrent queues built on the primitives below |
+| ASN.1 code generator | In-house - generates strongly-typed C++ from 3GPP ASN.1 schemas |
+| `expected<T, E>` | External: [TartanLlama/expected](https://github.com/TartanLlama/expected) - C++23 `std::expected` backport; re-exported as `ocudu::expected` |
+| String formatting | External: [fmt](https://fmt.dev) - C++20 `std::format` backport; used directly as `fmt::format` |
 | Lock-free MPMC queue | External: [cameron314/concurrentqueue](https://github.com/cameron314/concurrentqueue) |
 | Lock-free MPMC / SPSC queues | External: [rigtorp/MPMCQueue + SPSCQueue](https://github.com/rigtorp) |
 | JSON serialisation | External: [nlohmann/json](https://github.com/nlohmann/json) |
@@ -27,7 +27,7 @@ The table below lists every in-house implementation and every vendored library, 
 
 ## STL and specialised containers
 
-Heavy use of the STL is encouraged. Where the STL does not meet real-time or performance requirements, OCUDU provides its own specialised containers — or wraps the vendored lock-free queue libraries listed above:
+Heavy use of the STL is encouraged. Where the STL does not meet real-time or performance requirements, OCUDU provides its own specialised containers - or wraps the vendored lock-free queue libraries listed above:
 
 - Lock-free and priority queues (backed by cameron314 and rigtorp primitives)
 - Memory pools and fixed-size allocators
