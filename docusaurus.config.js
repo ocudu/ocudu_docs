@@ -9,11 +9,7 @@ const gitlab_project = 'ocudu';
 const url = `https://${gitlab_namespace}.gitlab.io/`;
 const baseUrl = process.env.BASE_URL || '/';
 const gitlab_repo_url = `https://gitlab.com/${gitlab_namespace}`;
-const ocudu_repo_url = `${gitlab_repo_url}/${gitlab_project}`;
 const ocudu_docs_repo_url = `${gitlab_repo_url}/ocudu_docs`;
-const ocudu_oran_apps_repo_url = `${gitlab_repo_url}/ocudu_elements/ocudu_oran_apps`;
-const ocudu_netconf_repo_url = `${ocudu_oran_apps_repo_url}/ocudu_netconf`;
-const ocudu_o1_adapter_repo_url = `${ocudu_oran_apps_repo_url}/ocudu_o1_adapter`;
 
 // Returns Commit Sha of given repository
 function getRepoCommitSha(repoPath, repoName) {
@@ -33,14 +29,8 @@ function getShortSha(sha) {
 }
 
 // Get Commit Sha's of used repositories and shorten them for printing in the footnote
-const ocuduCommitSha = getRepoCommitSha('docs/ocudu', 'OCUDU');
 const ocuduDocsCommitSha = getRepoCommitSha('.', 'OCUDU Docs');
-const ocuduNetconfCommitSha = getRepoCommitSha('oran_apps/ocudu_netconf', 'OCUDU Netconf');
-const ocuduO1AdapterCommitSha = getRepoCommitSha('oran_apps/ocudu_o1_adapter', 'OCUDU O1 Adapter');
-const ocuduCommitShort = getShortSha(ocuduCommitSha);
 const ocuduDocsCommitShort = getShortSha(ocuduDocsCommitSha);
-const ocuduNetconfCommitShort = getShortSha(ocuduNetconfCommitSha);
-const ocuduO1AdapterCommitShort = getShortSha(ocuduO1AdapterCommitSha);
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
@@ -63,6 +53,15 @@ module.exports = {
   },
   themes: ['@docusaurus/theme-mermaid'],
   themeConfig: {
+    docs: {
+      sidebar: {
+        autoCollapseCategories: true,
+      },
+    },
+    tableOfContents: {
+      minHeadingLevel: 2,
+      maxHeadingLevel: 3,
+    },
     prism: {
       theme: themes.github,
       darkTheme: themes.dracula,
@@ -77,46 +76,61 @@ module.exports = {
       },
       items: [
         {
-          to: '/',
-          position: 'left',
-          label: 'Documentation',
-        },
-        {
           type: 'dropdown',
-          label: 'ORAN Apps',
+          label: 'User Documentation',
           position: 'left',
           items: [
-            {
-              to: '/oran_apps/ocudu_netconf',
-              label: 'Netconf',
-            },
-            {
-              to: '/oran_apps/ocudu_o1_adapter',
-              label: 'O1 Adapter',
-            }
+            { type: 'doc', docId: 'user_manual/index',    label: 'User Manual' },
+            { type: 'doc', docId: 'tutorials/index',      label: 'Tutorials' },
+            { type: 'doc', docId: 'integrations/index',   label: 'Integrations' },
+            { type: 'doc', docId: 'releases/index',       label: 'Releases & Roadmap' },
           ],
+        },
+        {
+          type: 'doc',
+          docId: 'knowledge_base/index',
+          position: 'left',
+          label: 'Knowledge Base',
+        },
+        {
+          type: 'doc',
+          docId: 'dev_guide/index',
+          position: 'left',
+          label: 'Developer Zone',
+        },
+        {
+          type: 'doc',
+          docId: 'community/index',
+          position: 'left',
+          label: 'Community',
+        },
+        {
+          type: 'doc',
+          docId: 'qa_results/index',
+          position: 'left',
+          label: 'QA Results',
         },
         {
           type: 'dropdown',
           label: 'CI Results',
-          position: 'left',
+          position: 'right',
           items: [
             {
               href: '/coverage/index.html',
-              target: "_blank",
+              target: '_blank',
               label: 'Code Coverage',
-            }
+            },
           ],
         },
         {
-          href: 'https://ocudu.org',
-          label: 'Website',
+          type: 'html',
           position: 'right',
+          value: '<a href="https://ocudu.org" target="_blank" rel="noopener noreferrer" aria-label="OCUDU Website" class="navbar__item navbar__link" style="display:flex;align-items:center;padding:0.25rem 0.35rem"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></a>',
         },
         {
-          href: gitlab_repo_url,
-          label: 'Gitlab',
+          type: 'html',
           position: 'right',
+          value: `<a href="${gitlab_repo_url}" target="_blank" rel="noopener noreferrer" aria-label="GitLab" class="navbar__item navbar__link" style="display:flex;align-items:center;padding:0.25rem 0.35rem"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="95 95 190 190"><path fill="#e24329" d="M265.26416,174.37243l-.2134-.55822-21.19899-55.30908c-.4236-1.08359-1.18542-1.99642-2.17699-2.62689-.98837-.63373-2.14749-.93253-3.32305-.87014-1.1689.06239-2.29195.48925-3.20809,1.21821-.90957.73554-1.56629,1.73047-1.87493,2.85346l-14.31327,43.80662h-57.90965l-14.31327-43.80662c-.30864-1.12299-.96536-2.11791-1.87493-2.85346-.91614-.72895-2.03911-1.15582-3.20809-1.21821-1.17548-.06239-2.33468.23641-3.32297.87014-.99166.63047-1.75348,1.5433-2.17707,2.62689l-21.19891,55.31237-.21348.55493c-6.28158,16.38521-.92929,34.90803,13.05891,45.48782.02621.01641.04922.03611.07552.05582l.18719.14119,32.29094,24.17392,15.97151,12.09024,9.71951,7.34871c2.34117,1.77316,5.57877,1.77316,7.92002,0l9.71943-7.34871,15.96822-12.09024,32.48142-24.31511c.02958-.02299.05588-.04269.08538-.06568,13.97834-10.57977,19.32735-29.09604,13.04905-45.47796Z"/><path fill="#fc6d26" d="M265.26416,174.37243l-.2134-.55822c-10.5174,2.16062-20.20405,6.6099-28.49844,12.81593-.1346.0985-25.20497,19.05805-46.55171,35.19699,15.84998,11.98517,29.6477,22.40405,29.6477,22.40405l32.48142-24.31511c.02958-.02299.05588-.04269.08538-.06568,13.97834-10.57977,19.32735-29.09604,13.04905-45.47796Z"/><path fill="#fca326" d="M160.34962,244.23117l15.97151,12.09024,9.71951,7.34871c2.34117,1.77316,5.57877,1.77316,7.92002,0l9.71943-7.34871,15.96822-12.09024s-13.79772-10.41888-29.6477-22.40405c-15.85327,11.98517-29.65099,22.40405-29.65099,22.40405Z"/><path fill="#fc6d26" d="M143.44561,186.63014c-8.29111-6.20274-17.97446-10.65531-28.49507-12.81264l-.21348.55493c-6.28158,16.38521-.92929,34.90803,13.05891,45.48782.02621.01641.04922.03611.07552.05582l.18719.14119,32.29094,24.17392s13.79772-10.41888,29.65099-22.40405c-21.34673-16.13894-46.42031-35.09848-46.55499-35.19699Z"/></svg></a>`,
         },
       ],
     },
@@ -140,20 +154,8 @@ module.exports = {
           title: 'Repositories used for building this website',
           items: [
             {
-              label: `OCUDU: ${ocuduCommitShort}`,
-              href: `${ocudu_repo_url}/-/tree/${ocuduCommitSha}`,
-            },
-            {
               label: `OCUDU Docs: ${ocuduDocsCommitShort}`,
               href: `${ocudu_docs_repo_url}/-/tree/${ocuduDocsCommitSha}`,
-            },
-            {
-              label: `OCUDU Netconf: ${ocuduNetconfCommitShort}`,
-              href: `${ocudu_netconf_repo_url}/-/tree/${ocuduNetconfCommitSha}`,
-            },
-            {
-              label: `OCUDU O1 Adapter: ${ocuduO1AdapterCommitShort}`,
-              href: `${ocudu_o1_adapter_repo_url}/-/tree/${ocuduO1AdapterCommitSha}`,
             },
           ],
         },
@@ -180,6 +182,7 @@ module.exports = {
             '**/build/**',
             '**/ccache/**',
             '**/.git/**',
+            'ocudu/**',
           ],
           sidebarPath: require.resolve('./sidebars_extended.js'),
         },
@@ -191,20 +194,6 @@ module.exports = {
     ],
   ],
   plugins: [
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'oran_apps',
-        path: 'oran_apps',
-        routeBasePath: 'oran_apps',
-        sidebarPath: require.resolve('./sidebars.js'),
-        include: ['**/*.md', '**/*.mdx'],
-        exclude: [
-          '**/.git/**',
-          '**/node_modules/**',
-        ],
-      }
-    ],
     'docusaurus-plugin-drawio',
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),

@@ -9,23 +9,20 @@
 
 services:
   docusaurus:
-    image: node:20
+    image: node:22
     working_dir: /builds/ocudu/ocudu_docs
     volumes:
       - ./:/builds/ocudu/ocudu_docs
-      # OCUDU repositories
-      - ${OCUDU_GROUP_PATH}/ocudu:/builds/ocudu/ocudu_docs/docs/ocudu:ro
-      - ${OCUDU_GROUP_PATH}/ocudu_elements/ocudu_oran_apps/:/builds/ocudu/ocudu_docs/oran_apps:ro
       # Static documentation from other OCUDU repositories
       - ${OCUDU_GROUP_PATH}/ocudu/build_doxygen/docs/doxygen/html:/builds/ocudu/ocudu_docs/static/doxygen:ro
     ports:
-      - "3000:3000"
+      - "3001:3000"
     stop_grace_period: 1s
     user: "1000:1000"
     command: >
       sh -c "
-      echo 'Starting Docusaurus server...' &&
-      npm install &&
+      echo '--- Starting Docusaurus server ---' &&
+      npm install --no-audit --no-fund &&
       npm run clear &&
-      npm run start -- --host 0.0.0.0
+      npm run start -- --host 0.0.0.0 --poll 1000
       "
