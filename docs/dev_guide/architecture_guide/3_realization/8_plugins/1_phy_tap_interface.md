@@ -124,3 +124,5 @@ create_phy_tap_factory(unsigned nof_rb, unsigned nof_ports,
 ```
 
 OCUDU calls this once at startup, holds the returned `phy_tap_factory`, and calls `factory->create()` once per cell to get the per-cell `phy_tap` instance it drives at runtime.
+
+You can find a toy example implementation, and fully detailed instructions, in the [PHY TAP Plugin Example repository](https://gitlab.com/ocudu/plugin_examples/phy_tap_plugin_example). To test it, just clone it inside the `plugins` folder (create one if it's not already present) and compile normally.
