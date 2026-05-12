@@ -27,7 +27,7 @@ OCUDU maps the Clean Architecture rings directly onto the 5G NR protocol stack, 
 |---|---|---|
 | Highest | **Business entities** | NR protocol layer implementations (MAC, RLC, PDCP, …) |
 | ↑ | **Business logic** | 3GPP TS procedures and state machines |
-| ↓ | **Adaptors** | Layer adaptors, gateways (GWs), interface glue |
+| ↓ | **Adaptors** | Layer adaptors, interface glue |
 | Lowest | **Frameworks & drivers** | Device drivers, I/O, build-system integrations |
 
 The key constraint: **lower abstraction modules depend on higher abstraction modules, not the reverse**. A device driver does not import a MAC-layer header; the MAC layer defines an interface and the driver implements it.

@@ -100,4 +100,23 @@ create_phy_tap_factory(unsigned           nof_rb,
 }
 ```
 
-Once these three pieces are in place and linked into the OCUDU binary (see [Build System](./5_build_system.md)), the plugin is active. OCUDU will call `process()` on every received uplink symbol for every configured cell.
+Once these three pieces are in place and linked into the OCUDU binary (see [Build System](./5_build_system.md)), the plugin is compiled in but **not active by default**. It must be enabled at runtime through the configuration.
+
+## Step 4 - enable the plugin in configuration
+
+Even with the plugin present in the binary, OCUDU will not invoke it unless `enable_phy_tap` is set to `true` under the `expert_phy` section. This lets the same binary be deployed with or without the plugin active without recompilation.
+
+```yaml
+expert_phy:
+  enable_phy_tap: true
+  phy_tap_arguments: ""   # optional: passed verbatim to create_phy_tap_factory()
+```
+
+Or equivalently on the command line:
+
+```bash
+--expert_phy.enable_phy_tap=true
+--expert_phy.phy_tap_arguments="key=value,..."
+```
+
+When `enable_phy_tap: false` (the default), OCUDU skips factory creation entirely and the plugin code is never executed. This means the plugin can be left linked in release builds and gated by configuration.
