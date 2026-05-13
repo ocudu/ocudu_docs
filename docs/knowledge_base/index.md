@@ -13,7 +13,7 @@ If you are new to the architecture, start with the O-RAN gNB Overview. The other
 
 <section className="row">
   <article className="col col--6 margin-bottom--lg">
-    <DocCard item={{type: 'link', href: '/knowledge_base/oran_gnb/', label: 'O-RAN Overview', description: 'The architecture of an O-RAN compliant gNB, the split 7.2x functional split, and how OCUDU implements it.'}} />
+    <DocCard item={{type: 'link', href: '/knowledge_base/oran_gnb/', label: 'O-RAN Overview', description: 'The architecture of an O-RAN compliant gNB, split 7.2, and how OCUDU implements it.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
     <DocCard item={{type: 'link', href: '/knowledge_base/gnb_components/', label: 'CU/DU Components', description: 'The roles and protocol layers of the CU, DU, and RU, and the boundaries between them.'}} />

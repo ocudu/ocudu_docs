@@ -5,7 +5,7 @@ See [here](https://www.nationalspectrumconsortium.org/news-detail/ocudu-awardees
 for more details.
 
 The project follows a clearly defined development roadmap covering the full period of performance.
-The first public release is scheduled for April 2026. Beginning with that release, we will adopt a
+The first public release 26.04, was released in April 2026. Following this, the project will use a 
 predictable bi-annual release cycle, issuing new versions every April and October to ensure steady
 feature development, community feedback integration, and long-term sustainability.
 

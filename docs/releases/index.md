@@ -70,7 +70,7 @@ Development status, current features, and release roadmap for OCUDU. New version
     <h4>Architecture &amp; Deployment</h4>
     <ul>
       <li>CU/DU and CU-CP/CU-UP separation</li>
-      <li>Split 7.2a via in-house Open Fronthaul library</li>
+      <li>Split 7.2 via Open Fronthaul library</li>
       <li>M-plane support via OCUDU helper components</li>
       <li>Hardware accelerator support via DPDK BBDEV</li>
     </ul>

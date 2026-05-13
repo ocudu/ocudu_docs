@@ -12,7 +12,7 @@ Step-by-step guides from your first gNB to advanced multi-component deployments.
 Choose a starting point based on your available hardware and experience with OCUDU.
 
 :::tip Start here if you are new to OCUDU
-The [Testmode](./testmode/index.md) tutorial requires only an installed OCUDU build, with no radio hardware or physical UE. Once you have a working system, the [srsUE](./srsue/index.md) tutorial adds a software UE over ZeroMQ.
+The [Testmode](./testmode/index.md) tutorial requires only an OCUDU build, with no radio hardware or physical UE. Once you have a working system, the [srsUE](./srsue/index.md) tutorial adds a software UE over ZeroMQ.
 :::
 
 ## Beginner
@@ -21,7 +21,7 @@ No specialist hardware required.
 
 <section className="row">
   <article className="col col--6 margin-bottom--lg">
-    <DocCard item={{type: 'link', href: '/tutorials/srsue/', label: 'OCUDU with srsUE', description: 'Build a complete open-source 5G network using srsUE as the UE and Open5GS as the core, connected over ZeroMQ.'}} />
+    <DocCard item={{type: 'link', href: '/tutorials/srsue/', label: 'OCUDU with srsUE', description: 'Build a complete open-source split 8 5G network using srsUE as the UE and Open5GS as the core.'}} />
   </article>
 </section>
 
