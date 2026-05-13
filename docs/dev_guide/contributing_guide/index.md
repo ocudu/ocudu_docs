@@ -45,7 +45,7 @@ We welcome many different types of contributions including:
 * Answering questions (e.g. in Gitlab)
 
 Not everything happens through a Gitlab pull request. Please come to our
-[meetings](https://ocudu.org) or [contact us](https://ocudu.org) and let's discuss how we can work
+[meetings](https://gitlab.com/ocudu/community/Governance/-/wikis/home) or [contact us](https://ocudu.org) and let's discuss how we can work
 together. 
 
 ### Come to Meetings
@@ -54,7 +54,7 @@ Absolutely everyone is welcome to come to any of our meetings. You never need an
 invite to join us. In fact, we want you to join us, even if you don’t have
 anything you feel like you want to contribute. Just being there is enough!
 
-You can find out more about our meetings [here](https://ocudu.org). You don’t have to turn on
+You can find out more about our meetings [here](https://gitlab.com/ocudu/community/Governance/-/wikis/home). You don’t have to turn on
 your video. The first time you come, introducing yourself is more than enough.
 Over time, we hope that you feel comfortable voicing your opinions, giving
 feedback on others’ ideas, and even sharing your own ideas, and experiences.
