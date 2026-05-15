@@ -156,7 +156,7 @@ module.exports = {
         {
           title: 'Documentation',
           items: [
-            { label: 'User Manual',      to: '/user_manual/installation/installation/' },
+            { label: 'User Manual',      to: '/user_manual/installation/' },
             { label: 'Tutorials',        to: '/tutorials/' },
             { label: 'Knowledge Base',   to: '/knowledge_base/' },
             { label: 'Developer Guide',  to: '/dev_guide/' },
