@@ -1,9 +1,13 @@
+---
+description: Install OCUDU from source on Linux, including hardware drivers and required library dependencies.
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Installation Guide
+# Installation
 
-The following steps need to be taken in order to download and build OCUDU:
+To download and build OCUDU:
 
 1. Install dependencies
 2. Install RF driver (only required for Split 8 deployments)
@@ -13,17 +17,17 @@ The following steps need to be taken in order to download and build OCUDU:
 ---
 
 :::note
-OCUDU requires a Linux-based OS, we recommend Ubuntu (22.04 or later).
+OCUDU requires a Linux-based OS. Ubuntu (22.04 or later) is recommended.
 :::
 
 ## Build Tools and Dependencies
 
-OCUDU uses CMake and C++17. We recommend the following build tools:
+OCUDU uses CMake and C++17. Recommended build tools:
 
 - [cmake](https://cmake.org/)
 - [gcc](https://gcc.gnu.org/) (v11.4.0 or later) **OR** [Clang](https://clang.llvm.org/) (v14.0.0 or later)
 
-OCUDU has the following necessary dependencies:
+OCUDU requires these dependencies:
 
 - [libsctp](https://github.com/sctp/lksctp-tools)
 - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
@@ -32,7 +36,7 @@ OCUDU has the following necessary dependencies:
 - Optional requirement: [googletest](https://github.com/google/googletest/)
   - GoogleTest is only mandatory when building with tests. You can enable test building by using the cmake option -DBUILD_TESTING=On.
 
-You can install the required build tools and dependencies for various distributions as follows:
+Install build tools and dependencies:
 
 <Tabs>
   <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
@@ -52,7 +56,7 @@ sudo pacman -S cmake make base-devel mbedtls yaml-cpp lksctp-tools gtest
   </TabItem>
 </Tabs>
 
-It is also recommended users install the following (although they are not required):
+These packages are optional but recommended:
 
 - [Ccache](https://ccache.dev/): This will help to speed up re-compilation
 - [backward-cpp](https://github.com/bombela/backward-cpp): This library helps to generate more informative backtraces in the stdout if an error occurs during runtime
@@ -146,18 +150,18 @@ UHD and/or ZMQ are only required for Split 8 deployments, if you are planning on
 
 OCUDU uses RF drivers to support different radio types. Currently, only UHD and ZMQ are supported:
 
-- [UHD](https://github.com/EttusResearch/uhd) (We recommended the LTS version of UHD, i.e. either 3.15 or 4.0.)
+- [UHD](https://github.com/EttusResearch/uhd) (The LTS version is recommended: either 3.15 or 4.0.)
 - [ZMQ](https://zeromq.org/)
 
 ---
 
 ## Clone and Build
 
-OCUDU can be built with certain features enabled or disabled. This is done during the build process by using CMake flags and/or by downloading third party dependencies prior to building the code. The following sections outline these various build options.
+OCUDU supports several build configurations, controlled via CMake flags. The tabs below cover the available options.
 
 <Tabs>
   <TabItem value="vanilla" label="Vanilla Installation" default>
-First, clone OCUDU repository:
+Clone the OCUDU repository:
 
 ```bash
 git clone https://gitlab.com/ocudu/ocudu.git
@@ -174,7 +178,7 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
+The binary is at `ocudu/build/apps/gnb/`. To install system-wide:
 
 ```bash
 sudo make install
@@ -185,10 +189,10 @@ sudo make install
 <TabItem value="split72" label="Split 7.2 Only Configuration">
 
 :::note
-OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
+OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the "Vanilla" installation guide.
 :::
 
-First, clone OCUDU repository:
+Clone the OCUDU repository:
 
 ```bash
 git clone https://gitlab.com/ocudu/ocudu.git
@@ -200,12 +204,12 @@ Then build the code-base, making sure to pass the correct CMake flag:
 cd ocudu
 mkdir build
 cd build
-cmake -DDU_SPLIT_TYPE=SPLIT_7_2  ../
+cmake -DDU_SPLIT_TYPE=SPLIT_7_2 ../
 make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
+The binary is at `ocudu/build/apps/gnb/`. To install system-wide:
 
 ```bash
 sudo make install
@@ -216,10 +220,10 @@ sudo make install
 <TabItem value="split8" label="Split 8 Only Configuration">
 
 :::note
-OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the “Vanilla” installation guide.
+OCUDU allows for compile time selection of a Split 7.2 or Split 8 configuration. By default, OCUDU builds with both options enabled. If you want to compile with the option to have both Split configurations available, follow the "Vanilla" installation guide.
 :::
 
-First, clone OCUDU repository:
+Clone the OCUDU repository:
 
 ```bash
 git clone https://gitlab.com/ocudu/ocudu.git
@@ -236,7 +240,7 @@ make -j $(nproc)
 make test -j $(nproc)
 ```
 
-You can now run the gNB from `ocudu/build/apps/gnb/`. If you wish to install OCUDU, you can use the following command:
+The binary is at `ocudu/build/apps/gnb/`. To install system-wide:
 
 ```bash
 sudo make install
@@ -253,7 +257,7 @@ sudo apt-get install libzmq3-dev
 
 Alternatively, ZeroMQ can also be built from source.
 
-First, one needs to install libzmq:
+Install libzmq:
 
 ```bash
 git clone https://github.com/zeromq/libzmq.git
@@ -265,7 +269,7 @@ sudo make install
 sudo ldconfig
 ```
 
-Second, install czmq:
+Install czmq:
 
 ```bash
 git clone https://github.com/zeromq/czmq.git
@@ -277,13 +281,11 @@ sudo make install
 sudo ldconfig
 ```
 
-Finally, you need to compile OCUDU (assuming you have already installed all the required dependencies).
+With dependencies installed, build OCUDU:
 
-:::note
+:::warning
 If you have already built and installed OCUDU prior to installing ZMQ and other dependencies you will have to re-build to ensure the ZMQ drivers have been recognized correctly.
 :::
-
-The following commands can be used to clone and build from source:
 
 ```bash
 git clone https://gitlab.com/ocudu/ocudu.git
@@ -294,11 +296,11 @@ cmake ../ -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON
 make -j`nproc`
 ```
 
-:::warning
+:::note
 ZeroMQ is disabled by default, this is enabled when running `cmake` by including `-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON`.
 :::
 
-Pay extra attention to the cmake console output. Make sure you read the following line to ensure ZMQ has been correctly detected by OCUDU:
+Verify ZMQ was detected in the cmake output:
 
 ```bash
 ...
@@ -313,48 +315,29 @@ Pay extra attention to the cmake console output. Make sure you read the followin
 
 </Tabs>
 
-The [Running OCUDU](../running/running.md) section of the documentation further discusses how to configure and run the gNB application.
-
----
-
-## Packages
-
-OCUDU is available to download directly from packages for various linux distributions. Users looking for a simple installation who do not wish to edit the source code should use the package installation.
-
-<Tabs>
-  <TabItem value="ubuntu" label="Ubuntu" default>
-Ubuntu users can download OCUDU packages using the following commands:
-
-```bash
-sudo add-apt-repository ppa:softwareradiosystems/srsran-project
-sudo apt-get update
-sudo apt-get install srsran-project -y
-```
-
-  </TabItem>
-<TabItem value="arch" label="Arch Linux">
-Arch Linux users can download OCUDU packages using an AUR helper, e.g. ‘yay’, using the following command:
-
-```bash
-yay -Sy srsran-project-git
-```
-
-</TabItem>
-
-</Tabs>
-
-This will install the latest version of OCUDU from git.
-
-When installed from packages, example configs for OCUDU can be found in `/usr/share/srsran`. For info on these config files, see [here](../config_reference/config_reference.md)
-
-The application can then be run using:
-
-```bash
-sudo gnb -c <config file>
-```
+See [Running OCUDU](../running/running.md) for configuration and next steps.
 
 ---
 
 ## Vector Tests
 
+<<<<<<< HEAD
 Most PHY components, as well as a few components from other layers, are tested by injecting vectors of input data and comparing the results with vectors of expected output data. Since data vectors can be quite heavy, vector tests are not included in the main repository and, instead, are offered as an external plugin that is part of the [OCUDU MATLAB](https://gitlab.com/ocudu/ocudu_elements/ocudu-matlab) companion repository. All the details for installing and running the vector tests are explained in our [MATLAB Testing Tools tutorial](../../tutorials/matlab).
+=======
+PHY tests use MATLAB-generated testvectors and are disabled by default. To enable them:
+
+1. Download the latest [PHY testvector set](https://gitlab.com/ocudu/ocudu/-/releases).
+2. Extract the PHY testvectors to their location within the OCUDU working directory:
+
+```bash
+tar -xf phy_testvectors.tar -C /path_to_your_local_repository/ocudu
+```
+
+3. Enable the use of the PHY testvectors by regenerating the CMake build system:
+
+```bash
+cmake -B build -DUSE_PHY_TESTVECTORS=ON
+```
+
+4. Rebuild OCUDU.
+>>>>>>> 67b6a5c (user_manual: improve installation guide)
