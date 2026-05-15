@@ -172,6 +172,18 @@ module.exports = {
         },
         {
           type: 'category',
+          label: 'Architecture Overview',
+          link: { type: 'doc', id: 'dev_guide/architecture_overview/index' },
+          collapsed: true,
+          items: [
+            'dev_guide/architecture_overview/cu_cp',
+            'dev_guide/architecture_overview/cu_up',
+            'dev_guide/architecture_overview/du_high',
+            'dev_guide/architecture_overview/du_low',
+          ],
+        },
+        {
+          type: 'category',
           label: 'C++ Code Guide',
           link: { type: 'doc', id: 'dev_guide/code_guide/index' },
           collapsed: true,
