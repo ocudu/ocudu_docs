@@ -24,4 +24,7 @@ If you are new to the architecture, start with the O-RAN gNB Overview. The other
   <article className="col col--6 margin-bottom--lg">
     <DocCard item={{type: 'link', href: '/knowledge_base/cots_ues/', label: 'COTS UEs', description: 'Commercial UEs tested with OCUDU, with confirmed bands, configurations, and user-reported working devices.'}} />
   </article>
+  <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/knowledge_base/glossary', label: 'Glossary', description: '5G NR and O-RAN terms and abbreviations used throughout the OCUDU documentation.'}} />
+  </article>
 </section>
