@@ -4,7 +4,6 @@
 import React, {type ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 import {
   useDocById,
   findFirstSidebarItemLink,
@@ -19,17 +18,45 @@ import type {
   PropSidebarItemLink,
 } from '@docusaurus/plugin-content-docs';
 
+import {
+  BookOpen01,
+  GraduationHat02,
+  Lightbulb01,
+  CodeBrowser,
+  PackageCheck,
+  Users01,
+  Link01,
+  CheckVerified01,
+  File02,
+} from '@untitled-ui/icons-react';
+
 import styles from '@docusaurus/theme-classic/lib/theme/DocCard/styles.module.css';
 
-const OcuduIcon = () => (
-  <img
-    src={useBaseUrl('/img/ocudu_o.png')}
-    alt=""
-    width={20}
-    height={20}
-    style={{verticalAlign: 'middle', marginRight: '0.4rem', flexShrink: 0}}
-  />
-);
+type SvgIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
+const ICON_MAP: Record<string, SvgIcon> = {
+  '/user_manual/':    BookOpen01,
+  '/tutorials/':      GraduationHat02,
+  '/knowledge_base/': Lightbulb01,
+  '/dev_guide/':      CodeBrowser,
+  '/releases/':       PackageCheck,
+  '/community/':      Users01,
+  '/integrations/':   Link01,
+  '/qa_results/':     CheckVerified01,
+};
+
+function CardIcon({href}: {href: string}): ReactNode {
+  const match = Object.keys(ICON_MAP).find(prefix => href.startsWith(prefix));
+  const Icon: SvgIcon = match ? ICON_MAP[match] : File02;
+  return (
+    <Icon
+      width={18}
+      height={18}
+      stroke="currentColor"
+      style={{verticalAlign: 'middle', marginRight: '0.4rem', flexShrink: 0, opacity: 0.8}}
+    />
+  );
+}
 
 function useCategoryItemsPlural() {
   const {selectMessage} = usePluralForm();
@@ -83,7 +110,7 @@ function CardLayout({
         as="h2"
         className={clsx('text--truncate', styles.cardTitle)}
         title={title}>
-        <OcuduIcon />
+        <CardIcon href={href} />
         {title}
       </Heading>
       {description && (
