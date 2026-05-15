@@ -39,7 +39,7 @@ module.exports = {
   url: url,
   baseUrl: baseUrl,
   onBrokenLinks: 'throw',
-  favicon: 'https://srs.io/wp-content/uploads/ocudu_color.png',
+  favicon: 'img/ocudu_o.png',
   organizationName: gitlab_namespace,
   projectName: gitlab_project,
   customFields: {
@@ -77,26 +77,42 @@ module.exports = {
       items: [
         {
           type: 'dropdown',
-          label: 'User Documentation',
+          label: 'User Docs',
           position: 'left',
+          to: '/user_manual/',
           items: [
-            { type: 'doc', docId: 'user_manual/index',    label: 'User Manual' },
+            { type: 'doc', docId: 'user_manual/installation/installation', label: 'User Manual' },
             { type: 'doc', docId: 'tutorials/index',      label: 'Tutorials' },
             { type: 'doc', docId: 'integrations/index',   label: 'Integrations' },
             { type: 'doc', docId: 'releases/index',       label: 'Releases & Roadmap' },
           ],
         },
         {
-          type: 'doc',
-          docId: 'knowledge_base/index',
+          type: 'dropdown',
+          label: 'Knowledge',
           position: 'left',
-          label: 'Knowledge Base',
+          to: '/knowledge_base/',
+          items: [
+            { type: 'doc', docId: 'knowledge_base/oran_gnb/index',       label: 'O-RAN Overview' },
+            { type: 'doc', docId: 'knowledge_base/gnb_components/index',  label: 'CU/DU Components' },
+            { type: 'doc', docId: 'knowledge_base/gnb_interfaces/index',  label: 'gNB Interfaces' },
+            { type: 'doc', docId: 'knowledge_base/cots_ues/index',        label: 'COTS UEs' },
+            { type: 'doc', docId: 'knowledge_base/glossary',              label: 'Glossary' },
+          ],
         },
         {
-          type: 'doc',
-          docId: 'dev_guide/index',
+          type: 'dropdown',
+          label: 'Dev Zone',
           position: 'left',
-          label: 'Developer Zone',
+          to: '/dev_guide/',
+          items: [
+            { type: 'doc', docId: 'dev_guide/architecture_guide/index',  label: 'Architecture Guide' },
+            { type: 'doc', docId: 'dev_guide/architecture_overview/index', label: 'Architecture Overview' },
+            { type: 'doc', docId: 'dev_guide/code_guide/index',          label: 'C++ Code Guide' },
+            { type: 'doc', docId: 'dev_guide/logging_guide/index',       label: 'Logging Guide' },
+            { type: 'doc', docId: 'dev_guide/testing_policy/index',      label: 'Testing Policy' },
+            { type: 'doc', docId: 'dev_guide/contributing_guide/index',  label: 'Contributing Guide' },
+          ],
         },
         {
           type: 'doc',
@@ -108,7 +124,7 @@ module.exports = {
           type: 'doc',
           docId: 'qa_results/index',
           position: 'left',
-          label: 'QA Results',
+          label: 'QA',
         },
         {
           type: 'dropdown',
@@ -138,29 +154,35 @@ module.exports = {
       style: 'dark',
       links: [
         {
-          title: 'More',
+          title: 'Documentation',
           items: [
-            {
-              label: 'Website',
-              href: 'https://ocudu.org'
-            },
-            {
-              label: 'Gitlab',
-              href: gitlab_repo_url,
-            },
+            { label: 'User Manual',      to: '/user_manual/installation/installation' },
+            { label: 'Tutorials',        to: '/tutorials/' },
+            { label: 'Knowledge Base',   to: '/knowledge_base/' },
+            { label: 'Developer Guide',  to: '/dev_guide/' },
+            { label: 'Releases',         to: '/releases/' },
           ],
         },
         {
-          title: 'Repositories used for building this website',
+          title: 'Community',
           items: [
-            {
-              label: `OCUDU Docs: ${ocuduDocsCommitShort}`,
-              href: `${ocudu_docs_repo_url}/-/tree/${ocuduDocsCommitSha}`,
-            },
+            { label: 'Discussions',          href: 'https://gitlab.com/ocudu/community/discussions' },
+            { label: 'Mailing List',         href: 'https://lists.ocudu.org/g/main' },
+            { label: 'Community Calls',      href: 'https://zoom-lfx.platform.linuxfoundation.org/meeting/97654512715?password=f7e88038-aff1-426e-bc62-02ef36985c98' },
+            { label: 'GitLab Issues',        href: 'https://gitlab.com/ocudu/ocudu/-/issues' },
+          ],
+        },
+        {
+          title: 'Project',
+          items: [
+            { label: 'ocudu.org',            href: 'https://ocudu.org' },
+            { label: 'GitLab',               href: gitlab_repo_url },
+            { label: 'Linux Foundation',     href: 'https://www.linuxfoundation.org/' },
+            { label: `Docs: ${ocuduDocsCommitShort}`, href: `${ocudu_docs_repo_url}/-/tree/${ocuduDocsCommitSha}` },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Software Radio Systems.`,
+      copyright: `Copyright © ${new Date().getFullYear()} OCUDU Project.`,
     },
   },
   i18n: {
@@ -207,12 +229,22 @@ module.exports = {
     ],
     // Link filter plugin - removes broken links to non-markdown files
     require('./plugins/link-filter-plugin.js'),
-    // Custom webpack config to ignore changes in static folders during live reload in local
+    // Webpack config: fix ESM resolution for @untitled-ui/icons-react and ignore
+    // static folders during live reload
     function (context, options) {
       return {
         name: 'custom-webpack-config',
         configureWebpack(config, isServer, utils) {
           return {
+            module: {
+              rules: [
+                {
+                  test: /\.js$/,
+                  include: /node_modules\/@untitled-ui\/icons-react/,
+                  resolve: { fullySpecified: false },
+                },
+              ],
+            },
             watchOptions: {
               ignored: /static[\\/](doxygen|coverage|cppcheck)/,
               poll: 1000,

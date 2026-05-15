@@ -70,6 +70,11 @@
   border-bottom-color: rgba(82, 184, 245, 0.12);
 }
 
+/* Smooth colour transitions on all nav links */
+.navbar__link {
+  transition: color 150ms ease;
+}
+
 .navbar__link--active {
   color: #ffffff;
   position: relative;
@@ -84,6 +89,73 @@
   height: 2px;
   background: var(--ocudu-gradient);
   border-radius: 2px;
+}
+
+/* Dropdown triggers: suppress the active gradient — active section is shown at item level */
+.navbar__item.dropdown > .navbar__link--active::after {
+  display: none;
+}
+
+/* Dropdown panel — dark card with brand-blue top border and shadow */
+.navbar__item.dropdown .dropdown__menu {
+  background: #182536;
+  border: 1px solid rgba(82, 184, 245, 0.15);
+  border-top: 2px solid #52B8F5;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 0.35rem 0;
+  min-width: 200px;
+}
+
+/* Dropdown items — left-accent reveal on hover */
+.navbar__item.dropdown .dropdown__link {
+  color: rgba(255, 255, 255, 0.8) !important;
+  background: none !important;
+  border-left: 2px solid transparent;
+  padding-left: calc(var(--ifm-menu-link-padding-horizontal) - 2px);
+  transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
+  font-size: 0.9rem;
+}
+
+.navbar__item.dropdown .dropdown__link:hover {
+  color: #ffffff !important;
+  background: rgba(82, 184, 245, 0.08) !important;
+  border-left-color: #52B8F5 !important;
+}
+
+/* Keep active dropdown items visually identical to the default state */
+.navbar__item.dropdown .dropdown__link--active {
+  color: rgba(255, 255, 255, 0.8) !important;
+  background: none !important;
+  border-left-color: transparent !important;
+  font-weight: inherit !important;
+}
+
+
+/* Replace border-triangle dropdown caret with a clean SVG chevron */
+.navbar__item.dropdown > .navbar__link::after {
+  content: '';
+  border: none;
+  width: 12px;
+  height: 12px;
+  margin-left: 0.25rem;
+  vertical-align: middle;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.75)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  transition: transform 200ms ease, background-image 150ms ease;
+}
+
+.navbar__item.dropdown > .navbar__link:hover::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2352B8F5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+.navbar__item.dropdown:hover > .navbar__link::after,
+.navbar__item.dropdown.dropdown--show > .navbar__link::after {
+  transform: rotate(180deg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2352B8F5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 }
 
 /* Toggle button and hamburger are <button> elements — not covered by --ifm-navbar-link-color */
@@ -397,6 +469,57 @@ code {
 
 .hero__subtitle {
   color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── Glossary ───────────────────────────────────────────────────────── */
+
+/* Letter jump index */
+.glossary-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.glossary-index__letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--ocudu-blue);
+  border: 1px solid rgba(82, 184, 245, 0.3);
+  text-decoration: none;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.glossary-index__letter:hover {
+  background: rgba(82, 184, 245, 0.1);
+  color: var(--ocudu-blue);
+  text-decoration: none;
+}
+
+/* Letter section header */
+.glossary-page h2 {
+  display: inline-block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--ocudu-blue);
+  border-bottom: 2px solid rgba(82, 184, 245, 0.25);
+  padding-bottom: 0.2rem;
+  margin-bottom: 1.25rem;
+  min-width: 2rem;
+}
+
+/* Term heading — tighter spacing */
+.glossary-page h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.3rem;
 }
 
 /* ── DocCards ───────────────────────────────────────────────────────── */
