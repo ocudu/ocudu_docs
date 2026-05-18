@@ -63,7 +63,7 @@ addpath .
 To verify you have added OCUDU MATLAB successfully to MATLAB’s search path, run the following command (again from the MATLAB console):
 
 ```matlab
-runtests('unitTests', Tag='matlab code')
+runtests('tests/smoke', Tag='matlab code')
 ```
 
 If successful, the final section of the output should look similar to:
@@ -462,7 +462,7 @@ to copy the new MEX files into their final location, inside the class folders of
 To check that the above was run successfully, execute the following command from the main OCUDU MATLAB directory:
 
 ```default
-runtests('unitTests', Tag='mex code')
+runtests('tests/smoke', Tag='mex code')
 ```
 
 This should output the following, or similar, report:

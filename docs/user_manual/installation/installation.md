@@ -355,22 +355,6 @@ sudo gnb -c <config file>
 
 ---
 
-## PHY testvectors
+## Vector Tests
 
-A number of PHY tests are based on MATLAB generated testvectors. By default, those tests are disabled.
-The following steps are required to enable them:
-
-1. Download the latest [PHY testvector set](https://gitlab.com/ocudu/ocudu/-/releases).
-2. Extract the PHY testvectors to their location within the OCUDU working directory:
-
-```bash
-tar -xf phy_testvectors.tar -C /path_to_your_local_repository/ocudu
-```
-
-3. Enable the use of the PHY testvectors by regenerating the CMake build system:
-
-```bash
-cmake -B build -DUSE_PHY_TESTVECTORS=ON
-```
-
-4. Rebuild OCUDU.
+Most PHY components, as well as a few components from other layers, are tested by injecting vectors of input data and comparing the results with vectors of expected output data. Since data vectors can be quite heavy, vector tests are not included in the main repository and, instead, are offered as an external plugin that is part of the [OCUDU MATLAB](https://gitlab.com/ocudu/ocudu_elements/ocudu-matlab) companion repository. All the details for installing and running the vector tests are explained in our [MATLAB Testing Tools tutorial](../../tutorials/matlab).
