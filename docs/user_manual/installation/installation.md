@@ -17,7 +17,7 @@ To download and build OCUDU:
 ---
 
 :::note
-OCUDU requires a Linux-based OS. Ubuntu (22.04 or later) is recommended.
+OCUDU requires a Linux-based OS with realtime kernel support.
 :::
 
 ## Build Tools and Dependencies
@@ -25,7 +25,7 @@ OCUDU requires a Linux-based OS. Ubuntu (22.04 or later) is recommended.
 OCUDU uses CMake and C++17. Recommended build tools:
 
 - [cmake](https://cmake.org/)
-- [gcc](https://gcc.gnu.org/) (v11.4.0 or later) **OR** [Clang](https://clang.llvm.org/) (v14.0.0 or later)
+- [gcc](https://gcc.gnu.org/) (v15.2.0 or later) **OR** [Clang](https://clang.llvm.org/) (v14.0.0 or later)
 
 OCUDU requires these dependencies:
 
@@ -150,7 +150,7 @@ UHD and/or ZMQ are only required for Split 8 deployments, if you are planning on
 
 OCUDU uses RF drivers to support different radio types. Currently, only UHD and ZMQ are supported:
 
-- [UHD](https://github.com/EttusResearch/uhd) (The LTS version is recommended: either 3.15 or 4.0.)
+- [UHD](https://github.com/EttusResearch/uhd) (v4.6.0.0)
 - [ZMQ](https://zeromq.org/)
 
 ---
@@ -321,23 +321,4 @@ See [Running OCUDU](../running/running.md) for configuration and next steps.
 
 ## Vector Tests
 
-<<<<<<< HEAD
 Most PHY components, as well as a few components from other layers, are tested by injecting vectors of input data and comparing the results with vectors of expected output data. Since data vectors can be quite heavy, vector tests are not included in the main repository and, instead, are offered as an external plugin that is part of the [OCUDU MATLAB](https://gitlab.com/ocudu/ocudu_elements/ocudu-matlab) companion repository. All the details for installing and running the vector tests are explained in our [MATLAB Testing Tools tutorial](../../tutorials/matlab).
-=======
-PHY tests use MATLAB-generated testvectors and are disabled by default. To enable them:
-
-1. Download the latest [PHY testvector set](https://gitlab.com/ocudu/ocudu/-/releases).
-2. Extract the PHY testvectors to their location within the OCUDU working directory:
-
-```bash
-tar -xf phy_testvectors.tar -C /path_to_your_local_repository/ocudu
-```
-
-3. Enable the use of the PHY testvectors by regenerating the CMake build system:
-
-```bash
-cmake -B build -DUSE_PHY_TESTVECTORS=ON
-```
-
-4. Rebuild OCUDU.
->>>>>>> 67b6a5c (user_manual: improve installation guide)
