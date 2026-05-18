@@ -7,11 +7,11 @@ displayed_sidebar: devSidebar
 
 <img src={require('./assets/du_low.png').default} alt="DU-low architecture" style={{maxWidth: '820px', width: '100%', display: 'block', margin: '2rem auto'}} />
 
-The DU-low (Distributed Unit - Low) is responsible for handling both uplink and downlink traffic, specifically the Upper PHY processing of these signals. The DU-low communicates directly with the DU-high via the FAPI interface and with the Radio Unit via the Open FrontHaul (OFH) interface. Lower PHY processing is carried out in the Radio Unit. This architecture applies to O-RAN Split 7.2 deployments.
+The DU-low (Distributed Unit - Low) implements the Upper PHY layer of the protocol stack. It performs channel coding and modulation for downlink transmissions, and channel estimation, equalization, and decoding for uplink receptions. The DU-low communicates with the DU-high via the FAPI interface and with the Radio Unit via the Open Fronthaul (OFH) interface, where lower PHY processing and RF functions are carried out. This architecture applies to O-RAN Split 7.2 deployments.
 
 ## Components
 
-- **Upper PHY:** Handles the processing of uplink and downlink signals to and from the Radio Unit.
+- **Upper PHY:** Performs channel coding, modulation, and resource mapping for downlink, and channel estimation, equalization, and decoding for uplink.
 
 ## Interfaces
 

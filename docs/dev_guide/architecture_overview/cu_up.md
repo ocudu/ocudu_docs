@@ -7,7 +7,7 @@ displayed_sidebar: devSidebar
 
 <img src={require('./assets/cu_up.png').default} alt="CU-UP architecture" style={{maxWidth: '520px', width: '100%', display: 'block', margin: '2rem auto'}} />
 
-The CU-UP (Central Unit - User Plane) is responsible for handling user plane messaging, specifically the user plane aspects of the PDCP and SDAP protocols. The CU-UP communicates directly with the UPF in the 5G Core via the N3 interface, the CU-CP via the E1 interface, the DU-high via the F1-u interface, and optionally with the near-RT RIC via the E2 interface.
+The CU-UP (Central Unit - User Plane) terminates the user plane at the CU layer. It implements PDCP for header compression, ciphering, and integrity protection of user data, and SDAP for mapping QoS flows to data radio bearers. User plane traffic is routed between the 5G Core via GTP-U tunnels on the N3 interface and the DU-high via the F1-u interface. Bearer configuration is managed by the CU-CP via the E1 interface, and optionally the near-RT RIC via the E2 interface.
 
 ## Components
 

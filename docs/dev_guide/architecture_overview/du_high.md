@@ -7,7 +7,7 @@ displayed_sidebar: devSidebar
 
 <img src={require('./assets/du_high.png').default} alt="DU-high architecture" style={{maxWidth: '900px', width: '100%', display: 'block', margin: '2rem auto'}} />
 
-The DU-high (Distributed Unit - High) is responsible for handling both uplink and downlink traffic, specifically the MAC and RLC processing of these signals. The DU-high communicates directly with the CU-CP and CU-UP via the F1-c and F1-u interfaces, the DU-low via the FAPI interface, and optionally with the near-RT RIC via the E2 interface.
+The DU-high (Distributed Unit - High) implements the MAC and RLC layers of the protocol stack. The MAC layer schedules radio resources for connected UEs, manages HARQ retransmissions, handles the Random Access procedure, and broadcasts System Information. The RLC layer provides segmentation, concatenation, and, in acknowledged mode, retransmission of data between PDCP in the CU and MAC. The DU-high communicates with the CU-CP and CU-UP via the F1-c and F1-u interfaces, with the DU-low via the FAPI interface, and optionally with the near-RT RIC via the E2 interface.
 
 ## Components
 

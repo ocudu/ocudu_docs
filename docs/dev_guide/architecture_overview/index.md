@@ -5,7 +5,7 @@ displayed_sidebar: devSidebar
 
 # Architecture Overview
 
-OCUDU implements all components and interfaces of the O-RAN gNB stack in software. Each component is fully performant, configurable, and compliant with the O-RAN standard. Third-party RICs, RUs, and gNB components can also be integrated with OCUDU components.
+OCUDU provides software implementations of the O-RAN network functions that make up a gNB: the CU-CP, CU-UP, and DU. These are distinct, independently deployable components, each responsible for a specific part of the radio access protocol stack. They can be deployed together as a single gNB or distributed across separate hosts, and each can be integrated with third-party O-RAN compliant components at any of the standard interfaces.
 
 For a conceptual introduction to the O-RAN gNB architecture, see the [Knowledge Base](/knowledge_base/gnb_components/).
 
@@ -13,7 +13,7 @@ For a conceptual introduction to the O-RAN gNB architecture, see the [Knowledge 
 
 ## Components
 
-- [CU-CP](./cu_cp): Central Unit - Control Plane. Handles control plane messaging, including the control plane aspect of PDCP.
-- [CU-UP](./cu_up): Central Unit - User Plane. Handles user plane messaging, including PDCP and SDAP.
-- [DU-high](./du_high): Distributed Unit - High. Handles MAC and RLC processing for uplink and downlink traffic.
-- [DU-low](./du_low): Distributed Unit - Low. Handles Upper PHY processing between the DU-high and the Radio Unit.
+- [CU-CP](./cu_cp): Central Unit - Control Plane. Implements RRC and the control plane aspect of PDCP. Manages RRC connections with UEs, handles NGAP signaling with the 5G Core, and coordinates bearer setup with the CU-UP.
+- [CU-UP](./cu_up): Central Unit - User Plane. Implements user plane PDCP and SDAP. Handles header compression, ciphering, and QoS flow mapping for user data, routing traffic between the 5G Core and the DU.
+- [DU-high](./du_high): Distributed Unit - High. Implements the MAC and RLC layers. MAC handles radio resource scheduling and HARQ; RLC provides segmentation and reliable in-order delivery.
+- [DU-low](./du_low): Distributed Unit - Low. Implements the Upper PHY layer, handling channel coding, modulation, and resource mapping at the interface between the DU-high and the Radio Unit.
