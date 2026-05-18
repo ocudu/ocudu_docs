@@ -64,7 +64,18 @@ The F1-C interface connects the CU-CP to the DU. The application protocol (F1AP)
 
 ### F1-U
 
+The F1-U interface connects the CU-UP to the DU. It transports user plane data as GTP-U packets over UDP/IP, with one GTP-U tunnel established per Data Radio Bearer (DRB). Each tunnel is identified by a Tunnel Endpoint Identifier (TEID). Tunnel endpoints are configured via E1AP (between CU-CP and CU-UP) and F1AP (between CU and DU). Its main functions are:
+
+* Downlink user data transfer from CU-UP to DU
+* Uplink user data transfer from DU to CU-UP
+* Flow control and packet loss detection
+
 ## FAPI
+
+FAPI is an interface defined by the Small Cell Forum (SCF) between the MAC layer and the Physical (PHY) layer. The 5G FAPI specification (SCF222) defines two planes:
+
+* **P5:** The control interface, responsible for PHY mode management including configuration, start, and stop procedures.
+* **P7:** The data path interface, used for per-slot scheduling and data exchange. Key messages include DL_TTI.request (downlink scheduling), UL_TTI.request (uplink scheduling), TX_Data.request (downlink payload delivery), and RX_Data.indication (uplink payload reception).
 
 ## NG
 
