@@ -17,6 +17,9 @@ Read the [Contribution Guidelines](./contributing_guide/index.md) for an overvie
 
 <section className="row">
   <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/dev_guide/architecture_overview/', label: 'Architecture Overview', description: 'Component breakdown of the OCUDU gNB: CU-CP, CU-UP, DU-high, and DU-low, with their interfaces.'}} />
+  </article>
+  <article className="col col--6 margin-bottom--lg">
     <DocCard item={{type: 'link', href: '/dev_guide/architecture_guide/', label: 'Architecture Guide', description: 'Vision, design principles, and implementation patterns for the OCUDU codebase.'}} />
   </article>
 </section>
@@ -44,7 +47,7 @@ The conventions that keep the OCUDU codebase consistent and readable. Familiaris
     <DocCard item={{type: 'link', href: '/dev_guide/contributing_guide/', label: 'Contribution Guidelines', description: 'Ways to contribute, how to propose ideas, opening merge requests, and licensing requirements.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
-    <DocCard item={{type: 'link', href: '/dev_guide/reporting/', label: 'Reporting Issues', description: 'How to report bugs and feature requests via GitLab issues. Security vulnerabilities use a separate responsible disclosure process.'}} />
+    <DocCard item={{type: 'link', href: '/dev_guide/reporting/', label: 'Reporting Issues', description: 'How to report bugs and feature requests for the OCUDU codebase via GitLab issues.'}} />
   </article>
 </section>
 

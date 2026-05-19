@@ -10,7 +10,7 @@ import DocCard from '@theme/DocCard';
 Development status, current features, and release roadmap for OCUDU. New versions ship every April and October.
 
 <div className="margin-bottom--lg">
-  <DocCard item={{type: 'link', href: '/releases/release_notes', label: 'Release Notes', description: 'Full changelog for all OCUDU releases.'}} />
+  <DocCard item={{type: 'link', href: '/releases/release_notes', label: 'Release Notes', description: 'Per-release changelog covering new features, protocol updates, and fixes for all OCUDU versions.'}} />
 </div>
 
 ## Development Status

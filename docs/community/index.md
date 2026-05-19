@@ -17,13 +17,13 @@ Use **Discussions** for open-ended questions, feedback, or ideas that are not ye
 
 <section className="row">
   <article className="col col--6 margin-bottom--lg">
-    <DocCard item={{type: 'link', href: 'https://gitlab.com/ocudu/community/discussions', label: 'Discussions', description: 'Questions, feedback, and early ideas. Open an issue with the label that fits your topic. No minimum expertise required.'}} />
+    <DocCard item={{type: 'link', href: 'https://gitlab.com/ocudu/community/discussions', label: 'Discussions', description: 'Questions, feedback, and early ideas. Open an issue with the label that fits your topic.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
     <DocCard item={{type: 'link', href: 'https://lists.ocudu.org/g/main', label: 'Mailing List', description: 'Low-traffic list for release announcements and major project updates. Subscribe to stay informed without following the issue tracker.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
-    <DocCard item={{type: 'link', href: 'https://zoom-lfx.platform.linuxfoundation.org/meeting/97654512715?password=f7e88038-aff1-426e-bc62-02ef36985c98', label: 'Community Calls', description: 'Monthly open calls covering roadmap, recent work, and Q&A with the SRS engineering team. All are welcome.'}} />
+    <DocCard item={{type: 'link', href: 'https://zoom-lfx.platform.linuxfoundation.org/meeting/97654512715?password=f7e88038-aff1-426e-bc62-02ef36985c98', label: 'Community Calls', description: 'Monthly open calls covering roadmap, recent work, and Q&A with the SRS engineering team.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
     <DocCard item={{type: 'link', href: 'https://gitlab.com/ocudu/ocudu/-/issues', label: 'GitLab Issues', description: 'Bug reports and feature requests for the main OCUDU repository. Report security vulnerabilities directly to the team rather than filing a public issue.'}} />
