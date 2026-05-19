@@ -69,7 +69,7 @@ make -j`nproc`
 ```
 
 :::info
-`-DASSERT_LEVEL=MINIMAL` is optional but recommended for production deployments. If you have not set up the build directory yet, follow the [Installation Guide](/user_manual/installation/installation/) first.
+`-DASSERT_LEVEL=MINIMAL` is optional but recommended for production deployments. If you have not set up the build directory yet, follow the [Installation Guide](/user_manual/installation/) first.
 :::
 
 Enabling DPDK triggers compilation of hardware-acceleration code for both PUSCH and PDSCH PHY-layer processing. Verify that DPDK was found by checking the cmake output includes:
