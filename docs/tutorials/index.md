@@ -69,6 +69,9 @@ Performance optimisation for OCUDU deployments.
     <DocCard item={{type: 'link', href: '/tutorials/dpdk/', label: 'DPDK', description: 'Configure DPDK for high-performance fronthaul connectivity with OCUDU.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/tutorials/accx00/', label: 'BBDEV Hardware Acceleration', description: 'Offload LDPC encoding and decoding to an Intel ACC100 or vRAN Boost (ACC200/VRB1) accelerator via DPDK BBDEV.'}} />
+  </article>
+  <article className="col col--6 margin-bottom--lg">
     <DocCard item={{type: 'link', href: '/tutorials/matlab/', label: 'MATLAB', description: 'Integrate MATLAB with OCUDU for signal processing, analysis, and algorithm prototyping.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
