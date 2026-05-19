@@ -7,7 +7,7 @@ displayed_sidebar: devSidebar
 
 <img src={require('./assets/cu_cp.png').default} alt="CU-CP architecture" style={{maxWidth: '680px', width: '100%', display: 'block', margin: '2rem auto'}} />
 
-The CU-CP (Central Unit - Control Plane) is responsible for handling control plane messaging, specifically the control plane aspect of the PDCP protocol. The CU-CP communicates directly with the 5G Core via the N2 interface, the CU-UP via the E1 interface, the DU-high via the F1-c interface, and optionally with the near-RT RIC via the E2 interface. This implementation takes a UE-centric approach.
+The CU-CP (Central Unit - Control Plane) is responsible for handling control plane messaging, specifically the control plane aspect of the PDCP protocol. The CU-CP communicates directly with the AMF via the N2 interface, the CU-UP via the E1 interface, the DU-high via the F1-c interface, and optionally with the near-RT RIC via the E2 interface. This implementation takes a UE-centric approach.
 
 ## Components
 
@@ -24,4 +24,4 @@ The CU-CP (Central Unit - Control Plane) is responsible for handling control pla
 | E2 | Near-RT RIC |
 | E1 | CU-UP |
 | F1-c | DU (control plane) |
-| N2 | 5G Core (AMF) |
+| N2 | AMF |

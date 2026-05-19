@@ -13,7 +13,7 @@ For a conceptual introduction to the O-RAN gNB architecture, see the [Knowledge 
 
 ## Components
 
-- [CU-CP](./cu_cp): Central Unit - Control Plane. Implements RRC and the control plane aspect of PDCP. Manages RRC connections with UEs, handles NGAP signaling with the 5G Core, and coordinates bearer setup with the CU-UP.
-- [CU-UP](./cu_up): Central Unit - User Plane. Implements user plane PDCP and SDAP. Handles header compression, ciphering, and QoS flow mapping for user data, routing traffic between the 5G Core and the DU.
+- [CU-CP](./cu_cp): Central Unit - Control Plane. Implements RRC and the control plane aspect of PDCP. Manages RRC connections with UEs, handles NGAP signaling with the AMF, and coordinates bearer setup with the CU-UP.
+- [CU-UP](./cu_up): Central Unit - User Plane. Implements user plane PDCP and SDAP. Handles header compression, ciphering, and QoS flow mapping for user data, routing traffic between the UPF and the DU.
 - [DU-high](./du_high): Distributed Unit - High. Implements the MAC and RLC layers. MAC handles radio resource scheduling and HARQ; RLC provides segmentation and reliable in-order delivery.
 - [DU-low](./du_low): Distributed Unit - Low. Implements the Upper PHY layer, handling channel coding, modulation, and resource mapping at the interface between the DU-high and the Radio Unit.
