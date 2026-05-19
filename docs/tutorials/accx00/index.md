@@ -36,13 +36,13 @@ In OCUDU configuration, `acc200` and `vrb1` are aliases and use the same code pa
 - OCUDU (built from source)
 - [DPDK](https://www.dpdk.org/) (already installed, see the [DPDK tutorial](../dpdk/))
 - [PF-BBDEV Configuration Application](https://github.com/intel/pf-bb-config)
-- An ACC100 or ACC200/VRB1 PCIe accelerator card
+- An ACC100 PCIe accelerator card or ACC200/VRB1 (integrated on 4th Gen Xeon processors)
 
 ## Installation
 
 ### PF-BBDEV Configuration Application
 
-The PF-BBDEV Configuration (`pf_bb_config`) application configures the hardware accelerator at the host level before DPDK takes ownership of the device. For more information, see the [pf_bb_config documentation](https://github.com/intel/pf-bb-config).
+The PF-BBDEV Configuration (`pf_bb_config`) application configures the hardware accelerator at the host level after DPDK takes ownership of the device. For more information, see the [pf_bb_config documentation](https://github.com/intel/pf-bb-config).
 
 To install `pf_bb_config`, run:
 
@@ -52,11 +52,6 @@ cd pf-bb-config/
 ./build.sh
 ```
 
-Verify the build succeeded by checking the binary exists:
-
-```bash
-ls pf_bb_config
-```
 
 ### OCUDU gNB
 
@@ -72,14 +67,17 @@ make -j`nproc`
 `-DASSERT_LEVEL=MINIMAL` is optional but recommended for production deployments. If you have not set up the build directory yet, follow the [Installation Guide](/user_manual/installation/) first.
 :::
 
-Enabling DPDK triggers compilation of hardware-acceleration code for both PUSCH and PDSCH PHY-layer processing. Verify that DPDK was found by checking the cmake output includes:
+Enabling DPDK triggers compilation of hardware-acceleration code for both PUSCH and PDSCH PHY-layer processing. Verify that DPDK was found and that BBDEV hardware-acceleration was enabled by checking the cmake output includes:
 
 ```
 -- Checking for module 'libdpdk>=22.11'
 --   Found libdpdk, version 25.11.0
+...
+-- BBDEV hardware-acceleration enabled for PDSCH.
+-- BBDEV hardware-acceleration enabled for PUSCH.
 ```
 
-If this line is absent, or if you see `Building without DPDK support as DPDK dependencies could not be resolved`, check the output of the DPDK installation step in the [DPDK tutorial](../dpdk/).
+If the first two lines are absent, or if you see `Building without DPDK support as DPDK dependencies could not be resolved`, check the output of the DPDK installation step in the [DPDK tutorial](../dpdk/).
 
 ## Test Mode with ACCx00
 
@@ -108,7 +106,7 @@ Baseband devices using DPDK-compatible driver
 
 **Step 2: Configure the device and enable SR-IOV**
 
-SR-IOV (Single Root I/O Virtualization) allows the single physical device to expose one or more virtual functions (VFs) to the OS. OCUDU communicates with a VF via the DPDK EAL, not the PF directly. For a single gNB instance, creating 1 VF is sufficient. Up to 64 VFs are supported if multiple instances need to share the device.
+SR-IOV (Single Root I/O Virtualization) allows a single physical device to expose one or more virtual functions (VFs) to the OS. OCUDU communicates with a VF via the DPDK EAL. For a single gNB instance, creating 1 VF is usually sufficient; up to 64 VFs are supported when multiple workloads or instances need to share the device.
 
 <Tabs>
   <TabItem value="acc100" label="ACC100" default>
@@ -137,7 +135,7 @@ echo 1 | sudo tee /sys/bus/pci/devices/0000\:8a\:00.0/sriov_numvfs
 
 `acc100_config_1vf_5g.cfg` and `vrb1_config_vf_5g.cfg` are predefined configuration files included with the `pf_bb_config` installation.
 
-The `-v` flag assigns a VFIO token (a UUID) to the VF. This token is a shared secret between `pf_bb_config` and the DPDK EAL: the same value must appear as `--vfio-vf-token` in `eal_args`. The value `00112233-4455-6677-8899-aabbccddeeff` used throughout this tutorial is an example; replace it with any valid UUID.
+The `-v` flag assigns a VFIO token (a UUID) to the VF. This token is a shared secret between `pf_bb_config` and the DPDK EAL: the same value must appear as `--vfio-vf-token` in `eal_args`. The value `00112233-4455-6677-8899-aabbccddeeff` used throughout this tutorial is an example; you can replace it with any valid UUID.
 
 It is also possible to use the ACCx00 with the `igb_uio` driver (see the [DPDK tutorial](../dpdk/) for build and usage details). In that case, the `pf_bb_config` command must point to a physical function-based (`_pf`) configuration and does not include the `-v` VF token flag.
 
@@ -320,12 +318,12 @@ hal:
 **`id`** — BBDEV device index (typically `0` when only one accelerator is installed). Use `rte_bbdev_count` / `rte_bbdev_is_valid` from the [BBDEV API](https://doc.dpdk.org/api/rte__bbdev_8h.html) to enumerate installed devices.
 
 **`pdsch_enc`** — hardware-accelerated PDSCH encoding:
-- `nof_hwacc` — number of hardware-accelerated LDPC encoder functions to reserve. Set to `0` to disable hardware acceleration and fall back to software.
+- `nof_hwacc` — number of hardware-accelerated LDPC encoder functions to reserve. Set to `0` to disable hardware acceleration and fall back to software. The maximum value is 64. This value is per cell.
 - `cb_mode` — when `false` (default), the entire TB is encoded in a single operation (lower overhead). When `true`, each code block (CB) is encoded separately. CB mode is forced automatically if the TB or rate-matched CB size exceeds the maximum `mbuf` size (64 000 bytes).
 - `dedicated_queue` — when `true` (default), each accelerated function instance gets its own hardware queue, allocated upfront. When `false`, a queue is reserved dynamically per operation, which is more flexible if the number of function instances exceeds available queues, but adds per-operation overhead.
 
 **`pusch_dec`** — hardware-accelerated PUSCH decoding:
-- `nof_hwacc` — number of hardware-accelerated LDPC decoder functions to reserve. Set to `0` to disable hardware acceleration and fall back to software.
+- `nof_hwacc` — number of hardware-accelerated LDPC decoder functions to reserve. Set to `0` to disable hardware acceleration and fall back to software. The maximum value is 64. This value is per cell.
 - `force_local_harq` — when `false` (default), HARQ uses the ACC100's embedded DDR. Set to `true` to use host memory instead (strongly discouraged for ACC100; significant performance penalty). The ACC200 has no dedicated DDR, so host memory is always used regardless of this setting.
 - `dedicated_queue` — same as for `pdsch_enc` above.
 - `harq_context_size` — size of the HARQ context repository for tracking CB offsets in DDR memory. Size to the maximum expected value (max CBs per TB × max UEs). The default in the example (5184 = 162 CBs × 32 UEs) is appropriate for a 100 MHz 32-UE configuration.
@@ -334,7 +332,7 @@ hal:
 - `-a <vf_address>` — the PCI address of the **VF** created by SR-IOV, not the PF. After enabling SR-IOV, confirm the VF address with `sudo dpdk-devbind.py -s` and substitute it here.
 - `--vfio-vf-token` — the UUID assigned during `pf_bb_config`. Must match the `-v` argument used there.
 - `--lcores (0-1)@(3-29,33-59)` — maps EAL threads 0–1 to cores 3–29 and 33–59. Adjust for your host's core count.
-- Use `--vfio-intr=msi` to request VFIO MSI interrupts (the only type supported by ACC100). If Open Fronthaul with DPDK is also enabled, MSI interrupt configuration will not complete; in that case, use `--log-level=error` to suppress the resulting warning messages.
+- Use `--vfio-intr=msi` to request VFIO MSI interrupts (the only type supported by ACC100). If Open Fronthaul with DPDK is also enabled, MSI interrupt configuration will not complete; in that case, use `--log-level=error` to suppress undesired warning messages when closing the gNB application.
 
 :::info
 When `upper_phy` parameters from `expert_execution` are in use, the number of DL/UL threads (including PUSCH decoder threads) is bounded by the corresponding `nof_hwacc` values in the `hal` section.
