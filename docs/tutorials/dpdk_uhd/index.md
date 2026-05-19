@@ -1,3 +1,7 @@
+---
+description: "Configure DPDK kernel-bypass packet I/O for use with a USRP RF front-end and OCUDU."
+---
+
 # OCUDU with DPDK on USRP
 
 
