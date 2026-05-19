@@ -1,3 +1,7 @@
+---
+description: "How to extend or replace OCUDU components with third-party implementations using the plugin system."
+---
+
 # Plugins
 
 The plugin system allows extending or replacing parts of OCUDU with third-party implementations without modifying the core codebase. Plugins live in the outermost layer of the Clean Architecture: they depend on OCUDU interfaces, but OCUDU never depends on them. The core stack does not know - and does not care - whether it is talking to a built-in implementation or a plugin.

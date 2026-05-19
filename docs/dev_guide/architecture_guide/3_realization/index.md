@@ -1,3 +1,7 @@
+---
+description: "How OCUDU's design principles are expressed in concrete implementation: threading, async, interfaces, metrics, real-time safety, C++, and testing."
+---
+
 # Realization
 
 This section explains how the design principles described earlier materialize into concrete implementation decisions in OCUDU. Each page covers one aspect of how abstract concepts - clean layering, interface-based design, asynchronous procedures - are actually expressed in the codebase.

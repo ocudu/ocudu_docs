@@ -1,3 +1,7 @@
+---
+description: "Commercial UEs known to work with OCUDU, with tested bands, configurations, and community-contributed findings."
+---
+
 # COTS UEs
 
 This section of our knowledge base aims to list COTS UEs known to be working with OCUDU including tested bands and configurations.

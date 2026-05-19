@@ -1,3 +1,7 @@
+---
+description: "How to report bugs and feature requests via GitLab, and how to disclose security vulnerabilities."
+---
+
 # Reporting Issues
 
 ## Issues

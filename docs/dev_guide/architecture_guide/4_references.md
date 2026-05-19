@@ -1,5 +1,6 @@
 ---
 sidebar_position: 4
+description: "Books and online resources for Clean Architecture, SOLID, C++ software design, and design patterns."
 ---
 
 # References

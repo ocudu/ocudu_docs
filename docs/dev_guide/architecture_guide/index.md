@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+description: "Design goals, principles, and how they are expressed in the OCUDU codebase."
 ---
 
 # Software Architecture Guide

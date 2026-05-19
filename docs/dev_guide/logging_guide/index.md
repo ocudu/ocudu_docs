@@ -1,3 +1,7 @@
+---
+description: "Log levels, subsystem tags, and formatting rules for consistent, readable OCUDU log output."
+---
+
 # Logging Style Guide
 
 To ensure consistency in the formatting of the log entries, some rules should be followed by the developers.

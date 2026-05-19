@@ -1,3 +1,7 @@
+---
+description: "Ways to contribute, how to propose ideas, opening merge requests, and licensing requirements for OCUDU."
+---
+
 # Contributing Guidelines
 
 Welcome! We are glad that you want to contribute to OCUDU.

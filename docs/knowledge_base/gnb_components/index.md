@@ -1,3 +1,7 @@
+---
+description: "The roles and protocol layers of the CU, DU, and RU in an O-RAN gNB, and the boundaries between them."
+---
+
 # O-RAN gNodeB Components
 
 As outlined in the [O-RAN gNB Overview](../oran_gnb/index.md) the 5G NR gNB introduces a flexible architecture. Splitting the gNB into the CU, DU and RU.

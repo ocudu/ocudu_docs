@@ -1,3 +1,7 @@
+---
+description: "The design principles every contributor must understand: Clean Architecture, SOLID, and OOP as applied in OCUDU."
+---
+
 # Design Principles
 
 Every architectural decision in OCUDU flows from a small set of design principles. These principles are not optional guidelines - they are the shared language that allows contributors across the world to work on the same codebase and produce coherent results. Understanding them is the single most important preparation before writing or reviewing OCUDU code.

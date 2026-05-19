@@ -1,3 +1,7 @@
+---
+description: "Language choices, library usage, source structure, naming conventions, and commit message formatting for OCUDU."
+---
+
 # Code Style Guide
 
 This document establishes the basic guidelines and recommendations for C and C++ programming styles within OCUDU code base. Many of the guidelines are C++ specific, however

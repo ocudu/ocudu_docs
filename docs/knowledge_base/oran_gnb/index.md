@@ -1,3 +1,7 @@
+---
+description: "An introduction to O-RAN compliant gNBs, the split architecture, and how OCUDU implements it."
+---
+
 # O-RAN gNB Overview
 
 This document aims to provide a basic understanding of O-RAN compliant gNBs, and how we have implemented this with OCUDU. A further deep dive can be

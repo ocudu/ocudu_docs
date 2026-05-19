@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+description: "The platform goals and design ambitions that every OCUDU contribution must respect."
 ---
 
 # Vision and Goals

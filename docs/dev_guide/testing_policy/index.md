@@ -1,3 +1,7 @@
+---
+description: "Test coverage expectations for OCUDU contributions: unit, integration, and system tests across the development lifecycle."
+---
+
 # Testing Policy
 
 This section of our knowledge base outlines our comprehensive testing strategy, which adheres to the [Shift-left](https://en.wikipedia.org/wiki/Shift-left_testing) development approach. Unlike the traditional [Waterfall](https://en.wikipedia.org/wiki/Waterfall_model) model, where testing occurs after coding, our strategy emphasizes testing at the earliest possible stages of development. This proactive approach ensures that the development team considers testing from the project’s inception.
