@@ -1,3 +1,7 @@
+---
+description: "Connecting OCUDU to Ella Core, an open-source single-binary 5G Core designed for private networks."
+---
+
 # Ella Core
 
 ## Overview

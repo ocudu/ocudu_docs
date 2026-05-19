@@ -1,3 +1,7 @@
+---
+description: "Using a Meinberg PTP grandmaster clock for timing and synchronization in an OCUDU O-RAN fronthaul deployment."
+---
+
 # Meinberg
 
 Meinberg produces PTP Grandmaster clocks suitable for providing timing and synchronization in O-RAN fronthaul networks. In general, any Meinberg device with announced PTP support should be compatible — see the [Meinberg website](https://www.meinbergglobal.com) for the full list of supported devices.

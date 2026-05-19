@@ -1,3 +1,7 @@
+---
+description: "Using the Fibrolan Falcon-RX as a PTP grandmaster and timing-aware O-RAN fronthaul switch with OCUDU."
+---
+
 # Falcon-RX Switch
 
 The [Falcon-RX/812/G Switch](https://www.fibrolan.com/Falcon-RX) is a 5G xHaul timing-aware O-RAN switch & PTP grandmaster. This is used to provide both clocking and timing synchronization to both the DU and RU.

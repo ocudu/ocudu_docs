@@ -1,3 +1,7 @@
+---
+description: "Connecting a Benetel RAN550 or RAN650 O-RAN radio unit to OCUDU over the split 7.2 Open Fronthaul interface."
+---
+
 # Benetel RAN550/RAN650
 
 :::warning

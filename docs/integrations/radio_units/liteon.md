@@ -1,3 +1,7 @@
+---
+description: "Connecting a LITEON FlexFi O-RAN radio unit to OCUDU over the split 7.2 Open Fronthaul interface."
+---
+
 # LITEON FlexFi
 
 ## Overview

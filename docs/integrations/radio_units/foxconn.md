@@ -1,3 +1,7 @@
+---
+description: "Connecting a Foxconn RPQN O-RAN radio unit to OCUDU over the split 7.2 Open Fronthaul interface."
+---
+
 # Foxconn RPQN-(48/78)00(E/I)
 
 :::warning
