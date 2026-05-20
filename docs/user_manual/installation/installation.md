@@ -122,19 +122,19 @@ cd /tmp
 wget --no-check-certificate -O - "https://github.com/amd/aocl-fftz/archive/refs/tags/${AOCL_FFTZ_VERSION}.tar.gz" | tar -xz
 cd aocl-fftz-${AOCL_FFTZ_VERSION}
 cmake -B buildFFTZ
-cmake --build buildFTTZ --target install -j"${nproc}"
+cmake --build buildFFTZ --target install -j"${nproc}"
 ```
   </TabItem>
 </Tabs>
 
-### ARMPL
+### ARMPL (for ARM architectures)
 
 <Tabs>
   <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
 ```bash
 sudo apt update && sudo apt install -y environment-modules wget
 cd /tmp
-wget https://developer.arm.com/-/cdn-downloads/permalink/Arm-Performance-Libraries/Version_24.10/arm-performance-libraries_24.10_deb_gcc.tar | tar -xz
+wget --no-check-certificate -O - https://developer.arm.com/-/cdn-downloads/permalink/Arm-Performance-Libraries/Version_24.10/arm-performance-libraries_24.10_deb_gcc.tar | tar -x
 cd arm-performance-libraries_24.10_deb/
 ./arm-performance-libraries_24.10_deb.sh --accept
 cd ~ && rm -Rf /tmp/arm-performance-libraries_24.10_deb
