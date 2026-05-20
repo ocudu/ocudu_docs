@@ -26,6 +26,12 @@ The [issue tracker](https://gitlab.com/ocudu/ocudu/-/issues) and [community chan
 
 ### 1. Rebase onto the OCUDU fork point
 
+Confirm you are on your feature branch before proceeding:
+
+```bash
+git status
+```
+
 Rebase your changes onto the fork point commit in your srsRAN repository:
 
 ```bash
@@ -51,10 +57,10 @@ The commit just before the oldest entry in that list is your old base. Replace `
 ### 2. Export your changes as patch files
 
 ```bash
-git format-patch 7d6183f..HEAD -o patches/
+git format-patch 7d6183f..HEAD -o ~/migration-patches/
 ```
 
-This exports each of your commits as a numbered patch file in the `patches/` directory, preserving commit messages and authorship. Review the list of patch files before you move on. The list should contain only your commits, with no srsRAN commits included.
+This exports each of your commits as a numbered patch file in `~/migration-patches/`, preserving commit messages and authorship. Saving to your home directory keeps the patches outside both repositories and avoids path issues in later steps. Review the list of patch files before you move on. The list should contain only your commits, with no srsRAN commits included.
 
 ### 3. Validate your changes on srsRAN Project
 
@@ -98,7 +104,7 @@ git checkout -b my-migration 7d6183f
 Apply your patches:
 
 ```bash
-git am --3way patches/*.patch
+git am --3way ~/migration-patches/*.patch
 ```
 
 The `--3way` flag enables merge-style conflict resolution: if a patch does not apply cleanly, git falls back to a 3-way merge rather than failing outright. Because both codebases are identical at `7d6183f`, most patches should apply without conflict at this stage.
