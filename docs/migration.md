@@ -14,7 +14,7 @@ There is no automated translation tool. Migration is a manual process.
 ## What You Need
 
 - Your srsRAN Project fork or branch that contains your changes
-- A complete git history of those changes (not a squashed snapshot; you need individual commits to generate a clean diff)
+- A complete git history of those changes (not a squashed snapshot; you need individual commits to generate a clean diff). A linear history rebases most cleanly. If your branch contains merge commits or was developed across multiple integrated branches, the rebase steps in this guide will require more manual work and the outcome is harder to predict.
 - A test setup or recorded results from your srsRAN validation
 - A [GitLab account](https://gitlab.com/users/sign_up) if you plan to file issues or contribute changes back to OCUDU
 
