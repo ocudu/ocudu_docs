@@ -20,6 +20,10 @@ To download and build OCUDU:
 OCUDU requires a Linux-based OS with realtime kernel support.
 :::
 
+:::tip Coming from srsRAN Project?
+Complete this installation first, then follow the [Migration Guide](/migration/) to port your existing srsRAN Project modifications to OCUDU.
+:::
+
 ## Build Tools and Dependencies
 
 OCUDU uses CMake and C++17. Recommended build tools:

@@ -15,6 +15,10 @@ Choose a starting point based on your available hardware and experience with OCU
 The [Testmode](./testmode/index.md) tutorial requires only an OCUDU build, with no radio hardware or physical UE. Once you have a working system, the [srsUE](./srsue/index.md) tutorial adds a software UE over ZeroMQ.
 :::
 
+:::tip Coming from srsRAN Project?
+See the [Migration Guide](/migration/) for instructions on porting your existing srsRAN Project modifications to OCUDU.
+:::
+
 ## Beginner
 
 No specialist hardware required.

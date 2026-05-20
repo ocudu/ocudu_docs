@@ -84,6 +84,7 @@ module.exports = {
             { type: 'doc', docId: 'user_manual/installation/installation', label: 'User Manual' },
             { type: 'doc', docId: 'tutorials/index',      label: 'Tutorials' },
             { type: 'doc', docId: 'integrations/index',   label: 'Integrations' },
+            { type: 'doc', docId: 'migration',            label: 'Migrating from srsRAN' },
             { type: 'doc', docId: 'releases/index',       label: 'Releases & Roadmap' },
           ],
         },

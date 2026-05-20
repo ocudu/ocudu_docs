@@ -87,6 +87,7 @@ module.exports = {
             },
           ],
         },
+        'migration',
         {
           type: 'category',
           label: 'Releases & Roadmap',
