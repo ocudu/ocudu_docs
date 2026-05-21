@@ -41,5 +41,5 @@ Use **Discussions** for open-ended questions, feedback, or ideas that are not ye
 Community articles are written by practitioners: field reports, integration guides, benchmarking results, and research using OCUDU. Browse the full collection at [ocudu.org/news](https://ocudu.org/news/).
 
 :::tip Want to contribute an article?
-Community articles are open to anyone using or researching OCUDU. Submit via GitLab merge request. See the [Contribution Guidelines](../dev_guide/contributing_guide/index.md) for the format and review process.
+Community articles are open to anyone using or researching OCUDU. Submit via GitLab merge request. See the [Code Contribution Guide](../dev_guide/contributing_guide/index.md) for the format and review process.
 :::

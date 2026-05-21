@@ -10,7 +10,7 @@ import DocCard from '@theme/DocCard';
 Everything you need to contribute to OCUDU: code style, logging conventions, testing requirements, and the full merge request process.
 
 :::tip First contribution?
-Read the [Contribution Guidelines](./contributing_guide/index.md) for an overview of the process, then check the GitLab issue tracker for issues labelled `good first issue`.
+Read the [Code Contribution Guide](./contributing_guide/index.md) for an overview of the process, then check the GitLab issue tracker for issues labelled `good first issue`.
 :::
 
 ## Architecture
@@ -44,7 +44,13 @@ The conventions that keep the OCUDU codebase consistent and readable. Familiaris
 
 <section className="row">
   <article className="col col--6 margin-bottom--lg">
-    <DocCard item={{type: 'link', href: '/dev_guide/contributing_guide/', label: 'Contribution Guidelines', description: 'Ways to contribute, how to propose ideas, opening merge requests, and licensing requirements.'}} />
+    <DocCard item={{type: 'link', href: '/dev_guide/contributing_guide/', label: 'Code Contribution Guide', description: 'Ways to contribute, how to propose ideas, opening merge requests, and licensing requirements.'}} />
+  </article>
+  <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/dev_guide/contributing_guide/contributing_docs', label: 'Docs Contribution Guide', description: 'How to add pages, write integration guides, follow the style rules, and submit a documentation merge request.'}} />
+  </article>
+  <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/dev_guide/claude_code', label: 'Using Claude Code', description: 'Pre-configured CLAUDE.md files for working on the OCUDU documentation with Claude Code.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
     <DocCard item={{type: 'link', href: '/dev_guide/reporting/', label: 'Reporting Issues', description: 'How to report bugs and feature requests for the OCUDU codebase via GitLab issues.'}} />

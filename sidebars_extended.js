@@ -204,6 +204,8 @@ module.exports = {
         'dev_guide/logging_guide/index',
         'dev_guide/testing_policy/index',
         'dev_guide/contributing_guide/index',
+        'dev_guide/contributing_guide/contributing_docs',
+        'dev_guide/claude_code',
         'dev_guide/reporting/index',
         {
           type: 'link',

@@ -112,7 +112,9 @@ module.exports = {
             { type: 'doc', docId: 'dev_guide/code_guide/index',          label: 'C++ Code Guide' },
             { type: 'doc', docId: 'dev_guide/logging_guide/index',       label: 'Logging Guide' },
             { type: 'doc', docId: 'dev_guide/testing_policy/index',      label: 'Testing Policy' },
-            { type: 'doc', docId: 'dev_guide/contributing_guide/index',  label: 'Contributing Guide' },
+            { type: 'doc', docId: 'dev_guide/contributing_guide/index',        label: 'Code Contribution Guide' },
+            { type: 'doc', docId: 'dev_guide/contributing_guide/contributing_docs', label: 'Docs Contribution Guide' },
+            { type: 'doc', docId: 'dev_guide/reporting/index',                label: 'Reporting Issues' },
           ],
         },
         {

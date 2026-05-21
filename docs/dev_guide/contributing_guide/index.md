@@ -1,8 +1,9 @@
 ---
 description: "Ways to contribute, how to propose ideas, opening merge requests, and licensing requirements for OCUDU."
+displayed_sidebar: devSidebar
 ---
 
-# Contributing Guidelines
+# Code Contribution Guide
 
 Welcome! We are glad that you want to contribute to OCUDU.
 The project accepts contributions via Gitlab merge requests.
