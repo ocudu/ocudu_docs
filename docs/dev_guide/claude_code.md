@@ -13,7 +13,7 @@ The `CLAUDE.md` for `ocudu_docs` gives the agent the context it needs to work on
 
 Download the file and save it as `CLAUDE.md` in the root of your cloned `ocudu_docs` repository. The file is served from `static/CLAUDE.md` in the repository:
 
-[Download CLAUDE.md](/CLAUDE.md)
+[Download CLAUDE.md](pathname:///CLAUDE.md)
 
 Open Claude Code from the root of the repository. It will read the file automatically. Some tasks you can ask it to handle:
 
