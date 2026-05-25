@@ -1,5 +1,7 @@
+---
+description: "Connecting a Pegatron O-RAN radio unit to OCUDU over the split 7.2 Open Fronthaul interface."
+---
 
-```markdown
 # Pegatron O-RU (PR1450/PR2850)
 
 :::warning
@@ -39,31 +41,29 @@ ru_ofh:
   t1a_min_up: 125
   ta4_max: 180
   ta4_min: 110
-  is_prach_cp_enabled: true            # Configures if Control-Plane messages should be used to receive PRACH messages.
-  compr_method_ul: bfp                 # Uplink compression method.
-  compr_bitwidth_ul: 9                 # Uplink IQ samples bitwidth after compression.
-  compr_method_dl: bfp                 # Downlink compression method.
-  compr_bitwidth_dl: 9                 # Downlink IQ samples bitwidth after compression.
-  compr_method_prach: bfp              # PRACH compression method.
-  compr_bitwidth_prach: 9              # PRACH IQ samples bitwidth after compression.
-  enable_ul_static_compr_hdr: true     # Configures if the compression header is present for uplink User-Plane messages (false) or not present (true).
-  enable_dl_static_compr_hdr: true     # Configures if the compression header is present for downlink User-Plane messages (false) or not present (true).
-  ru_reference_level_dBFS: -12         # -9 for 4T2R, -12 for 2T2R, -15 for 1T1R?
+  is_prach_cp_enabled: true
+  compr_method_ul: bfp
+  compr_bitwidth_ul: 9
+  compr_method_dl: bfp
+  compr_bitwidth_dl: 9
+  compr_method_prach: bfp
+  compr_bitwidth_prach: 9
+  enable_ul_static_compr_hdr: true
+  enable_dl_static_compr_hdr: true
+  ru_reference_level_dBFS: -12
   subcarrier_rms_backoff_dB: 0
 
   cells:
-    - network_interface: 0000:ca:01.3  # PCI address of the DPDK-bound network interface (SR-IOV VF or physical NIC).
-      ru_mac_addr: 48:21:0b:xx:xx:xx   # RU MAC address.
-      du_mac_addr: 00:11:22:33:44:55   # DU MAC address.
-      vlan_tag_cp: 5                   # VLAN tag value for CP.
-      vlan_tag_up: 5                   # VLAN tag value for UP.
-      enable_promiscuous: true         # Enable promiscuous mode on the DPDK interface.
-      check_link_status: false         # Disable link status check (required for some SR-IOV VF setups).
-      prach_port_id: [4, 5, 6, 7]      # PRACH eAxC port values.
-      dl_port_id: [0, 1, 2, 3]         # Downlink eAxC port values.
-      ul_port_id: [0, 1, 2, 3]         # Uplink eAxC port values.
-
-
+    - network_interface: 0000:ca:01.3
+      ru_mac_addr: 48:21:0b:xx:xx:xx
+      du_mac_addr: 00:11:22:33:44:55
+      vlan_tag_cp: 5
+      vlan_tag_up: 5
+      enable_promiscuous: true
+      check_link_status: false
+      prach_port_id: [4, 5, 6, 7]
+      dl_port_id: [0, 1, 2, 3]
+      ul_port_id: [0, 1, 2, 3]
 ```
 
 To expand on this, the following parameters are set in the `cells` field:
@@ -112,7 +112,6 @@ hal:
 
 ```
 
-
 3. The `-a` flag specifies the PCI address of the VF, and `-d` flags load the required DPDK PMD drivers for Intel Adaptive Virtual Function (iavf).
 4. The `--lcores` mapping pins DPDK worker threads to specific CPU cores for real-time performance.
 
@@ -158,7 +157,6 @@ sudo ./gnb -c gnb_ru_pegatron_tdd_n78_100mhz_4x4.yml
 ```
 
 
-
 If the DU connects to the RU successfully, you will see the following output:
 
 ```bash
@@ -170,7 +168,6 @@ Cell pci=0, bw=100 MHz, 4T4R, dl_arfcn=650000 (n78), dl_freq=3750.0 MHz, dl_ssb_
 
 ==== gNodeB started ===
 Type <t> to view trace
-
 ```
 
 ### Troubleshooting
@@ -200,7 +197,3 @@ This RU has also been tested with the OCUDU Helm chart for Kubernetes-based depl
 * Host network disabled (using SR-IOV VFs instead)
 
 Refer to the OCUDU Helm chart documentation for full details on Kubernetes deployment.
-
-```
-
-```
