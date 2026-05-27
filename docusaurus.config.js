@@ -230,6 +230,14 @@ module.exports = {
         docsRouteBasePath: '/',
       },
     ],
+    // Google Analytics plugin - tracks user interactions for improving the documentation
+        [
+      '@docusaurus/plugin-google-gtag',
+      {
+        trackingID: 'G-6GLQZTK26Q',
+        anonymizeIP: true,
+      },
+    ], 
     // Link filter plugin - removes broken links to non-markdown files
     require('./plugins/link-filter-plugin.js'),
     // Webpack config: fix ESM resolution for @untitled-ui/icons-react and ignore
@@ -262,5 +270,5 @@ module.exports = {
         },
       };
     },
-  ]
+  ], 
 };
