@@ -319,6 +319,9 @@ table tbody td {
 /* Language badge — top-right of the code block, fades on hover to clear copy button */
 pre[class*='language-'] {
   position: relative;
+  font-size: 0.82rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(82, 184, 245, 0.35) transparent;
 }
 
 pre[class*='language-']::before {
@@ -350,6 +353,84 @@ pre.language-python::before  { content: 'python'; }
 pre.language-text::before    { content: 'text'; }
 pre.language-diff::before    { content: 'diff'; }
 pre.language-mermaid::before { content: 'mermaid'; }
+
+/* Webkit scrollbar — styled to brand colours; keeps the bar visible and unobtrusive */
+[class*='codeBlockContainer'] pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+[class*='codeBlockContainer'] pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[class*='codeBlockContainer'] pre::-webkit-scrollbar-thumb {
+  background: rgba(82, 184, 245, 0.3);
+  border-radius: 3px;
+}
+
+[class*='codeBlockContainer'] pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(82, 184, 245, 0.55);
+}
+
+[data-theme='dark'] [class*='codeBlockContainer'] pre::-webkit-scrollbar-thumb {
+  background: rgba(82, 184, 245, 0.25);
+}
+
+[data-theme='dark'] [class*='codeBlockContainer'] pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(82, 184, 245, 0.45);
+}
+
+/* Sticky scrollbar overlay — appears at viewport bottom when native scrollbar is off-screen */
+.sticky-code-scrollbar {
+  position: fixed;
+  bottom: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 10px;
+  z-index: 999;
+  pointer-events: none;
+  background: transparent;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(82, 184, 245, 0.35) transparent;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+.sticky-code-scrollbar.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.sticky-code-scrollbar::-webkit-scrollbar {
+  height: 10px;
+}
+
+.sticky-code-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sticky-code-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(82, 184, 245, 0.3);
+  border-radius: 3px;
+}
+
+.sticky-code-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(82, 184, 245, 0.55);
+}
+
+[data-theme='dark'] .sticky-code-scrollbar {
+  scrollbar-color: rgba(82, 184, 245, 0.25) transparent;
+}
+
+[data-theme='dark'] .sticky-code-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(82, 184, 245, 0.25);
+}
+
+[data-theme='dark'] .sticky-code-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(82, 184, 245, 0.45);
+}
 
 /* ── Inline code ────────────────────────────────────────────────────── */
 

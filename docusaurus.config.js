@@ -218,6 +218,7 @@ module.exports = {
       }
     ],
   ],
+  clientModules: [require.resolve('./src/js/stickyCodeScrollbar.js')],
   plugins: [
     'docusaurus-plugin-drawio',
     [
