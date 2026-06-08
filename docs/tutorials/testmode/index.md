@@ -180,4 +180,30 @@ pci rnti | cqi  ri  mcs  brate   ok  nok  (%)  dl_bs | pusch  rsrp  mcs  brate  
   1 0x44 |  15 1.0   28   1.0G 1548    0   0%    10M |  99.9 -99.9   28    76M  401    0   0%  81.5M      0  n/a
 ```
 
+### Verifying the output
+
+Before connecting a real UE, confirm that the testmode output looks healthy. **Do not skip this step.** A passing testmode run is the only reliable way to confirm that the gNB and RU are communicating correctly.
+
+Check the following in the console trace:
+
+1. **No KOs in either direction.** The `nok` column and the `(%)` column should both read `0` for both DL and UL. Any non-zero value indicates a problem with the RU-gNB link.
+
+2. **Bitrate matches expectations.** The `brate` field should show full-rate throughput for the configured bandwidth and MIMO configuration. Compare against the example output above for your specific setup.
+
+3. **No warnings in the logs.** Search the log file for warning-level messages:
+
+   ```bash
+   cat <logfile> | grep "\[W\]"
+   ```
+
+   If warnings are present, check the [Troubleshooting](../../user_manual/troubleshooting/troubleshooting.md) guide and resolve them before proceeding.
+
+4. **RU health is good.** Check the RU's own monitoring interface for power and DPD status. Refer to your RU's documentation for details.
+
+5. **No sustained late or early packets at the RU.** Check the RU KPI output and confirm there are no sustained late or early packet counts. Occasional single occurrences are normal; a sustained stream is not. See [RU late or early packets](../../user_manual/troubleshooting/troubleshooting.md#ru-late-or-early-packets) for guidance.
+
+6. **RF channel is clean (optional).** If a spectrum analyzer is available, verify that the signal being produced by the RU looks correct for the configured bandwidth and frequency.
+
+Once all of the above checks pass, you can proceed to connect a UE.
+
 For more information about the test mode please refer to the OCUDU [Configuration Reference](../../user_manual/config_reference/config_reference.md).
