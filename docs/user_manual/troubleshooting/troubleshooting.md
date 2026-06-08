@@ -191,7 +191,7 @@ Work through the following steps to diagnose and fix the drops:
 
 5. **Check compression settings.** Verify that the compression method and compression header settings are consistent across both the DU and RU configurations. A mismatch (for example, static compression header enabled in the RU but not in the DU) will produce similar warnings.
 
-6. **Check the fronthaul switch.** Confirm that the switch is configured correctly, that all physical connections are secure and in the correct ports, and that VLAN tags are configured correctly. Refer to the relevant [switch integration guide](../../integrations/switches_and_timing/) for your hardware.
+6. **Check the fronthaul switch.** Confirm that the switch is configured correctly, that all physical connections are secure and in the correct ports, and that VLAN tags are configured correctly. Refer to the relevant [switch integration guide](../../integrations/index.md) for your hardware.
 
 7. **Check RU KPIs.** Verify that there are no sustained late or early packets in the RU KPI output. See [RU late or early packets](#ru-late-or-early-packets) below.
 
