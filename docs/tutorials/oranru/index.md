@@ -157,6 +157,10 @@ The first value here is used to determine if the PTP sync is correct, for this w
 
 In both of the above commands `enp1s0f0` is the network interface on our DU that gets the PTP sync.
 
+:::warning
+Both `ptp4l` and `phc2sys` must be kept running at all times while OCUDU is active. If either process stops or loses lock, OFH packet drops or late/early packet errors will occur. See the [Troubleshooting](../../user_manual/troubleshooting/troubleshooting.md#ofh-packet-drops) guide for help diagnosing these issues.
+:::
+
 #### Enabling PTP with DPDK
 
 If you are using PTP and OFH with DPDK on the same interface, you will need to use virtual functions (VFs) to ensure that the PTP sync is correctly passed to the relevant components.
