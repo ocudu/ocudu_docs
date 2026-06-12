@@ -502,8 +502,8 @@ The following diagram presents the setup architecture:
 
 The following config files were modified to use ZMQ-based RF driver:
 
-* [gNB config](gnb_zmq.yaml)
-* [UE config](ue_zmq.conf)
+* [gNB config](assets/gnb_zmq.yaml)
+* [UE config](assets/ue_zmq.conf)
 
 Details of the modifications made are outlined in following sections.
 

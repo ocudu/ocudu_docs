@@ -15,7 +15,7 @@ To implement a Split 7.2x configuration, use this guide in conjunction with the 
 For this application note, the following hardware and software are used:
 
 - PC with, e.g. Ubuntu 24.04 LTS
-- [OCUDU](git clone https://gitlab.com/ocudu/ocudu.git)
+- [OCUDU](https://gitlab.com/ocudu/ocudu.git)
 - [Ettus Research B210 USRP](https://www.ettus.com/all-products/ub210-kit/) (connected over USB 3.0)
 - [Open5GS 5G Core](https://open5gs.org/) (running bare metal)
 - COTS UE (Xiaomi 12 5G)
