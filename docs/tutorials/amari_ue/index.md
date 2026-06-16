@@ -86,7 +86,7 @@ Make sure CMake finds the file `trx_driver.h` in the specified folder. CMake sho
 A symbolic link must be done for the UE application to load the driver. From the Amarisoft UE build folder run the following command:
 
 ```bash
-ln -s ocudu/build/utils/trx_srsran/libtrx_ocudu.so trx_ocudu.so
+ln -s ocudu/build/utils/trx_ocudu/libtrx_ocudu.so trx_ocudu.so
 ```
 
 ---
@@ -142,7 +142,7 @@ Modify the `rf_driver` section of Amarisoft UE configuration with IPs from which
 
 ```cfg
 rf_driver: {
-  name:      "srsran",
+  name:      "ocudu",
   args:      "",
   tx_port0:  "tcp://10.53.1.2:6000",
   rx_port0:  "tcp://10.53.1.1:5000",

@@ -6,7 +6,7 @@
 . /usr/lib/tuned/functions
 
 start() {
-  # srsran performance script
+  # ocudu performance script
   echo N | tee /sys/module/drm_kms_helper/parameters/poll >/dev/null
   echo performance | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor >/dev/null
   return "$?"

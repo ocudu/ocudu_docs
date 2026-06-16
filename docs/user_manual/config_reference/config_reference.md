@@ -561,8 +561,8 @@ ru_sdr:
   srate: 61.44                          # Required FLOAT (61.44). Sets the sampling rate of the RF-frontend in MHz.
   device_driver: uhd                    # Required TEXT (uhd). RF device driver name. Supported: [uhd, zmq].
   device_args:                          # Optional TEXT. An argument that gets passed to the selected RF driver.
-  tx_gain: 50                           # Required FLOAT (50). Sets the transmit gain in dB. Supported: [0 - max value supported by radio].
-  rx_gain: 60                           # Required FLOAT (60). Sets the receive gain in dB. Supported: [0 - max value supported by radio].
+  tx_gain: 50                           # Required FLOAT (50). Sets the transmit gain in dB. Supported: [0 - max value supported by radio]. When using the ZMQ driver, must be <= 0.
+  rx_gain: 60                           # Required FLOAT (60). Sets the receive gain in dB. Supported: [0 - max value supported by radio]. When using the ZMQ driver, must be <= 0.
   freq_offset: 0                        # Optional FLOAT (0). Sets the frequency offset in Hertz.
   clock_ppm: 0                          # Optional FLOAT (0). Sets the clock calibration in Parts Per Million (PPM).
   lo_offset: 0                          # Optional FLOAT (0). Shifts the local oscillator frequency in MHz away from the center frequency to move LO leakage out of the channel.
@@ -715,7 +715,7 @@ log:
   fapi_level: warning                      # Optional TEXT (warning). Sets FAPI log level.
   hal_level: warning                       # Optional TEXT (warning). Sets the HAL log level.
   broadcast_enabled: false                 # Optional BOOLEAN (false). Enables logging in the PHY and MAC layer of broadcast messages and all PRACH opportunities. Supported: [false, true].
-  phy_rx_symbols_filename:                 # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the srsRAN_matlab project.
+  phy_rx_symbols_filename:                 # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the ocudu_matlab project.
   phy_rx_symbols_port: 0                   # Optional TEXT. Set to a valid receive port number to dump the IQ symbols from that port only, or set to "all" to dump the IQ symbols from all UL receive ports. Only works if "phy_rx_symbols_filename" is set. Supported: [NON-NEGATIVE or all].
   phy_rx_symbols_prach: false              # Optional BOOLEAN (false). Set to true to dump the IQ symbols from all the PRACH ports. Only works if "phy_rx_symbols_filename" is set. Supported: [false, true].
   hex_max_size: 0                          # Optional INT (0). Sets the aximum number of bytes to print in hex (zero for no hex dumps, -1 for unlimited bytes). Supported: [-1 - 1024]
@@ -1427,8 +1427,8 @@ ru_sdr:
   srate: 61.44                          # Required FLOAT (61.44). Sets the sampling rate of the RF-frontend in MHz.
   device_driver: uhd                    # Required TEXT (uhd). RF device driver name. Supported: [uhd, zmq].
   device_args:                          # Optional TEXT. An argument that gets passed to the selected RF driver.
-  tx_gain: 50                           # Required FLOAT (50). Sets the transmit gain in dB. Supported: [0 - max value supported by radio].
-  rx_gain: 60                           # Required FLOAT (60). Sets the receive gain in dB. Supported: [0 - max value supported by radio].
+  tx_gain: 50                           # Required FLOAT (50). Sets the transmit gain in dB. Supported: [0 - max value supported by radio]. When using the ZMQ driver, must be <= 0.
+  rx_gain: 60                           # Required FLOAT (60). Sets the receive gain in dB. Supported: [0 - max value supported by radio]. When using the ZMQ driver, must be <= 0.
   freq_offset: 0                        # Optional FLOAT (0). Sets the frequency offset in Hertz.
   clock_ppm: 0                          # Optional FLOAT (0). Sets the clock calibration in Parts Per Million (PPM).
   lo_offset: 0                          # Optional FLOAT (0). Shifts the local oscillator frequency in MHz away from the center frequency to move LO leakage out of the channel.
@@ -1566,7 +1566,7 @@ log:
   fapi_level: warning                      # Optional TEXT (warning). Sets FAPI log level.
   hal_level: warning                       # Optional TEXT (warning). Sets the HAL log level.
   broadcast_enabled: false                 # Optional BOOLEAN (false). Enables logging in the PHY and MAC layer of broadcast messages and all PRACH opportunities. Supported: [false, true].
-  phy_rx_symbols_filename:                 # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the srsRAN_matlab project.
+  phy_rx_symbols_filename:                 # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the ocudu_matlab project.
   phy_rx_symbols_port: 0                   # Optional TEXT. Set to a valid receive port number to dump the IQ symbols from that port only, or set to "all" to dump the IQ symbols from all UL receive ports. Only works if "phy_rx_symbols_filename" is set. Supported: [NON-NEGATIVE or all].
   phy_rx_symbols_prach: false              # Optional BOOLEAN (false). Set to true to dump the IQ symbols from all the PRACH ports. Only works if "phy_rx_symbols_filename" is set. Supported: [false, true].
   hex_max_size: 0                          # Optional INT (0). Sets the aximum number of bytes to print in hex (zero for no hex dumps, -1 for unlimited bytes). Supported: [-1 - 1024]

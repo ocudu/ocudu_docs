@@ -20,8 +20,8 @@ ru_sdr:
   device_driver: zmq                # The RF driver name.
   device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001 # Optionally pass arguments to the selected RF driver.
   srate: 5.76                       # RF sample rate might need to be adjusted according to selected bandwidth.
-  tx_gain: 75                       # Transmit gain of the RF might need to adjusted to the given situation.
-  rx_gain: 75                       # Receive gain of the RF might need to adjusted to the given situation.
+  tx_gain: 0                        # Transmit gain of the RF might need to adjusted to the given situation.
+  rx_gain: 0                        # Receive gain of the RF might need to adjusted to the given situation.
 
 cell_cfg:
   dl_arfcn: 437000                  # ARFCN of the downlink carrier (center frequency).

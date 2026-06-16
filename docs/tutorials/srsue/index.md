@@ -514,10 +514,10 @@ Replacing the UHD driver with the ZMQ-based RF driver requires changing only **r
 ```default
 ru_sdr:
   device_driver: zmq
-  device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001,base_srate=23.04e6
-  srate: 23.04
-  tx_gain: 75
-  rx_gain: 75
+  device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001,base_srate=11.52e6
+  srate: 11.52
+  tx_gain: 0
+  rx_gain: 0
 ```
 
 #### srsUE
@@ -542,11 +542,11 @@ Then, the **[rf]** section in the srsUE config file has to be changed as follows
 freq_offset = 0
 tx_gain = 50
 rx_gain = 40
-srate = 23.04e6
+srate = 11.52e6
 nof_antennas = 1
 
 device_name = zmq
-device_args = tx_port=tcp://127.0.0.1:2001,rx_port=tcp://127.0.0.1:2000,base_srate=23.04e6
+device_args = tx_port=tcp://127.0.0.1:2001,rx_port=tcp://127.0.0.1:2000,base_srate=11.52e6
 ```
 
 In addition, the srsUE must be configured to use the created network namespace. This is achieved by updating the **[gw]** section of the config file:
