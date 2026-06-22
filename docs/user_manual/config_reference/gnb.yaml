@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (C) 2021-2026 Software Radio Systems Limited
+# SPDX-License-Identifier: BSD-3-Clause-Open-MPI
+
 ran_node_name: gnb01             # Optional TEXT (gnb01). Sets the RAN node name.
 gnb_id: 411                         # Optional UINT (411). gNodeB identifier.
 gnb_id_bit_length: 22               # Optional UINT (22). gNodeB identifier length in bits. Supported: [22 - 32].

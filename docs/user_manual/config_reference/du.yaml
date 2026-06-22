@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: Copyright (C) 2021-2026 Software Radio Systems Limited
+# SPDX-License-Identifier: BSD-3-Clause-Open-MPI
 
 gnb_id: 411                         # Optional UINT (411). gNodeB identifier.
 gnb_id_bit_length: 22               # Optional UINT (22). Sets the bit length of the gnb_id. Supported: [22 - 32].
