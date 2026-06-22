@@ -48,7 +48,7 @@ For more information on connecting a COTS UEs to OCUDU, see the [full tutorial](
 
 ## Configuration
 
-For the CU-DU split two configuration files are needed, one for CU and one for DU. These configuration files are explained in detail [here](../../user_manual/config_reference/config_reference.md).
+For the CU-DU split two configuration files are needed, one for CU and one for DU. These configuration files are explained in detail [here](../../user_manual/config_reference/config_reference.mdx).
 
 ### Core
 

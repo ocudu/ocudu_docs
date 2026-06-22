@@ -61,7 +61,7 @@ Metrics are provided on a per-UE basis. The following metrics are provided:
 ## Logs
 
 OCUDU provides users with a highly configurable logging mechanism, with per-layer and per-component log levels. Set the log file path and log levels in the gNB config
-file. See the [Configuration Reference](../config_reference/config_reference.md) for more details.
+file. See the [Configuration Reference](../config_reference/config_reference.mdx) for more details.
 
 The format used for all log messages is as follows:
 
@@ -124,7 +124,7 @@ OCUDU can output PCAPs at the following layers:
 - F1AP
 - E2AP
 
-To output these PCAPs, they must first be enabled on a per-layer basis in the gNB configuration file. See the [Configuration Reference](../config_reference/config_reference.md) for more details.
+To output these PCAPs, they must first be enabled on a per-layer basis in the gNB configuration file. See the [Configuration Reference](../config_reference/config_reference.mdx) for more details.
 
 ### MAC
 

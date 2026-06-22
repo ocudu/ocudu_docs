@@ -15,7 +15,7 @@ function emulates single or multiple UEs, simulating traffic  across layers such
 builds beyond the gNB.
 
 Detailed explanations of these scenarios are provided in the following sections. For detailed information on specific configuration parameters and usage of these modes, refer to the
-OCUDU [Configuration Reference](../../user_manual/config_reference/config_reference.md).
+OCUDU [Configuration Reference](../../user_manual/config_reference/config_reference.mdx).
 
 ---
 
@@ -206,4 +206,4 @@ Check the following in the console trace:
 
 Once all of the above checks pass, you can proceed to connect a UE.
 
-For more information about the test mode please refer to the OCUDU [Configuration Reference](../../user_manual/config_reference/config_reference.md).
+For more information about the test mode please refer to the OCUDU [Configuration Reference](../../user_manual/config_reference/config_reference.mdx).
