@@ -1,0 +1,309 @@
+ran_node_name: cucp01                # Optional TEXT (gnb01). Sets the RAN node name.
+gnb_id: 411                         # Optional UINT (411). gNodeB identifier.
+gnb_id_bit_length: 22               # Optional UINT (22). Sets the bit length of the gnb_id. Supported: [22 - 32].
+gnb_cu_up_id: 0                     # Optional UINT (0). Sets the gNB CU-UP ID. Supported: [0 - 68719476735].
+dryrun: false                       # Optional BOOLEAN (false). Enable application dry run mode. Supported: [false, true].
+
+qos:                                # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis.
+  - five_qi: 9                        # Optional UINT (9). Sets the 5QI. Supported: [0 - 255].
+    f1u_cu_up:
+      backoff_timer: 5                # Optional INT (5). Sets the F1-U backoff timer in milliseconds.
+      queue_size: 8192                # Optional UINT (8192). Sets the F1-U queue size.
+      batch_size: 256                 # Optional UINT (256). Sets the F1-U batch size.
+
+srbs:                               # Optional TEXT. Configures signaling radio bearers.
+
+cu_cp:
+  max_nof_dus: 6                         # Optional UINT (6). Sets the maximum number of DU connections that the CU-CP may accept.
+  max_nof_cu_ups: 6                      # Optional UINT (6). Sets the maximum number of CU-UP connections that the CU-CP may accept.
+  max_nof_ues: 8192                      # Optional UINT (8192). Sets the maximum number of UEs that the CU-CP may accept.
+  max_nof_drbs_per_ue: 8                 # Optional UINT (8). Sets the maximum number of DRBs per UE. Supported: [1 - 29].
+  inactivity_timer: 120                  # Optional INT (120). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
+  request_pdu_session_timeout: 3         # Optional INT (3). Timeout for the setup of a PDU session after an InitialUeMessage was sent to the core, in seconds. The timeout must be larger
+                                         # than T310. If the value is reached, the UE will be released.
+  enable_rrc_inactive: false             # Optional BOOLEAN (false). Enables the RRC INACTIVE state for UEs. Supported: [false, true].
+  ran_paging_cycle: 32                   # Optional UINT (32). Sets the default RAN paging cycle for INACTIVE UEs. Supported: [32, 64, 128, 256].
+  nof_i_rnti_ue_bits: 13                 # Optional UINT (13). Sets the number of bits used for the I-RNTI UE identifier. Supported: [1 - 18].
+  t380: 10                               # Optional INT (10). Sets the RRC inactivity timer T380 in minutes. Supported: [5, 10, 20, 30, 60, 120, 360, 720].
+  extra_amfs:                            # Optional TEXT. Sets the list of extra AMFs for the CU-CP to connect to.
+
+  amf:
+    no_core: false                        # Optional BOOLEAN (false). Setting to true allows the gNB to run without a core. Supported: [false, true].
+    amf_reconnection_retry_time: 1000     # Optional UINT (1000). Sets the time in ms to wait before retrying to connect to the AMF after a failed connection attempt.
+    addrs: 127.0.1.100                    # Required TEXT. Sets the AMF IP addresses for N2 interface. Multiple addresses supported for SCTP multi-homing. Format: IPV4 or IPV6 IP address.
+    port: 38412                           # Optional UINT (38412). Sets the AMF port. Supported: [20000 - 40000].
+    bind_addrs: 127.0.0.1                 # Optional TEXT (127.0.0.1). Sets the local bind addresses for N2 interface. Multiple addresses supported for SCTP multi-homing.
+    bind_interface: auto                  # Optional TEXT (auto). Sets network device to bind for N2 interface.
+    sctp_rto_initial: 120                 # Optional INT (120). Sets the initial retransmission timeout when creating the SCTP connection.
+    sctp_rto_min: 120                     # Optional INT (120). Sets the minimum retransmission timeout for the SCTP connection.
+    sctp_rto_max: 500                     # Optional INT (500). Sets the maximum retransmission timeout for the SCTP connection.
+    sctp_init_max_attempts: 3             # Optional INT (3). Sets the maximum retransmission attempts for the initial SCTP connection.
+    sctp_max_init_timeo: 500              # Optional INT (500). Sets the maximum retransmission timeout for the initial SCTP connection.
+    sctp_hb_interval: 30000               # Optional INT (30000). SCTP heartbeat interval in milliseconds. Supported: [-1 - inf] (-1 to use system default).
+    sctp_assoc_max_retx: 10               # Optional INT (10). SCTP association max retransmissions. Supported: [-1 - inf] (-1 to use system default).
+    sctp_nodelay: false                   # Optional BOOLEAN (false). Setting to true allows the gNB to send SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
+    procedure_timeout: 5000               # Optional UINT (5000). Sets the AMF NGAP procedure timeout in milliseconds.
+    supported_tracking_areas:             # Optional TEXT. Sets the list of tracking areas supported by this AMF.
+      -                                     # Supported TAC #1
+        tac: 7                                # Required UINT. Sets the Tracking Area Code.
+        plmn_list:                            # Required TEXT. Sets the list of PLMN items supported for this Tracking Area.
+          -                                     # Supported PLMN #1
+            plmn: "00101"                         # Required TEXT. Sets the Public Land Mobile Network code. Format: 7-digit PLMN code containing MCC & MNC.
+            tai_slice_support_list:               # Required TEXT. Sets the list of TAI slices for this PLMN item.
+              -                                     # Supported TAI Slice(s) for PLMN
+                sst: 1                                # Optional UINT (0). Sets the Slice Service Type. Supported: [0 - 255].
+                sd: 16777215                          # Optional UINT (16777215). Sets the Service Differentiator. Supported: [0 - 16777215].
+
+  xnap:
+    procedure_timeout: 5000              # Optional UINT (5000). Sets the Xn-AP procedure timeout in milliseconds.
+    reconnect_timer: 10000               # Optional UINT (10000). Sets the Xn-AP reconnect timer in milliseconds.
+    no_connection_init: false            # Optional BOOLEAN (false). Disables Xn-AP connection initiation. Supported: [false, true].
+    gateways:                            # Optional TEXT. Sets the list of Xn-AP gateway addresses. Each list entry should begin with "-".
+      -
+        bind_addrs: x.x.x.x             # Required TEXT. Sets the gateway IP addresses.
+        sctp:
+          sctp_rto_initial: 120
+          sctp_rto_min: 120
+          sctp_rto_max: 500
+          sctp_init_max_attempts: 3
+          sctp_max_init_timeo: 500
+          sctp_hb_interval: 30000
+          sctp_assoc_max_retx: 10
+          sctp_nodelay: false
+        connections:              # Optional TEXT. Sets the list of Xn-C peer connections reachable via this gateway.
+          -
+            peer_addrs:             # Required TEXT. Sets the peer gNB IP addresses for this XnAP connection.
+
+  mobility:
+    trigger_handover_from_measurements: false   # Optional BOOLEAN (false). Sets whether or not to start HO if neighbor cells become stronger. Supported: [false, true].
+    trigger_cho_on_ue_setup: false              # Optional BOOLEAN (false). Sets whether to trigger Conditional Handover on UE setup. Supported: [false, true].
+    cho_timeout_ms: 10000                       # Optional UINT (10000). Sets the Conditional Handover timeout in milliseconds. Supported: [1 - 600000].
+    cells:                                      # Optional TEXT. Sets the list of cells known to the CU-CP, their configs (if not provided over F1) and their respective neighbor cells.
+      -                                         # Define Cell 1
+        nr_cell_id:                               # Required UINT. The ID of a cell that belongs to this gNB.
+        periodic_report_cfg_id:                   # Optional UINT. The periodical report configuration to use for this cell.
+        ncells:                                   # Required TEXT. List of neighbor cells.
+          -                                         # Define neighbour cell(s) of Cell 1.
+            nr_cell_id:                             # Required UINT. The ID of this neighbor cell.
+            report_configs:                         # Required TEXT. List of report configurations to use for measurements of this neighbor cell.
+      -                                         # Define Cell 2
+        nr_cell_id:                               # Required UINT. The ID of a cell that does not belong to this gNB.
+        ncells:                                   # Required TEXT. List of neighbor cells.
+          -                                         # Define neighbour cell(s) of Cell 2.
+            nr_cell_id:                             # Required UINT. The ID of this neighbor cell.
+            report_configs:                         # Required TEXT. List of report configurations to use for measurements of this neighbor cell.
+        gnb_id_bit_length:                        # Optional UINT. The ID of this cell's gNB. Must be present if the cell does not belong to this gNB. Supported: [22 - 32].
+        pci:                                      # Optional UINT. The PCI of this cell. Must be present if the cell does not belong to this gNB. Supported: [0 - 1007].
+        band:                                     # Optional TEXT (enum). The NR band of this cell. Must be present if the cell does not belong to this gNB.
+        ssb_arfcn:                                # Optional UINT. Sets the SSB ARFCN of this cell.
+        plmn:                                     # Optional TEXT. Sets the PLMN of this cell.
+        tac:                                      # Optional UINT. Sets the Tracking Area Code of this cell. Supported: [0 - 16777215].
+        ssb_scs:                                  # Optional UINT. The SSB subcarrier spacing of this cell in KHz. Must be present if cell does not belong to this gNB. Supported: [15, 30, 60, 120, 240].
+        ssb_period:                               # Optional UINT. The SSB period of this cell in ms. Must be present if cell does not belong to this gNB. Supported: [5, 10, 20, 40, 80, 160].
+        ssb_offset:                               # Optional UINT. The SSB offset of this cell. Must be present if cell does not belong to this gNB.
+        ssb_duration:                             # Optional UINT. The SSB duration of this cell in subframes. Must be present if cell does not belong to this gNB. Supported: [1, 2, 3, 4, 5].
+    report_configs:                             # Optional TEXT. Sets the list of report configurations to dynamically build a measurement configuration sent to UEs.
+      -                                         # Define report configs to be used by the UEs
+        report_cfg_id:                            # Required UINT. The ID of this report configuration.
+        report_type:                              # Required TEXT. The type of the report. Supported: [event_triggered, periodical, cond_trigger].
+        event_triggered_report_type:              # Optional TEXT. Sets the type of event triggered report. Supported: [a1, a2, a3, a4, a5, a6, d1, t1, d2].
+        report_interval_ms:                        # Optional UINT. The report interval in ms. Supported: [120, 240, 480, 640, 1024, 2048, 5120, 10240, 20480, 40960, 60000, 360000, 720000, 1800000].
+        meas_trigger_quantity:                    # Optional TEXT. Sets the quantity to be measured. Supported: [rsrp, rsrq, sinr].
+        meas_trigger_quantity_threshold_db:       # Optional INT. Sets the measurement trigger quantity threshold in dB for A1/A2/A4/A5 events. Valid ranges: RSRP [-156..-31] dBm, RSRQ [-43..20] dB, SINR [-23..40] dB. Supported: [-156 - 40].
+        meas_trigger_quantity_threshold_2_db:     # Optional INT. Sets the measurement trigger quantity threshold 2 in dB for A5 events. Valid ranges: RSRP [-156..-31] dBm, RSRQ [-43..20] dB, SINR [-23..40] dB. Supported: [-156 - 40].
+        meas_trigger_quantity_offset_db:          # Optional INT. Sets the measurement trigger quantity offset in dB for A3/A6 events. Supported: [-15 - 15].
+        hysteresis_db:                            # Optional UINT. Sets the hysteresis in dB for measurement report trigger. Supported: [0 - 15].
+        time_to_trigger_ms:                       # Optional UINT. Sets the time in ms during which a condition must be met before measurement report trigger. Supported: [0, 40, 64, 80, 100, 128, 160, 256, 320, 480, 512, 640, 1024, 1280, 2560, 5120].
+        periodic_ho_rsrp_offset_db: -1            # Optional INT (-1). Sets the RSRP offset for periodic HO triggering in dB. -1 disables. Note the actual value is field value * 0.5 dB. Supported: [-1 - 30].
+        t312:                                     # Optional UINT. Sets the T312 timer in ms. Supported: [0, 50, 100, 200, 300, 400, 500, 1000].
+        distance_thresh_from_ref1_km:             # Optional FLOAT. Sets the D1/D2 distance threshold 1 in km. Supported: [0.0 - 3276.75].
+        distance_thresh_from_ref2_km:             # Optional FLOAT. Sets the D1/D2 distance threshold 2 in km. Supported: [0.0 - 3276.75].
+        hysteresis_location_km:                   # Optional FLOAT. Sets the D1/D2 location hysteresis in km. Supported: [0.0 - 327.68].
+        ref_location1:
+          latitude:                               # Optional FLOAT. Sets D1 reference location 1 latitude in degrees. Supported: [-90.0 - 90.0].
+          longitude:                              # Optional FLOAT. Sets D1 reference location 1 longitude in degrees. Supported: [-180.0 - 180.0].
+        ref_location2:
+          latitude:                               # Optional FLOAT. Sets D1 reference location 2 latitude in degrees. Supported: [-90.0 - 90.0].
+          longitude:                              # Optional FLOAT. Sets D1 reference location 2 longitude in degrees. Supported: [-180.0 - 180.0].
+        t1_thres:                                 # Optional TEXT. Sets the T1 time threshold. Format: Unix ms integer or YYYY-MM-DDTHH:MM:SS[.mmm].
+        duration_s:                               # Optional FLOAT. Sets the T1 duration in seconds. Supported: [0.1 - 600.0].
+
+  rrc:
+    force_reestablishment_fallback: false    # Optional BOOLEAN (false). Forces RRC re-establishment fallback to RRC setup. Supported: [false, true].
+    force_resume_fallback: false             # Optional BOOLEAN (false). Forces RRC Resume to fall back to RRC Setup. Supported: [false, true].
+    rrc_procedure_guard_time_ms: 1000        # Optional UINT (1000). Sets the guard time in ms used for RRC message exchange with UE. This is added to the RRC procedure timeout.
+
+  security:
+    integrity: not_needed                    # Optional TEXT (not_needed). Sets the default integrity protection indication for DRBs. Supported: [not_needed, preferred, required].
+    confidentiality: required                # Optional TEXT (required). Sets the default confidentiality protection indication for DRBs. Supported: [not_needed, preferred, required].
+    nea_pref_list: nea0,nea2,nea1,nea3       # Optional TEXT (nea0,nea2,nea1,nea3). Sets the ordered preference list for the selection of encryption algorithm (NEA).
+    nia_pref_list: nia2,nia1,nia3            # Optional TEXT (nia2,nia1,nia3). Sets the ordered preference list for the selection of integrity algorithm (NIA).
+
+  f1ap:
+    bind_addr: 127.0.10.1                    # Optional TEXT (127.0.0.1). Sets the F1-C bind address.
+    procedure_timeout: 1000                  # Optional UINT (1000). Sets the time the F1AP waits for a DU response in milliseconds.
+
+  e1ap:
+    procedure_timeout: 1000                  # Optional UINT (1000). Sets the time the E1AP waits for a CU-UP response in milliseconds.
+
+cu_up:
+  max_nof_ues: 16384                     # Optional UINT (16384). Sets the maximum number of UE bearer contexts supported by the CU-UP. Supported: [1 - 65536].
+  warn_on_drop: false                    # Optional BOOLEAN (false). Enables logging a warning for dropped packets in GTP-U and PDCP due to full queues. Supported: [false, true].
+  plmn_list:                             # Optional TEXT. Sets the list of supported PLMN IDs. Each entry is a 5 or 6 digit string (MCC+MNC). Supported: up to 12 PLMNs.
+
+  f1u:
+    bind_port: 2152                       # Optional INT (2152). Sets the F1-U bind port.
+    peer_port: 2152                       # Optional INT (2152). Sets the F1-U peer port.
+    socket:                               # Define UDP/IP socket(s) for F1-U interface.
+      -                                     # Socket 1
+        bind_addr: 127.0.10.1                 # Required TEXT. Sets the address that the F1-U socket will bind to.
+        ext_addr: 8.8.8.8                    # Optional TEXT. Sets the address that is reported as the F1-U bind address. If empty, the real bind address is used.
+        udp:
+          max_rx_msgs: 256                      # Optional UINT (256). Sets the maximum packets read from the socket in a single syscall.
+          pool_threshold: 0.9                   # Optional FLOAT (0.9). Sets the pool occupancy threshold, after which packets are dropped. Supported: [0.0 - 1.0].
+
+  ngu:
+    no_core: false                        # Optional BOOLEAN (false). Setting to true allows the gNB to run without a core. Supported: [false, true].
+    gtpu:
+      queue_size: 2046                       # Optional UINT (2046). Sets the GTP-U queue size, in PDUs.
+      batch_size: 256                        # Optional UINT (256). Sets the maximum number of GTP-U PDUs processed in a batch.
+      reordering_timer: 0                    # Optional UINT (0). Sets the GTP-U RX reordering timer in milliseconds. 0 disables reordering.
+      rate_limiter_period: 100               # Optional UINT (100). Sets the GTP-U RX rate limiter period in milliseconds.
+      ignore_ue_ambr: true                   # Optional BOOLEAN (true). Ignores GTP-U DL UE-AMBR rate limiter. Supported: [false, true].
+      teid_release_linger_time: 100          # Optional UINT (100). Sets the TEID linger time after release in milliseconds.
+    socket:                               # Optional TEXT. Defines socket(s) for NG-U interface. Each list entry should begin with "-".
+      -                                     # Socket 1
+        bind_addr: 127.0.3.1                  # Optional TEXT (127.0.0.1). Sets local IP address to bind for N3 interface. Format: IPV4 or IPV6 IP address.
+        bind_interface: auto                  # Optional TEXT (auto). Sets network device to bind for N3 interface.
+        ext_addr: auto                        # Optional TEXT (auto). Sets the external IP address for N3 traffic. "auto" uses bind_addr.
+        udp:
+          max_rx_msgs: 256                      # Optional UINT (256). Sets the maximum number of messages RX from a socket in a single syscall.
+          pool_threshold: 0.9                   # Optional FLOAT (0.9). Sets the pool occupancy threshold above which packets are dropped. Supported: [0.0 - 1.0].
+          tx_qsize: 4096                        # Optional UINT (4096). Sets the size of TX queue used for batching SDUs.
+          max_tx_msgs: 256                      # Optional UINT (256). Sets the maximum amount of messages TX in a single syscall.
+          max_tx_segments: 256                  # Optional UINT (256). Sets the maximum amount of segments TX in a single SDU.
+          reuse_addr: false                     # Optional BOOLEAN (false). Allow multiple sockets to bind to the same port. Supported: [false, true].
+          dscp:                                 # Optional UINT. Sets the Differentiated Services Code Point value. Supported: [0 - 63].
+
+  test_mode:
+    enable: false                         # Optional BOOLEAN (false). Enables or disables CU-UP test mode. Supported: [false, true].
+    integrity_enable: true                # Optional BOOLEAN (true). Enables or disables PDCP integrity testing. Supported: [false, true].
+    ciphering_enable: true                # Optional BOOLEAN (true). Enables or disables PDCP ciphering testing. Supported: [false, true].
+    nea_algo: 2                           # Optional UINT (2). Sets the NEA algorithm index for test mode. Supported: [0 - 3].
+    nia_algo: 2                           # Optional UINT (2). Sets the NIA algorithm index for test mode. Supported: [1 - 3].
+    ue_ambr: 40000000000                  # Optional UINT (40000000000). Sets the DL UE-AMBR used for testing in bps.
+    attach_detach_period: 0               # Optional UINT (0). Sets the attach/detach period for test mode in milliseconds. 0 means always attached.
+    reestablish_period: 0                 # Optional UINT (0). Sets the reestablish period for test mode in milliseconds. 0 means no re-establishment.
+    f1u_peer_address: 127.0.10.2          # Optional TEXT (127.0.10.2). Sets the F1-U peer address for test mode.
+    nof_ues: 1                            # Optional UINT (1). Sets the number of test UEs.
+
+e2:
+  enable_cu_cp_e2: false                # Optional BOOLEAN (false). Enables the E2 agent for CU-CP. Supported: [false, true].
+  enable_cu_up_e2: false                # Optional BOOLEAN (false). Enables the E2 agent for CU-UP. Supported: [false, true].
+  addrs: 127.0.0.1                      # Optional TEXT (127.0.0.1). Sets the RIC IP addresses. Multiple addresses can be specified for SCTP multi-homing. Format: IPV4 or IPV6 IP address.
+  port: 36421                           # Optional UINT (36421). Sets the RIC port. Supported: [20000 - 40000].
+  bind_addrs: 127.0.0.1                 # Optional TEXT (127.0.0.1). Sets the local bind addresses for the E2 interface. Multiple addresses can be specified for SCTP multi-homing.
+  sctp_rto_initial: 120                 # Optional INT (120). Sets the initial retransmission timeout when creating the SCTP connection.
+  sctp_rto_min: 120                     # Optional INT (120). Sets the minimum retransmission timeout for the SCTP connection.
+  sctp_rto_max: 500                     # Optional INT (500). Sets the maximum retransmission timeout for the SCTP connection.
+  sctp_init_max_attempts: 3             # Optional INT (3). Sets the maximum retransmission attempts for the initial SCTP connection.
+  sctp_max_init_timeo: 500              # Optional INT (500). Sets the maximum retransmission timeout for the initial SCTP connection.
+  sctp_hb_interval: 30000               # Optional INT (30000). Sets the SCTP heartbeat interval in milliseconds. -1 uses system default.
+  sctp_assoc_max_retx: 10               # Optional INT (10). Sets the SCTP association max retransmissions. -1 uses system default.
+  sctp_nodelay: false                   # Optional BOOLEAN (false). Enables sending SCTP messages without Nagle-like delay. Supported: [false, true].
+  e2sm_kpm_enabled: false               # Optional BOOLEAN (false). Enables the E2SM KPM service module. Supported: [false, true].
+  e2sm_rc_enabled: false                # Optional BOOLEAN (false). Enables the E2SM RC service module. Supported: [false, true].
+  e2sm_ccc_enabled: false               # Optional BOOLEAN (false). Enables the E2SM CCC service module. Supported: [false, true].
+
+buffer_pool:
+  nof_segments: 1048576                 # Optional UINT (1048576). Sets the number of segments allocated by the buffer pool.
+  segment_size: 2048                    # Optional UINT (2048). Sets the size of each buffer pool segment in bytes.
+
+expert_execution:
+  affinities:
+    main_pool_cpus:                           # Optional TEXT. Sets CPU cores assigned to the main thread pool. No default — the affinity mask is empty by default.
+    main_pool_pinning: mask                   # Optional ENUM (mask). Sets the policy used for assigning CPU cores to the main thread pool. Supported: [round-robin, mask].
+  threads:
+    main_pool:
+      nof_threads:                              # Optional UINT. Sets the number of threads for processing upper layers. No default — field is std::optional<unsigned> (nullopt when not set).
+      task_queue_size: 2048                     # Optional UINT (2048). Sets the main thread pool task queue size.
+      backoff_period: 50                        # Optional UINT (50). Sets the main thread pool back-off period in microseconds.
+  queues:
+    cu_up_dl_ue_executor_queue_size: 8192     # Optional UINT (8192). Sets the CU-UP's DL UE executor queue size.
+    cu_up_ul_ue_executor_queue_size: 8192     # Optional UINT (8192). Sets the CU-UP's UL UE executor queue size.
+    cu_up_ctrl_ue_executor_queue_size: 8192   # Optional UINT (8192). Sets the CU-UP's CTRL UE executor queue size.
+    cu_up_strand_batch_size: 256              # Optional UINT (256). Sets the CU-UP's strands batch size.
+  tracing:
+    cu_up_executor_tracing_enable: false      # Optional BOOLEAN (false). Enables tracing for CU-UP executors. Supported: [false, true].
+
+remote_control:
+  enabled: false                        # Optional BOOLEAN (false). Enables the remote control feature. Supported: [false, true].
+  bind_addr: 127.0.0.1                  # Optional TEXT (127.0.0.1). Sets the local IP address to bind for remote control. Format: IPV4 or IPV6 IP address.
+  port: 8001                            # Optional UINT (8001). Sets the port where the remote control server listens. Supported: [0 - 65535].
+
+log:
+# All gNB layers and components can be configured independently to output at various levels of detail. Supported levels (from lowest to highest detail):
+# none, error, warning, info, debug
+  filename: stdout                      # Optional TEXT (stdout). Sets the file path for logs. Use "stdout" to redirect to standard output.
+  all_level: warning                    # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers. Supported: [none, warning, info, debug, error].
+  lib_level: warning                    # Optional TEXT (warning). Sets the log level for external library components. Supported: [none, warning, info, debug, error].
+  e2ap_level: warning                   # Optional TEXT (warning). Sets the E2AP log level. Supported: [none, warning, info, debug, error].
+  config_level: none                    # Optional TEXT (none). Sets the configuration parser log level. Supported: [none, info, debug].
+  rrc_level: warning                    # Optional TEXT (warning). Sets the RRC log level.
+  ngap_level: warning                   # Optional TEXT (warning). Sets the NGAP log level.
+  nrppa_level: warning                  # Optional TEXT (warning). Sets the NRPPa log level.
+  pdcp_level: warning                   # Optional TEXT (warning). Sets the PDCP log level.
+  sdap_level: warning                   # Optional TEXT (warning). Sets the SDAP log level.
+  sec_level: warning                    # Optional TEXT (warning). Sets the security functions log level.
+  rohc_level: warning                   # Optional TEXT (warning). Sets the ROHC log level. Supported: [none, error, warning, info, debug].
+  e1ap_level: warning                   # Optional TEXT (warning). Sets the E1AP log level.
+  e1ap_json_enabled: false              # Optional BOOLEAN (false). Enables JSON-formatted logging of E1AP PDUs. Supported: [false, true].
+  cu_level: warning                     # Optional TEXT (warning). Sets the CU management log level.
+  xnap_level: warning                   # Optional TEXT (warning). Sets the Xn-AP log level.
+  f1ap_level: warning                   # Optional TEXT (warning). Sets the F1AP log level.
+  f1ap_json_enabled: false              # Optional BOOLEAN (false). Enables JSON-formatted logging of F1AP PDUs. Supported: [false, true].
+  f1u_level: warning                    # Optional TEXT (warning). Sets the F1-U log level.
+  gtpu_level: warning                   # Optional TEXT (warning). Sets the GTP-U log level.
+  high_latency_diagnostics_enabled: false  # Optional BOOLEAN (false). Enables logging of performance diagnostics when high computational latencies are detected. Supported: [false, true].
+  hex_max_size: 0                       # Optional INT (0). Sets the maximum number of bytes to print in hex. 0 disables hex dumps; -1 for unlimited. Supported: [-1 - 1024].
+
+pcap:
+  ngap_filename: /tmp/cu_ngap.pcap            # Optional TEXT (/tmp/cu_ngap.pcap). Sets the path for NGAP PCAP files.
+  ngap_enable: false                          # Optional BOOLEAN (false). Enables NGAP packet capture. Supported: [false, true].
+  n3_filename:                                # Optional TEXT. Sets the N3 GTP-U PCAP file output path.
+  n3_enable: false                            # Optional BOOLEAN (false). Enables N3 packet capture. Supported: [false, true].
+  e1ap_filename: /tmp/cu_e1ap.pcap            # Optional TEXT (/tmp/cu_e1ap.pcap). Sets the E1AP PCAP file output path.
+  e1ap_enable: false                          # Optional BOOLEAN (false). Enables E1AP packet capture. Supported: [false, true].
+  e2ap_cu_cp_filename: /tmp/cu_cp_e2ap.pcap   # Optional TEXT (/tmp/cu_cp_e2ap.pcap). Sets the path for E2AP CU-CP PCAP files.
+  e2ap_cu_up_filename: /tmp/cu_up_e2ap.pcap   # Optional TEXT (/tmp/cu_up_e2ap.pcap). Sets the path for E2AP CU-UP PCAP files.
+  e2ap_enable: false                          # Optional BOOLEAN (false). Enables E2AP packet capture. Supported: [false, true].
+  f1ap_filename: /tmp/cu_f1ap.pcap            # Optional TEXT (/tmp/cu_f1ap.pcap). Sets the path for F1AP PCAP files.
+  f1ap_enable: false                          # Optional BOOLEAN (false). Enables F1AP packet capture. Supported: [false, true].
+  f1u_filename: /tmp/du_f1u.pcap              # Optional TEXT (/tmp/du_f1u.pcap). Sets the F1-U GTP-U PCAP file output path.
+  f1u_enable: false                           # Optional BOOLEAN (false). Enables F1-U packet capture. Supported: [false, true].
+  xnap_filename: /tmp/cu_xnap.pcap            # Optional TEXT (/tmp/cu_xnap.pcap). Sets the path for Xn-AP PCAP files.
+  xnap_enable: false                          # Optional BOOLEAN (false). Enables Xn-AP packet capture. Supported: [false, true].
+
+metrics:
+  autostart_stdout_metrics: false       # Optional BOOLEAN (false). Autostart stdout metrics reporting. Supported: [false, true].
+  enable_json: false                    # Optional BOOLEAN (false). Enables JSON metrics reporting. Supported: [false, true].
+  enable_log: false                     # Optional BOOLEAN (false). Enables log metrics reporting. Supported: [false, true].
+  enable_verbose: false                 # Optional BOOLEAN (false). Enables extended detail metrics reporting. Supported: [false, true].
+  layers:
+    enable_app_usage: false             # Optional BOOLEAN (false). Enables application usage metrics. Supported: [false, true].
+    enable_ngap: false                  # Optional BOOLEAN (false). Enables NGAP metrics. Supported: [false, true].
+    enable_e1ap: false                  # Optional BOOLEAN (false). Enables E1AP metrics. Supported: [false, true].
+    enable_pdcp: false                  # Optional BOOLEAN (false). Enables PDCP metrics (reported by the CU-UP). Supported: [false, true].
+    enable_nrup_cu: false               # Optional BOOLEAN (false). Enables NRUP metrics (CU side). Supported: [false, true].
+    enable_rrc: false                   # Optional BOOLEAN (false). Enables CU-CP RRC metrics. Supported: [false, true].
+    skip_cu_up_executor: true           # Optional BOOLEAN (true). Whether to skip logging CU-UP executor metrics when executor logging is enabled application wide. Supported: [false, true].
+    enable_executor: false              # Optional BOOLEAN (false). Whether to log application executors metrics. Supported: [false, true].
+  periodicity:
+    app_usage_report_period: 1000       # Optional UINT (1000). Sets the application resource usage metrics report period in milliseconds.
+    cu_cp_report_period: 1000           # Optional UINT (1000). Sets the CU-CP metrics report period in milliseconds.
+    cu_up_report_period: 1000           # Optional UINT (1000). Sets the CU-UP metrics report period in milliseconds.
+
+trace:
+  filename:                             # Optional TEXT. Sets the file path for trace output. Leave empty to disable tracing.
+  max_tracing_events_per_file: 1000000  # Optional UINT (1000000). Sets the maximum number of events per trace file. 0 means no limit.
+  nof_tracing_events_after_severe: 0    # Optional UINT (0). Sets the number of events to write prior to a severe event. Set to zero for writing all events.
