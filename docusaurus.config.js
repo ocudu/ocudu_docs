@@ -253,8 +253,24 @@ module.exports = {
     ], 
     // Link filter plugin - removes broken links to non-markdown files
     require('./plugins/link-filter-plugin.js'),
-    // Webpack config: fix ESM resolution for @untitled-ui/icons-react and ignore
-    // static folders during live reload
+    // Copy config YAML source files to the build output so they are downloadable
+    function () {
+      return {
+        name: 'copy-config-yaml',
+        async postBuild({ outDir }) {
+          const fs = require('fs');
+          const path = require('path');
+          const srcDir = path.join(__dirname, 'docs/user_manual/config_reference');
+          const destDir = path.join(outDir, 'config_examples');
+          fs.mkdirSync(destDir, { recursive: true });
+          for (const file of ['gnb.yaml', 'cu.yaml', 'du.yaml']) {
+            fs.copyFileSync(path.join(srcDir, file), path.join(destDir, file));
+          }
+        },
+      };
+    },
+    // Webpack config: fix ESM resolution for @untitled-ui/icons-react, enable
+    // ?raw imports for file content, and ignore static folders during live reload
     function (context, options) {
       return {
         name: 'custom-webpack-config',
@@ -266,6 +282,10 @@ module.exports = {
                   test: /\.js$/,
                   include: /node_modules\/@untitled-ui\/icons-react/,
                   resolve: { fullySpecified: false },
+                },
+                {
+                  resourceQuery: /raw/,
+                  type: 'asset/source',
                 },
               ],
             },

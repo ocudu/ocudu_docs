@@ -320,6 +320,8 @@ table tbody td {
 pre[class*='language-'] {
   position: relative;
   font-size: 0.82rem;
+  max-height: 700px;
+  overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(82, 184, 245, 0.35) transparent;
 }
@@ -342,21 +344,39 @@ pre[class*='language-']::before {
   opacity: 0;
 }
 
-pre.language-bash::before    { content: 'bash'; }
-pre.language-shell::before   { content: 'shell'; }
-pre.language-yaml::before    { content: 'yaml'; }
-pre.language-json::before    { content: 'json'; }
-pre.language-cpp::before     { content: 'c++'; }
-pre.language-c::before       { content: 'c'; }
-pre.language-cmake::before   { content: 'cmake'; }
-pre.language-python::before  { content: 'python'; }
-pre.language-text::before    { content: 'text'; }
-pre.language-diff::before    { content: 'diff'; }
-pre.language-mermaid::before { content: 'mermaid'; }
+pre.language-bash::before         { content: 'bash'; }
+pre.language-shell::before        { content: 'shell'; }
+pre.language-shell-session::before{ content: 'shell'; }
+pre.language-yaml::before         { content: 'yaml'; }
+pre.language-json::before         { content: 'json'; }
+pre.language-cpp::before          { content: 'c++'; }
+pre.language-c::before            { content: 'c'; }
+pre.language-cmake::before        { content: 'cmake'; }
+pre.language-python::before       { content: 'python'; }
+pre.language-text::before         { content: 'text'; }
+pre.language-diff::before         { content: 'diff'; }
+pre.language-mermaid::before      { content: 'mermaid'; }
+pre.language-matlab::before       { content: 'matlab'; }
+pre.language-cfg::before          { content: 'cfg'; }
+pre.language-ini::before          { content: 'ini'; }
+pre.language-console::before      { content: 'console'; }
+pre.language-default::before      { content: 'output'; }
+
+/* Output/console blocks — muted top border distinguishes "see this" from "run this" */
+[class*='codeBlockContainer']:has(pre.language-default),
+[class*='codeBlockContainer']:has(pre.language-console) {
+  border-top-color: rgba(150, 150, 160, 0.35);
+}
+
+[data-theme='dark'] [class*='codeBlockContainer']:has(pre.language-default),
+[data-theme='dark'] [class*='codeBlockContainer']:has(pre.language-console) {
+  border-top-color: rgba(150, 150, 160, 0.25);
+}
 
 /* Webkit scrollbar — styled to brand colours; keeps the bar visible and unobtrusive */
 [class*='codeBlockContainer'] pre::-webkit-scrollbar {
   height: 6px;
+  width: 6px;
 }
 
 [class*='codeBlockContainer'] pre::-webkit-scrollbar-track {
@@ -648,4 +668,186 @@ article.col .card p {
   overflow: visible;
   white-space: normal;
   word-wrap: break-word;
+}
+
+/* ============================================================
+   PDF download floating button
+   ============================================================ */
+
+.pdf-download-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  font-family: var(--ifm-font-family-base);
+}
+
+.pdf-download-fab__trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  background: linear-gradient(135deg, #52B8F5 0%, #8B5CF6 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(82, 184, 245, 0.35);
+  transition: box-shadow 150ms ease, transform 150ms ease;
+  white-space: nowrap;
+}
+
+.pdf-download-fab__trigger:hover {
+  box-shadow: 0 4px 16px rgba(82, 184, 245, 0.5);
+  transform: translateY(-1px);
+}
+
+.pdf-download-fab__trigger svg {
+  flex-shrink: 0;
+}
+
+.pdf-download-fab__menu {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 220px;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.pdf-download-fab__menu.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.pdf-download-fab__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--ifm-color-emphasis-100);
+  color: var(--ifm-font-color-base);
+  font-size: 0.82rem;
+  font-family: var(--ifm-font-family-base);
+  text-decoration: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 100ms ease;
+}
+
+.pdf-download-fab__menu-item:last-child {
+  border-bottom: none;
+}
+
+.pdf-download-fab__menu-item:hover {
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+.pdf-download-fab__menu-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ifm-color-emphasis-600);
+  padding: 0.5rem 1rem 0.25rem;
+  display: block;
+}
+
+/* ============================================================
+   Print styles — single-page browser Print → Save as PDF
+   ============================================================ */
+
+@media print {
+  .navbar,
+  .footer,
+  .theme-doc-sidebar-container,
+  .breadcrumbs,
+  .pagination-nav,
+  .theme-doc-toc-desktop,
+  .theme-doc-toc-mobile,
+  .table-of-contents,
+  .tocCollapsible,
+  [class*='docSidebarContainer'],
+  [class*='sidebar'],
+  .pdf-download-fab,
+  .sticky-code-scrollbar,
+  .DocSearch,
+  .announcementBar {
+    display: none !important;
+  }
+
+  .main-wrapper,
+  .docMainContainer,
+  [class*='docMainContainer'],
+  [class*='docItemContainer'],
+  article {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  article {
+    font-size: 11pt;
+    line-height: 1.55;
+    color: #000;
+  }
+
+  h1 { font-size: 20pt; margin-top: 1.5em; }
+  h2 { font-size: 15pt; margin-top: 1.2em; }
+  h3 { font-size: 12pt; margin-top: 1em; }
+
+  pre,
+  code {
+    font-size: 9pt !important;
+    background: #f5f5f5 !important;
+    color: #000 !important;
+    border: 1px solid #ddd;
+    white-space: pre-wrap !important;
+    word-break: break-all;
+  }
+
+  pre {
+    page-break-inside: avoid;
+    padding: 0.75em 1em;
+  }
+
+  h2, h3, h4 {
+    page-break-after: avoid;
+  }
+
+  table {
+    page-break-inside: avoid;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 10pt;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 0.4em 0.6em;
+  }
+
+  a[href]::after {
+    content: none;
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
 }
