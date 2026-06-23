@@ -131,6 +131,7 @@ cu_cp:
   rrc:
     force_reestablishment_fallback: false    # Optional BOOLEAN (false). Force RRC re-establishment fallback to RRC setup. Supported: [false, true].
     rrc_procedure_guard_time_ms: 1000        # Optional UINT (1000). Sets the guard time in ms used for RRC message exchange with UE. This is added to the RRC procedure timeout. Supported: [0 - inf].
+    rrc_reject_wait_time_s: 8                # Optional UINT (). Sets the waitTime IE in RRC Reject. Omit the key to send no waitTime IE in RRC Reject. Supported: [1, 16].
 
   security:
     integrity: not_needed                    # Optional TEXT (not_needed). Sets the default integrity protection indication for DRBs.
