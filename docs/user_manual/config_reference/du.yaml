@@ -12,25 +12,85 @@ cells:                              # Optional TEXT. Sets the cell configuration
   - pci: 2                          # Optional UINT. Set the PCI of the second cell.
     dl_arfcn: 532020                # Optional UINT. Set the ARFCN of the second cell.
 
-qos:                                # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis.
+qos:                                # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. Each list entry should begin with "-".
+- five_qi: 9                          # Optional UINT (9). Sets the 5QI value. Supported: [0 - 255].
+  rlc:
+    mode: am                            # Optional TEXT (am). Sets the RLC mode. Supported: [am, um-bidir].
+    um-bidir:
+      tx:
+        sn: 0                             # Optional UINT (0). Sets the RLC UM TX SN size.
+        queue-size: 0                     # Optional UINT (0). Sets the RLC UM TX SDU queue limit in PDUs.
+        queue-bytes: 0                    # Optional UINT (0). Sets the RLC UM TX SDU queue limit in bytes.
+      rx:
+        sn: 0                             # Optional UINT (0). Sets the RLC UM RX SN size.
+        t-reassembly: 0                   # Optional INT (0). Sets the RLC UM RX t-Reassembly timer.
+    am:
+      tx:
+        sn: 0                             # Optional UINT (0). Sets the RLC AM TX SN size.
+        t-poll-retransmit: 0              # Optional INT (0). Sets the RLC AM TX t-PollRetransmit in ms.
+        max-retx-threshold: 0             # Optional UINT (0). Sets the RLC AM TX max retransmission threshold.
+        poll-pdu: 0                       # Optional INT (0). Sets the RLC AM TX PollPdu.
+        poll-byte: 0                      # Optional INT (0). Sets the RLC AM TX PollByte.
+        max_window: 0                     # Optional UINT (0). Sets a non-standard TX window size limit. 0 means no limit beyond the SN size.
+        queue-size: 4096                  # Optional UINT (4096). Sets the RLC AM TX SDU queue size in PDUs.
+        queue-bytes: 6172672              # Optional UINT (6172672). Sets the RLC AM TX SDU queue size in bytes.
+      rx:
+        sn: 0                             # Optional UINT (0). Sets the RLC AM RX SN size.
+        t-reassembly: 0                   # Optional INT (0). Sets the RLC AM RX t-Reassembly timer.
+        t-status-prohibit: 0              # Optional INT (0). Sets the RLC AM RX t-StatusProhibit timer.
+        max_sn_per_status: 0              # Optional UINT (0). Sets the RLC AM RX status SN limit.
+  f1u_du:
+    backoff_timer: 0                    # Optional INT (0). Sets the F1-U backoff timer in milliseconds.
+    ul_buffer_size: 0                   # Optional UINT (0). Sets the F1-U handover UL buffer size.
 
-srbs:                               # Optional TEXT. Configures signaling radio bearers.
+srbs:                               # Optional TEXT. Configures signaling radio bearers. Each list entry should begin with "-".
+- srb_id: 0                           # Optional UINT (0). Sets the SRB ID. Supported: [1, 2].
+  rlc:
+    tx:
+      sn: 0                             # Optional UINT (0). Sets the RLC AM TX SN size.
+      t-poll-retransmit: 0              # Optional INT (0). Sets the RLC AM TX t-PollRetransmit in ms.
+      max-retx-threshold: 0             # Optional UINT (0). Sets the RLC AM TX max retransmission threshold.
+      poll-pdu: 0                       # Optional INT (0). Sets the RLC AM TX PollPdu.
+      poll-byte: 0                      # Optional INT (0). Sets the RLC AM TX PollByte.
+      max_window: 0                     # Optional UINT (0). Sets a non-standard TX window size limit. 0 means no limit beyond the SN size.
+      queue-size: 4096                  # Optional UINT (4096). Sets the RLC AM TX SDU queue size in PDUs.
+      queue-bytes: 6172672              # Optional UINT (6172672). Sets the RLC AM TX SDU queue size in bytes.
+    rx:
+      sn: 0                             # Optional UINT (0). Sets the RLC AM RX SN size.
+      t-reassembly: 0                   # Optional INT (0). Sets the RLC AM RX t-Reassembly timer.
+      t-status-prohibit: 0              # Optional INT (0). Sets the RLC AM RX t-StatusProhibit timer.
+      max_sn_per_status: 0              # Optional UINT (0). Sets the RLC AM RX status SN limit.
 
 f1ap:                               # Interface between DU and CU-CP
-  cu_cp_addr: 127.0.10.1                # Required TEXT (127.0.10.1). Sets the CU-CP F1-C address to connect to.
-  bind_addr: 127.0.10.2                 # Required TEXT (127.0.10.2). Sets the DU F1-C bind address. If left empty, implicit bind is performed.
+  addrs: 127.0.10.1                     # Optional TEXT (127.0.10.1). Sets the CU-CP F1-C addresses to connect to. Multiple addresses can be specified for SCTP multi-homing.
+  bind_addrs: 127.0.10.2                # Optional TEXT (127.0.10.2). Sets the DU F1-C bind addresses. Multiple addresses can be specified for SCTP multi-homing. If left empty, implicit bind is performed.
+  sctp_rto_initial: 120                 # Optional INT (120). Sets the SCTP initial RTO value in milliseconds. -1 uses system default.
+  sctp_rto_min: 120                     # Optional INT (120). Sets the SCTP RTO min value in milliseconds. -1 uses system default.
+  sctp_rto_max: 500                     # Optional INT (500). Sets the SCTP RTO max value in milliseconds. -1 uses system default.
+  sctp_init_max_attempts: 3             # Optional INT (3). Sets the SCTP init max attempts. -1 uses system default.
+  sctp_max_init_timeo: 500              # Optional INT (500). Sets the SCTP max init timeout in milliseconds. -1 uses system default.
+  sctp_hb_interval: 30000               # Optional INT (30000). Sets the SCTP heartbeat interval in milliseconds. -1 uses system default.
+  sctp_assoc_max_retx: 10               # Optional INT (10). Sets the SCTP association max retransmissions. -1 uses system default.
+  sctp_nodelay: false                   # Optional BOOLEAN (false). Sends SCTP messages without Nagle-like delay. Supported: [false, true].
 
 f1u:
   queue_size: 2048                      # Optional INT (2048). Sets the F1-U PDU queue size in bytes.
   bind_port: 2152                       # Optional INT (2152). Sets the F1-U bind port.
   peer_port: 2152                       # Optional INT (2152). Sets the F1-U peer port.
-  socket:
-    bind_addr: 127.0.10.1                 # Required TEXT (127.0.10.1). Sets the DU F1-U bind address.
-    ext_addr:                             # Optional TEXT. Sets the external IP address that is advertised to receive F1-U packets from the CU-UP. If left empty, the bind address is used.
+  socket:                                # Optional TEXT. Configures UDP/IP socket parameters of the F1-U interface. Each list entry should begin with "-".
+  - bind_addr: 127.0.10.1                 # Optional TEXT (127.0.10.1). Sets the DU F1-U bind address. Format: must be a valid IPv4 address.
+    sst:                                  # Required UINT. Sets the Slice Service Type. Supported: [0 - 255].
+    sd:                                   # Required UINT. Sets the Service Differentiator. Supported: [0 - 16777214].
     five_qi: 9                            # Optional UINT (9). Sets the 5QI value for the F1-U socket. Supported: [0 - 255].
+    ext_addr: auto                        # Optional TEXT (auto). Sets the external IP address advertised for receiving F1-U packets. Format: must be a valid IPv4 address or "auto".
     udp:
-      max_rx_msgs: 256                     # Optional UINT (256). Sets the maximum number of messages that can be received in a single UDP packet. Supported: [1 - 256].
+      max_rx_msgs: 256                     # Optional UINT (256). Sets the maximum number of messages received in a single syscall. Supported: [1 - 256].
+      tx_qsize: 4096                       # Optional UINT (4096). Sets the size of the TX queue used for batching SDUs.
+      max_tx_msgs: 256                     # Optional UINT (256). Sets the maximum number of messages transmitted in a single syscall.
+      max_tx_segments: 256                 # Optional UINT (256). Sets the maximum number of segments transmitted in a single SDU.
       pool_threshold: 0.9                  # Optional FLOAT (0.9). Sets the pool occupancy threshold after which packets are dropped. Supported: [0 - 1].
+      reuse_addr: false                    # Optional BOOLEAN (false). Allows multiple sockets to bind to the same port. Supported: [false, true].
+      dscp:                                # Required UINT. Sets the Differentiated Services Code Point value. Supported: [0 - 63].
 
 du:
   warn_on_drop: false                  # Optional BOOLEAN (false). Enables logging a warning for dropped packets in F1-U, RLC and MAC due to full queues. Supported: [false, true].
@@ -427,32 +487,33 @@ ru_ofh:
   gps_alpha: 0                                             # Optional UINT (0). Sets the GPS alpha. Supported: [0 - 1.2288e+07].
   gps_beta: 0                                              # Optional INT (0). Sets the GPS beta. Supported: [-32768 - +32767].
   ru_bandwidth_MHz: <cell bandwidth>                         # Optional TEXT (<cell bandwidth>). Sets the channel bandwidth in MHz. Supported: [5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100].
-  t1a_max_cp_dl: 500                                       # Optional UINT (500). Sets the T1a maximum value for downlink control-plane in microseconds. Supported: [0 - 1960].
-  t1a_min_cp_dl: 258                                       # Optional UINT (258). Sets the T1a minimum value for downlink control-plane in microseconds. Supported: [0 - 1960].
-  t1a_max_cp_ul: 500                                       # Optional UINT (500). Sets the T1a maximum value for uplink control-plane in microseconds. Supported: [0 - 1960].
-  t1a_min_cp_ul: 285                                       # Optional UINT (285). Sets the T1a minimum value for uplink control-plane in microseconds. Supported: [0 - 1960].
-  t1a_max_up: 300                                          # Optional UINT (300). Sets the T1a maximum value for user-plane in microseconds. Supported: [0 - 1960].
-  t1a_min_up: 85                                           # Optional UINT (85). Sets the T1a minimum value for user-plane in microseconds. Supported: [0 - 1960].
-  ta4_max: 500                                             # Optional UINT (500). Sets the Ta4 maximum value for User-Plane in microseconds. Supported: [0 - 1960].
-  ta4_min: 85                                              # Optional UINT (85). Sets the Ta4 minimum value for User-Plane in microseconds. Supported: [0 - 1960].
-  is_prach_cp_enabled: true                                # Optional BOOLEAN (true). Sets the PRACH control-plane enabled flag. Supported: [false, true].
-  ignore_ecpri_seq_id: false                               # Optional BOOLEAN (false). Sets whether to ignore the eCPRI sequence ID field value. Supported: [false, true].
-  ignore_ecpri_payload_size: false                         # Optional BOOLEAN (false). Sets whether to ignore the eCPRI payload size field value. Supported: [false, true].
-  ignore_prach_start_symbol: false                         # Optional BOOLEAN (false). Sets whether to ignore the PRACH start symbol in PRACH U-Plane packets. Supported: [false, true].
-  log_lates_as_warnings: true                              # Optional BOOLEAN (true). Sets late Open Fronthaul events to be logged as warnings. Supported: [false, true].
-  warn_unreceived_ru_frames: after_traffic_detection       # Optional TEXT (after_traffic_detection). Sets the policy for warning about unreceived Radio Unit frames. Supported: [never, always, after_traffic_detection].
-  compr_method_ul: bfp                                     # Optional TEXT (bfp). Sets the uplink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
-  compr_bitwidth_ul: 9                                     # Optional UINT (9). Sets the uplink compression bit width. Supported: [1 - 16].
-  compr_method_dl: bfp                                     # Optional TEXT (bfp). Sets the downlink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
-  compr_bitwidth_dl: 9                                     # Optional UINT (9). Sets the downlink compression bit width. Supported: [1 - 16].
-  compr_method_prach: bfp                                  # Optional TEXT (bfp). Sets the PRACH compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
-  compr_bitwidth_prach: 9                                  # Optional UINT (9). Sets the PRACH compression bit width. Supported: [1 - 16].
-  enable_ul_static_compr_hdr: true                         # Optional BOOLEAN (true). Enables the uplink static compression header. Supported: [false, true].
-  enable_dl_static_compr_hdr: true                         # Optional BOOLEAN (true). Enables the downlink static compression header. Supported: [false, true].
   ru_reference_level_dBFS: -12                             # Optional FLOAT (-12). Sets the RU IQ reference level mapped to the maximum RF power in dBFS. Supported: (-inf - 0].
   subcarrier_rms_backoff_dB: auto                          # Optional TEXT (auto). Sets the per-subcarrier power back-off relative to the RU reference level in dB. Accepts a numeric value >= 0 or 'auto'. Supported: [0 - inf, auto].
   iq_scaling: 0.1                                          # Optional FLOAT (0.1). Sets the IQ scaling factor. This is an alternative to ru_reference_level_dBFS. Supported: [0 - 100].
   cplane_prach_fft_len: 4096                               # Optional UINT (4096). Sets the PRACH FFT length used in C-Plane Type-3 messages. Supported: [128, 256, 512, 1024, 1536, 2048, 3072, 4096].
+  base_cell:                                               # Default timing and compression settings shared across all cells. Per-cell overrides can be set in the cells list below.
+    t1a_max_cp_dl: 500                                       # Optional INT (500). Sets the T1a maximum value for downlink control-plane in microseconds. Supported: [0 - 1960].
+    t1a_min_cp_dl: 258                                       # Optional INT (258). Sets the T1a minimum value for downlink control-plane in microseconds. Supported: [0 - 1960].
+    t1a_max_cp_ul: 500                                       # Optional INT (500). Sets the T1a maximum value for uplink control-plane in microseconds. Supported: [0 - 1960].
+    t1a_min_cp_ul: 285                                       # Optional INT (285). Sets the T1a minimum value for uplink control-plane in microseconds. Supported: [0 - 1960].
+    t1a_max_up: 300                                          # Optional INT (300). Sets the T1a maximum value for user-plane in microseconds. Supported: [0 - 1960].
+    t1a_min_up: 85                                           # Optional INT (85). Sets the T1a minimum value for user-plane in microseconds. Supported: [0 - 1960].
+    ta4_max: 500                                             # Optional INT (500). Sets the Ta4 maximum value for user-plane in microseconds. Supported: [0 - 1960].
+    ta4_min: 85                                              # Optional INT (85). Sets the Ta4 minimum value for user-plane in microseconds. Supported: [0 - 1960].
+    is_prach_cp_enabled: true                                # Optional BOOLEAN (true). Sets the PRACH control-plane enabled flag. Supported: [false, true].
+    ignore_ecpri_seq_id: false                               # Optional BOOLEAN (false). Sets whether to ignore the eCPRI sequence ID field value. Supported: [false, true].
+    ignore_ecpri_payload_size: false                         # Optional BOOLEAN (false). Sets whether to ignore the eCPRI payload size field value. Supported: [false, true].
+    ignore_prach_start_symbol: false                         # Optional BOOLEAN (false). Sets whether to ignore the PRACH start symbol in PRACH U-Plane packets. Supported: [false, true].
+    log_lates_as_warnings: true                              # Optional BOOLEAN (true). Sets late Open Fronthaul events to be logged as warnings. Supported: [false, true].
+    warn_unreceived_ru_frames: after_traffic_detection       # Optional TEXT (after_traffic_detection). Sets the policy for warning about unreceived Radio Unit frames. Supported: [never, always, after_traffic_detection].
+    compr_method_ul: bfp                                     # Optional TEXT (bfp). Sets the uplink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+    compr_bitwidth_ul: 9                                     # Optional UINT (9). Sets the uplink compression bit width. Supported: [1 - 16].
+    compr_method_dl: bfp                                     # Optional TEXT (bfp). Sets the downlink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+    compr_bitwidth_dl: 9                                     # Optional UINT (9). Sets the downlink compression bit width. Supported: [1 - 16].
+    compr_method_prach: bfp                                  # Optional TEXT (bfp). Sets the PRACH compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+    compr_bitwidth_prach: 9                                  # Optional UINT (9). Sets the PRACH compression bit width. Supported: [1 - 16].
+    enable_ul_static_compr_hdr: true                         # Optional BOOLEAN (true). Enables the uplink static compression header. Supported: [false, true].
+    enable_dl_static_compr_hdr: true                         # Optional BOOLEAN (true). Enables the downlink static compression header. Supported: [false, true].
   cells:                                                   # Optional TEXT. Sets the hardware-specific cell configuration on a per cell basis.
     -                                                      # Cell 1 - set custom configuration for each cell
       network_interface: enp1s0f0                          # Optional TEXT (enp1s0f0). Sets the ethernet network interface name for the RU or PCIe identifier when using DPDK.
@@ -627,28 +688,27 @@ log:
   filename: stdout                         # Optional TEXT (stdout). Sets the file path for logs. Use "stdout" to redirect to standard output.
   all_level: warning                       # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers. Supported: [none, warning, info, debug, error].
   lib_level: warning                       # Optional TEXT (warning). Sets the log level for external library components. Supported: [none, warning, info, debug, error].
-  e2ap_level: warning                      # Optional TEXT (warning). Sets the E2AP log level. Supported: [none, warning, info, debug, error].
   config_level: none                       # Optional TEXT (none). Sets the configuration parser log level. Supported: [none, info, debug].
-  mac_level: warning                       # Optional TEXT (warning). Sets the MAC log level.
-  rlc_level: warning                       # Optional TEXT (warning). Sets the RLC log level.
   f1ap_level: warning                      # Optional TEXT (warning). Sets the F1AP log level.
   f1ap_json_enabled: false                 # Optional BOOLEAN (false). Enables JSON-formatted logging of F1AP PDUs. Supported: [false, true].
+  e2ap_level: warning                      # Optional TEXT (warning). Sets the E2AP log level. Supported: [none, warning, info, debug, error].
+  du_level: warning                        # Optional TEXT (warning). Sets the DU management log level.
+  mac_level: warning                       # Optional TEXT (warning). Sets the MAC log level.
+  rlc_level: warning                       # Optional TEXT (warning). Sets the RLC log level.
   f1u_level: warning                       # Optional TEXT (warning). Sets the F1-U log level.
   gtpu_level: warning                      # Optional TEXT (warning). Sets the GTP-U log level.
-  rohc_level: warning                      # Optional TEXT (warning). Sets the ROHC log level. Supported: [none, error, warning, info, debug].
-  du_level: warning                        # Optional TEXT (warning). Sets the DU management log level.
-  ntn_level: warning                       # Optional TEXT (warning). Sets the NTN log level.
-  high_latency_diagnostics_enabled: false  # Optional BOOLEAN (false). Enables logging of performance diagnostics when high computational latencies are detected. Supported: [false, true].
   fapi_level: warning                      # Optional TEXT (warning). Sets the FAPI log level (split_7_2 and split_6 only).
+  phy_level: warning                       # Optional TEXT (warning). Sets the physical layer log level.
+  ofh_level: warning                       # Optional TEXT (warning). Sets the Open Fronthaul log level.
+  radio_level: info                        # Optional TEXT (info). Sets the radio driver log level.
   hal_level: warning                       # Optional TEXT (warning). Sets the HAL log level.
+  ntn_level: warning                       # Optional TEXT (warning). Sets the NTN log level.
+  hex_max_size: 0                          # Optional INT (0). Sets the maximum number of bytes to print in hex. 0 disables hex dumps; -1 for unlimited. Supported: [-1 - 1024].
   broadcast_enabled: false                 # Optional BOOLEAN (false). Enables logging of broadcast messages and all PRACH opportunities in the PHY and MAC layers. Supported: [false, true].
+  high_latency_diagnostics_enabled: false  # Optional BOOLEAN (false). Enables logging of performance diagnostics when high computational latencies are detected. Supported: [false, true].
   phy_rx_symbols_filename:                 # Optional TEXT. Sets the file path to dump received IQ symbols. Leave empty to disable.
   phy_rx_symbols_port: 0                   # Optional TEXT (0). Sets the Rx port number to dump IQ symbols from, or "all" for all UL receive ports. Only active if phy_rx_symbols_filename is set.
   phy_rx_symbols_prach: false              # Optional BOOLEAN (false). Enables dumping of IQ symbols from all PRACH ports. Only active if phy_rx_symbols_filename is set. Supported: [false, true].
-  hex_max_size: 0                          # Optional INT (0). Sets the maximum number of bytes to print in hex. 0 disables hex dumps; -1 for unlimited. Supported: [-1 - 1024].
-  ofh_level: warning                       # Optional TEXT (warning). Sets the Open Fronthaul log level.
-  radio_level: info                        # Optional TEXT (info). Sets the radio driver log level.
-  phy_level: warning                       # Optional TEXT (warning). Sets the physical layer log level.
 
 pcap:
   e2ap_du_filename: /tmp/du_e2ap.pcap      # Optional TEXT (/tmp/du_e2ap.pcap). Sets the path for E2AP DU PCAP files.
