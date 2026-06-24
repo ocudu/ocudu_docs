@@ -9,10 +9,54 @@ dryrun: false                       # Optional BOOLEAN (false). Enable applicati
 
 qos:                                # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis.
   - five_qi: 9                        # Optional UINT (9). Sets the 5QI. Supported: [0 - 255].
+    rlc:
+      mode: am                          # Optional TEXT (am). Sets the RLC mode.
+      um-bidir:
+        tx:
+          sn: 0                           # Optional UINT (0). Sets the RLC UM TX SN size.
+          queue-size: 0                   # Optional UINT (0). Sets the RLC UM TX SDU queue size.
+        rx:
+          sn: 0                           # Optional UINT (0). Sets the RLC UM RX SN size.
+          t-reassembly: 0                 # Optional INT (0). Sets the RLC UM RX t-Reassembly in milliseconds.
+      am:
+        tx:
+          sn: 0                           # Optional UINT (0). Sets the RLC AM TX SN size.
+          t-poll-retransmit: 0            # Optional INT (0). Sets the RLC AM TX t-PollRetransmit in milliseconds.
+          max-retx-threshold: 0           # Optional UINT (0). Sets the RLC AM maximum retransmission threshold.
+          poll-pdu: 0                     # Optional INT (0). Sets the RLC AM TX PollPdu.
+          poll-byte: 0                    # Optional INT (0). Sets the RLC AM TX PollByte.
+          max_window: 0                   # Optional UINT (0). Sets the TX window size limit. 0 means no limit other than the SN size. Non-standard parameter.
+          queue-size: 4096                # Optional UINT (4096). Sets the RLC AM TX SDU queue size.
+        rx:
+          sn: 0                           # Optional UINT (0). Sets the RLC AM RX SN size.
+          t-reassembly: 0                 # Optional INT (0). Sets the RLC AM RX t-Reassembly in milliseconds.
+          t-status-prohibit: 0            # Optional INT (0). Sets the RLC AM RX t-StatusProhibit in milliseconds.
+          max_sn_per_status: 0            # Optional UINT (0). Sets the RLC AM RX status SN limit.
+    pdcp:
+      rohc:
+        rohc_type: none                   # Optional TEXT (none). Sets the ROHC type. Supported: [none, rohc, uplink_only_rohc].
+        max_cid: 15                       # Optional UINT (15). Sets the maximum Context ID.
+        profile0x0001: false              # Optional BOOLEAN (false). Enables ROHCv1 RTP/UDP/IP profile. Supported: [false, true].
+        profile0x0002: false              # Optional BOOLEAN (false). Enables ROHCv1 UDP/IP profile. Supported: [false, true].
+        profile0x0003: false              # Optional BOOLEAN (false). Enables ROHCv1 ESP/IP profile. Supported: [false, true].
+        profile0x0004: false              # Optional BOOLEAN (false). Enables ROHCv1 IP profile. Supported: [false, true].
+        profile0x0006: false              # Optional BOOLEAN (false). Enables ROHCv1 TCP/IP profile. Supported: [false, true].
+        profile0x0101: false              # Optional BOOLEAN (false). Enables ROHCv2 RTP/UDP/IP profile. Supported: [false, true].
+        profile0x0102: false              # Optional BOOLEAN (false). Enables ROHCv2 UDP/IP profile. Supported: [false, true].
+        profile0x0103: false              # Optional BOOLEAN (false). Enables ROHCv2 ESP/IP profile. Supported: [false, true].
+        profile0x0104: false              # Optional BOOLEAN (false). Enables ROHCv2 IP profile. Supported: [false, true].
+      tx:
+        sn: 0                             # Optional UINT (0). Sets the PDCP TX SN size.
+        discard_timer: 0                  # Optional INT (0). Sets the PDCP TX discard timer in milliseconds.
+        status_report_required: false     # Optional BOOLEAN (false). Sets whether PDCP TX status report is required. Supported: [false, true].
+      rx:
+        sn: 0                             # Optional UINT (0). Sets the PDCP RX SN size.
+        t_reordering: 0                   # Optional INT (0). Sets the PDCP RX t-Reordering in milliseconds.
+        out_of_order_delivery: false      # Optional BOOLEAN (false). Enables PDCP RX out-of-order delivery. Supported: [false, true].
     f1u_cu_up:
-      backoff_timer: 5                # Optional INT (5). Sets the F1-U backoff timer in milliseconds.
-      queue_size: 8192                # Optional UINT (8192). Sets the F1-U queue size.
-      batch_size: 256                 # Optional UINT (256). Sets the F1-U batch size.
+      backoff_timer: 5                    # Optional INT (5). Sets the F1-U backoff timer in milliseconds.
+      queue_size: 8192                    # Optional UINT (8192). Sets the F1-U queue size.
+      batch_size: 256                     # Optional UINT (256). Sets the F1-U batch size.
 
 srbs:                               # Optional TEXT. Configures signaling radio bearers.
 
@@ -28,7 +72,22 @@ cu_cp:
   ran_paging_cycle: 32                   # Optional UINT (32). Sets the default RAN paging cycle for INACTIVE UEs. Supported: [32, 64, 128, 256].
   nof_i_rnti_ue_bits: 13                 # Optional UINT (13). Sets the number of bits used for the I-RNTI UE identifier. Supported: [1 - 18].
   t380: 10                               # Optional INT (10). Sets the RRC inactivity timer T380 in minutes. Supported: [5, 10, 20, 30, 60, 120, 360, 720].
-  extra_amfs:                            # Optional TEXT. Sets the list of extra AMFs for the CU-CP to connect to.
+  extra_amfs:                            # Optional TEXT. Sets the list of extra AMFs for the CU-CP to connect to. Each list entry should begin with "-".
+    -
+      addrs:                               # Optional TEXT (127.0.1.100). Sets the AMF IP addresses for N2 interface. Multiple addresses supported for SCTP multi-homing.
+      port: 38412                          # Optional UINT (38412). Sets the AMF port. Supported: [20000 - 40000].
+      bind_addrs:                          # Optional TEXT (127.0.0.1). Sets the local bind addresses for N2 interface. Multiple addresses supported for SCTP multi-homing.
+      bind_interface: auto                 # Optional TEXT (auto). Sets network device to bind for N2 interface.
+      supported_tracking_areas:            # Optional TEXT. Sets the list of tracking areas supported by this AMF. Each list entry should begin with "-".
+        -
+          tac: 0                             # Optional UINT (0). Sets the Tracking Area Code. Supported: [0 - 16777215].
+          plmn_list:                         # Optional TEXT. Sets the list of PLMN items supported for this Tracking Area.
+            -
+              plmn:                            # Optional TEXT. Sets the Public Land Mobile Network code. Format: 7-digit PLMN code containing MCC & MNC.
+              tai_slice_support_list:          # Optional TEXT. Sets the list of TAI slices for this PLMN item.
+                -
+                  sst: 0                         # Optional UINT (0). Sets the Slice Service Type. Supported: [0 - 255].
+                  sd: 16777215                   # Optional UINT (16777215). Sets the Service Differentiator. Supported: [0 - 16777215].
 
   amf:
     no_core: false                        # Optional BOOLEAN (false). Setting to true allows the gNB to run without a core. Supported: [false, true].
@@ -61,21 +120,18 @@ cu_cp:
     procedure_timeout: 5000              # Optional UINT (5000). Sets the Xn-AP procedure timeout in milliseconds.
     reconnect_timer: 10000               # Optional UINT (10000). Sets the Xn-AP reconnect timer in milliseconds.
     no_connection_init: false            # Optional BOOLEAN (false). Disables Xn-AP connection initiation. Supported: [false, true].
-    gateways:                            # Optional TEXT. Sets the list of Xn-AP gateway addresses. Each list entry should begin with "-".
+    connections:                         # Optional TEXT. Sets the list of XN-C peer CU-CPs to connect to. Each list entry should begin with "-".
       -
-        bind_addrs: x.x.x.x             # Required TEXT. Sets the gateway IP addresses.
-        sctp:
-          sctp_rto_initial: 120
-          sctp_rto_min: 120
-          sctp_rto_max: 500
-          sctp_init_max_attempts: 3
-          sctp_max_init_timeo: 500
-          sctp_hb_interval: 30000
-          sctp_assoc_max_retx: 10
-          sctp_nodelay: false
-        connections:              # Optional TEXT. Sets the list of Xn-C peer connections reachable via this gateway.
-          -
-            peer_addrs:             # Required TEXT. Sets the peer gNB IP addresses for this XnAP connection.
+        bind_addrs:                        # Optional TEXT (127.0.30.1). Sets the local IP addresses for the XNAP interface. Multiple addresses supported for SCTP multi-homing.
+        peer_addrs:                        # Optional TEXT. Sets the peer IP addresses for this XnAP connection.
+    sctp_rto_initial: 120                # Optional INT (120). Sets the initial retransmission timeout when creating the SCTP connection.
+    sctp_rto_min: 120                    # Optional INT (120). Sets the minimum retransmission timeout for the SCTP connection.
+    sctp_rto_max: 500                    # Optional INT (500). Sets the maximum retransmission timeout for the SCTP connection.
+    sctp_init_max_attempts: 3            # Optional INT (3). Sets the maximum retransmission attempts for the initial SCTP connection.
+    sctp_max_init_timeo: 500             # Optional INT (500). Sets the maximum retransmission timeout for the initial SCTP connection.
+    sctp_hb_interval: 30000              # Optional INT (30000). SCTP heartbeat interval in milliseconds. Supported: [-1 - inf] (-1 to use system default).
+    sctp_assoc_max_retx: 10              # Optional INT (10). SCTP association max retransmissions. Supported: [-1 - inf] (-1 to use system default).
+    sctp_nodelay: false                  # Optional BOOLEAN (false). Setting to true sends SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
 
   mobility:
     trigger_handover_from_measurements: false   # Optional BOOLEAN (false). Sets whether or not to start HO if neighbor cells become stronger. Supported: [false, true].
@@ -143,8 +199,16 @@ cu_cp:
     nia_pref_list: nia2,nia1,nia3            # Optional TEXT (nia2,nia1,nia3). Sets the ordered preference list for the selection of integrity algorithm (NIA).
 
   f1ap:
-    bind_addr: 127.0.10.1                    # Optional TEXT (127.0.0.1). Sets the F1-C bind address.
+    bind_addrs: 127.0.10.1                   # Optional TEXT (127.0.10.1). Sets the F1-C bind addresses. Multiple addresses supported for SCTP multi-homing.
     procedure_timeout: 1000                  # Optional UINT (1000). Sets the time the F1AP waits for a DU response in milliseconds.
+    sctp_rto_initial: 120                    # Optional INT (120). Sets the initial retransmission timeout when creating the SCTP connection.
+    sctp_rto_min: 120                        # Optional INT (120). Sets the minimum retransmission timeout for the SCTP connection.
+    sctp_rto_max: 500                        # Optional INT (500). Sets the maximum retransmission timeout for the SCTP connection.
+    sctp_init_max_attempts: 3                # Optional INT (3). Sets the maximum retransmission attempts for the initial SCTP connection.
+    sctp_max_init_timeo: 500                 # Optional INT (500). Sets the maximum retransmission timeout for the initial SCTP connection.
+    sctp_hb_interval: 30000                  # Optional INT (30000). SCTP heartbeat interval in milliseconds. Supported: [-1 - inf] (-1 to use system default).
+    sctp_assoc_max_retx: 10                  # Optional INT (10). SCTP association max retransmissions. Supported: [-1 - inf] (-1 to use system default).
+    sctp_nodelay: false                      # Optional BOOLEAN (false). Setting to true sends SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
 
   e1ap:
     procedure_timeout: 1000                  # Optional UINT (1000). Sets the time the E1AP waits for a CU-UP response in milliseconds.
@@ -159,11 +223,19 @@ cu_up:
     peer_port: 2152                       # Optional INT (2152). Sets the F1-U peer port.
     socket:                               # Define UDP/IP socket(s) for F1-U interface.
       -                                     # Socket 1
-        bind_addr: 127.0.10.1                 # Required TEXT. Sets the address that the F1-U socket will bind to.
-        ext_addr: 8.8.8.8                    # Optional TEXT. Sets the address that is reported as the F1-U bind address. If empty, the real bind address is used.
+        bind_addr: 127.0.10.1                 # Optional TEXT (127.0.10.1). Sets the address that the F1-U socket will bind to.
+        sst:                                  # Required UINT. Sets the Slice Service Type for this socket. Supported: [0 - 255].
+        sd:                                   # Required UINT. Sets the Service Differentiator for this socket. Supported: [0 - 16777214].
+        five_qi:                              # Required UINT. Assigns this socket to a specific 5QI. Supported: [0 - 255].
+        ext_addr: auto                        # Optional TEXT (auto). Sets the external IP address advertised for receiving UDP packets.
         udp:
           max_rx_msgs: 256                      # Optional UINT (256). Sets the maximum packets read from the socket in a single syscall.
+          tx_qsize: 4096                        # Optional UINT (4096). Sets the size of TX queue used for batching SDUs.
+          max_tx_msgs: 256                      # Optional UINT (256). Sets the maximum amount of messages TX in a single syscall.
+          max_tx_segments: 256                  # Optional UINT (256). Sets the maximum amount of segments TX in a single SDU.
           pool_threshold: 0.9                   # Optional FLOAT (0.9). Sets the pool occupancy threshold, after which packets are dropped. Supported: [0.0 - 1.0].
+          reuse_addr: false                     # Optional BOOLEAN (false). Allow multiple sockets to bind to the same port. Supported: [false, true].
+          dscp:                                 # Optional UINT. Sets the Differentiated Services Code Point value. Supported: [0 - 63].
 
   ngu:
     no_core: false                        # Optional BOOLEAN (false). Setting to true allows the gNB to run without a core. Supported: [false, true].
@@ -245,47 +317,47 @@ remote_control:
   port: 8001                            # Optional UINT (8001). Sets the port where the remote control server listens. Supported: [0 - 65535].
 
 log:
-# All gNB layers and components can be configured independently to output at various levels of detail. Supported levels (from lowest to highest detail):
+# All CU layers and components can be configured independently to output at various levels of detail. Supported levels (from lowest to highest detail):
 # none, error, warning, info, debug
   filename: stdout                      # Optional TEXT (stdout). Sets the file path for logs. Use "stdout" to redirect to standard output.
   all_level: warning                    # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers. Supported: [none, warning, info, debug, error].
   lib_level: warning                    # Optional TEXT (warning). Sets the log level for external library components. Supported: [none, warning, info, debug, error].
-  e2ap_level: warning                   # Optional TEXT (warning). Sets the E2AP log level. Supported: [none, warning, info, debug, error].
   config_level: none                    # Optional TEXT (none). Sets the configuration parser log level. Supported: [none, info, debug].
-  rrc_level: warning                    # Optional TEXT (warning). Sets the RRC log level.
   ngap_level: warning                   # Optional TEXT (warning). Sets the NGAP log level.
   nrppa_level: warning                  # Optional TEXT (warning). Sets the NRPPa log level.
-  pdcp_level: warning                   # Optional TEXT (warning). Sets the PDCP log level.
-  sdap_level: warning                   # Optional TEXT (warning). Sets the SDAP log level.
-  sec_level: warning                    # Optional TEXT (warning). Sets the security functions log level.
-  rohc_level: warning                   # Optional TEXT (warning). Sets the ROHC log level. Supported: [none, error, warning, info, debug].
   e1ap_level: warning                   # Optional TEXT (warning). Sets the E1AP log level.
   e1ap_json_enabled: false              # Optional BOOLEAN (false). Enables JSON-formatted logging of E1AP PDUs. Supported: [false, true].
-  cu_level: warning                     # Optional TEXT (warning). Sets the CU management log level.
   xnap_level: warning                   # Optional TEXT (warning). Sets the Xn-AP log level.
   f1ap_level: warning                   # Optional TEXT (warning). Sets the F1AP log level.
   f1ap_json_enabled: false              # Optional BOOLEAN (false). Enables JSON-formatted logging of F1AP PDUs. Supported: [false, true].
+  e2ap_level: warning                   # Optional TEXT (warning). Sets the E2AP log level. Supported: [none, warning, info, debug, error].
+  rrc_level: warning                    # Optional TEXT (warning). Sets the RRC log level.
+  sec_level: warning                    # Optional TEXT (warning). Sets the security functions log level.
+  cu_level: warning                     # Optional TEXT (warning). Sets the CU management log level.
+  pdcp_level: warning                   # Optional TEXT (warning). Sets the PDCP log level.
+  sdap_level: warning                   # Optional TEXT (warning). Sets the SDAP log level.
+  rohc_level: warning                   # Optional TEXT (warning). Sets the ROHC log level. Supported: [none, error, warning, info, debug].
   f1u_level: warning                    # Optional TEXT (warning). Sets the F1-U log level.
   gtpu_level: warning                   # Optional TEXT (warning). Sets the GTP-U log level.
-  high_latency_diagnostics_enabled: false  # Optional BOOLEAN (false). Enables logging of performance diagnostics when high computational latencies are detected. Supported: [false, true].
   hex_max_size: 0                       # Optional INT (0). Sets the maximum number of bytes to print in hex. 0 disables hex dumps; -1 for unlimited. Supported: [-1 - 1024].
+  high_latency_diagnostics_enabled: false  # Optional BOOLEAN (false). Enables logging of performance diagnostics when high computational latencies are detected. Supported: [false, true].
 
 pcap:
-  ngap_filename: /tmp/cu_ngap.pcap            # Optional TEXT (/tmp/cu_ngap.pcap). Sets the path for NGAP PCAP files.
-  ngap_enable: false                          # Optional BOOLEAN (false). Enables NGAP packet capture. Supported: [false, true].
-  n3_filename:                                # Optional TEXT. Sets the N3 GTP-U PCAP file output path.
-  n3_enable: false                            # Optional BOOLEAN (false). Enables N3 packet capture. Supported: [false, true].
-  e1ap_filename: /tmp/cu_e1ap.pcap            # Optional TEXT (/tmp/cu_e1ap.pcap). Sets the E1AP PCAP file output path.
-  e1ap_enable: false                          # Optional BOOLEAN (false). Enables E1AP packet capture. Supported: [false, true].
-  e2ap_cu_cp_filename: /tmp/cu_cp_e2ap.pcap   # Optional TEXT (/tmp/cu_cp_e2ap.pcap). Sets the path for E2AP CU-CP PCAP files.
-  e2ap_cu_up_filename: /tmp/cu_up_e2ap.pcap   # Optional TEXT (/tmp/cu_up_e2ap.pcap). Sets the path for E2AP CU-UP PCAP files.
-  e2ap_enable: false                          # Optional BOOLEAN (false). Enables E2AP packet capture. Supported: [false, true].
-  f1ap_filename: /tmp/cu_f1ap.pcap            # Optional TEXT (/tmp/cu_f1ap.pcap). Sets the path for F1AP PCAP files.
-  f1ap_enable: false                          # Optional BOOLEAN (false). Enables F1AP packet capture. Supported: [false, true].
-  f1u_filename: /tmp/du_f1u.pcap              # Optional TEXT (/tmp/du_f1u.pcap). Sets the F1-U GTP-U PCAP file output path.
-  f1u_enable: false                           # Optional BOOLEAN (false). Enables F1-U packet capture. Supported: [false, true].
-  xnap_filename: /tmp/cu_xnap.pcap            # Optional TEXT (/tmp/cu_xnap.pcap). Sets the path for Xn-AP PCAP files.
-  xnap_enable: false                          # Optional BOOLEAN (false). Enables Xn-AP packet capture. Supported: [false, true].
+  ngap_filename: /tmp/cu_ngap.pcap          # Optional TEXT (/tmp/cu_ngap.pcap). Sets the NGAP PCAP file output path.
+  ngap_enable: false                        # Optional BOOLEAN (false). Enables NGAP packet capture. Supported: [false, true].
+  xnap_filename: /tmp/cu_xnap.pcap          # Optional TEXT (/tmp/cu_xnap.pcap). Sets the XNAP PCAP file output path.
+  xnap_enable: false                        # Optional BOOLEAN (false). Enables XNAP packet capture. Supported: [false, true].
+  f1ap_filename: /tmp/cu_f1ap.pcap          # Optional TEXT (/tmp/cu_f1ap.pcap). Sets the F1AP PCAP file output path.
+  f1ap_enable: false                        # Optional BOOLEAN (false). Enables F1AP packet capture. Supported: [false, true].
+  e1ap_filename: /tmp/cu_e1ap.pcap          # Optional TEXT (/tmp/cu_e1ap.pcap). Sets the E1AP PCAP file output path.
+  e1ap_enable: false                        # Optional BOOLEAN (false). Enables E1AP packet capture. Supported: [false, true].
+  e2ap_cu_cp_filename: /tmp/cu_cp_e2ap.pcap # Optional TEXT (/tmp/cu_cp_e2ap.pcap). Sets the E2AP CU-CP PCAP file output path.
+  e2ap_cu_up_filename: /tmp/cu_up_e2ap.pcap # Optional TEXT (/tmp/cu_up_e2ap.pcap). Sets the E2AP CU-UP PCAP file output path.
+  e2ap_enable: false                        # Optional BOOLEAN (false). Enables E2AP packet capture. Supported: [false, true].
+  n3_filename: /tmp/cu_n3.pcap              # Optional TEXT (/tmp/cu_n3.pcap). Sets the N3 GTP-U PCAP file output path.
+  n3_enable: false                          # Optional BOOLEAN (false). Enables N3 GTP-U packet capture. Supported: [false, true].
+  f1u_filename: /tmp/cu_f1u.pcap            # Optional TEXT (/tmp/cu_f1u.pcap). Sets the F1-U GTP-U PCAP file output path.
+  f1u_enable: false                         # Optional BOOLEAN (false). Enables F1-U GTP-U packet capture. Supported: [false, true].
 
 metrics:
   autostart_stdout_metrics: false       # Optional BOOLEAN (false). Autostart stdout metrics reporting. Supported: [false, true].
@@ -310,3 +382,5 @@ trace:
   filename:                             # Optional TEXT. Sets the file path for trace output. Leave empty to disable tracing.
   max_tracing_events_per_file: 1000000  # Optional UINT (1000000). Sets the maximum number of events per trace file. 0 means no limit.
   nof_tracing_events_after_severe: 0    # Optional UINT (0). Sets the number of events to write prior to a severe event. Set to zero for writing all events.
+  layers:
+    cu_up_enable: false                 # Optional BOOLEAN (false). Enables tracing for CU-UP executors. Supported: [false, true].
