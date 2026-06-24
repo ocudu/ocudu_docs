@@ -20,7 +20,7 @@ These include sample supplementary configuration files for:
 - Specific QOS configurations for voice, video, IMS, live-streaming and buffered video streaming
 - Slicing support
 
-OCUDU allows configuration files to be used in concatenated with other configuration files, using the `-c` between configuration file. For example you might want to use both the n310 and MIMO example configs together as follows:
+OCUDU allows configuration files to be used in concatenation with other configuration files, using the `-c` flag between each file. For example you might want to use both the n310 and MIMO example configs together as follows:
 
 ```bash
 sudo ./gnb -c gnb_rf_n310_fdd_n3_20mhz.yml -c mimo.yml
@@ -31,6 +31,8 @@ Furthermore you may wish to use QAM256 in addition to the above. This can be don
 ```bash
 sudo ./gnb -c gnb_rf_n310_fdd_n3_20mhz.yml -c mimo.yml -c qam256.yml
 ```
+
+Note: list-of-structures sections such as `cells` and `qos` cannot be merged across files due to CLI11 limitations. The last file to define the section takes effect.
 
 ---
 
