@@ -14,14 +14,79 @@ cells:                              # Optional TEXT. Sets the cell configuration
   - pci: 2                          # Optional UINT. Set the PCI of the second cell.
     dl_arfcn: 532020                # Optional UINT. Set the ARFCN of the second cell.
 
-qos:                                # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis.
-  - five_qi: 9                        # Optional UINT (9). Sets the 5QI. Supported: [0 - 255].
-    f1u_cu_up:
-      backoff_timer: 5                # Optional INT (5). Sets the F1-U backoff timer in milliseconds.
-      queue_size: 8192                # Optional UINT (8192). Sets the F1-U queue size.
-      batch_size: 256                 # Optional UINT (256). Sets the F1-U batch size.
+qos:                  # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. Each list entry should begin with "-".
+- five_qi: 9 # Optional UINT (9). 5QI. Supported: [0 - 255].
+  rlc:
+    mode: am # Optional TEXT (am). RLC mode.
+    um-bidir:
+      tx:
+        sn: 0          # Optional UINT (0). RLC UM TX SN.
+        queue-size: 0  # Optional UINT (0). RLC UM TX SDU queue size.
+        queue-bytes: 0 # Optional UINT (0). RLC UM TX SDU queue limit in bytes.
+      rx:
+        sn: 0           # Optional UINT (0). RLC UM RX SN.
+        t-reassembly: 0 # Optional INT (0). RLC UM t-Reassembly.
+    am:
+      tx:
+        sn: 0                 # Optional UINT (0). RLC AM TX SN size.
+        t-poll-retransmit: 0  # Optional INT (0). RLC AM TX t-PollRetransmit (ms).
+        max-retx-threshold: 0 # Optional UINT (0). RLC AM max retx threshold.
+        poll-pdu: 0           # Optional INT (0). RLC AM TX PollPdu.
+        poll-byte: 0          # Optional INT (0). RLC AM TX PollByte.
+        max_window: 0         # Optional UINT (0). Non-standard parameter that limits the tx window size. Can be used for limiting memory usage with large windows. 0 means no limits other than the SN size (i.e. 2^[sn_size-1]).
+        queue-size: 4096      # Optional UINT (4096). RLC AM TX SDU queue size.
+        queue-bytes: 6172672  # Optional UINT (6172672). RLC AM TX SDU queue size in bytes.
+      rx:
+        sn: 0                # Optional UINT (0). RLC AM RX SN.
+        t-reassembly: 0      # Optional INT (0). RLC AM RX t-Reassembly.
+        t-status-prohibit: 0 # Optional INT (0). RLC AM RX t-StatusProhibit.
+        max_sn_per_status: 0 # Optional UINT (0). RLC AM RX status SN limit.
+  pdcp:
+    rohc:
+      rohc_type: none      # Optional TEXT (none). ROHC type (none/rohc/ul_only_rohc). Values: {none, rohc, ul_only_rohc}. Default: none. Supported: [none, rohc, uplink_only_rohc].
+      max_cid: 15          # Optional UINT (15). Maximum CID.
+      profile0x0001: false # Optional BOOLEAN (false). Configure profile0x0001 (ROHCv1 RTP/UDP/IP). Supported: [false, true].
+      profile0x0002: false # Optional BOOLEAN (false). Configure profile0x0002 (ROHCv1 UDP/IP). Supported: [false, true].
+      profile0x0003: false # Optional BOOLEAN (false). Configure profile0x0003 (ROHCv1 ESP/IP). Supported: [false, true].
+      profile0x0004: false # Optional BOOLEAN (false). Configure profile0x0004 (ROHCv1 IP). Supported: [false, true].
+      profile0x0006: false # Optional BOOLEAN (false). Configure profile0x0006 (ROHCv1 TCP/IP). Supported: [false, true].
+      profile0x0101: false # Optional BOOLEAN (false). Configure profile0x0101 (ROHCv2 RTP/UDP/IP). Supported: [false, true].
+      profile0x0102: false # Optional BOOLEAN (false). Configure profile0x0102 (ROHCv2 UDP/IP). Supported: [false, true].
+      profile0x0103: false # Optional BOOLEAN (false). Configure profile0x0103 (ROHCv2 ESP/IP). Supported: [false, true].
+      profile0x0104: false # Optional BOOLEAN (false). Configure profile0x0104 (ROHCv2 IP). Supported: [false, true].
+    tx:
+      sn: 0                         # Optional UINT (0). PDCP TX SN size.
+      discard_timer: 0              # Optional INT (0). PDCP TX discard timer (ms).
+      status_report_required: false # Optional BOOLEAN (false). PDCP TX status report required. Supported: [false, true].
+    rx:
+      sn: 0                        # Optional UINT (0). PDCP RX SN size.
+      t_reordering: 0              # Optional INT (0). PDCP RX t-Reordering (ms).
+      out_of_order_delivery: false # Optional BOOLEAN (false). PDCP RX enable out-of-order delivery. Supported: [false, true].
+  f1u_cu_up:
+    backoff_timer: 5 # Optional INT (5). F1-U backoff timer (ms).
+    queue_size: 8192 # Optional UINT (8192). F1-U backoff timer (ms).
+    batch_size: 256  # Optional UINT (256). F1-U backoff timer (ms).
+  f1u_du:
+    backoff_timer: 0  # Optional INT (0). F1-U backoff timer (ms).
+    ul_buffer_size: 0 # Optional UINT (0). F1-U handover buffer size.
 
-srbs:                               # Optional TEXT. Configures signaling radio bearers.
+srbs:                               # Optional TEXT. Configures signaling radio bearers. Each list entry should begin with "-".
+  - srb_id: 0 # Optional UINT (0). SRB Id. Format: legal values: {1, 2}.
+    rlc:
+      tx:
+        sn: 0                 # Optional UINT (0). RLC AM TX SN size.
+        t-poll-retransmit: 0  # Optional INT (0). RLC AM TX t-PollRetransmit (ms).
+        max-retx-threshold: 0 # Optional UINT (0). RLC AM max retx threshold.
+        poll-pdu: 0           # Optional INT (0). RLC AM TX PollPdu.
+        poll-byte: 0          # Optional INT (0). RLC AM TX PollByte.
+        max_window: 0         # Optional UINT (0). Non-standard parameter that limits the tx window size. Can be used for limiting memory usage with large windows. 0 means no limits other than the SN size (i.e. 2^[sn_size-1]).
+        queue-size: 4096      # Optional UINT (4096). RLC AM TX SDU queue size in PDUs.
+        queue-bytes: 6172672  # Optional UINT (6172672). RLC AM TX SDU queue size in bytes.
+      rx:
+        sn: 0                # Optional UINT (0). RLC AM RX SN.
+        t-reassembly: 0      # Optional INT (0). RLC AM RX t-Reassembly.
+        t-status-prohibit: 0 # Optional INT (0). RLC AM RX t-StatusProhibit.
+        max_sn_per_status: 0 # Optional UINT (0). RLC AM RX status SN limit.
 
 cu_cp:
   max_nof_dus: 6                         # Optional UINT (6). Sets the maximum number of DU connections that the CU-CP may accept.
@@ -217,7 +282,7 @@ cell_cfg:
   pcg_p_nr_fr1:                         # Optional INT. Sets the maximum total TX power for the UE in this NR cell group in FR1. Supported: [-30 - +23].
   additional_plmns:                     # Optional TEXT. Sets additional PLMN list for the cell.
   slicing:                              # Optional TEXT. Configures network slicing options. This can only be set via the configuration file.
-    -                                     # Configure Slice 1, for further slices, replicate below format. 
+    -                                     # Configure Slice 1, for further slices, replicate below format.
       sst: 1                                  # Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
       sd: 0                                   # Optional UINT (0). Sets the Service Differentiator. Supported: [0 - 16777215].
       sched_cfg:                              # Scheduler configuration for the slice.
@@ -225,6 +290,14 @@ cell_cfg:
         max_prb_policy_ratio: 100               # Optional UINT (100). Sets the maximum percentage of PRBs to be allocated to the slice. Supported: [1 - 100].
         ded_prb_policy_ratio: 1                 # Optional UINT. Sets the dedicated percentage of PRBs to be allocated to the slice. Supported: [1 - 100].
         priority: 0                             # Optional UINT (0). Sets the slice scheduler priority. Supported: [0 - 254].
+        policy:
+          qos_sched:
+            combine_function: gbr_prioritized     # Optional TEXT (gbr_prioritized). Sets the QoS-aware scheduler weight combining function. Supported: [gbr_prioritized, geometric_mean].
+            pf_fairness_coeff: 2                  # Optional FLOAT (2). Sets the fairness coefficient for the Proportional Fair policy scheduler.
+            prio_enabled: true                    # Optional BOOLEAN (true). Enables the QoS Flow priority in QoS-aware scheduling. Supported: [false, true].
+            pdb_enabled: true                     # Optional BOOLEAN (true). Enables the Packet Delay Budget (PDB) in QoS-aware scheduling. Supported: [false, true].
+            gbr_enabled: true                     # Optional BOOLEAN (true). Enables the Guaranteed Bit Rate (GBR) in QoS-aware scheduling. Supported: [false, true].
+          rr_sched:                               # Optional. Round-robin scheduler policy configuration.
 
   mac_cell_group:
     bsr_cfg:
@@ -262,14 +335,42 @@ cell_cfg:
       t_reselection_nr: 1                   # Optional UINT (1). Sets the cell reselection timer value in seconds. Supported: [0 - 7].
     sib3:
       intra_freq_neigh_cell_list:           # Optional TEXT. Sets the intra-frequency neighbor cell list.
+        - pci: 0                              # Optional UINT (0). Sets the PCI of the neighbour cell. Supported: [0 - 1007].
+          q_offset_cell: 0                    # Optional INT (0). Sets the cell-specific offset for this neighbour. Format: legal values: {-24, -22, -20, -18, -16, -14, -12, -10, -8, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24}.
       intra_freq_excluded_cell_list:        # Optional TEXT. Sets the intra-frequency excluded cell list.
+        - start: 0                            # Required UINT (0). Sets the range start. Supported: [0 - 1007].
+          size: 1                             # Required UINT (1). Sets the range size. Format: legal values: {1, 4, 8, 12, 16, 24, 32, 48, 64, 84, 96, 128, 168, 252, 504, 1008}.
     sib4:
       inter_freq_carrier_freq_list:         # Optional TEXT. Sets the inter-frequency carrier frequency list.
+        - arfcn: 0                            # Optional UINT (0). Sets the carrier ARFCN.
+          ssb_scs: 15kHz                      # Optional TEXT (15kHz). Sets the SSB subcarrier spacing. Format: accepts SCS strings (e.g. "15kHz", "30kHz").
+          derive_ssb_index_from_cell: false   # Optional BOOLEAN (false). Derives SSB index from cell. Supported: [false, true].
+          q_rx_lev_min: -140                  # Optional INT (-140). Sets the minimum required Rx level in dBm. Format: must be an even value within [-140, -44].
+          thresh_x_high_p: 0                  # Optional UINT (0). Sets the Rx level threshold in dB for reselection to a higher priority RAT/frequency. Format: must be an even value within [0, 62].
+          thresh_x_low_p: 0                   # Optional UINT (0). Sets the Rx level threshold in dB for reselection to a lower priority RAT/frequency. Format: must be an even value within [0, 62].
+          q_offset_freq: 0                    # Optional INT (0). Sets the frequency-specific offset in dB for equal priority NR frequencies. Format: legal values: {-24, -22, -20, -18, -16, -14, -12, -10, -8, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24}.
     sib5:
       t_reselection_eutra:                  # Optional UINT. Sets the EUTRA cell reselection timer value in seconds. Supported: [0 - 7].
       carrier_freq_list_eutra:              # Optional TEXT. Sets the EUTRA carrier frequency list.
+        - earfcn: 0                           # Optional UINT (0). Sets the EUTRA EARFCN.
+          allowed_meas_bandwidth: 0           # Optional UINT (0). Sets the allowed measurement bandwidth. Format: legal values: {6, 15, 25, 50, 75, 100}.
+          presence_antenna_port1: false       # Optional BOOLEAN (false). Sets whether all neighbour cells use Antenna Port 1. Supported: [false, true].
+          cell_reselection_priority:          # Required UINT. Sets the cell reselection priority for this frequency. Supported: [0 - 7].
+          thresh_x_high: 0                    # Optional UINT (0). Sets the Rx level threshold in dB for reselection to a higher priority RAT/frequency. Format: must be an even value within [0, 62].
+          thresh_x_low: 0                     # Optional UINT (0). Sets the Rx level threshold in dB for reselection to a lower priority RAT/frequency. Format: must be an even value within [0, 62].
+          q_rx_lev_min: -140                  # Optional INT (-140). Sets the minimum required Rx level in dBm. Format: must be an even value within [-140, -44].
+          q_qual_min: -34                     # Optional INT (-34). Sets the minimum required quality level in dB. Supported: [-34 - -3].
+          p_max_eutra: 33                     # Optional INT (33). Sets the maximum allowed transmission power in dBm. Supported: [-30 - 33].
     sib16:
       freq_prio_list_slicing:               # Optional TEXT. Sets the frequency priority slicing list entries.
+        - dl_implicit_carrier_freq: 0         # Optional UINT (0). Sets the DL implicit carrier frequency index. Supported: [0 - 8].
+          slice_info_list:                    # Optional TEXT. Sets the slice info list entries.
+            - nsag_id: 0                        # Optional UINT (0). Sets the NSAG ID. Supported: [0 - 255].
+              allowed: true                     # Optional BOOLEAN (true). Sets whether the cell list is allowed (true) or excluded (false). Supported: [false, true].
+              reselection_priority: 0           # Optional FLOAT (0). Sets the priority for this cell reselection slice. Format: must be a multiple of 0.2 within [0.0, 7.8].
+              cells_allowed:                    # Optional TEXT. Sets the slice cell list entries.
+                - start: 0                        # Required UINT (0). Sets the range start. Supported: [0 - 1007].
+                  size: 1                         # Required UINT (1). Sets the range size. Format: legal values: {1, 4, 8, 12, 16, 24, 32, 48, 64, 84, 96, 128, 168, 252, 504, 1008}.
     etws:
       message_id: 4356                      # Optional UINT (4356). Sets the ETWS message ID. Supported: [0 - 65535].
       serial_num: 12288                     # Optional UINT (12288). Sets the ETWS message serial number. Supported: [0 - 65535].
@@ -491,6 +592,7 @@ cell_cfg:
         prio_enabled: true                  # Optional BOOLEAN (true). Enables the QoS Flow priority in QoS-aware scheduling. Supported: [false, true].
         pdb_enabled: true                   # Optional BOOLEAN (true). Enables the Packet Delay Budget (PDB) in QoS-aware scheduling. Supported: [false, true].
         gbr_enabled: true                   # Optional BOOLEAN (true). Enables the Guaranteed Bit Rate (GBR) in QoS-aware scheduling. Supported: [false, true].
+      rr_sched:                             # Optional. Round-robin scheduler policy configuration.
 
   ta:
     ta_measurement_slot_period: 80               # Optional UINT (80). Sets the measurements periodicity in nof. slots over which the new Timing Advance Command is computed.
@@ -780,11 +882,32 @@ expert_execution:
   affinities:
     main_pool_cpus:                           # Optional TEXT. Sets CPU cores assigned to the main thread pool. No default — the affinity mask is empty by default.
     main_pool_pinning: mask                   # Optional ENUM (mask). Sets the policy used for assigning CPU cores to the main thread pool. Supported: [round-robin, mask].
+    ofh:
+      timing_cpu:                               # Optional TEXT. Sets the CPU used for timing in the Radio Unit. Format: comma-separated CPU ids or ranges, e.g. "0-3,5".
   threads:
     main_pool:
       nof_threads:                              # Optional UINT. Sets the number of threads for processing upper PHY and upper layers. No default — field is std::optional<unsigned> (nullopt when not set).
       task_queue_size: 2048                     # Optional UINT (2048). Sets the main thread pool task queue size.
       backoff_period: 50                        # Optional UINT (50). Sets the main thread pool back-off period in microseconds.
+    upper_phy:
+      pdsch_processor_type: auto                # Optional TEXT (auto). Sets the PDSCH processor type. Supported: [auto, generic, flexible].
+      pdsch_cb_batch_length: 4                  # Optional UINT (4). Sets the PDSCH flexible processor codeblock-batch size. Format: a non-negative integer or the sentinel strings "auto", "default", "synchronous".
+      max_pucch_concurrency: 0                  # Optional UINT (0). Sets the maximum PUCCH processing concurrency for all cells. 0 means no limit.
+      max_pusch_and_srs_concurrency: 4          # Optional UINT (4). Sets the maximum PUSCH and SRS processing concurrency for all cells. 0 means no limit. If hardware acceleration is enabled, this is set to the number of accelerator queues.
+      max_pdsch_concurrency: 0                  # Optional UINT (0). Sets the maximum PDSCH processing concurrency for all cells. 0 means no limit. If hardware acceleration is enabled, this is set to the number of accelerator queues.
+    ofh:
+      enable_busy_waiting: false                # Optional BOOLEAN (false). Enables busy-waiting of the RU timing worker. Supported: [false, true].
+    lower_phy:
+      execution_profile: triple                 # Optional TEXT (triple). Sets the lower physical layer executor profile. Supported: [blocking, single, dual, triple].
+  queues:
+    cu_up_dl_ue_executor_queue_size: 8192     # Optional UINT (8192). Sets the CU-UP DL UE executor queue size.
+    cu_up_ul_ue_executor_queue_size: 8192     # Optional UINT (8192). Sets the CU-UP UL UE executor queue size.
+    cu_up_ctrl_ue_executor_queue_size: 8192   # Optional UINT (8192). Sets the CU-UP control UE executor queue size.
+    cu_up_strand_batch_size: 256              # Optional UINT (256). Sets the CU-UP strand batch size.
+    du_ue_data_executor_queue_size: 8192      # Optional UINT (8192). Sets the DU UE executor task queue size for PDU processing.
+  cell_affinities:                            # Optional TEXT. Sets the cell CPU affinity configuration on a per cell basis. Each list entry should begin with "-".
+    - ru_cpus:                                  # Optional TEXT. Sets the CPU cores used for Radio Unit tasks. Format: comma-separated CPU ids or ranges, e.g. "0-3,5".
+      ru_pinning: mask                          # Optional TEXT (mask). Sets the policy used for assigning CPU cores to Radio Unit tasks. Format: one of: mask, round-robin.
 
 remote_control:
   enabled: false                        # Optional BOOLEAN (false). Enables the remote control feature. Supported: [false, true].
@@ -817,38 +940,38 @@ log:
   filename: /tmp/gnb.log                   # Optional TEXT (/tmp/gnb.log). Sets the file path for logs. The gnb_appconfig constructor overrides the base logger default (stdout) to /tmp/gnb.log.
   all_level: warning                       # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers. Supported: [none, warning, info, debug, error].
   lib_level: warning                       # Optional TEXT (warning). Sets the log level for external library components. Supported: [none, warning, info, debug, error].
-  e2ap_level: warning                      # Optional TEXT (warning). Sets the E2AP log level. Supported: [none, warning, info, debug, error].
   config_level: none                       # Optional TEXT (none). Sets the configuration parser log level. Supported: [none, info, debug] (error and warning are not accepted).
-  rrc_level: warning                       # Optional TEXT (warning). Sets the RRC log level.
   ngap_level: warning                      # Optional TEXT (warning). Sets the NGAP log level.
   nrppa_level: warning                     # Optional TEXT (warning). Sets the NRPPa log level.
-  sec_level: warning                       # Optional TEXT (warning). Sets the security functions log level.
-  pdcp_level: warning                      # Optional TEXT (warning). Sets the PDCP log level.
-  sdap_level: warning                      # Optional TEXT (warning). Sets the SDAP log level.
   e1ap_level: warning                      # Optional TEXT (warning). Sets the E1AP log level.
   e1ap_json_enabled: false                 # Optional BOOLEAN (false). Enables JSON-formatted logging of E1AP PDUs. Supported: [false, true].
-  cu_level: warning                        # Optional TEXT (warning). Sets the CU management log level.
   xnap_level: warning                      # Optional TEXT (warning). Sets the Xn-AP log level.
-  mac_level: warning                       # Optional TEXT (warning). Sets the MAC log level.
-  rlc_level: warning                       # Optional TEXT (warning). Sets the RLC log level.
   f1ap_level: warning                      # Optional TEXT (warning). Sets the F1AP log level.
   f1ap_json_enabled: false                 # Optional BOOLEAN (false). Enables JSON-formatted logging of F1AP PDUs. Supported: [false, true].
-  f1u_level: warning                       # Optional TEXT (warning). Sets the F1-U log level.
-  gtpu_level: warning                      # Optional TEXT (warning). Sets the GTP-U log level.
+  e2ap_level: warning                      # Optional TEXT (warning). Sets the E2AP log level. Supported: [none, warning, info, debug, error].
+  rrc_level: warning                       # Optional TEXT (warning). Sets the RRC log level.
+  sec_level: warning                       # Optional TEXT (warning). Sets the security functions log level.
+  cu_level: warning                        # Optional TEXT (warning). Sets the CU management log level.
+  pdcp_level: warning                      # Optional TEXT (warning). Sets the PDCP log level.
+  sdap_level: warning                      # Optional TEXT (warning). Sets the SDAP log level.
   rohc_level: warning                      # Optional TEXT (warning). Sets the ROHC log level. Supported: [none, error, warning, info, debug].
   du_level: warning                        # Optional TEXT (warning). Sets the DU management log level.
-  ntn_level: warning                       # Optional TEXT (warning). Sets the NTN log level.
-  high_latency_diagnostics_enabled: false  # Optional BOOLEAN (false). Enables logging of performance diagnostics when high computational latencies are detected. Supported: [false, true].
+  mac_level: warning                       # Optional TEXT (warning). Sets the MAC log level.
+  rlc_level: warning                       # Optional TEXT (warning). Sets the RLC log level.
+  f1u_level: warning                       # Optional TEXT (warning). Sets the F1-U log level.
+  gtpu_level: warning                      # Optional TEXT (warning). Sets the GTP-U log level.
   fapi_level: warning                      # Optional TEXT (warning). Sets the FAPI log level (split_7_2 and split_6 only).
+  phy_level: warning                       # Optional TEXT (warning). Sets the physical layer log level.
+  ofh_level: warning                       # Optional TEXT (warning). Sets the Open Fronthaul log level.
+  radio_level: info                        # Optional TEXT (info). Sets the radio driver log level.
   hal_level: warning                       # Optional TEXT (warning). Sets the HAL log level.
+  ntn_level: warning                       # Optional TEXT (warning). Sets the NTN log level.
+  hex_max_size: 0                          # Optional INT (0). Sets the maximum number of bytes to print in hex. 0 disables hex dumps; -1 for unlimited. Supported: [-1 - 1024].
   broadcast_enabled: false                 # Optional BOOLEAN (false). Enables logging of broadcast messages and all PRACH opportunities in the PHY and MAC layers. Supported: [false, true].
+  high_latency_diagnostics_enabled: false  # Optional BOOLEAN (false). Enables logging of performance diagnostics when high computational latencies are detected. Supported: [false, true].
   phy_rx_symbols_filename:                 # Optional TEXT. Sets the file path to dump received IQ symbols. Leave empty to disable.
   phy_rx_symbols_port: 0                   # Optional TEXT (0). Sets the Rx port number to dump IQ symbols from, or "all" for all UL receive ports. Only active if phy_rx_symbols_filename is set.
   phy_rx_symbols_prach: false              # Optional BOOLEAN (false). Enables dumping of IQ symbols from all PRACH ports. Only active if phy_rx_symbols_filename is set. Supported: [false, true].
-  hex_max_size: 0                          # Optional INT (0). Sets the maximum number of bytes to print in hex. 0 disables hex dumps; -1 for unlimited. Supported: [-1 - 1024].
-  ofh_level: warning                       # Optional TEXT (warning). Sets the Open Fronthaul log level.
-  radio_level: info                        # Optional TEXT (info). Sets the radio driver log level.
-  phy_level: warning                       # Optional TEXT (warning). Sets the physical layer log level.
 
 pcap:
   ngap_filename: /tmp/cu_ngap.pcap            # Optional TEXT (/tmp/cu_ngap.pcap). Sets the path for NGAP PCAP files.
@@ -905,3 +1028,7 @@ trace:
   filename:                             # Optional TEXT. Sets the file path for trace output. Leave empty to disable tracing.
   max_tracing_events_per_file: 1000000  # Optional UINT (1000000). Sets the maximum number of events per trace file. 0 means no limit.
   nof_tracing_events_after_severe: 0    # Optional UINT (0). Sets the number of events to write prior to a severe event. Set to zero for writing all events.
+  layers:
+    cu_up_enable: false                 # Optional BOOLEAN (false). Enables tracing for CU-UP executors. Supported: [false, true].
+    du_high_enable: false               # Optional BOOLEAN (false). Enables tracing for DU-high executors. Supported: [false, true].
+    phy_enable: false                   # Optional BOOLEAN (false). Enables tracing for physical layer executors. Supported: [false, true].
