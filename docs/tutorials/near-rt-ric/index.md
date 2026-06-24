@@ -31,7 +31,7 @@ The following diagram presents the setup architecture used in this application n
 
 For this application note, the following hardware and software are used:
 
-- PC with Ubuntu 22.04.1 LTS
+- PC with Ubuntu 24.04.1 LTS
 - [OCUDU](https://gitlab.com/ocudu/ocudu)
 - [srsRAN UE](https://github.com/srsran/srsRAN_4G) (srsRAN 4G 23.04 or later)
 - [ZeroMQ](https://zeromq.org/)
@@ -105,8 +105,8 @@ In this tutorial, we use `br-flexric` branch (commit: `1a3903a7`).
 FlexRIC requires the following dependencies to be installed (see [FlexRIC Installation Guide](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/br-flexric) for details):
 
 ```bash
-sudo apt-get update
-sudo apt-get install swig libsctp-dev python3 cmake-curses-gui python3-dev pkg-config libconfig-dev libconfig++-dev
+sudo apt update
+sudo apt install swig build-essential cmake libsctp-dev python3 cmake-curses-gui python3-dev pkg-config libconfig-dev libconfig++-dev
 ```
 
 The FlexRIC installation is performed as follows:
@@ -122,23 +122,23 @@ make
 sudo make install
 ```
 
+<!--
 Note that while by default Ubuntu 22.04.1 uses gcc-11, the used FlexRIC version can be built only with gcc-10. One possible way to switch gcc version is to use update-alternatives tool, for example:
-
-```bash
+  
+ ```bash
 sudo update-alternatives --config gcc
 
-There are 3 choices for the alternative gcc (providing /usr/bin/gcc).
+ There are 3 choices for the alternative gcc (providing /usr/bin/gcc).
+   Selection    Path             Priority   Status 
+ ------------------------------------------------------------
+   0            /usr/bin/gcc-11   11        auto mode
+ * 1            /usr/bin/gcc-10   10        manual mode
+   2            /usr/bin/gcc-11   11        manual mode
+   3            /usr/bin/gcc-9    9         manual mode
 
-  Selection    Path             Priority   Status
-------------------------------------------------------------
-  0            /usr/bin/gcc-11   11        auto mode
-* 1            /usr/bin/gcc-10   10        manual mode
-  2            /usr/bin/gcc-11   11        manual mode
-  3            /usr/bin/gcc-9    9         manual mode
-
-Press <enter> to keep the current choice[*], or type selection number:
-```
-
+ Press <enter> to keep the current choice[*], or type selection number:
+ ```
+-->
 </TabItem>
 </Tabs>
 
@@ -196,6 +196,10 @@ If you have already built and installed srsRAN 4G and OCUDU prior to installing 
 :::
 
 ### OCUDU
+Install additional OCUDU dependencies by running:
+```bash
+sudo apt install libgtest-dev libyaml-cpp-dev libmbedtls-dev
+```
 
 For OCUDU, the following commands can be used to download and build from source:
 
