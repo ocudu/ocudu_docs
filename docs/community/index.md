@@ -36,9 +36,18 @@ Use **Discussions** for open-ended questions, feedback, or ideas that are not ye
   </article>
 </section>
 
-## Community Articles
+## Community Highlights
 
-Community articles are written by practitioners: field reports, integration guides, benchmarking results, and research using OCUDU. Browse the full collection at [ocudu.org/news](https://ocudu.org/news/).
+Community highlights include field reports, use cases, integration guides, benchmarking results, and research from practitioners building with OCUDU. Browse the full collection at [ocudu.org/news](https://ocudu.org/news/).
+
+<section className="row">
+  <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: 'https://docs.google.com/forms/d/e/1FAIpQLSfFvG_s-VrfNvyCITlCUrHgakwNmiF-M7FpULcjv8u_cMUWzQ/viewform', label: 'Submit Your Use Case', description: 'Share how you are deploying or researching OCUDU. Submissions are reviewed by the OCUDU team and featured on ocudu.org.'}} />
+  </article>
+  <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: 'https://docs.google.com/document/d/1TarMm6FGFUbl6g5fMbLky_y53K1xYVYpY1TH8yvOOH0/edit?tab=t.0', label: 'Use Case Submission Guide', description: 'Step-by-step guidance for completing the submission form, with tips for each field.'}} />
+  </article>
+</section>
 
 :::tip Want to contribute an article?
 Community articles are open to anyone using or researching OCUDU. Submit via GitLab merge request. See the [Code Contribution Guide](../dev_guide/contributing_guide/index.md) for the format and review process.
