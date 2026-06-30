@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /coverage/
+Disallow: /doxygen/
+
+Sitemap: https://docs.ocudu.org/sitemap.xml

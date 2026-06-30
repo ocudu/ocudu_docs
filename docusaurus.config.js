@@ -6,7 +6,7 @@ const { themes } = require('prism-react-renderer');
 
 const gitlab_namespace = 'ocudu';
 const gitlab_project = 'ocudu';
-const url = `https://${gitlab_namespace}.gitlab.io/`;
+const url = 'https://docs.ocudu.org';
 const baseUrl = process.env.BASE_URL || '/';
 const gitlab_repo_url = `https://gitlab.com/${gitlab_namespace}`;
 const ocudu_docs_repo_url = `${gitlab_repo_url}/ocudu_docs`;
@@ -38,6 +38,7 @@ module.exports = {
   tagline: 'Open Centralized Unit Distributed Unit',
   url: url,
   baseUrl: baseUrl,
+  trailingSlash: true,
   onBrokenLinks: 'throw',
   favicon: 'img/ocudu_o.png',
   organizationName: gitlab_namespace,
@@ -53,6 +54,12 @@ module.exports = {
   },
   themes: ['@docusaurus/theme-mermaid'],
   themeConfig: {
+    image: 'img/ocudu_social_card.png',
+    metadata: [
+      { property: 'og:type', content: 'website' },
+      { property: 'og:site_name', content: 'OCUDU Documentation' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+    ],
     docs: {
       sidebar: {
         autoCollapseCategories: true,
@@ -212,6 +219,11 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars_extended.js'),
         },
         blog: false,
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/coverage/**', '/doxygen/**'],
+        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
