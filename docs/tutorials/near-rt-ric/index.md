@@ -45,9 +45,9 @@ While our ultimate goal is to fully support the E2 interface, it is still under 
 Specifically, the current E2 interface implementation supports only E2SM_KPM and E2SM_RC service models with the following limitations:
 
 - E2SM_RC service model:
-  - Only Control Service Style 2 is supported
+  - Only Control Service Style 2 is supported, shown [here](https://gitlab.com/ocudu/ocudu/-/blob/dev/lib/e2/e2sm/e2sm_rc/e2sm_rc_impl.cpp) 
 - E2SM_KPM service model:
-  - All Report Service Styles (1 - 5) are supported
+  - All Report Service Styles (1 - 5) are supported, as shown [here](https://gitlab.com/ocudu/ocudu/-/blob/dev/lib/e2/e2sm/e2sm_kpm/e2sm_kpm_impl.cpp?ref_type=heads#L36-46)
   - Monitoring period limited to 1s
   - The following 3 ‘dummy’ DU metrics are exposed (they will be removed in future releases):
     - CQI
