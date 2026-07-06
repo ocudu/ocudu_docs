@@ -24,7 +24,7 @@ ocudu_docs/
 docker compose -f docker-compose.yml up
 ```
 
-**Access:** [http://localhost:3000/ocudu](http://localhost:3001/ocudu)
+**Access:** [http://localhost:3001](http://localhost:3001)
 
 ## Docusaurus
 
