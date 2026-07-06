@@ -7,13 +7,9 @@ import DocCard from '@theme/DocCard';
 
 # Releases
 
-Development status, current features, and release roadmap for OCUDU. New versions ship every April and October.
+OCUDU is an open-source initiative awarded initial funding by the National Spectrum Consortium (NSC) under a three-year programme running through October 2028. See the [NSC announcement](https://www.nationalspectrumconsortium.org/news-detail/ocudu-awardees-deepsig-srs) for details.
 
-<div className="margin-bottom--lg">
-  <DocCard item={{type: 'link', href: '/releases/release_notes', label: 'Release Notes', description: 'Per-release changelog covering new features, protocol updates, and fixes for all OCUDU versions.'}} />
-</div>
-
-## Development Status
+The first public release, v26.04, shipped in April 2026. The project follows a predictable bi-annual release cycle — new versions every April and October — to ensure steady feature development, community feedback integration, and long-term sustainability.
 
 <div className="row" style={{marginBottom: '2rem'}}>
   <div className="col col--4">
@@ -32,9 +28,9 @@ Development status, current features, and release roadmap for OCUDU. New version
   </div>
   <div className="col col--4">
     <div style={{textAlign:'center', padding:'1rem 0.75rem', border:'1px solid var(--ifm-color-emphasis-300)', borderRadius:'8px'}}>
-      <div style={{fontSize:'1.1rem', fontWeight:'700', color:'var(--ifm-color-primary)'}}>Active</div>
-      <div style={{fontWeight:'600', margin:'0.25rem 0'}}>OCUDU gNB</div>
-      <div style={{fontSize:'0.8rem', color:'var(--ifm-color-emphasis-600)'}}>O1 agent · E2 agent</div>
+      <div style={{fontSize:'1.1rem', fontWeight:'700', color:'var(--ifm-color-primary)'}}>Bi-annual</div>
+      <div style={{fontWeight:'600', margin:'0.25rem 0'}}>Release Cycle</div>
+      <div style={{fontSize:'0.8rem', color:'var(--ifm-color-emphasis-600)'}}>April and October each year</div>
     </div>
   </div>
 </div>
@@ -70,7 +66,7 @@ Development status, current features, and release roadmap for OCUDU. New version
     <h4>Architecture &amp; Deployment</h4>
     <ul>
       <li>CU/DU and CU-CP/CU-UP separation</li>
-      <li>Split 7.2 via Open Fronthaul library</li>
+      <li>Split 7.2a via in-house Open Fronthaul library</li>
       <li>M-plane support via OCUDU helper components</li>
       <li>Hardware accelerator support via DPDK BBDEV</li>
     </ul>
@@ -83,22 +79,33 @@ Planned features by release, through the end of the programme in October 2028.
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {
-  'cScale0': '#64B5FF',
+  'cScale0': '#52B8F5',
   'cScaleLabel0': '#000000',
-  'cScale1': '#5a73d3',
-  'cScaleLabel1': '#ffffff',
-  'cScale2': '#64B5FF',
-  'cScaleLabel2': '#000000',
-  'cScale3': '#6F8BFF',
+  'cScale1': '#5EA3F3',
+  'cScaleLabel1': '#000000',
+  'cScale2': '#6B7EEF',
+  'cScaleLabel2': '#ffffff',
+  'cScale3': '#7A66EF',
   'cScaleLabel3': '#ffffff',
-  'cScale4': '#64B5FF',
-  'cScaleLabel4': '#000000'
+  'cScale4': '#8E4AF1',
+  'cScaleLabel4': '#ffffff',
+  'cScale5': '#9F35F2',
+  'cScaleLabel5': '#ffffff'
 }}}%%
     timeline
         title OCUDU Feature Roadmap 2026-2028
           v26.04 <br> Initial release : FR2 : RoHC : RRC inactive : Xn : M plane
-          v26.10 : Beamforming : 8T8R : ORAN Split 7.2b : NSA : NTN Release 17
-          v27.04 : MU-MIMO : 64T64R : NTN Release 18
-          v27.10 : Multiple BWP : Carrier Aggregation : RedCap
-          v28.04 : Dual Connectivity : non-3GPP Access Technologies
+          v26.10 : Beamforming : 8T8R : NR Positioning : ORAN Split 7.2b : 2-step RACH : Enhanced fault-tolerance : NTN Release 17
+          v27.04 : MU-MIMO : 64T64R : Reciprocity Beamforming : SRS Antenna Switching : EPS Fallback : NTN Release 18
+          v27.10 : Multiple BWP : Carrier Aggregation : Emergency Call Priority : Coverage Enhancements : Rel-17 Type-II Codebook : RedCap
+          v28.04 : Dual Connectivity : UL Tx Switching : S-NPN / NPI-NPN : non-3GPP Access : NSA
+          v28.10 : Final optimisations : External Test and Validation
 ```
+
+The features shown are planned with allocated engineering resources and a defined delivery timeline, but this roadmap is not fixed. With additional engineering capacity and collaborative contributions, priorities and timelines can be adjusted. If there are features within the OCUDU scope that matter to you or your organisation and are not listed here, we welcome discussions on accelerating, expanding, or re-prioritising development through resource support and joint contribution.
+
+## Release Notes
+
+<div className="margin-bottom--lg">
+  <DocCard item={{type: 'link', href: '/releases/release_notes', label: 'Release Notes', description: 'Per-release changelog covering new features, protocol updates, and fixes for all OCUDU versions.'}} />
+</div>
