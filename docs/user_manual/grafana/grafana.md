@@ -21,9 +21,9 @@ reporting of the metrics to the necessary JSON format for use in the webUI.
 
 ### Docker
 
-Using the Docker Containers included with OCUDU requires `docker compose` to be installed on your system. You can read about `docker compose` [here](https://docs.docker.com/compose/).  There
-are multiple ways to install this, but the most basic way to do so is to install Docker Desktop. For installing Docker Desktop on linux, take a look at
-the [Docker documentation](https://docs.docker.com/desktop/install/linux-install/).
+Using the Docker Containers included with OCUDU requires `docker compose` to be installed on your system. You can read about `docker compose` [here](https://docs.docker.com/compose/).  
+There are multiple ways to install this, but the most basic way to do so is to install Docker Desktop. 
+For installing Docker Desktop on linux, take a look at the [Docker documentation](https://docs.docker.com/desktop/install/linux-install/).
 
 #### NOTE
 We recommend using a Docker Compose V2 or later.
@@ -47,7 +47,7 @@ sudo docker compose -f docker/docker-compose.yml up grafana
 
 The following output should be observed:
 
-```bash
+```default
 Creating network "docker_ran" with the default driver
 Starting metrics_server ...
 Starting metrics_server ... done
