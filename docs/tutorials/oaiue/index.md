@@ -416,3 +416,123 @@ During iPerf3 DL test:
    1 4601 |  15 1.0   27    66M 1600    0   0%  2.56M |  42.1 -35.2   1   27  1.13M  160    0   0%    535   242n   38
    1 4601 |  15 1.0   27    54M 1321    0   0%      0 |  42.1 -35.2   1   27  1.87M  215    0   0%      0   245n   38
 ```
+
+---
+
+## Troubleshooting
+
+### Performance Issues
+
+If you experience some performance-related issues (e.g., RF underflows/lates), please run the [ocudu_performance](https://gitlab.com/ocudu/ocudu/-/blob/dev/scripts/ocudu_performance?ref_type=heads) script on all PCs used in your setup. The script configures the host machine (CPU, etc.) to run with the best possible performance.
+
+### 5G QoS Identifier
+
+By default, Open5GS uses 5QI = 9. If the **qos** section is not provided in the gNB config file, the default one with 5QI = 9 will be generated and the UE should connect to the network. If one needs to change the 5QI, please harmonize these settings between gNB and Open5GS config files, as otherwise, a UE will not be able to connect.
+
+### UE does not get IP address
+
+If the UE successfully performs RACH procedure, gets into RRC Connected state, but finally disconnects with RRC Release, this might indicate that the UE database in the core network is not filled properly.
+Specifically, in such case, the OAI UE console output will look similar to this:
+
+```default
+[NR_MAC] [UE 0][130.5][RAPROC] 4-Step RA procedure succeeded. CBRA: Contention Resolution is successful.
+[NR_RRC] [UE0][RAPROC] Logical Channel DL-CCCH (SRB0), Received NR_RRCSetup
+[RLC]    Added srb 1 to UE 0
+[NR_RRC] State = NR_RRC_CONNECTED
+[NAS]    Generate Initial NAS Message: Registration Request
+[NAS]    [UE 0] Received NR_NAS_CONN_ESTABLISH_IND: asCause 0
+[NR_RRC] [UE 0][RAPROC] Logical Channel UL-DCCH (SRB1), Generating RRCSetupComplete (bytes33)
+[MAC]    [UE 0] Applying CellGroupConfig from gNodeB
+[NR_MAC] NR_SRI_PUSCH_PowerControl not implemented, power control will not work as intended
+[NR_RRC] [UE 0] Received RRC Release (gNB 0)
+[NAS]    [UE 0] Received NAS_DOWNLINK_DATA_IND type FGS_REGISTRATION_REJECT with length 4
+[NAS]    Received Registration reject message too short
+[RLC]    Released RLC entity: ue_id=0, lc_id=1
+[NR_RRC] RRC moved into IDLE state
+[NAS]    [UE 0] Received NR_NAS_CONN_RELEASE_IND: cause OTHER
+```
+
+You can also check core network logs, for more information on the cause of this event. For example, Open5gs might show the following information in its log output:
+
+```default
+open5gs_5gc  | 07/06 22:09:49.507: [amf] INFO: InitialUEMessage (../src/amf/ngap-handler.c:437)
+open5gs_5gc  | 07/06 22:09:49.507: [amf] INFO: [Added] Number of gNB-UEs is now 1 (../src/amf/context.c:2789)
+open5gs_5gc  | 07/06 22:09:49.507: [amf] INFO:     RAN_UE_NGAP_ID[0] AMF_UE_NGAP_ID[3] TAC[7] CellID[0x66c000] (../src/amf/ngap-handler.c:598)
+open5gs_5gc  | 07/06 22:09:49.507: [amf] INFO: [suci-0-001-01-0000-0-0-0123456786] Unknown UE by SUCI (../src/amf/context.c:1906)
+open5gs_5gc  | 07/06 22:09:49.507: [amf] INFO: [Added] Number of AMF-UEs is now 1 (../src/amf/context.c:1682)
+open5gs_5gc  | 07/06 22:09:49.507: [gmm] INFO: Registration request (../src/amf/gmm-sm.c:1339)
+
+...
+
+open5gs_5gc  | 07/06 22:09:49.509: [dbi] INFO: [imsi-001010123456786] Cannot find IMSI in DB (../lib/dbi/subscription.c:63)
+```
+
+From the above, it is clear that UE data is not present in the subscriber database.
+
+Please check and populate the UE database if needed.
+
+The dockerized Open5GS Core provided in OCUDU is populated from the `SUBSCRIBER_DB` entry in `ocudu/docker/open5gs/open5gs.env`. View this file to confirm the subscriber credentials:
+
+```bash
+cat ocudu/docker/open5gs/open5gs.env
+```
+
+The `SUBSCRIBER_DB` line lists the subscriber as comma-separated fields, beginning with the IMSI, key, and OPc:
+
+```default
+SUBSCRIBER_DB=001010123456780,00112233445566778899aabbccddeeff,opc,63bfa50ee6523365ff14c1f45f88737d,8000,9,10.45.1.2
+```
+
+Confirm that the IMSI (`001010123456780`), key, and OPc match the `imsi`, `key`, and `opc` values in the `uicc0` section of your `oaiue_zmq.conf`. Correct the UE's config file if needed.
+
+In addition to the credentials, the DNN requested by the UE in its PDU session must match the APN provisioned for the subscriber. The subscriber database is populated by the `ocudu/docker/open5gs/add_users.py` script, whose default APN name is `internet`:
+
+```python
+def add_user(
+    imsi,
+    key="00112233445566778899aabbccddeeff",
+    op=None,
+    opc="63bfa50ee6523365ff14c1f45f88737d",
+    amf="9001",
+    apn="internet",
+    qci="9",
+    ip_alloc="",
+):
+```
+
+Confirm that the `dnn` in the `pdu_sessions` block of your `oaiue_zmq.conf` is also set to `internet`. If the UE's DNN and the provisioned APN do not match, the UE will fail to establish a PDU session and will not be assigned an IP address.
+
+Unlike a missing subscriber, a DNN mismatch allows registration to complet. In this case the core log shows a `Registration complete` message followed by a `DNN ... Not Supported` warning and a `UE Context Release`:
+
+```default
+open5gs_5gc  | 07/06 22:14:17.552: [gmm] INFO: [imsi-001010123456780] Registration complete (../src/amf/gmm-sm.c:2698)
+
+...
+
+open5gs_5gc  | 07/06 22:14:17.552: [gmm] WARNING: [imsi-001010123456780] Ue requested DNN "foo" Not Supported OR Not Subscribed in the Slice (../src/amf/gmm-handler.c:1370)
+open5gs_5gc  | 07/06 22:14:19.356: [amf] INFO: UE Context Release [Action:2] (../src/amf/ngap-handler.c:1733)
+```
+
+### UE IP Forwarding
+
+To ensure that UE traffic is routed correctly to the internet, IP forwarding and source NAT must be configured. This differs from the [srsUE tutorial](../srsue/index.md#ue-ip-forwarding), where the srsUE runs in its own network namespace (`ue1`) and forwarding is applied on the host machine. The OAI UE instead creates the `oaitun_ue1` interface in the host's default namespace, and its traffic reaches the internet through the Open5GS core container, so forwarding and NAT are configured **inside that container**.
+
+First, enable IP forwarding inside the core container so its kernel forwards packets between the internal UE tunnel (`ogstun`) and its outbound interface:
+
+```bash
+docker exec open5gs_5gc sysctl -w net.ipv4.ip_forward=1
+```
+
+Then add a source NAT rule to the container's `nat` table. For packets from the UE subnet (`10.45.0.0/16`) that leave on any interface other than the internal `ogstun` tunnel, `MASQUERADE` rewrites the source address to that outbound interface's address. The internet then sees the traffic as coming from the container, so return packets can be routed back and translated to the UE:
+
+```bash
+docker exec open5gs_5gc iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
+```
+
+To check that this has been configured correctly, ping an external address such as the Google DNS from the UE interface:
+
+```bash
+ping -I oaitun_ue1 8.8.8.8
+```
+
+If the UE can ping the Google DNS, then the internet can be successfully accessed.
