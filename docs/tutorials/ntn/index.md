@@ -101,7 +101,7 @@ Then, you need to compile OCUDU (assuming you have already installed all the req
 Note that ZeroMQ is initially deactivated, and activation occurs during the execution of the `cmake` command, with the inclusion of the flags `-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON`.
 Speficially, the following commands can be used to download and build OCUDU from source:
 
-```default
+```bash
 git clone https://gitlab.com/ocudu/ocudu.git
 cd ocudu
 mkdir build
@@ -164,7 +164,7 @@ ln -s ocudu/build/utils/trx_ocudu/libtrx_ocudu.so trx_ocudu.so
 
 On Ubuntu, it can be installed with the following command:
 
-```default
+```bash
 sudo apt-get install gnuradio
 ```
 
@@ -189,7 +189,7 @@ It is recommended you use these files to avoid errors while changing configs man
 
 When using the ZMQ-based RF driver in the OCUDU gNB, the **ru_sdr** sections of the config file has to be as follows:
 
-```default
+```yaml
 ru_sdr:
   device_driver: zmq
   device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001
@@ -207,7 +207,7 @@ Enabling NTN features in the gNB requires the following:
 
 Finally, the `cell_cfg` config section for NTN GEO scenario is as follows:
 
-```default
+```yaml
 cell_cfg:
   dl_arfcn: 437000                  # ARFCN of the downlink carrier (center frequency).
   band: 256                         # Use NTN band.
@@ -241,7 +241,7 @@ cell_cfg:
 
 The `ntn` section is as follows:
 
-```default
+```yaml
 cell_cfg:
   ntn:
     cell_specific_koffset:  240       # Cell-specific k-offset.
@@ -257,7 +257,7 @@ cell_cfg:
 
 Finally, the Timing Advance (TA) Scheduler configuration must be updated to account for the large propagation delays in GEO NTN. Specifically, it is important to avoid measuring and issuing new TA commands before the previous command has been applied by the UE. The `ta_sched_cfg` section is as follows:
 
-```default
+```yaml
 cell_cfg:
   ta:
     ta_cmd_offset_threshold: 1                 # Sets the timing Advance Command (T_A) offset threshold above which Timing Advance Command is triggered.
@@ -272,7 +272,7 @@ Note that [gnb_zmq.yml](assets/gnb_zmq.yml) file contains the basic (i.e., gener
 
 When using the ZMQ-based RF driver in the AmarisoftUE, the **rf_driver** section in the AmarisoftUE config file has to be changed as follows:
 
-```default
+```yaml
 rf_driver: {
     /* OCUDU zmq RF device */
     name: "ocudu",
@@ -290,7 +290,7 @@ Enabling NTN features in the UE requires the following:
 
 Finally, the `cell_groups` section in the AmarisoftUE config is as follows:
 
-```default
+```yaml
 cell_groups: [{
   group_type: "nr",
   multi_ue: false,
@@ -372,7 +372,7 @@ Note that the delay value of 119720us matches the link delay between the GEO sat
 
 We run gNB directly from the build folder (the config files are also located here) with the following command:
 
-```default
+```bash
 sudo ./gnb -c ./gnb_zmq.yml -c geo_ntn.yml
 ```
 
@@ -406,13 +406,13 @@ open5gs_5gc  | 05/15 10:02:24.197: [amf] INFO: gNB-N2[10.53.1.1] max_num_of_ostr
 
 To start AmarisoftUE run:
 
-```default
+```bash
 sudo ./lteue ./ue-nr-ntn-geo.cfg
 ```
 
 Note that the `up-ifup` script should be located in the same directory, so the simulator can create a network namespace for the UE. Also, verify that the script is executable by running:
 
-```default
+```bash
 chmod +x ./ue-ifup
 ```
 
@@ -503,7 +503,7 @@ route -n
 
 It should contain the following entries (note that `Iface` names might be different):
 
-```bash
+```default
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 eno1
@@ -520,7 +520,7 @@ sudo ip netns exec ue1 route -n
 
 The output should be as follows:
 
-```bash
+```default
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         10.45.1.2       0.0.0.0         UG    0      0        0 pdn0
@@ -533,7 +533,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 
 To test the connection in the uplink direction, use the following:
 
-```default
+```bash
 sudo ip netns exec ue1 ping 10.45.1.1
 ```
 
@@ -541,7 +541,7 @@ sudo ip netns exec ue1 ping 10.45.1.1
 
 To run ping in the downlink direction, use:
 
-```default
+```bash
 ping 10.45.1.2
 ```
 
@@ -570,7 +570,7 @@ rtt min/avg/max/mdev = 641.317/702.106/762.413/45.207 ms
 
 To test the connection in the uplink direction, use the following:
 
-```default
+```bash
 sudo ip netns exec ue1 iperf -c 10.45.1.1 -i 1 -t 100 -u -b25M
 ```
 
@@ -578,7 +578,7 @@ sudo ip netns exec ue1 iperf -c 10.45.1.1 -i 1 -t 100 -u -b25M
 
 To run iperf in the downlink direction, use:
 
-```default
+```bash
 iperf -c 10.45.1.2 -i 1 -t 1000 -u -b 25M
 ```
 
@@ -609,7 +609,7 @@ When running gNB and AmarisoftUE on two separate host machines (i.e., using Amar
 Specifically, if the NTN channel emulator runs on the same PC as gNB, the following configuration has to be applied:
 
 1. The `ru_sdr` section in the gNB config remains unchanged:
-   ```default
+   ```yaml
    ru_sdr:
      device_driver: zmq
      device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001
@@ -623,7 +623,7 @@ Specifically, if the NTN channel emulator runs on the same PC as gNB, the follow
 | Rx UL from UE | tcp://127.0.0.1:2101 | tcp://$UE_IP:2101 |
 
 3. The `rf_driver` section in the AmarisoftUE config file has to be changed as follows:
-   ```default
+   ```yaml
    rf_driver: {
        /* OCUDU zmq RF device */
        name: "ocudu",

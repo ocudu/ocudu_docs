@@ -204,7 +204,7 @@ ZeroMQ is disabled by default, this is enabled when running `cmake` by including
 
 Pay extra attention to the cmake console output. Make sure you read the following line:
 
-```bash
+```default
 ...
 -- FINDING ZEROMQ.
 -- Checking for module 'ZeroMQ'
@@ -325,7 +325,7 @@ Start example NearRT-RIC provided in FlexRIC framework:
 
 The NearRT-RIC console output should be similar to:
 
-```bash
+```default
 Setting the config -c file to /usr/local/etc/flexric/ric.conf
 [LibConf]: loading service models from SM_DIR: /usr/local/lib/flexric/
 [LibConf]: reading configuration for NearRT_RIC
@@ -368,7 +368,7 @@ sudo ./gnb -c gnb_zmq.yaml e2 --addr="127.0.0.1" --bind_addr="127.0.0.1"
 
 The gNB console output should be similar to:
 
-```bash
+```default
 --== OCUDU gNB (commit 0b2702cca) ==--
 
 Connecting to AMF on 10.53.1.2:38412
@@ -387,13 +387,13 @@ If the connection attempt is successful, the following (or similar) will be disp
 <Tabs>
 
   <TabItem value="oransc" label="ORAN SC RIC" default>
-```bash
+```default
 ric_rtmgr_sim       | 2024/04/02 11:07:39 POST /ric/v1/handles/associate-ran-to-e2t  body: [{"E2TAddress":"10.0.2.10:38000","ranNamelist":["gnb_001_001_00019b"]}] elapsed: 10.77µs
 ```
   </TabItem>
 
   <TabItem value="flexric" label="FlexRIC">
-```bash
+```default
 Received message with id = 411, port = 1715
 [E2AP] Received SETUP-REQUEST from PLMN   1. 1 Node ID 411 RAN type ngran_gNB_DU
 [NEAR-RIC]: Accepting RAN function ID 2 with def = ORAN-E2SM-KPM
@@ -422,7 +422,7 @@ sudo ./srsue ue_zmq.conf
 
 If srsUE connects successfully to the network, the following (or similar) should be displayed on the console:
 
-```bash
+```default
 Built in Release mode using commit fa56836b1 on branch master.
 
 Opening 1 channels in RF device=zmq with args=tx_port=tcp://127.0.0.1:2001,rx_port=tcp://127.0.0.1:2000,base_srate=11.52e6
@@ -459,7 +459,7 @@ Note that we set the ping interval to 0.1s to increase the traffic volume.
 
 Example **ping** output:
 
-```bash
+```default
 PING 10.45.1.1 (10.45.1.1) 56(84) bytes of data.
 64 bytes from 10.45.1.1: icmp_seq=1 ttl=64 time=32.2 ms
 64 bytes from 10.45.1.1: icmp_seq=2 ttl=64 time=35.3 ms
@@ -482,7 +482,7 @@ route -n
 
 It should contain the following entries (note that Iface names might be different):
 
-```bash
+```default
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 eno1
@@ -505,7 +505,7 @@ sudo ip netns exec ue1 route -n
 
 The output should be as follows:
 
-```bash
+```default
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         10.45.1.1       0.0.0.0         UG    0      0        0 tun_srsue
@@ -538,7 +538,7 @@ docker compose exec python_xapp_runner ./kpm_mon_xapp.py --metrics=DRB.UEThpDl,D
 The xApp allows subscribing with all E2SM-KPM Report Styles (i.e., 1-5) and to set the metric names.
 With the above parameters, the xApp should subscribe to DRB.UEThpUl and DRB.UEThpUl measurements, and display the content of received RIC_INDICATION messages. The xApp console output should be similar to:
 
-```bash
+```default
 RIC Indication Received from gnb_001_001_00019b for Subscription ID: 5, KPM Report Style: 5
 E2SM_KPM RIC Indication Content:
 -ColletStartTime:  2024-04-02 13:24:56
@@ -551,13 +551,13 @@ E2SM_KPM RIC Indication Content:
 
 On start, the xApp sends a subscription request to the NearRT-RIC, therefore the following (or similar) should be displayed on the NearRT-RIC console:
 
-```bash
+```default
 ric_rtmgr_sim       | 2024/04/02 13:35:33 POST /ric/v1/handles/xapp-subscription-handle  body: {"address":"10.0.2.20","port":4560,"subscription_id":1} elapsed: 13.263µs
 ```
 
 On exit, the xApp sends a subscription delete request to the NearRT-RIC and the following (or similar) should be displayed on the NearRT-RIC console:
 
-```bash
+```default
 ric_rtmgr_sim       | 2024/04/02 13:35:40 DELETE /ric/v1/handles/xapp-subscription-handle  body: {"address":"10.0.2.20","port":4560,"subscription_id":1} elapsed: 27.513µs
 ```
   </TabItem>
@@ -577,7 +577,7 @@ Start the xApp with the following command:
 
 If xApp connects successfully to the NearRT-RIC, the following (or similar) should be displayed on the xApp console:
 
-```bash
+```default
 Setting the config -c file to ./config/xapp_mon_e2sm_kpm.conf
 [LibConf]: loading service models from SM_DIR: /usr/local/lib/flexric/
 [LibConf]: reading configuration for xApp
@@ -619,14 +619,14 @@ Registered node 0 ran func id = 2
 
 The following (or similar) will be displayed on the NearRT-RIC console:
 
-```bash
+```default
 [iApp]: E42 SETUP-REQUEST received
 [iApp]: E42 SETUP-RESPONSE sent
 ```
 
 Next, the xApp sends the `RIC Subscription Request` message and upon successful subscription, it will periodically receive `RIC Indication messages` with the recent measurements of the requested metrics. The following (or similar) should be displayed on the xApp console:
 
-```bash
+```default
 Generated of req_id = 1
 E42_RIC_SUBSCRIPTION_REQUEST 31
 adding event fd = 5 ev-> 6
@@ -653,7 +653,7 @@ Note that the metrics’ names are not shown in this xApp, but their order shoul
 
 The xApp can be stopped with CTRL+C signal. In such case, the following (or similar) should be displayed on the xApp console:
 
-```bash
+```default
 ^Csignal 2 received !
 CTRL+C detect
 Remove handle number = 1
@@ -673,7 +673,7 @@ Test xApp run SUCCESSFULLY
 
 The following (or similar) will be displayed on the NearRT-RIC console:
 
-```bash
+```default
 [iApp]: SUBSCRIPTION-REQUEST xapp_ric_id->ric_id.ran_func_id 2
 [E2AP] SUBSCRIPTION REQUEST generated
 [NEAR-RIC]: nb_id 411 port = 1715
@@ -723,7 +723,7 @@ E2AP dissector is still under development in Wireshark. Therefore, some fields a
 
 If the dockerized version of Open5Gs fails to run it may be due to the ports set in *docker-compose.yml* are already in use on your PC. For example, you may see an error like the following:
 
-```bash
+```default
 ERROR: for bdfcb7644f79_open5gs_5gc  Cannot start service 5gc: driver failed programming external connectivity on endpoint open5gs_5gc (2919e37332feb0a3001c44985b7e3d310ae82b7adb0e2cb1d9c214ed29ff39fa): Error starting userland proxy: listen tcp4 0.0.0.0:3000: bind: address already in use
 
 ERROR: for 5gc  Cannot start service 5gc: driver failed programming external connectivity on endpoint open5gs_5gc (2919e37332feb0a3001c44985b7e3d310ae82b7adb0e2cb1d9c214ed29ff39fa): Error starting userland proxy: listen tcp4 0.0.0.0:3000: bind: address already in use
