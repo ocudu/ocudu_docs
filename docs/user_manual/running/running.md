@@ -13,7 +13,7 @@ To successfully run an end-to-end network OCUDU applications you will need the f
 
 - A PC with a Linux based OS (Ubuntu 22.04 or later)
 - A USRP device
-- OCUDU (see the [Installation Guide](../installation/installation.md)
+- OCUDU (see the [Installation Guide](../installation/installation.md))
 - A 3rd-party 5G core (we recommend [Open5GS](https://github.com/open5gs/open5gs))
 - A 3rd-party 5G UE
 
@@ -100,7 +100,7 @@ sudo ./odu -c du.yml
 
 Run the DU with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_reference.md).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase, as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/configs). For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_reference.md).
 
 When running, the DU should generate the following console output:
 
@@ -155,7 +155,7 @@ sudo ./ocu -c cu.yml
 
 Run the CU with `sudo` to ensure threads are configured with the correct priority.
 
-Example configuration files can be found in the `configs/` folder in OCUDU codebase. For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_reference.md).
+Example configuration files can be found in the `configs/` folder in OCUDU codebase, as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/configs). For more information on the configuration files and the available parameters see the [configuration reference](../config_reference/config_reference.md).
 
 When running, the CU should generate the following console output:
 

@@ -5,7 +5,7 @@ The GrafanaGUI works with both the monolithic gNB and the DU application. The co
 :::
 
 OCUDU allows the reporting and visualization of the CU/DU metrics to a [Grafana](https://grafana.com/oss/grafana/) WebUI. This is done through the use
-of a [Docker](https://www.docker.com/) container that comes as standard with the OCUDU code base, located in the `docker/` folder. This container allows users
+of a [Docker](https://www.docker.com/) container that comes as standard with the OCUDU code base, located in the `docker/` folder, as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/docker). This container allows users
 to bring up the Grafana dashboard in a single command.
 
 **Further Reading:**

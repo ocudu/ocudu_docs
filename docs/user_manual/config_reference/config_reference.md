@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 OCUDU uses a YAML (.yml) configuration file.
 
-The gNB comes with a number of example configuration files, these can be found in the `configs/` folder in the source files.
+The gNB comes with a number of example configuration files, these can be found in the `configs/` folder in the source files, as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/configs).
 
 These configuration file examples provide a basic set-up to get users up and running, users can easily modify these to suit their use-case.
 
