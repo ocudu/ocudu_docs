@@ -15,6 +15,10 @@ Our E2 interface implementation is based on the following O-RAN technical specif
 - [O-RAN.WG3.E2SM-KPM-R003-v03.00](https://specifications.o-ran.org/download?id=393)
 - [O-RAN.WG3.E2SM-RC-R003-v03.00](https://specifications.o-ran.org/download?id=498)
 
+:::info
+To consult other O-RAN ALLIANCE Specifications, please click [here](https://specifications.o-ran.org/specifications). 
+:::
+
 ---
 
 ## Setup Overview
@@ -76,7 +80,11 @@ The ORAN SC RIC platform is an advanced software framework with a functionality 
 Since it relies on Kubernetes and Helm for deployment, reliability, and scalability, its vanilla installation is quite complex, involves many steps, and requires a high level of knowledge and expertise in those frameworks.
 
 In this application note, we use a minimal version of the O-RAN SC near-RT RIC (`i-release`), that can be easily deployed as a multi-container application using a single Docker command, eliminating the necessity for Kubernetes or Helm.
-Specifically, we will deploy ORAN SC RIC using Docker and configuration files provided in this [repository](https://github.com/srsran/oran-sc-ric).
+Specifically, we will deploy ORAN SC RIC using Docker and configuration files provided in this [repository](https://github.com/srsran/oran-sc-ric). 
+
+:::info
+It is recommended to download and install [Docker Engine](https://docs.docker.com/engine/install), instead of [Docker Desktop](https://www.docker.com/products/docker-desktop/). To learn more on why, click [here](https://gitlab.com/ocudu/ocudu/-/work_items/417). 
+:::
 
 The ORAN SC RIC deployment is performed as follows:
 
@@ -298,8 +306,29 @@ Note that we have already configured Open5GS to operate correctly with OCUDU. Mo
 
 <Tabs>
   <TabItem value="oransc" label="ORAN SC RIC" default>
+Before starting the ORAN SC RIC platform as a multi-container application, run the following command from the `oran-sc-ric` directory:
 
-To start the ORAN SC RIC platform as a multi-container application, run the following command from the `oran-sc-ric` directory:
+```bash
+cd ./oran-sc-ric
+nano docker-compose.yml 
+```
+
+Edit the [docker-compose.yml](https://github.com/srsran/oran-sc-ric/blob/main/docker-compose.yml) and delete the # character from the 76th and 77th line of the file, from this: 
+
+```yaml
+  #ports:
+    #  - "36421:36421/sctp"
+```
+to this:  
+
+```yaml
+  ports:
+      - "36421:36421/sctp"
+```
+
+so the OCUDU gNB can access the ORAN SC RIC outside the docker network. 
+
+Then start the ORAN SC RIC platform as a multi-container application, run the following command from the `oran-sc-ric` directory:
 
 ```bash
 cd ./oran-sc-ric
