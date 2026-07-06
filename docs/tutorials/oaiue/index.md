@@ -36,12 +36,6 @@ Ideally the USRPs would be connected to a 10 MHz external reference clock or GPS
 If you have not already done so, install the latest version of Duranta OpenAirInterface and all of its dependencies. This is outlined in the [OAI installation guide](https://github.com/duranta-project/openairinterface5g/blob/develop/doc/BUILD.md). 
 
 
-#### Limitations
-
-The current OAI UE implementation has the following feature limitation:
-
-- With CSI RS enabled on the OCUDU gNB, Tracking Reference Signal (TRS) is not handled by the OAI UE
-
 ### ZeroMQ
 
 Building and running OAI with ZMQ radio is also documented in the [OAI ZMQ README](https://github.com/duranta-project/openairinterface5g/blob/develop/radio/zmq/README.md).
@@ -536,3 +530,11 @@ ping -I oaitun_ue1 8.8.8.8
 ```
 
 If the UE can ping the Google DNS, then the internet can be successfully accessed.
+
+---
+
+## Limitations
+
+The current OAI UE implementation has the following feature limitation:
+
+- With CSI RS enabled on the OCUDU gNB, Tracking Reference Signal (TRS) is not handled by the OAI UE
