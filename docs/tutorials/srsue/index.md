@@ -53,7 +53,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
 - [GitHub](https://github.com/open5gs/open5gs)
 - [Quickstart Guide](https://open5gs.org/open5gs/docs/guide/01-quickstart/)
 
-For the purpose of this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`.
+For the purpose of this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`, as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/docker).
 
 ### ZeroMQ
 
@@ -69,7 +69,7 @@ The following diagram presents the setup architecture:
 
 ### Configuration
 
-You can find a configuration file for this example in the `configs` folder of the OCUDU source files. 
+You can find a configuration file for this example in the `configs` folder of the OCUDU source files: 
 
 * [gNB FDD srsUE config](https://gitlab.com/ocudu/ocudu/-/blob/dev/configs/gnb_rf_b210_fdd_srsUE.yml?ref_type=heads)
 
@@ -86,7 +86,7 @@ The following changes need to be made to the gNB configuration file.
 
 The gNB has to connect to AMF in the 5G core network, therefore we need to provide two IP addresses:
 
-```bash
+```yaml
 cu_cp:
   amf:
     addr: 10.53.1.2                 # The address or hostname of the AMF. Check Open5GS config -> amf -> ngap -> addr
@@ -103,7 +103,7 @@ cu_cp:
 
 Next, we have to configure the RF front-end device:
 
-```bash
+```yaml
 ru_sdr:
   device_driver: uhd                # The RF driver name.
   device_args: type=b200            # Optionally pass arguments to the selected RF driver.
@@ -115,7 +115,7 @@ ru_sdr:
 
 Finally, we configure the 5G cell parameters:
 
-```bash
+```yaml
 cell_cfg:
   dl_arfcn: 368500                  # ARFCN of the downlink carrier (center frequency).
   band: 3                           # The NR band.
@@ -140,7 +140,7 @@ The following changes need to be made to the UE configuration file to allow it t
 
 First, the following parameters need to be changed under the **[rf]** options so that the B210 is configured optimally:
 
-```bash
+```yaml
 [rf]
 freq_offset = 0
 tx_gain = 50
@@ -155,7 +155,7 @@ time_adv_nsamples = 300
 
 The next set of changes need to be made to the **[rat.eutra]** options. The LTE carrier is disabled, to force the UE to use a 5G NR carrier:
 
-```bash
+```yaml
 [rat.eutra]
 dl_earfcn = 2850
 nof_carriers = 0
@@ -163,7 +163,7 @@ nof_carriers = 0
 
 Then, the **[rat.nr]** options need to be configured for 5G SA mode operation:
 
-```bash
+```yaml
 [rat.nr]
 bands = 3
 nof_carriers = 1
@@ -182,7 +182,7 @@ The max_nof_prb and nof_prb parameters have to be adapted for the used bandwidth
 
 Lastly, set the release and ue_category:
 
-```bash
+```yaml
 [rrc]
 release = 15
 ue_category = 4
@@ -190,7 +190,7 @@ ue_category = 4
 
 Note that the following (default) USIM Credentials are used:
 
-```bash
+```yaml
 [usim]
 mode = soft
 algo = milenage
@@ -202,7 +202,7 @@ imei = 353490069873319
 
 The APN is enabled with the following configuration:
 
-```bash
+```yaml
 [nas]
 apn = internet
 apn_protocol = ipv4
@@ -237,7 +237,7 @@ sudo ./gnb -c ./gnb.yaml
 
 The console output should be similar to:
 
-```bash
+```default
 --== OCUDU gNB (commit 374200dee) ==--
 
 Connecting to AMF on 10.53.1.2:38412
@@ -264,7 +264,7 @@ Cell pci=1, bw=20 MHz, dl_arfcn=368500 (n3), dl_freq=1842.5 MHz, dl_ssb_arfcn=36
 The `Connecting to AMF on 10.53.1.2:38412` message indicates that gNB initiated a connection to the core.
 If the connection attempt is successful, the following (or similar) will be displayed on the Open5GS console:
 
-```bash
+```default
 Open5GS    | 04/17 10:00:43.567: [amf] INFO: gNB-N2 accepted[10.53.1.1]:41578 in ng-path module (../src/amf/ngap-sctp.c:113)
 Open5GS    | 04/17 10:00:43.567: [amf] INFO: gNB-N2 accepted[10.53.1.1] in master_sm module (../src/amf/amf-sm.c:706)
 Open5GS    | 04/17 10:00:43.567: [amf] INFO: [Added] Number of gNBs is now 1 (../src/amf/context.c:1034)
@@ -281,7 +281,7 @@ sudo ./srsue ue_rf.conf
 
 If srsUE connects successfully to the network, the following (or similar) should be displayed on the console:
 
-```bash
+```default
 Reading configuration file ./ue_rf.conf...
 
 Built in Release mode using commit eea87b1d8 on branch master.
@@ -338,7 +338,7 @@ route -n
 
 It should contain the following entries (note that Iface names might be different):
 
-```bash
+```default
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 eno1
@@ -403,7 +403,7 @@ In this example, we generate traffic in the uplink direction. To this end, we ru
 
 Start the iPerf3 server the machine running the core network (i.e., Open5GS docker container):
 
-```default
+```bash
 iperf3 -s -i 1
 ```
 
@@ -413,7 +413,7 @@ The server listens for traffic coming from the UE. After the client connects, th
 
 With the network and the iPerf3 server up and running, the client can be run from the UE’s machine with the following command:
 
-```default
+```bash
 # TCP
 iperf3 -c 10.53.1.1 -i 1 -t 60
 # or UDP
@@ -428,7 +428,7 @@ Traffic will now be sent from the UE to the network. This will be shown in both 
 
 Example **server** iPerf3 output:
 
-```bash
+```default
 # iperf3 -s -i 1
 -----------------------------------------------------------
 Server listening on 5201
@@ -446,7 +446,7 @@ Accepted connection from 10.45.1.2, port 40544
 
 Example **client** iPerf3 output:
 
-```bash
+```default
 # iperf3 -c 10.53.1.1 -i 1 -t 60 -u -b 10M
 Connecting to host 10.45.1.1, port 5201
 [  5] local 10.45.1.2 port 40546 connected to 10.45.1.1 port 5201
@@ -463,7 +463,7 @@ Connecting to host 10.45.1.1, port 5201
 
 The following example trace was taken from the **srsUE console** while running the above iPerf3 test:
 
-```bash
+```default
 ---------Signal-----------|-----------------DL-----------------|-----------UL-----------
 rat  pci  rsrp   pl   cfo | mcs  snr  iter  brate  bler  ta_us | mcs   buff  brate  bler
  nr    1     0    0 -457m |  27   43   1.3   274k    0%    0.0 |  27   136k    13M    0%
@@ -478,7 +478,7 @@ To read more about the UE console trace metrics, see the [UE User Manual](https:
 
 The following example trace was taken from the **gNB console** at the same time period as the srsUE trace shown above:
 
-```bash
+```default
           -------------DL----------------|------------------UL--------------------
 pci rnti  cqi  mcs  brate   ok  nok  (%) | pusch  mcs  brate   ok  nok  (%)    bsr
   1 4601   15   27   275k  328    0   0% |  23.2   28    13M  398    0   0%  55.5k
@@ -511,7 +511,7 @@ Details of the modifications made are outlined in following sections.
 
 Replacing the UHD driver with the ZMQ-based RF driver requires changing only **ru_sdr** sections of the gNB file:
 
-```default
+```yaml
 ru_sdr:
   device_driver: zmq
   device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001,base_srate=11.52e6
@@ -525,19 +525,19 @@ ru_sdr:
 When using the ZMQ-based RF driver in the srsUE, it is important to create an appropriate network namespace in the host machine.
 This is achieved with the following command:
 
-```default
+```bash
 sudo ip netns add ue1
 ```
 
 To verify the new “ue1” network namespace exists, run:
 
-```default
+```bash
 sudo ip netns list
 ```
 
 Then, the **[rf]** section in the srsUE config file has to be changed as follows:
 
-```default
+```yaml
 [rf]
 freq_offset = 0
 tx_gain = 50
@@ -551,7 +551,7 @@ device_args = tx_port=tcp://127.0.0.1:2001,rx_port=tcp://127.0.0.1:2000,base_sra
 
 In addition, the srsUE must be configured to use the created network namespace. This is achieved by updating the **[gw]** section of the config file:
 
-```default
+```yaml
 [gw]
 netns = ue1
 ip_devname = tun_srsue
@@ -581,7 +581,7 @@ route -n
 
 It should contain the following entries (note that Iface names might be different):
 
-```bash
+```default
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 eno1
@@ -604,7 +604,7 @@ sudo ip netns exec ue1 route -n
 
 The output should be as follows:
 
-```bash
+```default
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         10.45.1.1       0.0.0.0         UG    0      0        0 tun_srsue
@@ -617,7 +617,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 
 To test the connection in the uplink direction, use the following:
 
-```default
+```bash
 sudo ip netns exec ue1 ping 10.45.1.1
 ```
 
@@ -625,7 +625,7 @@ sudo ip netns exec ue1 ping 10.45.1.1
 
 To run ping in the downlink direction, use:
 
-```default
+```bash
 ping 10.45.1.2
 ```
 
@@ -656,7 +656,7 @@ In this example, we generate traffic in the uplink direction. To this end, we ru
 
 Start the iPerf3 server the machine running the core network (i.e., Open5GS docker container):
 
-```default
+```bash
 iperf3 -s -i 1
 ```
 
@@ -666,7 +666,7 @@ The server listens for traffic coming from the UE. After the client connects, th
 
 With the network and the iPerf3 server up and running, the client can be run from the UE’s machine with the following command:
 
-```default
+```bash
 # TCP
 sudo ip netns exec ue1 iperf3 -c 10.53.1.1 -i 1 -t 60
 # or UDP
@@ -784,7 +784,7 @@ The following table lists port numbers are used in the example flow graph:
 
 Please install GNU-Radio Companion following the instructions available [here](https://wiki.gnuradio.org/index.php/InstallingGR). On Ubuntu it can be installed with the following command:
 
-```default
+```bash
 sudo apt-get install gnuradio
 ```
 
@@ -823,7 +823,7 @@ The following gNB config files was modified to operate with a channel bandwidth 
 
 In addition, the total number of available PRACH preambles was set to 63 to mitigate contention among UEs:
 
-```bash
+```diff
   prach:
     prach_config_index: 1           # Sets PRACH config to match what is expected by srsUE
 +   total_nof_ra_preambles: 64      # Sets number of available PRACH preambles
@@ -908,7 +908,7 @@ When gnuradio-companion is started, click on the play button (i.e., `Execute the
 After a few seconds, all UE should attach and get an IP address.
 If a srsUE connects successfully to the network, the following (or similar) should be displayed on the console:
 
-```bash
+```default
 ...
 Random Access Transmission: prach_occasion=0, preamble_index=45, ra-rnti=0x39, tti=174
 Random Access Complete.     c-rnti=0x4602, ta=0
@@ -982,7 +982,7 @@ By default, Open5GS uses 5QI = 9. If the **qos** section is not provided in the 
 If the UE successfully performs RACH procedure, gets into RRC Connected state, but finally disconnects with RRC Release, this might indicate that the UE database in the core network is not filled properly.
 Specifically, in such case, the srsUE console output will look similar to this:
 
-```bash
+```default
 Attaching UE...
 Random Access Transmission: prach_occasion=0, preamble_index=8, ra-rnti=0x39, tti=174
 Random Access Complete.     c-rnti=0x4601, ta=0
@@ -992,7 +992,7 @@ Received RRC Release
 
 You can also check core network logs, for more information on the cause of this event. For example, Open5gs might show the following information in its log output:
 
-```bash
+```default
 open5gs_5gc  | 02/02 09:06:13.742: [amf] INFO: InitialUEMessage (../src/amf/ngap-handler.c:372)
 open5gs_5gc  | 02/02 09:06:13.742: [amf] INFO: [Added] Number of gNB-UEs is now 2 (../src/amf/context.c:2327)
 open5gs_5gc  | 02/02 09:06:13.742: [amf] INFO:     RAN_UE_NGAP_ID[2] AMF_UE_NGAP_ID[3] TAC[7] CellID[0x19b0] (../src/amf/ngap-handler.c:533)
@@ -1011,13 +1011,13 @@ In case you are using Open5gs, you can open [http://localhost:9999/](http://loca
 
 In the case of the ZMQ-based setup, please check if you have properly added network namespace for each emulated UE, i.e.:
 
-```default
+```bash
 sudo ip netns add ue1
 ```
 
 To verify the new “ue1” network namespace exists, run:
 
-```default
+```bash
 sudo ip netns list
 ```
 
@@ -1079,7 +1079,7 @@ ru_sdr:
 
 1. srsUE config:
 
-```default
+```yaml
 [rf]
 ...
 device_name = zmq
@@ -1111,7 +1111,7 @@ The following config files changes are required to run the above setup with USRP
 
 In the gnb config file, the following parameters in ru_sdr section have to changed:
 
-```bash
+```yaml
 ru_sdr:
   ...
   device_args: type=x300,addr=X.X.X.X,master_clock_rate=184.32e6,send_frame_size=8000,recv_frame_size=8000
@@ -1121,7 +1121,7 @@ ru_sdr:
 
 In the srsUE config file, the following parameters have to changed:
 
-```bash
+```yaml
 [rf]
 ...
 srate = 30.72e6
