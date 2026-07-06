@@ -10,10 +10,10 @@ For this purpose, we use [O-RAN Alliance](https://www.o-ran.org/) compliant Near
 
 Our E2 interface implementation is based on the following O-RAN technical specifications:
 
-- O-RAN.WG3.E2AP-R003-v03.00
-- O-RAN.WG3.E2SM-R003-v03.00
-- O-RAN.WG3.E2SM-KPM-R003-v03.00
-- O-RAN.WG3.E2SM-RC-R003-v03.00
+- [O-RAN.WG3.E2AP-R003-v03.00](https://specifications.o-ran.org/download?id=391)
+- [O-RAN.WG3.E2SM-R003-v03.00](https://specifications.o-ran.org/download?id=392)
+- [O-RAN.WG3.E2SM-KPM-R003-v03.00](https://specifications.o-ran.org/download?id=393)
+- [O-RAN.WG3.E2SM-RC-R003-v03.00](https://specifications.o-ran.org/download?id=498)
 
 ---
 
@@ -33,7 +33,7 @@ For this application note, the following hardware and software are used:
 - [ZeroMQ](https://zeromq.org/)
 - [ORAN SC RIC](https://docs.o-ran-sc.org/en/latest/projects.html#near-realtime-ran-intelligent-controller-ric) **or** [FlexRIC](https://gitlab.eurecom.fr/mosaic5g/flexric)
 - [Open5GS 5G Core](https://open5gs.org/)
-- Wireshark (Version 4.0.7 or later)
+- [Wireshark](https://www.wireshark.org/#download) (Version 4.0.7 or later)
 
 ### Limitations
 
@@ -145,7 +145,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
 - [GitHub](https://github.com/open5gs/open5gs)
 - [Quickstart Guide](https://open5gs.org/open5gs/docs/guide/01-quickstart/)
 
-For the purpose of this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`.
+For the purpose of this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`,as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/docker).
 
 ### ZeroMQ
 

@@ -65,7 +65,7 @@ This tutorial uses version `2023-02-06` of Amarisoft UE, but it can be any versi
 These steps should only be completed **after** compiling OCUDU as mentioned above, as they require the build files of OCUDU and of the Amarisoft UHD RF frontend driver.
 :::
 
-Interfacing the Amarisoft UE with OCUDU over ZMQ requires a custom TRX driver implemented by SRS, which can be found in OCUDU source files in `ocudu/utils/trx_ocudu`.
+Interfacing the Amarisoft UE with OCUDU over ZMQ requires a custom TRX driver implemented by SRS, which can be found in OCUDU source files in `ocudu/utils/trx_ocudu`, as shwon [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/utils/trx_ocudu).
 
 The Amarisoft UE release folder, `amarisoft.2023-02-06.tar.gz`, should contain a file called `trx_uhd-linux-2023-02-06.tar.gz`. The release folder and the sub-file in question should be uncompressed before proceeding.
 

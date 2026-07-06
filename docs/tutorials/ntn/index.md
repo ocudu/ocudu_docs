@@ -70,7 +70,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
 - [GitHub](https://github.com/open5gs/open5gs)
 - [Quickstart Guide](https://open5gs.org/open5gs/docs/guide/01-quickstart/)
 
-For this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`.
+For this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`, as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/docker).
 
 ### GNU-Radio Companion
 
