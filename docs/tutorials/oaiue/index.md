@@ -14,7 +14,7 @@ This application note shows how to create an end-to-end fully open-source 5G TDD
 
 The ZMQ-based virtual radio use case is shown here. Various use cases such as over-the-air hardware setup and multi-UE emulation will be added later.
 
-
+---
 
 ## Hardware and Software Overview
 
@@ -38,10 +38,9 @@ If you have not already done so, install the latest version of Duranta OpenAirIn
 
 #### Limitations
 
-The current OAI UE implementation has a few feature limitations:
+The current OAI UE implementation has the following feature limitation:
 
 - With CSI RS enabled on the OCUDU gNB, Tracking Reference Signal (TRS) is not handled by the OAI UE
-- **TODO: identify more limitations**
 
 ### ZeroMQ
 
@@ -60,13 +59,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
 
 For the purpose of this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`.
 
-
-
-
-## Over-the-air Setup
-**TODO**
-
-
+---
 
 ## ZeroMQ-based Setup
 
@@ -88,7 +81,7 @@ Details of the modifications made are outlined in following sections.
 
 Replacing the UHD driver with the ZMQ-based RF driver requires changing only **ru_sdr** sections of the gNB file:
 
-```default
+```yaml
 ru_sdr:
   device_driver: zmq
   device_args: tx_port=tcp://127.0.0.1:4556,rx_port=tcp://127.0.0.1:4557
@@ -100,7 +93,7 @@ ru_sdr:
 
 The following cell configuration should be matched by the OAI UE configuration.  
 
-```default
+```yaml
 cell_cfg:
   dl_arfcn: 632628
   band: 78
@@ -109,7 +102,7 @@ cell_cfg:
 ```
 TDD is enabled by default since the frequency band is **n78**. The following TDD configuration is provided as an example for setting the TDD pattern:
 
-```default
+```yaml
 cell_cfg:
   ...
   tdd_ul_dl_cfg:
@@ -121,7 +114,7 @@ cell_cfg:
 ```
 CSI RS is enabled by default. However, when CSI RS is enabled, the number of CSI REs must greater than 0, and up to 8.
 
-```default
+```yaml
 cell_cfg:
   ...
   csi:
@@ -134,7 +127,7 @@ cell_cfg:
 
 The OAI UE UICC fields should match the subscriber database of the 5G Core Network
 
-```default
+```cfg
 uicc0 = {
   imsi = "001010123456780";
   key = "00112233445566778899aabbccddeeff";
@@ -148,7 +141,7 @@ uicc0 = {
 
 Then, the ZMQ radio driver is configured as follows:
 
-```default
+```cfg
 device = {
   name = "oai_zmqdevif";
 };
@@ -163,7 +156,7 @@ zmq = (
 
 In addition, match the PRB/bandwith, numerology/SCS, frequency band, and ARFCN/carrier frequency configuration of the gNB:
 
-```default
+```cfg
 r               = 51;
 numerology      = 1;
 band            = 78;
@@ -171,7 +164,7 @@ C               = 3489420000;
 ```
 Enable carrier scanning to find the SSB offset automatically. Optionally, enable 3/4 FFT sample rate with the `E` flag to match the gNB. Finally, the UE capabilities file is required for interoperability with any third party gNB. Some example UE capabilities file provided in-tree that work with OCUDU gNB. 
 
-```default
+```cfg
 ue-scan-carrier = 1;
 E               = 1;
 uecap_file      = "../../../targets/PROJECTS/GENERIC-NR-5GC/CONF/uecap_ports1.xml";
@@ -202,7 +195,7 @@ sudo ./gnb -c ./gnb_zmq.yaml
 
 The console output should be similar to:
 
-```bash
+```default
 --== OCUDU gNB (commit 76a15775c9) ==--
 
 Lower PHY in executor sequential baseband mode.
@@ -217,7 +210,7 @@ Type <h> to view help
 The `Connecting to AMF on 10.53.1.2:38412` message indicates that gNB initiated a connection to the core.
 If the connection attempt is successful, the following (or similar) will be displayed on the Open5GS console:
 
-```bash
+```default
 open5gs_5gc  | 06/25 07:22:50.219: [amf] INFO: gNB-N2 accepted[10.53.1.1]:35496 in ng-path module (../src/amf/ngap-sctp.c:113)
 open5gs_5gc  | 06/25 07:22:50.219: [amf] INFO: gNB-N2 accepted[10.53.1.1] in master_sm module (../src/amf/amf-sm.c:894)
 open5gs_5gc  | 06/25 07:22:50.222: [amf] INFO: [Added] Number of gNBs is now 1 (../src/amf/context.c:1277)
@@ -234,7 +227,7 @@ sudo ./nr-uesoftmodem -O oaiue_zmq.conf
 
 If OAI UE connects successfully to the network, the following (or similar) should be displayed on the console:
 
-```bash
+```default
 [NAS]    Received PDU Session Establishment Accept, UE IPv4: 10.45.1.2
 [SDAP]   UE 0 PDU session 1: cached QFI 1
 [SDAP]   UE 0 PDU session 1: bringing TUN oaitun_ue1 up
@@ -264,7 +257,7 @@ The OAI UE application configures the TUN interface and IP routing. Verify TUN i
 ip addr show oaitun_ue1
 ```
 It should show:
-```bash
+```default
 371: oaitun_ue1: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UNKNOWN group default qlen 500
     link/none
     inet 10.45.1.2/24 scope global oaitun_ue1
@@ -280,7 +273,7 @@ ip route get 10.53.1.2 from 10.45.1.2
 
 It should show the policy-based routing rule configured in the OAI UE [source code](https://github.com/duranta-project/openairinterface5g/blob/31eb466a7d598a7f0a8850b0a7405dca16290b9a/common/utils/tuntap_if.c#L268):
 
-```bash
+```default
 10.53.1.2 from 10.45.1.2 dev oaitun_ue1 table 9999 uid 1000
     cache
 ```
@@ -291,7 +284,7 @@ It should show the policy-based routing rule configured in the OAI UE [source co
 
 To test the connection in the uplink direction, run ping from the host OS:
 
-```default
+```bash
 ping -I 10.45.1.2 10.53.1.2 -c 3
 ```
 
@@ -299,7 +292,7 @@ ping -I 10.45.1.2 10.53.1.2 -c 3
 
 Run the downlink ping from inside the 5G Core container:
 
-```default
+```bash
 docker exec -it open5gs_5gc ping 10.45.1.2 -c 3
 ```
 
@@ -324,7 +317,7 @@ rtt min/avg/max/mdev = 34.000/38.490/41.586/3.250 ms
 
 Start the iPerf3 server inside the 5G Core container:
 
-```default
+```bash
 docker exec -it open5gs_5gc iperf3 -s -i 1
 ```
 
@@ -334,7 +327,7 @@ The server listens for traffic coming from the UE. After the client connects, th
 
 With the network and the iPerf3 server up and running, the client can be run on the host OS by binding to the UE TUN interface IP:
 
-```default
+```bash
 # UL
  iperf3 -c 10.53.1.2 -B 10.45.1.2 -t 10 -i 1
 # DL
@@ -423,16 +416,3 @@ During iPerf3 DL test:
    1 4601 |  15 1.0   27    66M 1600    0   0%  2.56M |  42.1 -35.2   1   27  1.13M  160    0   0%    535   242n   38
    1 4601 |  15 1.0   27    54M 1321    0   0%      0 |  42.1 -35.2   1   27  1.87M  215    0   0%      0   245n   38
 ```
-
-
-## Multi-UE Emulation
-
-**TODO**
-
-## Troubleshooting
-
-**TODO**
-
-## Limitations
-
-**TODO**

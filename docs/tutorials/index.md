@@ -27,6 +27,9 @@ No specialist hardware required.
   <article className="col col--6 margin-bottom--lg">
     <DocCard item={{type: 'link', href: '/tutorials/srsue/', label: 'OCUDU with srsUE', description: 'Build a complete open-source split 8 5G network using srsUE as the UE and Open5GS as the core.'}} />
   </article>
+  <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/tutorials/oaiue/', label: 'OAI UE', description: 'Build an end-to-end open-source 5G TDD network using the OpenAirInterface UE over ZeroMQ, with an OCUDU gNB and Open5GS core.'}} />
+  </article>
 </section>
 
 ## Intermediate
