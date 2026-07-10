@@ -104,6 +104,7 @@ module.exports = {
             { type: 'doc', docId: 'knowledge_base/oran_gnb/index',       label: 'O-RAN Overview' },
             { type: 'doc', docId: 'knowledge_base/gnb_components/index',  label: 'CU/DU Components' },
             { type: 'doc', docId: 'knowledge_base/gnb_interfaces/index',  label: 'gNB Interfaces' },
+            { type: 'doc', docId: 'knowledge_base/e2sm_kpm_metrics/index', label: 'Supported E2 Metrics' },
             { type: 'doc', docId: 'knowledge_base/cots_ues/index',        label: 'COTS UEs' },
             { type: 'doc', docId: 'knowledge_base/glossary',              label: 'Glossary' },
           ],

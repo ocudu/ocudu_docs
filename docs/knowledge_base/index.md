@@ -22,6 +22,9 @@ If you are new to the architecture, start with the O-RAN gNB Overview. The other
     <DocCard item={{type: 'link', href: '/knowledge_base/gnb_interfaces/', label: 'O-RAN Interfaces', description: 'The purpose, message types, and connected components for the E1, E2, F1, FAPI, NG, O1, and Open FrontHaul interfaces.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/knowledge_base/e2sm_kpm_metrics/', label: 'Supported E2 Metrics', description: 'E2SM-KPM report styles and metrics supported by OCUDU, with source nodes, units, and label restrictions.'}} />
+  </article>
+  <article className="col col--6 margin-bottom--lg">
     <DocCard item={{type: 'link', href: '/knowledge_base/cots_ues/', label: 'COTS UEs', description: 'Commercial UEs tested with OCUDU, with confirmed bands, configurations, and user-reported working devices.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
