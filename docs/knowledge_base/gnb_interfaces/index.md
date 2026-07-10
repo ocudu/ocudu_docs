@@ -45,11 +45,7 @@ The current specification (as of March 2021 specs) defines two service models wh
 1. **Network Interface (NI):** exposure of network interfaces and modification of the messages.
 2. **Key Performance Measurement (KPM):** Performance monitoring of set metrics within the RAN.
 
-The KPM service model requires the following metrics to be exposed:
-
-* **CU-UP:** PDCP UL/DL bytes, QCI.
-* **DU:** DL/UL PRB usage.
-* **CU-CP:** number of active UEs.
+The KPM service model defines a catalogue of performance measurements that an xApp can subscribe to via the near-RT RIC. For the metrics currently exposed by OCUDU, see [Supported E2 Metrics](../e2sm_kpm_metrics/index.md).
 
 
 ## F1

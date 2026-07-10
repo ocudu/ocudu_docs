@@ -41,25 +41,14 @@ For this application note, the following hardware and software are used:
 
 ### Limitations
 
-While our ultimate goal is to fully support the E2 interface, it is still under development and its current version is limited in features and operation.
-Specifically, the current E2 interface implementation supports only E2SM_KPM and E2SM_RC service models with the following limitations:
+The E2 interface implementation supports E2SM-KPM and E2SM-RC service models with the following limitations:
 
-- E2SM_RC service model:
-  - Only Control Service Style 2 is supported, shown [here](https://gitlab.com/ocudu/ocudu/-/blob/dev/lib/e2/e2sm/e2sm_rc/e2sm_rc_impl.cpp) 
-- E2SM_KPM service model:
-  - All Report Service Styles (1 - 5) are supported, as shown [here](https://gitlab.com/ocudu/ocudu/-/blob/dev/lib/e2/e2sm/e2sm_kpm/e2sm_kpm_impl.cpp?ref_type=heads#L36-46)
-  - Monitoring period limited to 1s
-  - The following 3 ‘dummy’ DU metrics are exposed (they will be removed in future releases):
-    - CQI
-    - RSRP
-    - RSRQ
-  - The following 6 ORAN defined metrics are exposed:
-    - `DRB.UEThpDl` - DL throughput
-    - `DRB.UEThpUl` - UL throughput
-    - `DRB.RlcPacketDropRateDl` - UL packet success rate
-    - `DRB.PacketSuccessRateUlgNBUu` - RLC DL packet drop rate
-    - `DRB.RlcSduTransmittedVolumeDL` - RLC DL transmitted SDU volume
-    - `DRB.RlcSduTransmittedVolumeUL` - RLC UL transmitted SDU volume
+- E2SM-RC service model:
+  - Only Control Service Style 2 is supported, shown [here](https://gitlab.com/ocudu/ocudu/-/blob/dev/lib/e2/e2sm/e2sm_rc/e2sm_rc_impl.cpp)
+- E2SM-KPM service model:
+  - All Report Service Styles (1–5 and 255) are supported, as shown [here](https://gitlab.com/ocudu/ocudu/-/blob/dev/lib/e2/e2sm/e2sm_kpm/e2sm_kpm_impl.cpp?ref_type=heads#L36-46)
+  - Minimum monitoring period is 1 s
+  - 27 metrics are currently exposed; see the [Supported E2 Metrics](../../knowledge_base/e2sm_kpm_metrics/index.md) for the full list
 
 ---
 
