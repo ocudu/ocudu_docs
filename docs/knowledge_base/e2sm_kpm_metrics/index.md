@@ -124,7 +124,7 @@ These metrics are reported at E2 node level only. UE-level granularity and per-P
 
 ## Extending the Metric Set
 
-For a spec-defined metric (the common case), adding support involves three steps. If you are exposing a measurement not defined in either 3GPP TS 28.552 or O-RAN WG3, there is a fourth step at the end.
+Adding support for a new metric involves three steps.
 
 All relevant files are under `lib/e2/e2sm/e2sm_kpm/`.
 
@@ -183,9 +183,5 @@ supported_metrics.emplace(
 Replace `e2sm_kpm_du_meas_provider_impl` with the actual provider class name from the table above.
 
 The declared labels and levels control which RIC subscription parameters the E2 agent accepts, and they are also advertised to the RIC in the RAN Function Definition at E2 setup. They must not exceed what `e2sm_kpm_metric_defs.h` defines for this metric name. The constraint is validated by `check_e2sm_kpm_metrics_definitions()` at startup, which will log an error if a violation is detected.
-
-### For non-spec metrics only
-
-If the metric is not defined in 3GPP TS 28.552 or O-RAN WG3, also add an `e2sm_kpm_metric_t` entry to `e2sm_kpm_metric_defs.h`. The struct requires: metric name, measurement object type, collection method, data type, unit string, and the maximum label and level flags you intend to permit. The existing entries in `get_e2sm_kpm_28_552_metrics()` and `get_e2sm_kpm_oran_metrics()` serve as examples.
 
 For contributions that add new metrics, see the [Contributing Guide](../../dev_guide/contributing_guide/index.md).
