@@ -1,0 +1,157 @@
+# SPDX-FileCopyrightText: Copyright (C) 2021-2026 Software Radio Systems Limited
+# SPDX-License-Identifier: BSD-3-Clause-Open-MPI
+
+gnb_id: 411
+gnb_id_bit_length: 32
+gnb_du_id: 0
+ran_node_name: ocudu01
+
+cu_cp:
+  amf:
+    addrs: 10.53.1.2
+    port: 38412
+    bind_addrs: 10.53.1.1
+    supported_tracking_areas:
+      - tac: 7
+        plmn_list:
+          - plmn: "00101"
+            tai_slice_support_list:
+              - sst: 1
+  inactivity_timer: 7200
+  request_pdu_session_timeout: 10
+  rrc:
+    rrc_procedure_guard_time_ms: 12800
+  f1ap:
+    procedure_timeout: 5000
+
+cell_cfg:
+  pci: 1
+  nof_antennas_dl: 1
+  nof_antennas_ul: 1
+  dl_arfcn: 437000
+  band: 256
+  channel_bandwidth_MHz: 5
+  common_scs: 15
+  sector_id: 0
+  plmn: 00101
+  pdsch:
+    dmrs_additional_position: 2
+    mcs_table: qam256
+    harq_feedback_disabled: false
+    nof_harqs: 32
+    max_nof_harq_retxs: 4
+  pusch:
+    dmrs_additional_position: 2
+    mcs_table: qam256
+    harq_mode_b: false
+    nof_harqs: 32
+    max_nof_harq_retxs: 4
+  prach:
+    zero_correlation_zone: 0
+    prach_config_index: 31
+    max_msg3_harq_retx: 0
+  pdcch:
+    common:
+      ss1_n_candidates: [0, 0, 3, 0, 0]
+    dedicated:
+      ss2_n_candidates: [0, 0, 3, 0, 0]
+  pucch:
+    sr_period_ms: 80
+    f1_nof_cyclic_shifts: 6
+  csi:
+    csi_rs_period: 80
+  ssb:
+    ssb_period: 10
+  sib:
+    t300: 2000
+    t301: 2000
+    t311: 3000
+    t319: 2000
+    si_window_length: 20
+    si_sched_info:
+      - si_period: 16               # Set SIB2 period.
+        sib_mapping: 2              # Enable SIB2.
+      - si_period: 16               # Set SIB19 period.
+        sib_mapping: 19             # Enable SIB19.
+        si_window_position: 2       # Set SIB19 position.
+    sib2:
+  ta:
+    ta_cmd_offset_threshold: 1
+    ta_measurement_slot_period: 1000
+    ta_measurement_slot_prohibit_period: 26
+    ta_outlier_detection_zscore_threshold: 0.0
+    ta_target: 0
+  ntn:
+    cell_specific_koffset: 16
+    ephemeris_orbital:
+      eccentricity: 0.0011959639962285152
+      inclination: 0.9295784053900794
+      longitude: 5.460191249899703
+      mean_anomaly: 5.428463205785937
+      periapsis: 0.8582609750544351
+      semi_major_axis: 6877288.146136846
+    epoch_time:
+      sfn: 0  # only placeholders, gnb overwrites it
+      subframe_number: 0  # only placeholders, gnb overwrites it
+    epoch_timestamp: '2026-07-20T22:23:28.283'
+    ntn_ul_sync_validity_dur: 5
+
+    feeder_link:
+      dl_freq: 2185000000.0
+      enable_doppler_compensation: false
+      ul_freq: 1995000000.0
+    gateway_location:
+      altitude: 1.0
+      latitude: 7.853127063969279
+      longitude: -41.916586438365854
+
+    use_state_vector: false
+
+expert_phy:
+  pusch_channel_estimator_cfo_compensation: false
+  pusch_dec_max_iterations: 12
+  pusch_channel_estimator_td_strategy: interpolate
+
+ru_sdr:
+  srate: 5.76
+
+  device_driver: zmq
+  device_args: tx_port0=tcp://*:32505,rx_port0=tcp://localhost:32275,id=gnb,base_srate=5760000
+
+  sync: default
+  time_alignment_calibration: -576
+  expert_cfg:
+    low_phy_dl_throttling: .99
+
+log:
+  filename: /tmp/gnb.log
+  all_level: info
+  lib_level: info
+  rlc_level: warning
+  config_level: debug
+  ntn_level: debug
+  flush_app_banner: true
+
+metrics:
+  autostart_stdout_metrics: true
+  enable_json: true
+  enable_log: true
+  layers:
+    enable_sched: true
+    enable_mac: true
+    enable_du_proc: true
+
+pcap:
+  ngap_enable: true
+  ngap_filename: /tmp/ngap.pcap
+  e1ap_enable: true
+  e1ap_filename: /tmp/e1ap.pcap
+  f1ap_enable: true
+  f1ap_filename: /tmp/f1ap.pcap
+  rlc_enable: true
+  rlc_rb_type: srb
+  rlc_filename: /tmp/rlc.pcap
+
+remote_control:
+  bind_addr: 0.0.0.0
+  enabled: true

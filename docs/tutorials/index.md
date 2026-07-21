@@ -60,7 +60,7 @@ Requires specialist infrastructure: an O-RAN RU or a Near-RT RIC.
     <DocCard item={{type: 'link', href: '/tutorials/near-rt-ric/', label: 'Near-RT RIC', description: 'Use the E2 interface to integrate OCUDU with a Near-RT RIC and deploy an xApp.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
-    <DocCard item={{type: 'link', href: '/tutorials/ntn/', label: 'NTN', description: 'Enable NTN mode in OCUDU for satellite and high-altitude platform deployments, with GEO orbit timing support.'}} />
+    <DocCard item={{type: 'link', href: '/tutorials/ntn/', label: 'NTN', description: 'Enable NTN mode in OCUDU for satellite deployments, covering GEO and LEO scenarios with SIB19 ephemeris and timing support.'}} />
   </article>
 </section>
 
