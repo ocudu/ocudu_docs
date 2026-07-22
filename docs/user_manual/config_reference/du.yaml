@@ -317,6 +317,7 @@ cell_cfg:
     max_rank: 4                             # Optional UINT (4). Sets the maximum number of PUSCH transmission layers. Supported: [1 - 4].
     msg3_delta_preamble: 6                  # Optional INT (6). Sets the MSG3 DeltaPreamble power offset between MSG3 and RACH preamble transmission. Supported: [-1 - 6].
     p0_nominal_with_grant: -76              # Optional INT (-76). Sets the P0 value for PUSCH grant (except MSG3), in dBm. Supported: multiples of 2 within the range [-202, 24].
+    p0_nominal_without_grant: -76           # Optional INT (-76). Sets the P0 value for PUSCH without grant, in dBm. Supported: multiples of 2 within the range [-202, 24].
     msg3_delta_power: 8                     # Optional INT (8). Sets the target power level at the network receiver side, in dBm. Supported: multiples of 2 within the range [-6, 8].
     max_puschs_per_slot: 16                 # Optional UINT (16). Sets the maximum number of PUSCH grants per slot. Supported: [1 - 16].
     beta_offset_ack_idx_1: 11               # Optional UINT (11). Sets the betaOffsetACK-Index1 part of UCI-OnPUSCH. Supported: [0 - 31].
