@@ -244,6 +244,23 @@ After forking the repository, you need to enable CI/CD runners:
 2. Under the **Instance** tab, enable instance runners (free GitLab Shared Runners)
 3. If you encounter issues enabling runners or see a banner stating `Identity verification is required in order to run CI jobs`, follow the [account verification instructions](https://docs.gitlab.com/ci/debugging/#error-identity-verification-is-required-in-order-to-run-ci-jobs)
 
+Shared runners are convenient, but they are subject to GitLab's compute minute limits and may be insufficient for large or frequent builds. In that case, using your own runner gives you more stable capacity and control over the build environment.
+
+If you want to use your own runner, register it with GitLab (**in your fork**):
+
+1. In **Settings → CI/CD → Runners**, expand the dropdown menu (or kebab menu with three dots) and choose "Show runner installation and registration instruction."
+2. Copy the registration token for your fork.
+3. On the machine where the runner will run, install GitLab Runner and execute `gitlab-runner register`.
+4. When prompted, enter the GitLab instance URL, the registration token, a description, tags (for example, `saas-linux-medium-amd64`), and executor type (usually `docker` is a good choice).
+5. After registration, make sure the runner is **active** and available for your fork.
+   
+See GitLab Runner install at https://docs.gitlab.com/runner/install/.
+
+For builds that use ThreadSanitizer or other privileged Docker features, the runner may need `security_opt = ["seccomp=unconfined"]` configured under the `[runners.docker]` section in `/etc/gitlab-runner/config.toml`.
+The default log output limit (`output_limit`) may need to be increased when builds produce large logs.
+
+See GitLab Runner configuration docs for `config.toml` at https://docs.gitlab.com/runner/configuration/advanced-configuration.html.
+
 ## Licensing
 
 Licensing is important to open source projects. It provides some assurances that
