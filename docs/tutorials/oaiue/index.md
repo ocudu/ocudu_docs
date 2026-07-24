@@ -1,7 +1,11 @@
-# OCUDU with OpenAirInterface (OAI) UE
+---
+sidebar_label: Using the OAI UE
+---
+
+# Building a 5G network with the OpenAirInterface UE
 
 :::warning
-Improving the interoperability of the OpenAirInterface (OAI) UE is an on-going effort at the Duranta project. This application note is based on the OAI `2026.w25` release and is intended to be used for proof-of-concept and initial testing to allow users to test OCUDU with an open source UE that is in active development. Please reach out to the Duranta community for general feedback and technical support for the OAI UE. 
+Improving the interoperability of the OpenAirInterface (OAI) UE is an on-going effort at the Duranta project. This tutorial is based on the OAI `2026.w25` release and is intended to be used for proof-of-concept and initial testing to allow users to test OCUDU with an open source UE that is in active development. Please reach out to the Duranta community for general feedback and technical support for the OAI UE. 
 :::
 
 ## Overview
@@ -10,7 +14,7 @@ OCUDU is a 5G CU/DU solution and does not include a UE application. The [Duranta
 
 Historically, the OCUDU and Duranta projects had incompatible virtual radio interfaces, ZeroMQ (ZMQ) and RFSim respectively. The OAI `2026.w17` release introduced a compatible ZMQ radio. While not strictly required for interoperability, this feature  enables testing with no hardware cost.
 
-This application note shows how to create an end-to-end fully open-source 5G TDD network with OAI UE, OCUDU gNodeB and Open5GS 5G core network.
+This tutorial shows how to create an end-to-end fully open-source 5G TDD network with OAI UE, OCUDU gNodeB and Open5GS 5G core network.
 
 The ZMQ-based virtual radio use case is shown here. Various use cases such as over-the-air hardware setup and multi-UE emulation will be added later.
 
@@ -18,7 +22,7 @@ The ZMQ-based virtual radio use case is shown here. Various use cases such as ov
 
 ## Hardware and Software Overview
 
-For this application note, the following hardware and software are used:
+For this tutorial, the following hardware and software are used:
 
 - PC with Ubuntu 24.04.3 LTS
 - [OCUDU](https://gitlab.com/ocudu)
@@ -51,7 +55,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
 - [GitHub](https://github.com/open5gs/open5gs)
 - [Quickstart Guide](https://open5gs.org/open5gs/docs/guide/01-quickstart/)
 
-For the purpose of this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`.
+For the purpose of this tutorial, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`.
 
 ---
 
@@ -538,3 +542,7 @@ If the UE can ping the Google DNS, then the internet can be successfully accesse
 The current OAI UE implementation has the following feature limitation:
 
 - With CSI RS enabled on the OCUDU gNB, Tracking Reference Signal (TRS) is not handled by the OAI UE
+
+## Next steps
+
+- [Connecting a COTS UE](../cots_ue/index.md) — connect a real 5G device over a USRP.

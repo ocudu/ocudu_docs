@@ -1,10 +1,14 @@
-# O-RAN CU-DU Split
+---
+sidebar_label: Splitting CU and DU
+---
+
+# Deploying a CU/DU split over F1
 
 ## Overview
 
 This tutorial outlines the steps required to configure and run the O-DU and O-CU applications, to create an E2E O-RAN compliant network with a CU-DU split. In this tutorial a USRP is used as the RF-frontend, resulting in this
 being a [Split 8](https://www.rcrwireless.com/20210317/5g/exploring-functional-splits-in-5g-ran-tradeoffs-and-use-cases-reader-forum#:~:text=Split%208%3A%20PHY%2DRF%20split.%C2%A0) configuration.
-To implement a Split 7.2x configuration, use this guide in conjunction with the [RU Guide](../oranru/index.md).
+To implement a Split 7.2x configuration, use this tutorial in conjunction with the [O-RAN RU tutorial](../oranru/index.md).
 
 ![image](assets/cu_du_split.png)
 
@@ -12,7 +16,7 @@ To implement a Split 7.2x configuration, use this guide in conjunction with the 
 
 ## Hardware and Software Overview
 
-For this application note, the following hardware and software are used:
+For this tutorial, the following hardware and software are used:
 
 - PC with, e.g. Ubuntu 24.04 LTS
 - [OCUDU](https://gitlab.com/ocudu/ocudu.git)
@@ -222,3 +226,9 @@ pci rnti | cqi  ri  mcs  brate   ok  nok  (%)  dl_bs | pusch  rsrp  mcs  brate  
   1 4601 |  15 1.0   27   517k   64    0   0%      0 |  33.6 -12.3   28   124k   29    0   0%    198   -40n   17
   1 4601 |  15 1.0   27    60k   36    0   0%      0 |  33.0 -11.8   28   127k   21    0   0%      0   -24n   17
 ```
+
+## Next steps
+
+- [Connecting an O-RAN RU](../oranru/index.md) — connect an O-RAN 7.2 radio unit.
+- [Integrating a Near-RT RIC](../near-rt-ric/index.md) — add the E2 interface and deploy an xApp.
+- [Running on Kubernetes](../k8s/index.md) — deploy the components as Kubernetes pods.

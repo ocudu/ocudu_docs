@@ -1,11 +1,12 @@
 ---
+sidebar_label: Accelerating with BBDEV
 description: "Configure OCUDU to offload LDPC encoding and decoding to an Intel ACC100 or vRAN Boost (ACC200/VRB1) hardware accelerator via DPDK BBDEV."
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# OCUDU gNB with BBDEV Hardware Acceleration
+# Hardware acceleration with BBDEV
 
 :::info
 This tutorial assumes that DPDK is already installed and configured on your system. For details, see the [DPDK tutorial](../dpdk/).
@@ -383,3 +384,7 @@ sudo dpdk-devbind.py --unbind 0000:8a:00.0
 ```
 
 After unbinding, the device will appear in the "Other devices" section of `dpdk-devbind.py -s` with no driver attached. This is the normal state for an ACC100/ACC200 on a system without the vendor kernel driver installed. The device is now available for re-binding in a future session.
+
+## Next steps
+
+- [Tuning performance](../tuning/index.md) — tune the host for real-time performance.

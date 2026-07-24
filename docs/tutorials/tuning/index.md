@@ -1,10 +1,14 @@
-# OCUDU Performance Tuning
+---
+sidebar_label: Tuning performance
+---
+
+# Tuning a host for real-time performance
 
 :::info
 This tutorial does not cover machine-specific configuration steps (e.g., BIOS settings) or the installation and fine-tuning of real-time Linux kernels.
 :::
 
-## Introduction
+## Overview
 
 This tutorial provides a step-by-step guide to tuning a Linux-based machine for maximizing the performance of OCUDU. While optimal performance
 of OCUDU may require additional machine-specific fine-tuning, the recommendations outlined here are designed to meet the needs of most users.
@@ -79,3 +83,7 @@ Finally, the machine must be rebooted in order for the modified `GRUB` arguments
 
 - [Performance Tuning Guide - TuneD](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html-single/performance_tuning_guide/index#chap-Red_Hat_Enterprise_Linux-Performance_Tuning_Guide-Tuned).
 - [Real-time group scheduing](https://www.kernel.org/doc/html/latest/scheduler/sched-rt-group.html).
+
+## Next steps
+
+- [Running on Kubernetes](../k8s/index.md) — deploy the components as Kubernetes pods.

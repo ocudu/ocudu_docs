@@ -1,11 +1,15 @@
+---
+sidebar_label: Integrating a Near-RT RIC
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# O-RAN NearRT-RIC and xApp
+# Integrating a Near-RT RIC and deploying an xApp
 
 ## Overview
 
-This application note shows how to use the E2 interface exposed by OCUDU and showcases its interoperability with third-party RIC frameworks.
+This tutorial shows how to use the E2 interface exposed by OCUDU and showcases its interoperability with third-party RIC frameworks.
 For this purpose, we use [O-RAN Alliance](https://www.o-ran.org/) compliant NearRT-RICs and xApps provided in [ORAN SC RIC](https://docs.o-ran-sc.org/en/latest/projects.html#near-realtime-ran-intelligent-controller-ric) and [FlexRIC](https://gitlab.eurecom.fr/mosaic5g/flexric) projects.
 
 Our E2 interface implementation is based on the following O-RAN technical specifications:
@@ -23,13 +27,13 @@ To consult other O-RAN ALLIANCE Specifications, please click [here](https://spec
 
 ## Setup Overview
 
-The following diagram presents the setup architecture used in this application note:
+The following diagram presents the setup architecture used in this tutorial:
 
 ![image](assets/gNB_srsUE_zmq_near_rt_RIC.png)
 
 ## Hardware and Software Overview
 
-For this application note, the following hardware and software are used:
+For this tutorial, the following hardware and software are used:
 
 - PC with Ubuntu 24.04.1 LTS
 - [OCUDU](https://gitlab.com/ocudu/ocudu)
@@ -68,7 +72,7 @@ Depending on which RIC you are using, you should select the appropriate instruct
 The ORAN SC RIC platform is an advanced software framework with a functionality that includes platform health monitoring, alarms, etc.
 Since it relies on Kubernetes and Helm for deployment, reliability, and scalability, its vanilla installation is quite complex, involves many steps, and requires a high level of knowledge and expertise in those frameworks.
 
-In this application note, we use a minimal version of the O-RAN SC near-RT RIC (`i-release`), that can be easily deployed as a multi-container application using a single Docker command, eliminating the necessity for Kubernetes or Helm.
+In this tutorial, we use a minimal version of the O-RAN SC near-RT RIC (`i-release`), that can be easily deployed as a multi-container application using a single Docker command, eliminating the necessity for Kubernetes or Helm.
 Specifically, we will deploy ORAN SC RIC using Docker and configuration files provided in this [repository](https://github.com/srsran/oran-sc-ric). 
 
 :::info
@@ -142,7 +146,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
 - [GitHub](https://github.com/open5gs/open5gs)
 - [Quickstart Guide](https://open5gs.org/open5gs/docs/guide/01-quickstart/)
 
-For the purpose of this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`,as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/docker).
+For the purpose of this tutorial, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`,as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/docker).
 
 ### ZeroMQ
 
@@ -224,14 +228,14 @@ Please check our srsRAN 4G [ZeroMQ Application Note](https://docs.srsran.com/pro
 
 ## Configuration
 
-Here, we use ZMQ-based setup, and hence the configuration files are based on those introduced in [OCUDU gNB with srsUE](../srsue/index.md) application note.
+Here, we use ZMQ-based setup, and hence the configuration files are based on those introduced in [Using srsUE](../srsue/index.md) tutorial.
 
 The following config files were modified to use ZMQ-based RF driver and enable E2 interface in OCUDU gNodeB:
 
 * [gNB config](assets/gnb_zmq.yaml)
 * [UE config](assets/ue_zmq.conf)
 
-Details of the modifications made are outlined in the following sections. The description of the remaining config parameters is available in [OCUDU gNB with srsUE](../srsue/index.md) application note.
+Details of the modifications made are outlined in the following sections. The description of the remaining config parameters is available in [Using srsUE](../srsue/index.md) tutorial.
 
 It is recommended you use these files to avoid errors while changing configs manually. Any configuration files not included here do not require modification from the default settings.
 
@@ -844,3 +848,7 @@ sudo ifconfig ogstun 0.0.0.0 down
 ### RIC running on a different machine
 
 If you are running your RIC on a different machine, you will need to correctly configure the E2 `bind_addr` parameter in the gNB config file. This is shown in the example config, with the line commented out. If you are running the RIC on a separate machine simply uncomment this option.
+
+## Next steps
+
+- [Splitting CU and DU](../cu_du_split/index.md) — run the CU and DU as separate processes over F1.

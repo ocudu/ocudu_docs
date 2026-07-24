@@ -1,7 +1,11 @@
-# O-RAN 7.2 RU Guide
+---
+sidebar_label: Connecting an O-RAN RU
+---
+
+# Connecting an O-RAN 7.2 radio unit
 
 :::info
-This guide covers the hardware-agnostic setup and configuration steps for connecting an O-RU via split 7.2. Hardware-specific details, including sample configuration files, for individual RU models can be found in the [Radio Units](../../integrations/index.md) section under integrations.
+This tutorial covers the hardware-agnostic setup and configuration steps for connecting an O-RU via split 7.2. Hardware-specific details, including sample configuration files, for individual RU models can be found in the [Radio Units](../../integrations/index.md) section under integrations.
 :::
 
 ## Overview
@@ -217,7 +221,7 @@ Network devices using using kernel driver
 
 In the above example, we can see that the VF has been created and is using the `iavf` driver in the line *Adaptive Virtual Function*. Note, this is **only** for the Intel E810 NIC, other NICs may have different drivers.
 
-Next, you will need to bind the VF to the `vfio-pci` driver, you can do this by running the following command. Before running this command, make sure that `vfio-pci` is enabled, see the [DPDK Guide](../dpdk/index.md) for more information on how to enable it.
+Next, you will need to bind the VF to the `vfio-pci` driver, you can do this by running the following command. Before running this command, make sure that `vfio-pci` is enabled, see the [DPDK tutorial](../dpdk/index.md) for more information on how to enable it.
 
 ```bash
 sudo dpdk-devbind.py --bind=vfio-pci 0000:51:01.0
@@ -350,3 +354,8 @@ pci rnti  cqi  mcs  brate   ok  nok  (%) | pusch  mcs  brate   ok  nok  (%)    b
 ## Integration Guide
 
 Hardware-specific guides for O-RUs and switches tested with OCUDU in an O-RAN split 7.2 compliant network can be found in the [Integrations](../../integrations/index.md) section. All of the hardware items listed there have been tested in-house.
+
+## Next steps
+
+- [Configuring DPDK](../dpdk/index.md) — add kernel-bypass fronthaul I/O for higher throughput.
+- [Running on Kubernetes](../k8s/index.md) — deploy the components as Kubernetes pods.

@@ -1,11 +1,12 @@
 ---
+sidebar_label: Enabling NTN
 description: Configure and run a 5G NR SA Non-Terrestrial Network (NTN) on OCUDU, covering GEO and LEO satellite scenarios with an Amarisoft UE.
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# OCUDU gNB for 5G NTN
+# Enabling 5G NTN for satellite deployments
 
 ## Overview
 
@@ -42,8 +43,8 @@ Both paths use the same Amarisoft UE and Open5GS core, and the steps are almost 
 | **Live SIB19 updates** | Not used | Yes (needed for LEO) |
 | **Extra tooling** | GNU Radio Companion | Amarisoft licence for the built-in emulator; Python 3 for the optional helper scripts |
 
-:::tip How to read this guide
-Most of this guide is common to both paths. Wherever the paths differ, the section has an **External GNU Radio emulator** and a **Built-in emulator** tab. Picking a tab applies your choice across the whole page, so you only choose once.
+:::tip How to read this tutorial
+Most of this tutorial is common to both paths. Wherever the paths differ, the section has an **External GNU Radio emulator** and a **Built-in emulator** tab. Picking a tab applies your choice across the whole page, so you only choose once.
 :::
 
 ## Key concepts
@@ -63,7 +64,7 @@ The following parameters appear in the gNB NTN configuration. Each one is docume
 
 ### Hardware and software
 
-For this application note, the following hardware and software are used:
+For this tutorial, the following hardware and software are used:
 
 - PC with Ubuntu 22.04.1 LTS
 - [OCUDU](https://gitlab.com/ocudu/ocudu) (26.04 or later) built with ZeroMQ support
@@ -169,7 +170,7 @@ The Amarisoft built-in NTN channel emulator is a licensed Amarisoft feature. Con
 
 ## Step 2: Configuration
 
-The tutorial ships prepared configuration files so you can avoid errors while editing configs manually. The description of any parameter not covered here is available in the [Configuration Reference](../../user_manual/config_reference/config_reference.mdx). Details of the ZMQ-based setup are explained in the [OCUDU with Amarisoft UE](../amari_ue/index.md) application note. The Amarisoft UE also requires the `ue-ifup` script that ships with it, located in the `config` folder of the UE application.
+The tutorial ships prepared configuration files so you can avoid errors while editing configs manually. The description of any parameter not covered here is available in the [Configuration Reference](../../user_manual/config_reference/config_reference.mdx). Details of the ZMQ-based setup are explained in the [Amarisoft UE](../amari_ue/index.md) tutorial. The Amarisoft UE also requires the `ue-ifup` script that ships with it, located in the `config` folder of the UE application.
 
 Download the prepared files for your path from the links in the sections below. Each config passed to the gNB with `-c` is read from the current working directory, so keep the files there or pass a full path (for example, `-c ~/configs/ocudu_gnb.yml`). Put the Amarisoft UE config in the Amarisoft UE directory, alongside the `ue-ifup` script.
 
@@ -644,7 +645,7 @@ If the NTN channel emulator runs on the same PC as the gNB:
 </TabItem>
 <TabItem value="amarisoft" label="Built-in emulator">
 
-With the built-in emulator the UE connects directly to the gNB. In `ocudu_gnb.yml` the gNB binds `tx_port0` on `32505` and reads `rx_port0` from `32275`; the UE mirrors this (`tx_port0` on `32275`, `rx_port0` from `32505`). On separate machines, replace `localhost` and `*` with the machine-reachable IP addresses on both sides. See the [OCUDU with Amarisoft UE](../amari_ue/index.md) application note for the general pattern.
+With the built-in emulator the UE connects directly to the gNB. In `ocudu_gnb.yml` the gNB binds `tx_port0` on `32505` and reads `rx_port0` from `32275`; the UE mirrors this (`tx_port0` on `32275`, `rx_port0` from `32505`). On separate machines, replace `localhost` and `*` with the machine-reachable IP addresses on both sides. See the [Amarisoft UE](../amari_ue/index.md) tutorial for the general pattern.
 
 </TabItem>
 </Tabs>
@@ -671,3 +672,7 @@ With the built-in emulator the UE connects directly to the gNB. In `ocudu_gnb.ym
 
 </TabItem>
 </Tabs>
+
+## Next steps
+
+- [Connecting an Amarisoft UE](../amari_ue/index.md) — scale up to multi-UE testing with a UE simulator.

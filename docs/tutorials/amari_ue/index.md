@@ -1,4 +1,8 @@
-# OCUDU with Amarisoft UE
+---
+sidebar_label: Connecting an Amarisoft UE
+---
+
+# Connecting an Amarisoft UE to OCUDU
 
 ## Overview
 
@@ -13,7 +17,7 @@ This tutorial details two example setups: connecting the OCUDU gNB to AmariUE us
 
 ## Hardware and Software Overview
 
-For this application note, the following hardware and software are used:
+For this tutorial, the following hardware and software are used:
 
 - A PC with a linux based OS
 - OCUDU CU/DU
@@ -787,3 +791,7 @@ If you encounter issues with the UE not finding the cell and/or not being able t
 ### 5G QoS Identifier
 
 By default, Open5GS uses 5QI = 9. If the **qos** section is not provided in the gNB config file, the default one with 5QI = 9 will be generated and the UE should connect to the network. If one needs to change the 5QI, please harmonize these settings between gNB and Open5GS config files, as otherwise, a UE will not be able to connect.
+
+## Next steps
+
+- [Testing handover](../handover/index.md) — move a UE between two cells.

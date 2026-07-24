@@ -1,6 +1,10 @@
-# OCUDU gNB(-DU) Load Testing
+---
+sidebar_label: Load testing
+---
 
-## Introduction
+# Load testing OCUDU without radio hardware
+
+## Overview
 
 In this tutorial, we will guide you through the process of load testing the OCUDU gNB(-DU) application without the need for specific hardware, via parameters available within the configuration file.
 
@@ -207,3 +211,7 @@ Check the following in the console trace:
 Once all of the above checks pass, you can proceed to connect a UE.
 
 For more information about the test mode please refer to the OCUDU [Configuration Reference](../../user_manual/config_reference/config_reference.mdx).
+
+## Next steps
+
+- [Using srsUE](../srsue/index.md) — add a software UE over ZeroMQ, no radio hardware required.

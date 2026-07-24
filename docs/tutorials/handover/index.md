@@ -1,4 +1,8 @@
-# OCUDU gNB Handover
+---
+sidebar_label: Testing handover
+---
+
+# Testing intra-gNB handover
 
 ## Overview
 
@@ -20,7 +24,7 @@ The following diagram presents the setup architecture:
 
 ## Hardware and Software Overview
 
-For this application note, the following hardware and software are used:
+For this tutorial, the following hardware and software are used:
 
 - PC with, e.g. Ubuntu 24.04 LTS
 - [OCUDU](https://gitlab.com/ocudu)
@@ -40,7 +44,7 @@ Not all dual channel USRPs have independent RF chains, this means that, for exam
 
 ### Open5GS
 
-For the purpose of this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker` as the 5G Core, as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/docker).
+For the purpose of this tutorial, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker` as the 5G Core, as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/docker).
 
 Open5GS is a C-language Open Source implementation for 5G Core and EPC. The following links will provide you
 with the information needed to download and set-up Open5GS so that it is ready to use with OCUDU:
@@ -257,3 +261,7 @@ between the cells to trigger handover.
 ![image](assets/grafana_handover.png)
 
 In the above image the traffic is being generated between the UE and gNB using iPerf.
+
+## Next steps
+
+- [Tuning performance](../tuning/index.md) — tune the host for real-time performance.

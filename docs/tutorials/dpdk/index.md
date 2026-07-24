@@ -1,10 +1,14 @@
-# OCUDU with DPDK
+---
+sidebar_label: Configuring DPDK
+---
+
+# Configuring DPDK for the Open Fronthaul
 
 :::info
 This tutorial assumes the machine being used has an Intel processor. For AMD processors some of the commands used will change. The overall steps will remain mostly the same.
 :::
 
-## Introduction
+## Overview
 
 This tutorial outlines how to configure DPDK for use with OCUDU for front-haul connectivity.
 
@@ -322,3 +326,9 @@ Type <t> to view trace
 ```
 
 The first lines beginning with `EAL` tell us that the CU/DU is successfully running with DPDK, specifically the third line which reads `Detected shared linkage of DPDK`.
+
+## Next steps
+
+- [Configuring DPDK with USRP](../dpdk_uhd/index.md) — apply DPDK to a USRP front-end.
+- [Accelerating with BBDEV](../accx00/index.md) — offload LDPC encode and decode to a hardware accelerator.
+- [Tuning performance](../tuning/index.md) — tune the host for real-time performance.

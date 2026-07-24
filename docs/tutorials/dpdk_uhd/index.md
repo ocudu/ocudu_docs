@@ -1,15 +1,16 @@
 ---
+sidebar_label: Configuring DPDK with USRP
 description: "Configure DPDK kernel-bypass packet I/O for use with a USRP RF front-end and OCUDU."
 ---
 
-# OCUDU with DPDK on USRP
+# Configuring DPDK with a USRP front-end
 
 
 :::info
 This tutorial assumes the machine being used has an Intel processor. For AMD processors, some of the commands (specifically regarding IOMMU and specific DPDK drivers) will change. The overall steps will remain mostly the same.
 :::
 
-## Introduction
+## Overview
 
 This tutorial outlines how to configure DPDK for use with OCUDU gNB in a USRP X310.
 
@@ -529,3 +530,8 @@ The first lines beginning with `EAL` tell us that the CU/DU is successfully runn
 
 - [Real-time failure in RF](https://github.com/srsran/srsRAN_Project/issues/1141)
 - [mbuf alloc](https://stackoverflow.com/questions/79340426/rx-mbuf-alloc-failed-queue-id-0-when-trying-to-use-dpdk-with-uhd)
+
+## Next steps
+
+- [Accelerating with BBDEV](../accx00/index.md) — offload LDPC encode and decode to a hardware accelerator.
+- [Tuning performance](../tuning/index.md) — tune the host for real-time performance.

@@ -1,7 +1,11 @@
+---
+sidebar_label: Integrating MATLAB
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# MATLAB Testing Tools
+# Integrating MATLAB with OCUDU
 
 ## Overview
 
@@ -28,7 +32,7 @@ conditions provided by MATLAB’s 3GPP-compliant models.
 
 ## Set-Up Considerations
 
-For this application note, the following hardware and software are used:
+For this tutorial, the following hardware and software are used:
 
 - A PC with Ubuntu 24.04 LTS
 - [OCUDU MATLAB](https://gitlab.com/ocudu/ocudu_elements/ocudu-matlab)
@@ -593,3 +597,7 @@ This will give the following output:
   </TabItem>
 
 </Tabs>
+
+## Next steps
+
+- [Load testing](../testmode/index.md) — validate your build without radio hardware.

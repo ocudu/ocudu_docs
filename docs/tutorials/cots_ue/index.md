@@ -1,4 +1,8 @@
-# OCUDU with COTS UEs
+---
+sidebar_label: Connecting a COTS UE
+---
+
+# Connecting a commercial 5G device to OCUDU
 
 :::warning
 Operating a private 5G SA network on cellular frequency bands may be tightly regulated in your jurisdiction. Seek the approval of your telecommunications regulator before doing so.
@@ -676,3 +680,9 @@ The smartphone stores these setting persistently across reboots on a per-IMSI ba
 ## Tested Devices
 
 You can find a list of all of the devices that have been tested by the SRS team and reported by the community [here](../../knowledge_base/cots_ues/index.md). This list contains information about the devices being used, and the configuration of the network.
+
+## Next steps
+
+- [Connecting an Amarisoft UE](../amari_ue/index.md) — scale up to multi-UE testing with a UE simulator.
+- [Testing handover](../handover/index.md) — move a UE between two cells.
+- [Connecting an O-RAN RU](../oranru/index.md) — connect an O-RAN 7.2 radio unit.

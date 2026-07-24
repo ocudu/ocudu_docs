@@ -1,6 +1,10 @@
-# OCUDU on Kubernetes
+---
+sidebar_label: Running on Kubernetes
+---
 
-## Introduction
+# Deploying OCUDU on Kubernetes
+
+## Overview
 
 This tutorial outlines the steps required to deploy the OCUDU gNB for a split 7.2 architecture using
 [Kubernetes](https://kubernetes.io/). This approach is well-suited for scenarios that require network
@@ -134,7 +138,7 @@ Reboot the system after the installation is complete. For more information, refe
 
 ### 3. Install TuneD
 
-For performance tuning using TuneD, refer to the [OCUDU Tuning Guide](../tuning/index.md) in our documentation.
+For performance tuning using TuneD, refer to the [tuning tutorial](../tuning/index.md) in our documentation.
 
 ### 4. Install DPDK
 
@@ -563,3 +567,7 @@ To delete the Grafana deployment:
 ```bash
 helm uninstall grafana -n ocudu
 ```
+
+## Next steps
+
+- [Splitting CU and DU](../cu_du_split/index.md) — run the CU and DU as separate processes over F1.

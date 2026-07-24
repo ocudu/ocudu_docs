@@ -1,4 +1,8 @@
-# OCUDU with srsUE
+---
+sidebar_label: Using srsUE
+---
+
+# Building a 5G network with srsUE
 
 :::warning
 5G extensions in srsUE are no longer in active development, although it does receive small maintenance updates. See [here](https://docs.srsran.com/projects/4g/en/latest/dev_status.html) for further details. srsUE is intended to be used
@@ -8,7 +12,7 @@ for proof-of-concept and initial testing to allow users to test OCUDU without th
 ## Overview
 
 OCUDU is a 5G CU/DU solution and does not include a UE application. However, [srsRAN 4G](https://github.com/srsran/srsRAN_4G) does include a prototype 5G UE (srsUE) which can be used for testing.
-This application note shows how to create an end-to-end fully open-source 5G network with srsUE, OCUDU gNodeB and Open5GS 5G core network.
+This tutorial shows how to create an end-to-end fully open-source 5G network with srsUE, OCUDU gNodeB and Open5GS 5G core network.
 
 Various use-cases are shown here, including both over-the-air and ZeroMQ based setups, and multi-UE emulation.
 
@@ -16,7 +20,7 @@ Various use-cases are shown here, including both over-the-air and ZeroMQ based s
 
 ## Hardware and Software Overview
 
-For this application note, the following hardware and software are used:
+For this tutorial, the following hardware and software are used:
 
 - PC with Ubuntu 22.04.1 LTS
 - [OCUDU](https://gitlab.com/ocudu)
@@ -53,7 +57,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
 - [GitHub](https://github.com/open5gs/open5gs)
 - [Quickstart Guide](https://open5gs.org/open5gs/docs/guide/01-quickstart/)
 
-For the purpose of this application note, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`, as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/docker).
+For the purpose of this tutorial, we will use a dockerized Open5GS version provided in OCUDU at `ocudu/docker`, as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/docker).
 
 ### ZeroMQ
 
@@ -322,7 +326,7 @@ The NR connection is then confirmed with the `RRC NR reconfiguration successful.
 
 Here, we demonstrate how to use ping and iPerf3 tools to test the connectivity and throughput in the network.
 
-#### Routing Configuration
+#### Routing Configuration {#ota-routing}
 
 Before being able to ping UE, you need to add a route to the UE on the **host machine** (i.e. the one running the Open5GS docker container):
 
@@ -563,9 +567,9 @@ ip_netmask = 255.255.255.0
 Once the config files are updated, the network can be set up on a single host machine, using the same commands as in the case of the over-the-air setup.
 
 
-### Testing the Network
+### Testing the Network {#zmq-testing}
 
-#### Routing Configuration
+#### Routing Configuration {#zmq-routing}
 
 Before being able to ping UE, you need to add a route to the UE on the **host machine** (i.e. the one running the Open5GS docker container):
 
@@ -771,7 +775,7 @@ The following table lists port numbers are used in the example flow graph:
 
 <a id="grc-ports-table"></a>
 
-#### Ports Used in the GNU-Radio flow graph
+#### Ports Used in the GNU-Radio flow graph {#grc-ports-table}
 
 | Port Direction   |   gNB |   srsUE1 |   srsUE2 |   srsUE3 |
 |------------------|-------|----------|----------|----------|
@@ -1141,3 +1145,8 @@ lte_sample_rates = true
 **Multiple TACs**
 
 - srsUE does not support the use of multiple TACs. Using multple TACs will result in errors parsing NAS messages from the core, resulting in the UE not connecting correctly.
+
+## Next steps
+
+- [Using the OAI UE](../oaiue/index.md) — try a second open-source software UE.
+- [Connecting a COTS UE](../cots_ue/index.md) — connect a real 5G device over a USRP.
