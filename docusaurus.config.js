@@ -54,6 +54,11 @@ module.exports = {
   },
   themes: ['@docusaurus/theme-mermaid'],
   themeConfig: {
+    mermaid: {
+      options: {
+        fontFamily: "'Ubuntu', system-ui, sans-serif",
+      },
+    },
     image: 'img/ocudu_social_card.png',
     metadata: [
       { property: 'og:type', content: 'website' },

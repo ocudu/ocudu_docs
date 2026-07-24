@@ -3,6 +3,12 @@
  * SPDX-License-Identifier: BSD-3-Clause-Open-MPI
  */
 
+/* ── Fonts (self-hosted via @fontsource) ────────────────────────────── */
+@import '@fontsource/ubuntu/400.css';
+@import '@fontsource/ubuntu/400-italic.css';
+@import '@fontsource/ubuntu/500.css';
+@import '@fontsource/ubuntu/700.css';
+
 /* ── Brand tokens ───────────────────────────────────────────────────── */
 
 :root {
@@ -12,6 +18,10 @@
   --ocudu-violet: #9F35F2;
   --ocudu-navy:   #001842;
   --ocudu-cyan:   #02C0DD;
+
+  /* Typography */
+  --ifm-font-family-base: 'Ubuntu', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ifm-heading-font-family: 'Ubuntu', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
   /* Docusaurus Infima primary scale */
   --ifm-color-primary:         #6B7EEF;
