@@ -10,7 +10,7 @@ This document is intended to be used as a guide. Variances in firmware and softw
 
 ## Overview
 
-This guide provides further details on connecting the OCUDU CU/DU to an RU using the the ORAN 7.2 split. Specifically, we discuss the Picocom PC802SCB.
+This guide provides further details on connecting the OCUDU CU/DU to an RU using the the O-RAN 7.2 split. Specifically, we discuss the Picocom PC802SCB.
 
 The RU is based on a PC802 Small Cell Development Board (PC802SCB) and an ADI ADRV9029BBCZ 4T4R RFIC subsystem, it is capable of up to 100MHz 4T4R. The PC802SCB is a flexible 5G NR development platform for evaluating the PC802 for different
 small cell use cases, including as a split 7.2 O-RU. You can read more about it [here](https://picocom.com/products/boards/).

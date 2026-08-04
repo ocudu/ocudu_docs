@@ -197,7 +197,7 @@ Check the following in the console trace:
 3. **No warnings in the logs.** Search the log file for warning-level messages:
 
    ```bash
-   cat <logfile> | grep "\[W\]"
+   grep "\[W\]" <logfile>
    ```
 
    If warnings are present, check the [Troubleshooting](../../user_manual/troubleshooting/troubleshooting.md) guide and resolve them before proceeding.

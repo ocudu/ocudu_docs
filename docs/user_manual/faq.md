@@ -7,15 +7,15 @@ available compute resources.
 
 ## Are there separate OCUDU software packages for the CU and the DU, or are they installed on a single server?
 
-Both CU and DU can be installed on a single server. Either as seperate applications or as a co-located (all-in-one) gNB.
+Both CU and DU can be installed on a single server. Either as separate applications or as a co-located (all-in-one) gNB.
 
 ## How many DUs are supported by one CU?
 
-There is no hard-coded limit. However, the number of DU accepted by a single CU can be limited with the `--max_nof_dus` parameter.
+There is no hard-coded limit. However, the number of DUs accepted by a single CU can be limited with the `--max_nof_dus` parameter.
 
 ## How many RUs / radio cells are supported by one DU?
 
-There is no hard-coded limit. If the physical layers runs in software, the number of component-carriers/sectors/cells primarily depends on
+There is no hard-coded limit. If the physical layer runs in software, the number of component-carriers/sectors/cells primarily depends on
 the cell bandwidth and MIMO layers supported by the underlying compute.
 
 ## How many 5G UEs can be managed by the CU and DU?

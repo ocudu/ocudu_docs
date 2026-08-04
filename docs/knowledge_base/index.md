@@ -9,7 +9,7 @@ import DocCard from '@theme/DocCard';
 
 This section covers the 5G NR and O-RAN architecture concepts that underpin OCUDU: how a gNB is structured, how its components interact, and how the interfaces between them are defined.
 
-If you are new to the architecture, start with the O-RAN gNB Overview. The other articles build on that foundation.
+If you are new to the architecture, start with the O-RAN Overview. The other articles build on that foundation.
 
 <section className="row">
   <article className="col col--6 margin-bottom--lg">
@@ -19,7 +19,7 @@ If you are new to the architecture, start with the O-RAN gNB Overview. The other
     <DocCard item={{type: 'link', href: '/knowledge_base/gnb_components/', label: 'CU/DU Components', description: 'The roles and protocol layers of the CU, DU, and RU, and the boundaries between them.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
-    <DocCard item={{type: 'link', href: '/knowledge_base/gnb_interfaces/', label: 'O-RAN Interfaces', description: 'The purpose, message types, and connected components for the E1, E2, F1, FAPI, NG, O1, and Open FrontHaul interfaces.'}} />
+    <DocCard item={{type: 'link', href: '/knowledge_base/gnb_interfaces/', label: 'gNB Interfaces', description: 'The purpose, message types, and connected components for the E1, E2, F1, FAPI, NG, O1, and Open FrontHaul interfaces.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
     <DocCard item={{type: 'link', href: '/knowledge_base/e2sm_kpm_metrics/', label: 'Supported E2 Metrics', description: 'E2SM-KPM report styles and metrics supported by OCUDU, with source nodes, units, and label restrictions.'}} />

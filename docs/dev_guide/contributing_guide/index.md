@@ -6,12 +6,12 @@ displayed_sidebar: devSidebar
 # Code Contribution Guide
 
 Welcome! We are glad that you want to contribute to OCUDU.
-The project accepts contributions via Gitlab merge requests.
+The project accepts contributions via GitLab merge requests.
 This document outlines the process to help get your contribution accepted.
 
 ## Reporting a Security Issue
 
-Most of the time, when you find a bug in OCUDU, it should be reported using [Gitlab issues](https://gitlab.com/ocudu/ocudu/-/issues).
+Most of the time, when you find a bug in OCUDU, it should be reported using [GitLab issues](https://gitlab.com/ocudu/ocudu/-/issues).
 However, if you are reporting a _security vulnerability_, please email a report to [security@ocudu.org](mailto:security@ocudu.org).
 This will give us a chance to try to fix the issue before it is exploited in the wild.
 
@@ -47,9 +47,9 @@ We welcome many different types of contributions including:
 * Bug fixes
 * Documentation
 * Issue Triage
-* Answering questions (e.g. in Gitlab)
+* Answering questions (e.g. in GitLab)
 
-Not everything happens through a Gitlab pull request. Please come to our
+Not everything happens through a GitLab merge request. Please come to our
 [meetings](https://gitlab.com/ocudu/community/Governance/-/wikis/home) or [contact us](https://ocudu.org) and let's discuss how we can work
 together. 
 
@@ -138,14 +138,14 @@ that you want to work on it. Something like "I want to work on this" is fine.
 
 OCUDU uses a two-tier process for proposing new ideas, scaled to the size of the change.
 
-### Tier 1 — Lightweight proposal (most changes)
+### Tier 1: Lightweight proposal (most changes)
 
 Open a GitLab issue in the main [ocudu](https://gitlab.com/ocudu/ocudu/-/issues) repository
 with the `proposal` label and start the discussion there. A maintainer will triage it within
 5 business days. If the scope is small enough the issue is converted directly to a `feature`
 and no further process is required.
 
-### Tier 2 — OCUDU Improvement Proposal (significant changes)
+### Tier 2: OCUDU Improvement Proposal (significant changes)
 
 A formal **OCUDU Improvement Proposal (OIP)** is required when a change:
 
@@ -213,7 +213,7 @@ Coding conventions and standards are explained in the [official developer docs](
       maintainers before it can be merged. Those with `size/XS` are per the judgement of the
       maintainers. For more detail see the [Size Labels](#size-labels) section.
 4. **Reviewing/Discussion**
-    - All reviews will be completed using Gitlab review tool.
+    - All reviews will be completed using GitLab review tool.
     - A "Comment" review should be used when there are questions about the code that should be
       answered, but that don't involve code changes. This type of review does not count as approval.
     - A "Changes Requested" review indicates that changes to the code need to be made before they

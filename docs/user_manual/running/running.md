@@ -9,7 +9,7 @@ This guide outlines how to *manually* run OCUDU applications in a Split 8 deploy
 
 ## Baseline Requirements
 
-To successfully run an end-to-end network OCUDU applications you will need the following:
+To successfully run an end-to-end network with OCUDU applications you will need the following:
 
 - A PC with a Linux based OS (Ubuntu 22.04 or later)
 - A USRP device

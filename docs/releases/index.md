@@ -9,7 +9,7 @@ import DocCard from '@theme/DocCard';
 
 OCUDU is an open-source initiative awarded initial funding by the National Spectrum Consortium (NSC) under a three-year programme running through October 2028. See the [NSC announcement](https://www.nationalspectrumconsortium.org/news-detail/ocudu-awardees-deepsig-srs) for details.
 
-The first public release, v26.04, shipped in April 2026. The project follows a predictable bi-annual release cycle — new versions every April and October — to ensure steady feature development, community feedback integration, and long-term sustainability.
+The first public release, v26.04, shipped in April 2026. The project follows a predictable bi-annual release cycle: new versions ship every April and October to ensure steady feature development, community feedback integration, and long-term sustainability.
 
 <div className="row" style={{marginBottom: '2rem'}}>
   <div className="col col--4">
@@ -95,7 +95,7 @@ Planned features by release, through the end of the programme in October 2028.
     timeline
         title OCUDU Feature Roadmap 2026-2028
           v26.04 <br> Initial release : FR2 : RoHC : RRC inactive : Xn : M plane
-          v26.10 : Beamforming : 8T8R : NR Positioning : ORAN Split 7.2b : 2-step RACH : Enhanced fault-tolerance : NTN Release 17
+          v26.10 : Beamforming : 8T8R : NR Positioning : O-RAN Split 7.2b : 2-step RACH : Enhanced fault-tolerance : NTN Release 17
           v27.04 : MU-MIMO : 64T64R : Reciprocity Beamforming : SRS Antenna Switching : EPS Fallback : NTN Release 18
           v27.10 : Multiple BWP : Carrier Aggregation : Emergency Call Priority : Coverage Enhancements : Rel-17 Type-II Codebook : RedCap
           v28.04 : Dual Connectivity : UL Tx Switching : S-NPN / NPI-NPN : non-3GPP Access : NSA

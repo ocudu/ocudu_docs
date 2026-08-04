@@ -12,9 +12,9 @@ Step-by-step guides from your first gNB to advanced multi-component deployments.
 The groups below run roughly from least to most infrastructure. Pick the group that matches what you want to do.
 
 :::tip New to OCUDU? Follow this path
-1. [Load testing](./testmode/index.md) — validate your build, no radio hardware needed.
-2. [Using srsUE](./srsue/index.md) — add a software UE over ZeroMQ.
-3. [Connecting a COTS UE](./cots_ue/index.md) — move to a real device with a USRP.
+1. [Load testing](./testmode/index.md): validate your build, no radio hardware needed.
+2. [Using srsUE](./srsue/index.md): add a software UE over ZeroMQ.
+3. [Connecting a COTS UE](./cots_ue/index.md): move to a real device with a USRP.
 :::
 
 :::tip Coming from srsRAN Project?

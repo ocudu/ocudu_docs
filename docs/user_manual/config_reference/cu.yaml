@@ -157,7 +157,7 @@ cu_cp:
         ssb_arfcn:                                # Optional UINT. Sets the SSB ARFCN of this cell.
         plmn:                                     # Optional TEXT. Sets the PLMN of this cell.
         tac:                                      # Optional UINT. Sets the Tracking Area Code of this cell. Supported: [0 - 16777215].
-        ssb_scs:                                  # Optional UINT. The SSB subcarrier spacing of this cell in KHz. Must be present if cell does not belong to this gNB. Supported: [15, 30, 60, 120, 240].
+        ssb_scs:                                  # Optional UINT. The SSB subcarrier spacing of this cell in kHz. Must be present if cell does not belong to this gNB. Supported: [15, 30, 60, 120, 240].
         ssb_period:                               # Optional UINT. The SSB period of this cell in ms. Must be present if cell does not belong to this gNB. Supported: [5, 10, 20, 40, 80, 160].
         ssb_offset:                               # Optional UINT. The SSB offset of this cell. Must be present if cell does not belong to this gNB.
         ssb_duration:                             # Optional UINT. The SSB duration of this cell in subframes. Must be present if cell does not belong to this gNB. Supported: [1, 2, 3, 4, 5].

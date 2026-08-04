@@ -21,7 +21,7 @@ From the OCUDU software itself, the most useful diagnostic outputs are:
 To quickly scan a log file for warnings, use:
 
 ```bash
-cat <logfile> | grep "\[W\]"
+grep "\[W\]" <logfile>
 ```
 
 ---

@@ -10,7 +10,7 @@ This document is intended to be used as a guide. Variances in firmware and softw
 
 ## Overview
 
-This guide provides further details on connecting the OCUDU CU/DU to an RU using the ORAN 7.2 split. Specifically, we discuss the Pegatron family of O-RAN Radio Units.
+This guide provides further details on connecting the OCUDU CU/DU to an RU using the O-RAN 7.2 split. Specifically, we discuss the Pegatron family of O-RAN Radio Units.
 Pegatron 5G offers several RU models covering different deployment scenarios:
 
 - **PR1450-78I**: Indoor 5G NR FR1 4T4R O-RU for private network deployments. (Tested Firmware: v1.0.2.4p1)

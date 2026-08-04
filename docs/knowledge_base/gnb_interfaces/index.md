@@ -1,10 +1,11 @@
 ---
 description: "The purpose, message types, and connected components for the E1, E2, F1, FAPI, NG, O1, and Open FrontHaul interfaces."
+sidebar_label: gNB Interfaces
 ---
 
-# gNodeB Interfaces
+# gNB Interfaces
 
-As outlined in the [O-RAN gNB Overview](../oran_gnb/index.md) the 5G NR gNB introduces a flexible architecture. Splitting the gNB and introducing multiple new interfaces.
+As outlined in the [O-RAN Overview](../oran_gnb/index.md) the 5G NR gNB introduces a flexible architecture. Splitting the gNB and introducing multiple new interfaces.
 
 This section of our knowledge base aims to go through these interfaces in further detail. Outlining the components they connect, the types of messages they carry and their purpose.
 

@@ -35,7 +35,7 @@ We mainly use [Google Test](https://github.com/google/googletest) for unit and i
 
 ## Integration and Component Tests
 
-Integration tests encompass a few sub-components or complete ORAN items, verifying input-output relationships as black-box tests. These tests play a crucial role in the initial development stages of (sub)components, serving as skeleton tests to validate general scenarios.
+Integration tests encompass a few sub-components or complete O-RAN items, verifying input-output relationships as black-box tests. These tests play a crucial role in the initial development stages of (sub)components, serving as skeleton tests to validate general scenarios.
 
 ---
 

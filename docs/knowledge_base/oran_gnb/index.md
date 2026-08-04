@@ -1,8 +1,9 @@
 ---
 description: "An introduction to O-RAN compliant gNBs, the split architecture, and how OCUDU implements it."
+sidebar_label: O-RAN Overview
 ---
 
-# O-RAN gNB Overview
+# O-RAN Overview
 
 This document aims to provide a basic understanding of O-RAN compliant gNBs, and how we have implemented this with OCUDU. A further deep dive can be
 found in our Developer Guide.
@@ -51,7 +52,7 @@ This is an overly simplified view of how the CU and DU might look. In practice, 
 with multiple interfaces between them.
 
 We will now look specifically at Split 7.2x. In this, the CU is split into the control plane and the user
-plane, resulting in two elements - the CU-CP and CU-UP. The ORAN-DU is split into the DU-high and
+plane, resulting in two elements - the CU-CP and CU-UP. The O-RAN DU is split into the DU-high and
 DU-low. Not only are the CU and DU split, but the layers they contain are also separated to allow for further control and
 acceleration of certain procedures - e.g. PDCP and PHY.
 
@@ -69,7 +70,7 @@ The following figure shows the complete architecture of an O-RAN compliant gNB, 
 ![image](oran_gnb_arch.jpg)
 
 The gNB is shown here in the blue shaded area. The CU-UP and CU-CP are clearly illustrated, as is the split between the high and low DU, and the interfaces between them.
-This diagram also shows how the nearRT-RIC is connected to the gNB and the nonRT-RIC. The RU is shown here in two versions, the RU (Split 7.2x) and a non-ORAN RU (Split 8).
+This diagram also shows how the nearRT-RIC is connected to the gNB and the nonRT-RIC. The RU is shown here in two versions, the RU (Split 7.2x) and a non-O-RAN RU (Split 8).
 Split 7.2 moves to low PHY out to the RU , while Split 8 keeps it within the DU-low. The frontHaul interface used here is typically eCPRI.
 
 To be O-RAN compliant a gNB must implement the CU and DU as shown above, while also having support for the interfaces needed for the nearRT-RIC, nonRT-RIC,

@@ -26,11 +26,11 @@ There are multiple ways to install this, but the most basic way to do so is to i
 For installing Docker Desktop on linux, take a look at the [Docker documentation](https://docs.docker.com/desktop/install/linux-install/).
 
 #### NOTE
-We recommend using a Docker Compose V2 or later.
+We recommend using Docker Compose V2 or later.
 
 ### OCUDU
 
-To enable the correct reporting of metrics to the Grafana UI, the gNB or DU configuration files needs to be updated to allow the metrics to be output in the correct JSON format and then sent through a udp-socket to the metrics-server,
+To enable the correct reporting of metrics to the Grafana UI, the gNB or DU configuration file needs to be updated to allow the metrics to be output in the correct JSON format and then sent through a udp-socket to the metrics-server,
 where it can be parsed and displayed correctly by the GUI.
 
 The `addr` and `port` values defined above mirror those set in the `docker-compose.yml` file found in the `docker/` folder, as shown [here](https://gitlab.com/ocudu/ocudu/-/tree/dev/docker). Any changes in these values must be kept consistent across both files.

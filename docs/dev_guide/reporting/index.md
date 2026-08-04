@@ -6,7 +6,7 @@ description: "How to report bugs and feature requests via GitLab, and how to dis
 
 ## Issues
 
-For contributing code and reporting issues, use Gitlab’s [merge request](https://gitlab.com/ocudu/ocudu/-/merge_requests) or
+For contributing code and reporting issues, use GitLab's [merge request](https://gitlab.com/ocudu/ocudu/-/merge_requests) or
 [issue](https://gitlab.com/ocudu/ocudu/-/issues) tracking system.
 
 ## Vulnerabilities
