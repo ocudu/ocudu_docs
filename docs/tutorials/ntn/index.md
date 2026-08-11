@@ -478,7 +478,7 @@ The delay value of 119720 us matches the link delay between the GEO satellite (p
 **3. Start the gNB** from the OCUDU source root, with the config files in the working directory:
 
 ```bash
-sudo ./build/apps/gnb/gnb -c gnb_zmq.yml -c geo_ntn.yml
+sudo ./build/apps/gnb/gnb -c gnb_zmq.yml -c geo_ntn.yml cell_cfg ntn --epoch_timestamp $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")
 ```
 
 **4. Start the Amarisoft UE:**
