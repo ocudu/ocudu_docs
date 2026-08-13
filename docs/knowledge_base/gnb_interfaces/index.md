@@ -1,5 +1,5 @@
 ---
-description: "The purpose, message types, and connected components for the E1, E2, F1, FAPI, NG, O1, and Open FrontHaul interfaces."
+description: "The purpose, message types, and connected components for the E1, E2, F1, FAPI, NG, O1, Xn-C, and Open FrontHaul interfaces."
 sidebar_label: gNB Interfaces
 ---
 
@@ -120,6 +120,14 @@ platform. The following Fault, Configuration, Accounting, Performance and Securi
 
 O1 provisioning operations use NETCONF for communication using YANG files for data exchange, while for CM notifications a RESTFUL HTTP-based solution is
 used. O1 is the communication protocol to support OAM.
+
+
+## Xn-C
+
+The Xn interface connects CU-CP instances of neighbouring gNBs for inter-gNB signalling. The control plane of the Xn interface (Xn-C) uses the application protocol (XNAP) implemented on top of SCTP using ASN1 messages, as defined by 3GPP TS 38.423. Its main functions are:
+
+* XN Setup (peer-initiated and locally-initiated)
+* Inter-gNB mobility and handover signalling
 
 
 ## Open FrontHaul
