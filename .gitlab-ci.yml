@@ -34,6 +34,7 @@ stages:
   - ci
   - test
   - build
+  - publish
 
 lint-and-test:
   stage: ci
@@ -61,6 +62,7 @@ get_ocudu_project_id:
     - if: $ON_MR
     - if: $ON_DEFAULT_BRANCH
     - if: $CI_PIPELINE_SCHEDULE_DESCRIPTION =~ /Nightly/
+    - if: $CI_PIPELINE_SCHEDULE_DESCRIPTION =~ /PDF/
   script:
     # Fetch project details using GitLab API and extract the project ID
     - |
@@ -129,3 +131,142 @@ pages:
       echo "*******************************************************************************************************************************"
       echo "Deployed to Pages: ${CI_PAGES_URL}"
       echo "*******************************************************************************************************************************"
+
+generate-pdf:
+  stage: publish
+  image: node:20
+  variables:
+    PUPPETEER_SKIP_DOWNLOAD: "true"
+    PDF_SECTIONS: "user_manual/installation/,tutorials/,knowledge_base/,dev_guide/,integrations/,releases/"
+  needs:
+    - job: get_ocudu_project_id
+      artifacts: true
+  rules:
+    - if: $CI_PIPELINE_SCHEDULE_DESCRIPTION =~ /PDF/
+  before_script:
+    # Install Chromium and dependencies required by Puppeteer
+    - apt-get update -qq
+    - >
+      apt-get install -y -qq --no-install-recommends
+      chromium
+      fonts-liberation
+      libatk-bridge2.0-0
+      libatk1.0-0
+      libcups2
+      libdrm2
+      libgbm1
+      libnss3
+      libxdamage1
+      libxkbcommon0
+      > /dev/null
+    - rm -rf /var/lib/apt/lists/*
+  script:
+    # Build the Docusaurus site (same as the build job)
+    - npm install
+    - git clone -b $[[ inputs.ocudu_ref ]] ${CI_SERVER_URL}/$[[ inputs.ocudu_path ]].git docs/ocudu
+    - mkdir -p docs/oran_apps
+    - git clone ${CI_SERVER_URL}/$[[ inputs.ocudu_oran_apps_path ]]/ocudu_netconf.git oran_apps/ocudu_netconf
+    - git clone ${CI_SERVER_URL}/$[[ inputs.ocudu_oran_apps_path ]]/ocudu_o1_adapter.git oran_apps/ocudu_o1_adapter
+    - mkdir -p static/coverage static/doxygen
+    - |
+      curl --header "JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/coverage_html/latest/coverage_html.tar.gz -o coverage_html.tar.gz
+      tar -xzf coverage_html.tar.gz -C static/coverage --strip-components=1
+      rm -f coverage_html.tar.gz
+    - |
+      curl --header "JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/doxygen/latest/doxygen.tar.gz -o doxygen.tar.gz
+      tar -xzf doxygen.tar.gz -C static/doxygen --strip-components=4
+      rm -f doxygen.tar.gz
+    - npm run build
+    - mv build public
+    # Install docs-to-pdf (after site build to avoid dependency conflicts)
+    - npm install --no-save docs-to-pdf@1 serve@14
+    # Expand tabs for PDF: inject a visible label into each tab panel so the
+    # reader knows which variant (e.g. Ubuntu / Fedora) they are looking at.
+    # React hydration re-hides inactive panels, but the CSS override in
+    # --cssStyle forces them visible again; the injected labels survive.
+    - |
+      node -e "
+      const fs = require('fs'), path = require('path');
+      function walk(dir) {
+        for (const e of fs.readdirSync(dir, {withFileTypes:true})) {
+          const p = path.join(dir, e.name);
+          if (e.isDirectory()) walk(p);
+          else if (e.name.endsWith('.html')) processFile(p);
+        }
+      }
+      function processFile(f) {
+        let html = fs.readFileSync(f, 'utf8');
+        let changed = false;
+        html = html.replace(
+          /(<ul\s+role=\"tablist\"[^>]*>)([\s\S]*?)<\/ul>/g,
+          (ulMatch, ulOpen, inner) => {
+            const labels = [];
+            inner.replace(/<li\s+role=\"tab\"[^>]*>([^<]+)<\/li>/g, (_, t) => { labels.push(t); });
+            if (labels.length < 2) return ulMatch;
+            // Mark the <ul> with data-pdf-labels so we know the count
+            changed = true;
+            return ulOpen + inner + '</ul><!--PDF_LABELS:' + JSON.stringify(labels) + '-->';
+          }
+        );
+        if (!changed) return;
+        // Now inject a label div at the start of each tabpanel that follows a marked tablist
+        html = html.replace(
+          /<!--PDF_LABELS:(\[[^\]]+\])-->([\s\S]*?)(?=<div[^>]*class=\"[^\"]*theme-tabs-container|$)/g,
+          (m, labelsJson, rest) => {
+            const labels = JSON.parse(labelsJson);
+            let idx = 0;
+            const out = rest.replace(
+              /(<div\s+role=\"tabpanel\"[^>]*>)/g,
+              (panelOpen) => {
+                const label = labels[idx] || '';
+                idx++;
+                return panelOpen + '<div class=\"pdf-tab-label\" style=\"font-weight:700;font-size:0.9em;padding:4px 0 8px;border-bottom:1px solid #dee2e6;margin-bottom:8px;\">' + label + '</div>';
+              }
+            );
+            return '<!--PDF_LABELS:' + labelsJson + '-->' + out;
+          }
+        );
+        fs.writeFileSync(f, html);
+      }
+      walk('public');
+      console.log('Tab labels injected for PDF.');
+      "
+    # Serve the built site in the background
+    - npx serve public -l 3000 &
+    - |
+      echo "Waiting for server on port 3000..."
+      for i in $(seq 1 30); do
+        if curl -sf http://localhost:3000/ > /dev/null 2>&1; then
+          echo "Server ready after ${i}s"
+          break
+        fi
+        sleep 1
+      done
+    # Generate PDF from the Docusaurus site
+    # Tab handling: CSS forces all hidden tab panels visible so every variant
+    # (e.g. Ubuntu / Fedora / Arch) appears in the PDF. The [hidden] override
+    # beats React hydration which would otherwise re-hide inactive panels.
+    # Inactive tab labels are dimmed to distinguish them from the selected tab.
+    - |
+      # Build --initialDocURLs from PDF_SECTIONS variable
+      INITIAL_URLS=$(echo "$PDF_SECTIONS" | tr ',' '\n' | sed 's|.*|http://localhost:3000/&|' | tr '\n' ',' | sed 's/,$//')
+      PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
+      npx docs-to-pdf docusaurus \
+        --initialDocURLs="$INITIAL_URLS" \
+        --contentSelector="article" \
+        --coverTitle="OCUDU Documentation" \
+        --coverSub="Generated $(date -u +%Y-%m-%d) from $(git rev-parse --short HEAD)" \
+        --paperFormat="A4" \
+        --outputPDFFilename="ocudu-docs.pdf" \
+        --excludePaths="/coverage/,/doxygen/,/qa_results/" \
+        --excludeSelectors=".theme-doc-footer,nav.pagination-nav,.table-of-contents" \
+        --cssStyle="div[role='tabpanel'][hidden]{display:block !important;} ul[role='tablist']{display:none !important;} div[role='tabpanel']{border:1px solid #dee2e6; padding:12px 16px; margin-bottom:1rem; border-radius:4px; page-break-inside:avoid;}" \
+        --puppeteerArgs="--no-sandbox,--disable-gpu,--disable-dev-shm-usage" \
+        --protocolTimeout=300000 \
+        --version=3
+    # Stop the background server
+    - kill %1 2>/dev/null || true
+  artifacts:
+    paths:
+      - ocudu-docs.pdf
+    expire_in: 30 days
