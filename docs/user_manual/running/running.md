@@ -68,7 +68,7 @@ When running, the gNB should generate the following console output:
 ```bash
 Available radio types: uhd.
 
---== OCUDU gNB (commit 77be7d339) ==--
+--== OCUDU gNB (commit 050a2bb72e) ==--
 
 [INFO] [UHD] linux; GNU C++ version 9.4.0; Boost_107100; UHD_4.2.0.HEAD-0-g197cdc4f
 Making USRP object with args 'type=b200'

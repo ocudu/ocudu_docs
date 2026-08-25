@@ -19,7 +19,7 @@ This tutorial details two example setups: connecting the OCUDU gNB to AmariUE us
 
 For this tutorial, the following hardware and software are used:
 
-- A PC with a linux based OS
+- PC with Ubuntu 22.04 or later
 - OCUDU CU/DU
 - [Amarisoft UE](https://www.amarisoft.com/technology/ue-simulator/) (2021-09-18 or later)
 - [Two Ettus Research USRP B210s](https://www.ettus.com/all-products/ub210-kit/) (connected over USB3)

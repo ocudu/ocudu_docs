@@ -14,7 +14,7 @@ This tutorial demonstrates how to configure and connect a 5G capable COTS UE to 
 
 To connect a COTS UE to a 5G network using OCUDU users will need the following requirements:
 
-- A PC with a linux based OS
+- PC with Ubuntu 22.04 or later
 - OCUDU CU/DU
 - RF-frontend compatible with OCUDU, e.g. a USRP
 - A third-party 5G Core
