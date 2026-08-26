@@ -35,6 +35,17 @@ stages:
   - test
   - build
 
+lint-and-test:
+  stage: ci
+  image: node:20
+  rules:
+    - if: $ON_MR
+    - if: $ON_DEFAULT_BRANCH
+  script:
+    - npm ci
+    - npm run lint
+    - npm test
+
 headers:
   stage: ci
   extends: .headers
