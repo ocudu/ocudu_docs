@@ -5,7 +5,7 @@ displayed_sidebar: userDocsSidebar
 
 # Migrating from srsRAN to OCUDU
 
-OCUDU is the successor to srsRAN Project. Under Linux Foundation governance, the codebase moved from GitHub to GitLab with a licence change from AGPLv3 to BSD 3-Clause and a focus on commercial-grade Open RAN deployments. The underlying architecture is unchanged, so your mental model of srsRAN is a valid starting point for OCUDU. The [Architecture Overview](/dev_guide/architecture_overview/) describes how OCUDU is organised. The fork point, commit [7d6183f](https://github.com/srsran/srsRAN_Project/commit/7d6183f), is the last commit the two projects share.
+OCUDU is the successor to srsRAN Project. Under Linux Foundation governance, the codebase moved from GitHub to GitLab with a licence change from AGPLv3 to BSD 3-Clause and a focus on commercial-grade Open RAN deployments. The underlying architecture is unchanged, so your mental model of srsRAN is a valid starting point for OCUDU. The [Codebase Guide](/dev_guide/codebase_guide/) describes how OCUDU is organised. The fork point, commit [7d6183f](https://github.com/srsran/srsRAN_Project/commit/7d6183f), is the last commit the two projects share.
 
 This guide shows you how to port existing modifications from srsRAN Project to OCUDU. Most changes do not require a rewrite. The effort depends on the scope and location of your work. This guide provides a general blueprint; it does not cover the specific requirements of each migration scenario.
 
@@ -134,7 +134,7 @@ git log --all -S <symbol-name> --oneline
 ```
 
 **Other conflict sources:**
-- **Structural changes:** a file your patch touches may have been reorganised in OCUDU. Use the [Architecture Overview](/dev_guide/architecture_overview/) as a reference.
+- **Structural changes:** a file your patch touches may have been reorganised in OCUDU. Use the [Codebase Guide](/dev_guide/codebase_guide/) as a reference.
 - **File moves:** if a file no longer exists at the expected path, search the OCUDU source tree before assuming it is missing.
 - **Build system changes:** if your patches include CMakeLists changes, resolve those first.
 

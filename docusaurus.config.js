@@ -121,7 +121,7 @@ module.exports = {
           to: '/dev_guide/',
           items: [
             { type: 'doc', docId: 'dev_guide/architecture_guide/index',  label: 'Architecture Guide' },
-            { type: 'doc', docId: 'dev_guide/architecture_overview/index', label: 'Architecture Overview' },
+            { type: 'doc', docId: 'dev_guide/codebase_guide',            label: 'Codebase Guide' },
             { type: 'doc', docId: 'dev_guide/code_guide/index',          label: 'C++ Code Guide' },
             { type: 'doc', docId: 'dev_guide/logging_guide/index',       label: 'Logging Guide' },
             { type: 'doc', docId: 'dev_guide/testing_policy/index',      label: 'Testing Policy' },

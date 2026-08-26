@@ -17,10 +17,10 @@ Read the [Code Contribution Guide](./contributing_guide/index.md) for an overvie
 
 <section className="row">
   <article className="col col--6 margin-bottom--lg">
-    <DocCard item={{type: 'link', href: '/dev_guide/architecture_overview/', label: 'Architecture Overview', description: 'Component breakdown of the OCUDU gNB: CU-CP, CU-UP, DU-high, and DU-low, with their interfaces.'}} />
+    <DocCard item={{type: 'link', href: '/dev_guide/architecture_guide/', label: 'Architecture Guide', description: 'Vision, design principles, and implementation patterns for the OCUDU codebase.'}} />
   </article>
   <article className="col col--6 margin-bottom--lg">
-    <DocCard item={{type: 'link', href: '/dev_guide/architecture_guide/', label: 'Architecture Guide', description: 'Vision, design principles, and implementation patterns for the OCUDU codebase.'}} />
+    <DocCard item={{type: 'link', href: '/dev_guide/codebase_guide/', label: 'Codebase Guide', description: 'Module-by-module breakdown of the OCUDU codebase: CU-CP, CU-UP, DU-high, DU-low, MAC, RLC, and the scheduler.'}} />
   </article>
 </section>
 
