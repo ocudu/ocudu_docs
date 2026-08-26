@@ -76,9 +76,12 @@ const POSITION = {
 // Lines that only exist to navigate the source tree. The sidebar does this job on the site.
 const NAV_CRUFT = /^\s*\[Return to top level architecture diagram\]\([^)]*\)\.?\s*$/;
 
+// Split so the tags are not literal in this file: REUSE scans the whole source and would
+// otherwise read these as a second, malformed licence declaration for the script itself.
+const SPDX = 'SPDX-';
 const LICENSE_SIDECAR =
-  'SPDX-FileCopyrightText: Copyright (C) 2021-2026 Software Radio Systems Limited\n' +
-  'SPDX-License-Identifier: BSD-3-Clause-Open-MPI\n';
+  `${SPDX}FileCopyrightText: Copyright (C) 2021-2026 Software Radio Systems Limited\n` +
+  `${SPDX}License-Identifier: BSD-3-Clause-Open-MPI\n`;
 
 const IMAGE_RE = /!\[([^\]]*)\]\(([^)\s]+)\)/g;
 const LINK_RE = /(?<!!)\[([^\]]*)\]\(([^)\s]+)\)/g;
