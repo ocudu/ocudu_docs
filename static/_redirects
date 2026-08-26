@@ -1,0 +1,10 @@
+# GitLab Pages redirects. Serves 301s for retired URLs.
+# https://docs.gitlab.com/user/project/pages/redirects/
+
+# Architecture Overview was replaced by the Codebase Guide, which is generated
+# from lib/**/*.md in the OCUDU source repo (see scripts/sync-source-docs.js).
+/dev_guide/architecture_overview/          /dev_guide/codebase_guide/            301
+/dev_guide/architecture_overview/cu_cp/    /dev_guide/codebase_guide/cu/cu_cp/   301
+/dev_guide/architecture_overview/cu_up/    /dev_guide/codebase_guide/cu/cu_up/   301
+/dev_guide/architecture_overview/du_high/  /dev_guide/codebase_guide/du/du_high/ 301
+/dev_guide/architecture_overview/du_low/   /dev_guide/codebase_guide/du/du_low/  301
