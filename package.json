@@ -15,6 +15,7 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
+    "test": "jest",
     "add-frontmatter": "node scripts/add-frontmatter.js"
   },
   "dependencies": {
@@ -35,6 +36,7 @@
     "@docusaurus/module-type-aliases": "3.9.2",
     "@docusaurus/tsconfig": "3.9.2",
     "@docusaurus/types": "3.9.2",
+    "jest": "^29.7.0",
     "typescript": "~5.2.0"
   },
   "browserslist": {
