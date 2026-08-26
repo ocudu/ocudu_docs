@@ -15,6 +15,8 @@ services:
       - ./:/builds/ocudu/ocudu_docs
       # Static documentation from other OCUDU repositories
       - ${OCUDU_GROUP_PATH}/ocudu/build_doxygen/docs/doxygen/html:/builds/ocudu/ocudu_docs/static/doxygen:ro
+      # Source repo, read by scripts/sync-source-docs.js to build the Codebase Guide
+      - ${OCUDU_GROUP_PATH}/ocudu:/builds/ocudu/ocudu_docs/docs/ocudu:ro
     ports:
       - "3001:3000"
     stop_grace_period: 1s

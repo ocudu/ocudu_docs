@@ -3,3 +3,7 @@
 
 node_modules/
 .docusaurus/
+build/
+docs/dev_guide/codebase_guide/
+docs/dev_guide/codebase_guide.md
+docs/user_manual/outputs/scheduler_logs.md

@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "prestart": "node scripts/generate-release-notes.js",
+    "prestart": "node scripts/generate-release-notes.js && node scripts/sync-source-docs.js",
     "start": "docusaurus start",
-    "prebuild": "node scripts/generate-release-notes.js",
+    "prebuild": "node scripts/generate-release-notes.js && node scripts/sync-source-docs.js",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
