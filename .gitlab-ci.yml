@@ -180,10 +180,10 @@ generate-pdf:
     - mv build public
     # Install docs-to-pdf (after site build to avoid dependency conflicts)
     - npm install --no-save docs-to-pdf@1 serve@14
-    # Expand tabs for PDF: inject a visible label into each tab panel so the
-    # reader knows which variant (e.g. Ubuntu / Fedora) they are looking at.
-    # React hydration re-hides inactive panels, but the CSS override in
-    # --cssStyle forces them visible again; the injected labels survive.
+    # Prepare HTML for PDF: since docs-to-pdf loads pages in headless Chromium,
+    # React would hydrate and rebuild the DOM — undoing any static HTML edits.
+    # We strip the Docusaurus JS bundles so pages render as pure static HTML,
+    # then inject tab labels and remove hidden attributes.
     - |
       node -e "
       const fs = require('fs'), path = require('path');
@@ -196,6 +196,11 @@ generate-pdf:
       }
       function processFile(f) {
         let html = fs.readFileSync(f, 'utf8');
+        // Strip Docusaurus JS bundles to prevent React hydration
+        html = html.replace(/<script\s[^>]*src=\"\/assets\/js\/[^\"]+\"[^>]*><\/script>/g, '');
+        // Remove hidden attribute from tab panels
+        html = html.replace(/(<div\s+role=\"tabpanel\"[^>]*)\s+hidden=\"\"/g, '\$1');
+        // Inject tab labels
         let changed = false;
         html = html.replace(
           /(<ul\s+role=\"tablist\"[^>]*>)([\s\S]*?)<\/ul>/g,
@@ -203,33 +208,32 @@ generate-pdf:
             const labels = [];
             inner.replace(/<li\s+role=\"tab\"[^>]*>([^<]+)<\/li>/g, (_, t) => { labels.push(t); });
             if (labels.length < 2) return ulMatch;
-            // Mark the <ul> with data-pdf-labels so we know the count
             changed = true;
             return ulOpen + inner + '</ul><!--PDF_LABELS:' + JSON.stringify(labels) + '-->';
           }
         );
-        if (!changed) return;
-        // Now inject a label div at the start of each tabpanel that follows a marked tablist
-        html = html.replace(
-          /<!--PDF_LABELS:(\[[^\]]+\])-->([\s\S]*?)(?=<div[^>]*class=\"[^\"]*theme-tabs-container|$)/g,
-          (m, labelsJson, rest) => {
-            const labels = JSON.parse(labelsJson);
-            let idx = 0;
-            const out = rest.replace(
-              /(<div\s+role=\"tabpanel\"[^>]*>)/g,
-              (panelOpen) => {
-                const label = labels[idx] || '';
-                idx++;
-                return panelOpen + '<div class=\"pdf-tab-label\" style=\"font-weight:700;font-size:0.9em;padding:4px 0 8px;border-bottom:1px solid #dee2e6;margin-bottom:8px;\">' + label + '</div>';
-              }
-            );
-            return '<!--PDF_LABELS:' + labelsJson + '-->' + out;
-          }
-        );
+        if (changed) {
+          html = html.replace(
+            /<!--PDF_LABELS:(\[[^\]]+\])-->([\s\S]*?)(?=<div[^>]*class=\"[^\"]*theme-tabs-container|$)/g,
+            (m, labelsJson, rest) => {
+              const labels = JSON.parse(labelsJson);
+              let idx = 0;
+              const out = rest.replace(
+                /(<div\s+role=\"tabpanel\"[^>]*>)/g,
+                (panelOpen) => {
+                  const label = labels[idx] || '';
+                  idx++;
+                  return panelOpen + '<div class=\"pdf-tab-label\" style=\"font-weight:700;font-size:0.9em;padding:4px 0 8px;border-bottom:1px solid #dee2e6;margin-bottom:8px;\">' + label + '</div>';
+                }
+              );
+              return '<!--PDF_LABELS:' + labelsJson + '-->' + out;
+            }
+          );
+        }
         fs.writeFileSync(f, html);
       }
       walk('public');
-      console.log('Tab labels injected for PDF.');
+      console.log('HTML prepared for PDF (JS stripped, tabs expanded, labels injected).');
       "
     # Serve the built site in the background
     - npx serve public -l 3000 &
@@ -242,11 +246,8 @@ generate-pdf:
         fi
         sleep 1
       done
-    # Generate PDF from the Docusaurus site
-    # Tab handling: CSS forces all hidden tab panels visible so every variant
-    # (e.g. Ubuntu / Fedora / Arch) appears in the PDF. The [hidden] override
-    # beats React hydration which would otherwise re-hide inactive panels.
-    # Inactive tab labels are dimmed to distinguish them from the selected tab.
+    # Tab styling: hide the interactive tab bar (labels are now inside each
+    # panel) and add borders between panels for visual separation.
     - |
       # Build --initialDocURLs from PDF_SECTIONS variable
       INITIAL_URLS=$(echo "$PDF_SECTIONS" | tr ',' '\n' | sed 's|.*|http://localhost:3000/&|' | tr '\n' ',' | sed 's/,$//')
@@ -260,7 +261,7 @@ generate-pdf:
         --outputPDFFilename="ocudu-docs.pdf" \
         --excludePaths="/coverage/,/doxygen/,/qa_results/" \
         --excludeSelectors=".theme-doc-footer,nav.pagination-nav,.table-of-contents" \
-        --cssStyle="div[role='tabpanel'][hidden]{display:block !important;} ul[role='tablist']{display:none !important;} div[role='tabpanel']{border:1px solid #dee2e6; padding:12px 16px; margin-bottom:1rem; border-radius:4px; page-break-inside:avoid;}" \
+        --cssStyle="ul[role='tablist']{display:none !important;} div[role='tabpanel']{border:1px solid #dee2e6; padding:12px 16px; margin-bottom:1rem; border-radius:4px; page-break-inside:avoid;}" \
         --puppeteerArgs="--no-sandbox,--disable-gpu,--disable-dev-shm-usage" \
         --protocolTimeout=300000 \
         --version=3
