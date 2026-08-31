@@ -107,41 +107,45 @@ describe('link-filter-loader', () => {
       resourcePath: '/builds/ocudu/ocudu_docs/docs/tutorials/srsue/index.md',
     };
 
+    // path.relative uses backslashes on Windows, forward slashes on Linux.
+    // CI runs on Linux so the URLs are correct there; this helper lets the
+    // assertions pass on both platforms.
+    const norm = (s) => s.replace(/\\/g, '/');
+
     test('converts .cpp file links', () => {
       const input = '[Source](../../src/main.cpp)';
-      const result = run(input, options);
-      expect(result).toContain('https://gitlab.com/ocudu/ocudu_docs/-/tree/abc123/');
-      expect(result).toMatch(/\[Source\]\(https:\/\/gitlab\.com/);
+      const result = norm(run(input, options));
+      expect(result).toBe('[Source](https://gitlab.com/ocudu/ocudu_docs/-/tree/abc123/docs/src/main.cpp)');
     });
 
     test('converts .h file links', () => {
       const input = '[Header](../include/module.h)';
-      const result = run(input, options);
-      expect(result).toContain('https://gitlab.com/ocudu/ocudu_docs/-/tree/abc123/');
+      const result = norm(run(input, options));
+      expect(result).toBe('[Header](https://gitlab.com/ocudu/ocudu_docs/-/tree/abc123/docs/tutorials/include/module.h)');
     });
 
     test('converts .yml file links', () => {
       const input = '[Config](./configs/gnb.yml)';
-      const result = run(input, options);
-      expect(result).toContain('https://gitlab.com/ocudu/ocudu_docs/-/tree/abc123/');
+      const result = norm(run(input, options));
+      expect(result).toBe('[Config](https://gitlab.com/ocudu/ocudu_docs/-/tree/abc123/docs/tutorials/srsue/configs/gnb.yml)');
     });
 
     test('converts .py file links', () => {
       const input = '[Script](./scripts/run.py)';
-      const result = run(input, options);
-      expect(result).toContain('https://gitlab.com/ocudu/ocudu_docs/-/tree/abc123/');
+      const result = norm(run(input, options));
+      expect(result).toBe('[Script](https://gitlab.com/ocudu/ocudu_docs/-/tree/abc123/docs/tutorials/srsue/scripts/run.py)');
     });
 
     test('converts ./LICENSE link', () => {
       const input = '[License](./LICENSE)';
-      const result = run(input, options);
-      expect(result).toContain('https://gitlab.com/ocudu/ocudu_docs/-/tree/abc123/');
+      const result = norm(run(input, options));
+      expect(result).toBe('[License](https://gitlab.com/ocudu/ocudu_docs/-/tree/abc123/docs/tutorials/srsue/LICENSE)');
     });
 
     test('preserves link text in converted links', () => {
       const input = '[View Source Code](../../src/gnb.cpp)';
-      const result = run(input, options);
-      expect(result).toMatch(/^\[View Source Code\]\(/);
+      const result = norm(run(input, options));
+      expect(result).toBe('[View Source Code](https://gitlab.com/ocudu/ocudu_docs/-/tree/abc123/docs/src/gnb.cpp)');
     });
   });
 

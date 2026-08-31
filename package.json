@@ -16,7 +16,7 @@
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
     "test": "jest",
-    "lint": "eslint plugins/ scripts/ src/js/ tests/",
+    "lint": "eslint --max-warnings=0 plugins/ scripts/ src/js/ tests/",
     "add-frontmatter": "node scripts/add-frontmatter.js"
   },
   "dependencies": {

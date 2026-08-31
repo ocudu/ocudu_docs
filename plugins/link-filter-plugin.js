@@ -3,7 +3,7 @@
 
 const path = require('path');
 
-module.exports = function linkFilterPlugin(context, options) {
+module.exports = function linkFilterPlugin(context, _options) {
     return {
         name: 'link-filter-plugin',
 
@@ -16,7 +16,7 @@ module.exports = function linkFilterPlugin(context, options) {
             return {};
         },
 
-        configureWebpack(config) {
+        configureWebpack(_config) {
             const loaderPath = path.resolve(__dirname, 'link-filter-loader.js');
             const versionUrl = context.siteConfig.customFields?.versionUrl || null;
 
