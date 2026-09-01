@@ -178,64 +178,12 @@ generate-pdf:
       rm -f doxygen.tar.gz
     - npm run build
     - mv build public
-    # Install docs-to-pdf (after site build to avoid dependency conflicts)
-    - npm install --no-save docs-to-pdf@1 serve@14
-    # Prepare HTML for PDF: since docs-to-pdf loads pages in headless Chromium,
-    # React would hydrate and rebuild the DOM — undoing any static HTML edits.
-    # We strip the Docusaurus JS bundles so pages render as pure static HTML,
-    # then inject tab labels and remove hidden attributes.
-    - |
-      node -e "
-      const fs = require('fs'), path = require('path');
-      function walk(dir) {
-        for (const e of fs.readdirSync(dir, {withFileTypes:true})) {
-          const p = path.join(dir, e.name);
-          if (e.isDirectory()) walk(p);
-          else if (e.name.endsWith('.html')) processFile(p);
-        }
-      }
-      function processFile(f) {
-        let html = fs.readFileSync(f, 'utf8');
-        // Strip Docusaurus JS bundles to prevent React hydration
-        html = html.replace(/<script\s[^>]*src=\"\/assets\/js\/[^\"]+\"[^>]*><\/script>/g, '');
-        // Remove hidden attribute from tab panels
-        html = html.replace(/(<div\s+role=\"tabpanel\"[^>]*)\s+hidden=\"\"/g, '\$1');
-        // Inject tab labels
-        let changed = false;
-        html = html.replace(
-          /(<ul\s+role=\"tablist\"[^>]*>)([\s\S]*?)<\/ul>/g,
-          (ulMatch, ulOpen, inner) => {
-            const labels = [];
-            inner.replace(/<li\s+role=\"tab\"[^>]*>([^<]+)<\/li>/g, (_, t) => { labels.push(t); });
-            if (labels.length < 2) return ulMatch;
-            changed = true;
-            return ulOpen + inner + '</ul><!--PDF_LABELS:' + JSON.stringify(labels) + '-->';
-          }
-        );
-        if (changed) {
-          html = html.replace(
-            /<!--PDF_LABELS:(\[[^\]]+\])-->([\s\S]*?)(?=<div[^>]*class=\"[^\"]*theme-tabs-container|$)/g,
-            (m, labelsJson, rest) => {
-              const labels = JSON.parse(labelsJson);
-              let idx = 0;
-              const out = rest.replace(
-                /(<div\s+role=\"tabpanel\"[^>]*>)/g,
-                (panelOpen) => {
-                  const label = labels[idx] || '';
-                  idx++;
-                  return panelOpen + '<div class=\"pdf-tab-label\" style=\"font-weight:700;font-size:0.9em;padding:4px 0 8px;border-bottom:1px solid #dee2e6;margin-bottom:8px;\">' + label + '</div>';
-                }
-              );
-              return '<!--PDF_LABELS:' + labelsJson + '-->' + out;
-            }
-          );
-        }
-        fs.writeFileSync(f, html);
-      }
-      walk('public');
-      console.log('HTML prepared for PDF (JS stripped, tabs expanded, labels injected).');
-      "
-    # Serve the built site in the background
+    # Install docs-to-pdf plus puppeteer-core (used by scripts/prepare-pdf-html.js)
+    # after the site build to avoid dependency conflicts. puppeteer-core skips
+    # the bundled Chromium download — the job installs system Chromium instead.
+    - npm install --no-save docs-to-pdf@1 serve@14 puppeteer-core@23
+    # Serve the built site in the background. The PDF-prep step below needs the
+    # site served so it can load each page with JS in Chromium (see below).
     - npx serve public -l 3000 &
     - |
       echo "Waiting for server on port 3000..."
@@ -246,8 +194,15 @@ generate-pdf:
         fi
         sleep 1
       done
-    # Tab styling: hide the interactive tab bar (labels are now inside each
-    # panel) and add borders between panels for visual separation.
+    # Prepare the built HTML for PDF rendering. Loads each page WITH JS in
+    # Chromium so Mermaid diagrams render to inline SVG, then expands tab panels
+    # and injects per-panel labels on the live DOM, and writes the fully-rendered
+    # static HTML back. This keeps both fixes: rendered diagrams AND expanded
+    # tabs. (Replaces the earlier JS-stripping approach, which broke Mermaid
+    # because the diagrams are drawn client-side — see MR !83 review.)
+    - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium node scripts/prepare-pdf-html.js http://localhost:3000 public
+    # Render the prepared static HTML to PDF. The tab bar is hidden and panels
+    # are bordered for visual separation (also reinforced via --cssStyle below).
     - |
       # Build --initialDocURLs from PDF_SECTIONS variable
       INITIAL_URLS=$(echo "$PDF_SECTIONS" | tr ',' '\n' | sed 's|.*|http://localhost:3000/&|' | tr '\n' ',' | sed 's/,$//')
