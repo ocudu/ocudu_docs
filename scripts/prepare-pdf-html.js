@@ -45,12 +45,22 @@ try {
 
 const EXECUTABLE_PATH = process.env.PUPPETEER_EXECUTABLE_PATH || undefined;
 
+// Top-level directories under the build root that we never render into the PDF
+// (see --excludePaths in the CI job). These hold thousands of generated pages
+// (Doxygen API docs, coverage reports) — walking and rendering them in Chromium
+// would take the job from minutes to tens of minutes for no benefit.
+const EXCLUDE_DIRS = new Set(['doxygen', 'coverage', 'qa_results']);
+
 // Collect every .html file under the build directory, returning paths relative
-// to the build root (used to build the matching served URL).
+// to the build root (used to build the matching served URL). Skips EXCLUDE_DIRS.
 function collectHtml(dir, root, out) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
+      const firstSegment = path
+        .relative(root, full)
+        .split(path.sep)[0];
+      if (EXCLUDE_DIRS.has(firstSegment)) continue;
       collectHtml(full, root, out);
     } else if (entry.name.endsWith('.html')) {
       out.push(path.relative(root, full));
