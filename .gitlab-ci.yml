@@ -36,6 +36,13 @@ stages:
   - build
   - publish
 
+variables:
+  # Sections included in the generated PDFs. Shared by generate-pdf (which
+  # renders one PDF per entry plus a full-site PDF) and build/pages (which pull
+  # the matching PDFs from the package registry into static/pdf/). Keep the
+  # slugs here in sync with any per-section download links added to the site.
+  PDF_SECTIONS: "user_manual/installation/,tutorials/,knowledge_base/,dev_guide/,integrations/,releases/"
+
 lint-and-test:
   stage: ci
   image: node:20
@@ -103,6 +110,27 @@ build:
       curl --header "JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/doxygen/latest/doxygen.tar.gz -o doxygen.tar.gz
       tar -xzf doxygen.tar.gz -C static/doxygen --strip-components=4
       rm -f doxygen.tar.gz
+    ## PDFs: pull the latest generated PDFs from the package registry into
+    ## static/pdf/ so they are served from the site root at /pdf/<name>.pdf.
+    ## The || skip keeps the build green before the first PDF schedule has run.
+    - |
+      mkdir -p static/pdf
+      slugify() { echo "$1" | sed 's#/*$##; s#/#-#g; s#_#-#g'; }
+      PDF_FILES="ocudu-docs.pdf"
+      for section in $(echo "$PDF_SECTIONS" | tr ',' ' '); do
+        [ -z "$section" ] && continue
+        PDF_FILES="$PDF_FILES ocudu-$(slugify "$section").pdf"
+      done
+      for f in $PDF_FILES; do
+        if curl --fail --silent --show-error --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+          "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/docs_pdf/latest/$f" \
+          -o "static/pdf/$f"; then
+          echo "Pulled $f"
+        else
+          echo "$f not published yet, skipping"
+          rm -f "static/pdf/$f"
+        fi
+      done
     # Build the Docusaurus site
     - npm run build
     # Move built site to public folder
@@ -137,7 +165,6 @@ generate-pdf:
   image: node:20
   variables:
     PUPPETEER_SKIP_DOWNLOAD: "true"
-    PDF_SECTIONS: "user_manual/installation/,tutorials/,knowledge_base/,dev_guide/,integrations/,releases/"
   needs:
     - job: get_ocudu_project_id
       artifacts: true
@@ -201,28 +228,66 @@ generate-pdf:
     # tabs. (Replaces the earlier JS-stripping approach, which broke Mermaid
     # because the diagrams are drawn client-side — see MR !83 review.)
     - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium node scripts/prepare-pdf-html.js http://localhost:3000 public
-    # Render the prepared static HTML to PDF. The tab bar is hidden and panels
-    # are bordered for visual separation (also reinforced via --cssStyle below).
+    # Render PDFs from the prepared static HTML. We produce one full-site PDF
+    # plus one PDF per section listed in PDF_SECTIONS. The tab bar is hidden and
+    # panels are bordered for visual separation (also reinforced via --cssStyle).
     - |
-      # Build --initialDocURLs from PDF_SECTIONS variable
-      INITIAL_URLS=$(echo "$PDF_SECTIONS" | tr ',' '\n' | sed 's|.*|http://localhost:3000/&|' | tr '\n' ',' | sed 's/,$//')
-      PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
-      npx docs-to-pdf docusaurus \
-        --initialDocURLs="$INITIAL_URLS" \
-        --contentSelector="article" \
-        --coverTitle="OCUDU Documentation" \
-        --coverSub="Generated $(date -u +%Y-%m-%d) from $(git rev-parse --short HEAD)" \
-        --paperFormat="A4" \
-        --outputPDFFilename="ocudu-docs.pdf" \
-        --excludePaths="/coverage/,/doxygen/,/qa_results/" \
-        --excludeSelectors=".theme-doc-footer,nav.pagination-nav,.table-of-contents" \
-        --cssStyle="ul[role='tablist']{display:none !important;} div[role='tabpanel']{border:1px solid #dee2e6; padding:12px 16px; margin-bottom:1rem; border-radius:4px; page-break-inside:avoid;}" \
-        --puppeteerArgs="--no-sandbox,--disable-gpu,--disable-dev-shm-usage" \
-        --protocolTimeout=300000 \
-        --version=3
+      mkdir -p pdf
+      COMMIT=$(git rev-parse --short HEAD)
+      DATE=$(date -u +%Y-%m-%d)
+
+      # Turn a section path (e.g. "user_manual/installation/") into a filename
+      # slug ("user-manual-installation") and a human title ("User Manual Installation").
+      slugify() { echo "$1" | sed 's#/*$##; s#/#-#g; s#_#-#g'; }
+      titleize() { echo "$1" | sed 's#/*$##; s#[/_]# #g' | sed 's/\b\(.\)/\u\1/g'; }
+
+      render_pdf() {
+        # $1 = comma-separated initial URLs, $2 = output file, $3 = cover title
+        PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
+        npx docs-to-pdf docusaurus \
+          --initialDocURLs="$1" \
+          --contentSelector="article" \
+          --coverTitle="$3" \
+          --coverSub="Generated $DATE from $COMMIT" \
+          --paperFormat="A4" \
+          --outputPDFFilename="$2" \
+          --excludePaths="/coverage/,/doxygen/,/qa_results/" \
+          --excludeSelectors=".theme-doc-footer,nav.pagination-nav,.table-of-contents" \
+          --cssStyle="ul[role='tablist']{display:none !important;} div[role='tabpanel']{border:1px solid #dee2e6; padding:12px 16px; margin-bottom:1rem; border-radius:4px; page-break-inside:avoid;}" \
+          --puppeteerArgs="--no-sandbox,--disable-gpu,--disable-dev-shm-usage" \
+          --protocolTimeout=300000 \
+          --version=3
+      }
+
+      # Full-site PDF: every section, one document.
+      FULL_URLS=$(echo "$PDF_SECTIONS" | tr ',' '\n' | sed 's|.*|http://localhost:3000/&|' | tr '\n' ',' | sed 's/,$//')
+      render_pdf "$FULL_URLS" "pdf/ocudu-docs.pdf" "OCUDU Documentation"
+
+      # Per-section PDFs.
+      echo "$PDF_SECTIONS" | tr ',' '\n' | while read -r section; do
+        [ -z "$section" ] && continue
+        slug=$(slugify "$section")
+        title=$(titleize "$section")
+        render_pdf "http://localhost:3000/$section" "pdf/ocudu-$slug.pdf" "OCUDU $title"
+      done
+
+      echo "Generated PDFs:"
+      ls -lh pdf/
     # Stop the background server
     - kill %1 2>/dev/null || true
+    # Publish every generated PDF to the generic package registry under
+    # docs_pdf/latest/, the same pattern used for coverage_html and doxygen.
+    # The build/pages jobs pull these into static/pdf/ so they are downloadable
+    # from the deployed site.
+    - |
+      for f in pdf/*.pdf; do
+        name=$(basename "$f")
+        echo "Publishing $name to package registry..."
+        curl --fail --silent --show-error --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+          --upload-file "$f" \
+          "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/docs_pdf/latest/$name"
+      done
   artifacts:
     paths:
-      - ocudu-docs.pdf
+      - pdf/
     expire_in: 30 days

@@ -7,6 +7,8 @@ import DocCard from '@theme/DocCard';
 
 # Developer Zone
 
+📄 [Download this section as a PDF](pathname:///pdf/ocudu-dev-guide.pdf)
+
 Everything you need to contribute to OCUDU: code style, logging conventions, testing requirements, and the full merge request process.
 
 :::tip First contribution?

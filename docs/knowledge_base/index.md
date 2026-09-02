@@ -7,6 +7,8 @@ import DocCard from '@theme/DocCard';
 
 # Knowledge Base
 
+📄 [Download this section as a PDF](pathname:///pdf/ocudu-knowledge-base.pdf)
+
 This section covers the 5G NR and O-RAN architecture concepts that underpin OCUDU: how a gNB is structured, how its components interact, and how the interfaces between them are defined.
 
 If you are new to the architecture, start with the O-RAN Overview. The other articles build on that foundation.

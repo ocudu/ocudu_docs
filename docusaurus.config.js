@@ -144,6 +144,23 @@ module.exports = {
         },
         {
           type: 'dropdown',
+          label: 'PDF',
+          position: 'right',
+          items: [
+            // pathname:// stops the router intercepting these; they are static
+            // files pulled into static/pdf/ by the build job. Links 404 until
+            // the first PDF schedule has published to the package registry.
+            { href: 'pathname:///pdf/ocudu-docs.pdf',                    label: 'Full Documentation' },
+            { href: 'pathname:///pdf/ocudu-user-manual-installation.pdf', label: 'User Manual' },
+            { href: 'pathname:///pdf/ocudu-tutorials.pdf',              label: 'Tutorials' },
+            { href: 'pathname:///pdf/ocudu-knowledge-base.pdf',         label: 'Knowledge Base' },
+            { href: 'pathname:///pdf/ocudu-dev-guide.pdf',              label: 'Developer Guide' },
+            { href: 'pathname:///pdf/ocudu-integrations.pdf',           label: 'Integrations' },
+            { href: 'pathname:///pdf/ocudu-releases.pdf',               label: 'Releases' },
+          ],
+        },
+        {
+          type: 'dropdown',
           label: 'CI Results',
           position: 'right',
           items: [

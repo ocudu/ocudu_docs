@@ -7,6 +7,8 @@ import DocCard from '@theme/DocCard';
 
 # Releases
 
+📄 [Download this section as a PDF](pathname:///pdf/ocudu-releases.pdf)
+
 OCUDU is an open-source initiative awarded initial funding by the National Spectrum Consortium (NSC) under a three-year programme running through October 2028. See the [NSC announcement](https://www.nationalspectrumconsortium.org/news-detail/ocudu-awardees-deepsig-srs) for details.
 
 The first public release, v26.04, shipped in April 2026. The project follows a predictable bi-annual release cycle: new versions ship every April and October to ensure steady feature development, community feedback integration, and long-term sustainability.
