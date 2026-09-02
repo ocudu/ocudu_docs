@@ -7,8 +7,6 @@ import DocCard from '@theme/DocCard';
 
 # Tutorials
 
-📄 [Download this section as a PDF](pathname:///pdf/ocudu-tutorials.pdf)
-
 Step-by-step guides from your first gNB to advanced multi-component deployments. Each tutorial has a single goal: follow it in order and you will have a working system by the end.
 
 The groups below run roughly from least to most infrastructure. Pick the group that matches what you want to do.

@@ -828,12 +828,36 @@ article.col .card p {
     color: #000 !important;
     border: 1px solid #ddd;
     white-space: pre-wrap !important;
-    word-break: break-all;
+    word-break: break-word;
+  }
+
+  /* Let long code blocks flow across page boundaries instead of being clipped.
+     The on-screen scrollbar (max-height + overflow) has no meaning on paper and
+     hides everything past the fold, so lift both here. */
+  pre[class*='language-'] {
+    max-height: none !important;
+    overflow: visible !important;
   }
 
   pre {
-    page-break-inside: avoid;
+    page-break-inside: auto;
     padding: 0.75em 1em;
+  }
+
+  /* Keep the line-number gutter on one line. The break-word/pre-wrap above is
+     for the code text; applied to the gutter it splits "112" into stacked
+     digits. */
+  .token-line > span:first-child,
+  [class*='codeLineNumber'],
+  [class*='linenumber'] {
+    white-space: nowrap !important;
+    word-break: normal !important;
+  }
+
+  /* The language badge is an absolutely-positioned decorative label pinned to
+     the block corner; it clips against the print padding. Drop it in print. */
+  pre[class*='language-']::before {
+    display: none !important;
   }
 
   h2, h3, h4 {

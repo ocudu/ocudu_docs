@@ -253,7 +253,7 @@ generate-pdf:
           --outputPDFFilename="$2" \
           --excludePaths="/coverage/,/doxygen/,/qa_results/" \
           --excludeSelectors=".theme-doc-footer,nav.pagination-nav,.table-of-contents" \
-          --cssStyle="ul[role='tablist']{display:none !important;} div[role='tabpanel']{border:1px solid #dee2e6; padding:12px 16px; margin-bottom:1rem; border-radius:4px; page-break-inside:avoid;}" \
+          --cssStyle="ul[role='tablist']{display:none !important;} div[role='tabpanel']{border:1px solid #dee2e6; padding:12px 16px; margin-bottom:1rem; border-radius:4px; page-break-inside:auto;}" \
           --puppeteerArgs="--no-sandbox,--disable-gpu,--disable-dev-shm-usage" \
           --protocolTimeout=300000 \
           --version=3
