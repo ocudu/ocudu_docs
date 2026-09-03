@@ -244,9 +244,13 @@ generate-pdf:
       render_pdf() {
         # $1 = comma-separated initial URLs, $2 = output file, $3 = cover title,
         # $4 = optional extra docs-to-pdf flags (e.g. --restrictPaths).
+        # --baseUrl rewrites the site's relative links to the live docs domain so
+        # links in the PDF point at docs.ocudu.org rather than the localhost build
+        # server the render runs against.
         PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
         npx docs-to-pdf docusaurus \
           --initialDocURLs="$1" \
+          --baseUrl="https://docs.ocudu.org/" \
           --contentSelector="article" \
           --coverTitle="$3" \
           --coverSub="Generated $DATE from $COMMIT" \
