@@ -884,4 +884,13 @@ article.col .card p {
     max-width: 100% !important;
     page-break-inside: avoid;
   }
+
+  /* DocCard grids (section/category landing pages) render as a .row of .col
+     cards. Without this each card can be sliced across a page boundary in the
+     PDF. Keep each card — and its column wrapper — whole. */
+  .card,
+  .row > .col {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
 }
