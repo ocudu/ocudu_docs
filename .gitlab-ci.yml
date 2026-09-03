@@ -274,12 +274,15 @@ generate-pdf:
       # --restrictPaths so docs-to-pdf includes only pages under that path. Without
       # it, the pagination crawl runs past the end of the section and pulls in
       # whatever comes next in the sidebar (e.g. the User Manual PDF picking up
-      # Tutorials/Integrations pages). See MR !83 review.
+      # Tutorials/Integrations pages). --disableTOC drops the auto-generated
+      # contents page: these section PDFs are small enough that the PDF reader's
+      # bookmark panel is enough, and the full-site PDF above keeps its TOC where
+      # a contents page actually helps. See MR !83 review.
       echo "$PDF_SECTIONS" | tr ',' '\n' | while read -r section; do
         [ -z "$section" ] && continue
         slug=$(slugify "$section")
         title=$(titleize "$section")
-        render_pdf "http://localhost:3000/$section" "pdf/ocudu-$slug.pdf" "OCUDU $title" "--restrictPaths"
+        render_pdf "http://localhost:3000/$section" "pdf/ocudu-$slug.pdf" "OCUDU $title" "--restrictPaths --disableTOC"
       done
 
       echo "Generated PDFs:"
