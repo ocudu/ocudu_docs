@@ -34,7 +34,6 @@ stages:
   - ci
   - test
   - build
-  - publish
 
 variables:
   # Sections included in the generated PDFs. Shared by generate-pdf (which
@@ -110,27 +109,37 @@ build:
       curl --header "JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/doxygen/latest/doxygen.tar.gz -o doxygen.tar.gz
       tar -xzf doxygen.tar.gz -C static/doxygen --strip-components=4
       rm -f doxygen.tar.gz
-    ## PDFs: pull the latest generated PDFs from the package registry into
-    ## static/pdf/ so they are served from the site root at /pdf/<name>.pdf.
-    ## The || skip keeps the build green before the first PDF schedule has run.
+    ## PDFs into static/pdf/, served from the site root at /pdf/<name>.pdf.
+    ## When generate-pdf ran earlier in this pipeline (nightly, or an on-demand
+    ## PDF schedule) its artifact is already on disk, so use that and the deploy
+    ## ships PDFs matching this build. Otherwise fall back to the last set
+    ## published to the package registry, which is what merge-request and
+    ## day-to-day default-branch pipelines use. Missing files are skipped so the
+    ## build stays green before the first PDF run.
     - |
       mkdir -p static/pdf
-      slugify() { echo "$1" | sed 's#/*$##; s#/#-#g; s#_#-#g'; }
-      PDF_FILES="ocudu-docs.pdf"
-      for section in $(echo "$PDF_SECTIONS" | tr ',' ' '); do
-        [ -z "$section" ] && continue
-        PDF_FILES="$PDF_FILES ocudu-$(slugify "$section").pdf"
-      done
-      for f in $PDF_FILES; do
-        if curl --fail --silent --show-error --header "JOB-TOKEN: $CI_JOB_TOKEN" \
-          "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/docs_pdf/latest/$f" \
-          -o "static/pdf/$f"; then
-          echo "Pulled $f"
-        else
-          echo "$f not published yet, skipping"
-          rm -f "static/pdf/$f"
-        fi
-      done
+      if ls pdf/*.pdf >/dev/null 2>&1; then
+        cp pdf/*.pdf static/pdf/
+        echo "Using PDFs generated in this pipeline:"
+        ls -1 static/pdf/
+      else
+        slugify() { echo "$1" | sed 's#/*$##; s#/#-#g; s#_#-#g'; }
+        PDF_FILES="ocudu-docs.pdf"
+        for section in $(echo "$PDF_SECTIONS" | tr ',' ' '); do
+          [ -z "$section" ] && continue
+          PDF_FILES="$PDF_FILES ocudu-$(slugify "$section").pdf"
+        done
+        for f in $PDF_FILES; do
+          if curl --fail --silent --show-error --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+            "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/docs_pdf/latest/$f" \
+            -o "static/pdf/$f"; then
+            echo "Pulled $f from the package registry"
+          else
+            echo "$f not published yet, skipping"
+            rm -f "static/pdf/$f"
+          fi
+        done
+      fi
     # Build the Docusaurus site
     - npm run build
     # Move built site to public folder
@@ -148,6 +157,16 @@ build:
 pages:
   extends: build
   stage: build
+  # `build` needs only get_ocudu_project_id, and a job with `needs` ignores stage
+  # order, so pages would otherwise deploy before generate-pdf had produced
+  # anything. `optional` keeps merge-request pipelines working, where
+  # generate-pdf does not exist.
+  needs:
+    - job: get_ocudu_project_id
+      artifacts: true
+    - job: generate-pdf
+      artifacts: true
+      optional: true
   environment:
     name: pages
     url: $CI_PAGES_URL
@@ -161,7 +180,9 @@ pages:
       echo "*******************************************************************************************************************************"
 
 generate-pdf:
-  stage: publish
+  # `test` runs before the `build` stage that holds pages, so the PDFs exist
+  # before the site is assembled and can ship with the same deploy.
+  stage: test
   image: node:20
   variables:
     PUPPETEER_SKIP_DOWNLOAD: "true"
@@ -169,6 +190,9 @@ generate-pdf:
     - job: get_ocudu_project_id
       artifacts: true
   rules:
+    # Nightly regenerates the PDFs so the nightly deploy ships current ones.
+    # The /PDF/ match stays so a one-off schedule can refresh them on demand.
+    - if: $CI_PIPELINE_SCHEDULE_DESCRIPTION =~ /Nightly/
     - if: $CI_PIPELINE_SCHEDULE_DESCRIPTION =~ /PDF/
   before_script:
     # Install Chromium and dependencies required by Puppeteer
