@@ -26,6 +26,13 @@
 //   baseUrl  - URL the built site is being served from (e.g. http://localhost:3000)
 //   buildDir - directory containing the built HTML (e.g. public)
 
+// Several functions/callbacks below are serialized and executed inside the
+// headless Chromium page via Puppeteer's page.evaluate/waitForFunction, so they
+// reference browser globals (document). Declare the browser env for the whole
+// file so ESLint does not flag those as no-undef. The Node-side code is
+// unaffected (node env is inherited from the base config).
+/* eslint-env browser */
+
 const fs = require('fs');
 const path = require('path');
 
@@ -82,7 +89,6 @@ function fileToUrlPath(relFile) {
 
 // Runs inside the page context. Waits for Mermaid, then rewrites tabs.
 // Returns a small summary so the Node side can log/verify.
-/* eslint-disable no-undef */
 function transformInPage() {
   const summary = { mermaid: 0, tabGroups: 0 };
 
@@ -130,7 +136,6 @@ function transformInPage() {
 
   return summary;
 }
-/* eslint-enable no-undef */
 
 async function main() {
   const buildRoot = path.resolve(BUILD_DIR);

@@ -242,7 +242,8 @@ generate-pdf:
       titleize() { echo "$1" | sed 's#/*$##; s#[/_]# #g' | sed 's/\b\(.\)/\u\1/g'; }
 
       render_pdf() {
-        # $1 = comma-separated initial URLs, $2 = output file, $3 = cover title
+        # $1 = comma-separated initial URLs, $2 = output file, $3 = cover title,
+        # $4 = optional extra docs-to-pdf flags (e.g. --restrictPaths).
         PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
         npx docs-to-pdf docusaurus \
           --initialDocURLs="$1" \
@@ -256,19 +257,25 @@ generate-pdf:
           --cssStyle="ul[role='tablist']{display:none !important;} div[role='tabpanel']{border:1px solid #dee2e6; padding:12px 16px; margin-bottom:1rem; border-radius:4px; page-break-inside:auto;}" \
           --puppeteerArgs="--no-sandbox,--disable-gpu,--disable-dev-shm-usage" \
           --protocolTimeout=300000 \
-          --version=3
+          --version=3 \
+          $4
       }
 
-      # Full-site PDF: every section, one document.
+      # Full-site PDF: every section, one document. No --restrictPaths here so
+      # the crawl is free to follow pagination across the whole site.
       FULL_URLS=$(echo "$PDF_SECTIONS" | tr ',' '\n' | sed 's|.*|http://localhost:3000/&|' | tr '\n' ',' | sed 's/,$//')
       render_pdf "$FULL_URLS" "pdf/ocudu-docs.pdf" "OCUDU Documentation"
 
-      # Per-section PDFs.
+      # Per-section PDFs. Each starts from a single section URL and passes
+      # --restrictPaths so docs-to-pdf includes only pages under that path. Without
+      # it, the pagination crawl runs past the end of the section and pulls in
+      # whatever comes next in the sidebar (e.g. the User Manual PDF picking up
+      # Tutorials/Integrations pages). See MR !83 review.
       echo "$PDF_SECTIONS" | tr ',' '\n' | while read -r section; do
         [ -z "$section" ] && continue
         slug=$(slugify "$section")
         title=$(titleize "$section")
-        render_pdf "http://localhost:3000/$section" "pdf/ocudu-$slug.pdf" "OCUDU $title"
+        render_pdf "http://localhost:3000/$section" "pdf/ocudu-$slug.pdf" "OCUDU $title" "--restrictPaths"
       done
 
       echo "Generated PDFs:"
