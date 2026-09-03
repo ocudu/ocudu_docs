@@ -151,7 +151,7 @@ module.exports = {
             // files pulled into static/pdf/ by the build job. Links 404 until
             // the first PDF schedule has published to the package registry.
             { href: 'pathname:///pdf/ocudu-docs.pdf',                    label: 'Full Documentation' },
-            { href: 'pathname:///pdf/ocudu-user-manual-installation.pdf', label: 'User Manual' },
+            { href: 'pathname:///pdf/ocudu-user-manual.pdf',           label: 'User Manual' },
             { href: 'pathname:///pdf/ocudu-tutorials.pdf',              label: 'Tutorials' },
             { href: 'pathname:///pdf/ocudu-knowledge-base.pdf',         label: 'Knowledge Base' },
             { href: 'pathname:///pdf/ocudu-dev-guide.pdf',              label: 'Developer Guide' },

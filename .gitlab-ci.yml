@@ -41,7 +41,7 @@ variables:
   # renders one PDF per entry plus a full-site PDF) and build/pages (which pull
   # the matching PDFs from the package registry into static/pdf/). Keep the
   # slugs here in sync with any per-section download links added to the site.
-  PDF_SECTIONS: "user_manual/installation/,tutorials/,knowledge_base/,dev_guide/,integrations/,releases/"
+  PDF_SECTIONS: "user_manual/,tutorials/,knowledge_base/,dev_guide/,integrations/,releases/"
 
 lint-and-test:
   stage: ci
