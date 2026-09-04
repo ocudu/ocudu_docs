@@ -102,13 +102,34 @@ build:
     ## Static
     - mkdir -p static/coverage static/doxygen
     - |
-      curl --header "JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/coverage_html/latest/coverage_html.tar.gz -o coverage_html.tar.gz
-      tar -xzf coverage_html.tar.gz -C static/coverage --strip-components=1
-      rm -f coverage_html.tar.gz
+      if curl --fail --silent --show-error --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+        "${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/coverage_html/latest/coverage_html.tar.gz" \
+        -o coverage_html.tar.gz; then
+        tar -xzf coverage_html.tar.gz -C static/coverage --strip-components=1
+        rm -f coverage_html.tar.gz
+        # ReportGenerator emits relative asset links (report.css, main.js). Those
+        # break when the page is opened at a trailing-slash URL such as
+        # /coverage/index.html/ (the browser resolves report.css against
+        # /coverage/index.html/report.css -> 404, so the page renders unstyled).
+        # Rewrite them to absolute /coverage/ paths so every coverage HTML page
+        # renders correctly regardless of the URL depth it is reached at.
+        find static/coverage -name '*.html' -exec sed -i \
+          -e 's#href="report\.css"#href="/coverage/report.css"#g' \
+          -e "s#'main\.js'#'/coverage/main.js'#g" {} +
+        echo "Coverage report downloaded and asset paths rewritten to /coverage/."
+      else
+        echo "WARNING: coverage_html package could not be downloaded (job token may lack read access to ${OCUDU_PROJECT_ID}, or no package published). The /coverage/ page will be missing." >&2
+      fi
     - |
-      curl --header "JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/doxygen/latest/doxygen.tar.gz -o doxygen.tar.gz
-      tar -xzf doxygen.tar.gz -C static/doxygen --strip-components=4
-      rm -f doxygen.tar.gz
+      if curl --fail --silent --show-error --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+        "${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/doxygen/latest/doxygen.tar.gz" \
+        -o doxygen.tar.gz; then
+        tar -xzf doxygen.tar.gz -C static/doxygen --strip-components=4
+        rm -f doxygen.tar.gz
+        echo "Doxygen documentation downloaded."
+      else
+        echo "WARNING: doxygen package could not be downloaded (job token may lack read access to ${OCUDU_PROJECT_ID}, or no package published). The /doxygen/ pages will be missing." >&2
+      fi
     ## PDFs into static/pdf/, served from the site root at /pdf/<name>.pdf.
     ## When generate-pdf ran earlier in this pipeline (nightly, or an on-demand
     ## PDF schedule) its artifact is already on disk, so use that and the deploy
@@ -220,13 +241,34 @@ generate-pdf:
     - git clone ${CI_SERVER_URL}/$[[ inputs.ocudu_oran_apps_path ]]/ocudu_o1_adapter.git oran_apps/ocudu_o1_adapter
     - mkdir -p static/coverage static/doxygen
     - |
-      curl --header "JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/coverage_html/latest/coverage_html.tar.gz -o coverage_html.tar.gz
-      tar -xzf coverage_html.tar.gz -C static/coverage --strip-components=1
-      rm -f coverage_html.tar.gz
+      if curl --fail --silent --show-error --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+        "${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/coverage_html/latest/coverage_html.tar.gz" \
+        -o coverage_html.tar.gz; then
+        tar -xzf coverage_html.tar.gz -C static/coverage --strip-components=1
+        rm -f coverage_html.tar.gz
+        # ReportGenerator emits relative asset links (report.css, main.js). Those
+        # break when the page is opened at a trailing-slash URL such as
+        # /coverage/index.html/ (the browser resolves report.css against
+        # /coverage/index.html/report.css -> 404, so the page renders unstyled).
+        # Rewrite them to absolute /coverage/ paths so every coverage HTML page
+        # renders correctly regardless of the URL depth it is reached at.
+        find static/coverage -name '*.html' -exec sed -i \
+          -e 's#href="report\.css"#href="/coverage/report.css"#g' \
+          -e "s#'main\.js'#'/coverage/main.js'#g" {} +
+        echo "Coverage report downloaded and asset paths rewritten to /coverage/."
+      else
+        echo "WARNING: coverage_html package could not be downloaded (job token may lack read access to ${OCUDU_PROJECT_ID}, or no package published). The /coverage/ page will be missing." >&2
+      fi
     - |
-      curl --header "JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/doxygen/latest/doxygen.tar.gz -o doxygen.tar.gz
-      tar -xzf doxygen.tar.gz -C static/doxygen --strip-components=4
-      rm -f doxygen.tar.gz
+      if curl --fail --silent --show-error --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+        "${CI_API_V4_URL}/projects/${OCUDU_PROJECT_ID}/packages/generic/doxygen/latest/doxygen.tar.gz" \
+        -o doxygen.tar.gz; then
+        tar -xzf doxygen.tar.gz -C static/doxygen --strip-components=4
+        rm -f doxygen.tar.gz
+        echo "Doxygen documentation downloaded."
+      else
+        echo "WARNING: doxygen package could not be downloaded (job token may lack read access to ${OCUDU_PROJECT_ID}, or no package published). The /doxygen/ pages will be missing." >&2
+      fi
     - npm run build
     - mv build public
     # Install docs-to-pdf plus puppeteer-core (used by scripts/prepare-pdf-html.js)
