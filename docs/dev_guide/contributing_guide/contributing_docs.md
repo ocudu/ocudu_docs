@@ -137,17 +137,89 @@ Most pages do not require a navbar change. The navbar links to section index pag
 
 ## Adding a New Integration Guide
 
-Integration guides are the most common community contribution. The process is:
+Integration guides are the most common community contribution. Before you start, read [Report an integration](../../integrations/report_an_integration.md); it lists the technical details a report should carry and lets you choose between adding a row to a category overview and writing a full guide. A row on an overview page is a complete contribution in itself.
+
+To add a full guide:
 
 1. Create the file at `docs/integrations/radio_units/<vendor>.md`, `docs/integrations/5g_cores/<vendor>/index.md`, or `docs/integrations/switches_and_timing/<vendor>.md` depending on the type.
-2. Follow the structure of an existing guide in the same category. The [Benetel guide](../../integrations/radio_units/benetel.md) is a good reference for a radio unit guide.
+2. Follow the skeleton below. The [Benetel guide](../../integrations/radio_units/benetel.md) is a worked example of it.
 3. Add the file to `sidebars_extended.js` in alphabetical order within the correct category (see step 3 in [Adding a New Page](#adding-a-new-page) above).
-4. Add any images to `static/img/` and include a `.license` sidecar alongside each one (see [License sidecars](#license-sidecars) below).
+4. Add your device to the category overview page, for example `docs/integrations/radio_units/index.md`, and link the new guide from its table row.
+5. Add any images to `static/img/` and include a `.license` sidecar alongside each one (see [License sidecars](#license-sidecars) below).
+
+### Integration guide skeleton
+
+Every radio unit guide uses the same headings in the same order, so that a reader who has used one guide can navigate the next one. Keep the heading text as written. Omit a section only if it genuinely does not apply; the [VVDN guide](../../integrations/radio_units/vvdn.md) omits the bring-up sections because the RU side is not documented yet, and says so.
+
+Three sections are optional and appear only where they have content: `## Troubleshooting`, `## Kubernetes and Helm deployment`, and any extra `###` subsections under `## Configuration` such as `### DPDK and SR-IOV configuration`. When present, they go in the order shown below. The [Pegatron guide](../../integrations/radio_units/pegatron.md) uses all three.
+
+```markdown
+# <Vendor> <Model>
+
+:::warning
+This document is intended to be used as a guide. Variances in firmware and
+software versions in local setups may require the sample configuration files
+provided to be changed. As a result please closely follow the specific users
+guides of your RU in conjunction with this guide.
+:::
+
+## Overview
+
+What the device is, a link to the vendor page, and the exact model and firmware
+version the guide was written against.
+
+## Configuration
+
+### CU/DU
+
+The OCUDU side: a link to a sample configuration file in `assets/`, and what
+cell it produces (band, bandwidth, duplexing, MIMO layers).
+
+### RU
+
+The device side: the commands or management steps needed, with output shown
+where it helps the reader confirm they are on track.
+
+## Initializing and connecting to the network
+
+### Initializing the network
+
+Bring-up order, and what a healthy start looks like.
+
+### Connecting to the network
+
+The UE attach, and how to confirm traffic is flowing.
+
+## Troubleshooting
+
+Optional. Symptom and check, for failures specific to this device.
+
+## Kubernetes and Helm deployment
+
+Optional. Helm values and cluster requirements specific to this device.
+
+## Known restrictions
+
+Bandwidths, MIMO configurations, firmware versions, or features that are not
+verified or not working, and any part of the setup that is a working example
+rather than a requirement. State them plainly; a recorded restriction is more
+useful than silence.
+```
+
+A short guide that fills in only the Overview and Configuration sections is worth submitting. Later contributors can extend it.
+
+### Keep the overview table in step
+
+Each category overview page, for example [O-RAN Radio Units](../../integrations/radio_units/index.md), carries a table summarising the guides: vendor, model, status, the release the result was recorded against, firmware, and a link to the guide. The table is a summary; the guide is the authoritative record. When you add or change a guide, update its table row to match. Keep notes in the table to a single clause; the long form belongs in the guide's **Known restrictions** section.
+
+Table rows without a guide are expected and fine. A row records that a device was integrated; a guide records how. Adding a row on its own is a complete contribution.
 
 ## Writing Style
 
 Follow these rules when writing documentation:
 
+- **Sentence case in headings.** Capitalise the first word and any proper noun or acronym, and nothing else: `## Known restrictions`, `### DPDK and SR-IOV configuration`, `## Kubernetes and Helm deployment`. Not `## Known Restrictions`.
+- **Name the device in the page title.** An integration guide's H1 is the vendor followed by the model or family, for example `# Picocom PC802SCB` or `# Benetel RAN550/RAN650`. Docusaurus uses the H1 as the sidebar label, so a bare vendor name leaves the reader guessing which unit the guide covers.
 - **Active voice.** Write "run the command" not "the command should be run."
 - **Imperative for instructions.** Write "clone the repository" not "you should clone the repository."
 - **One topic per sentence.** Split complex sentences rather than joining them with "and" or "but."
@@ -166,6 +238,7 @@ Check all of the following before submitting a merge request:
 - **Broken relative links.** Links to other `.md` files use relative paths. Verify that the target file exists at the path you specify.
 - **Broken anchor links.** An anchor like `#section-heading` will silently stop working if the target heading is renamed. Verify all anchors after any heading change.
 - **Missing `.license` sidecar.** Every PNG, JPG, GIF, SVG, PDF, `.woff`, or other binary or generated file in `static/` requires a `.license` file alongside it. See [License sidecars](#license-sidecars).
+- **Bare curly braces.** Docusaurus parses `.md` files as MDX, so `{` and `}` in prose are read as a JSX expression and fail the build. Wrap literal braces in inline code, for example a log line such as `` `{Format B4, ZCZ 0, SCS 30kHz, Rx ports 1}` ``.
 - **JSX in `.md` files.** JSX syntax (React components, `className=`, self-closing tags) is only valid in `.mdx` files. Using JSX in a `.md` file will break the build. If your page includes custom components, rename the file to `.mdx`.
 - **Conflict markers.** Run `git diff` before committing to confirm no `<<<<<<<`, `=======`, or `>>>>>>>` markers remain in the files.
 
