@@ -5,7 +5,7 @@ sidebar_label: Connecting an O-RAN RU
 # Connecting an O-RAN 7.2 radio unit
 
 :::info
-This tutorial covers the hardware-agnostic setup and configuration steps for connecting an O-RU via split 7.2. Hardware-specific details, including sample configuration files, for individual RU models can be found in the [Radio Units](../../integrations/index.md) section under integrations.
+This tutorial covers the hardware-agnostic setup and configuration steps for connecting an O-RU via split 7.2. Hardware-specific details, including sample configuration files, for individual RU models can be found in the [Radio Units](../../integrations/radio_units/index.md) overview under integrations.
 :::
 
 ## Overview
@@ -48,7 +48,7 @@ The CU/DU is provided by this project. The Open Fronthaul (OFH) Library provides
 ### RU
 
 Users should chose the RU that best suits their usecase and specific requirements. There are various O-RUs available with specific implementations for indoor and outdoor use, various price points, and various hardware capabilities. A list of tested O-RUs
-can be found in the [Radio Units](../../integrations/index.md) section under integrations, along with details on using them with OCUDU.
+can be found in the [Radio Units](../../integrations/radio_units/index.md) overview under integrations, along with details on using them with OCUDU.
 
 For all set-ups the RU should be connected to the fronthaul switch via SFP+ fiber cable through the main fronthaul interface.
 
@@ -85,7 +85,7 @@ The chosen switch should be a timing-aware O-RAN switch & PTP grandmaster. This 
 
 Refer to the specific Switch documentation to correctly configure it. Specifically any timing and routing options that may need to be configured.
 
-We recommend using the manufacturers documentation as well as the specific switch guide if it is available in the [Switches and Timing](../../integrations/index.md) section under integrations.
+We recommend using the manufacturers documentation as well as the specific switch guide if it is available in the [Switches and Timing](../../integrations/switches_and_timing/index.md) overview under integrations.
 
 ### CU/DU
 
@@ -254,13 +254,13 @@ Sample configuration files for the CU/DU can be found in the `configs` folder of
 
 The main configuration steps for the CU/DU occur in the `ru_ofh` field. Here the CU/DU is configured to match the capabilities of the RU being used. All parameters should be configured specifically for each RU.
 
-See the specific RU guides in the [Radio Units](../../integrations/index.md) section under Integrations for more information on configuring the CU/DU.
+See the specific RU guides in the [Radio Units](../../integrations/radio_units/index.md) overview under Integrations for more information on configuring the CU/DU.
 
 ### RU
 
 Refer to the specific RU documentation to correctly configure the RU. Ensure the RU is running before trying to make any configuration changes.
 
-We recommend using the manufacturers documentation as well as the specific RU guide if it is available in the [Radio Units](../../integrations/index.md) section under Integrations.
+We recommend using the manufacturers documentation as well as the specific RU guide if it is available in the [Radio Units](../../integrations/radio_units/index.md) overview under Integrations.
 
 ### Core
 
@@ -353,7 +353,9 @@ pci rnti  cqi  mcs  brate   ok  nok  (%) | pusch  mcs  brate   ok  nok  (%)    b
 
 ## Integration Guide
 
-Hardware-specific guides for O-RUs and switches tested with OCUDU in an O-RAN split 7.2 compliant network can be found in the [Integrations](../../integrations/index.md) section. All of the hardware items listed there have been tested in-house.
+Hardware-specific guides for O-RUs and switches tested with OCUDU in an O-RAN split 7.2 compliant network can be found in the [Integrations](../../integrations/index.md) section. The [O-RAN Radio Units](../../integrations/radio_units/index.md) overview records the radio units, test equipment, and reference platforms that have been integrated, the firmware and release each result was recorded against, and whether the result came from the SRS lab or from a community report.
+
+If you integrate a radio unit that is not listed there, please [report it](../../integrations/report_an_integration.md).
 
 ## Next steps
 

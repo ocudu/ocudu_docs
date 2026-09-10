@@ -58,8 +58,9 @@ module.exports = {
           items: [
             {
               type: 'category',
-              label: 'ORAN Radio Units',
+              label: 'O-RAN Radio Units',
               collapsed: true,
+              link: { type: 'doc', id: 'integrations/radio_units/index' },
               items: [
                 'integrations/radio_units/benetel',
                 'integrations/radio_units/foxconn',
@@ -73,6 +74,7 @@ module.exports = {
               type: 'category',
               label: '5G Cores',
               collapsed: true,
+              link: { type: 'doc', id: 'integrations/5g_cores/index' },
               items: [
 		'integrations/5g_cores/amarisoft/index',
                 'integrations/5g_cores/ella_core/index',
@@ -82,6 +84,7 @@ module.exports = {
               type: 'category',
               label: 'Switches and Timing',
               collapsed: true,
+              link: { type: 'doc', id: 'integrations/switches_and_timing/index' },
               items: [
                 'integrations/switches_and_timing/falcon',
                 'integrations/switches_and_timing/meinberg',
@@ -89,6 +92,7 @@ module.exports = {
                 'integrations/switches_and_timing/netgear',
               ],
             },
+            'integrations/report_an_integration',
           ],
         },
         'migration',

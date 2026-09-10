@@ -7,6 +7,6 @@ import DocCardList from '@theme/DocCardList';
 
 # Integrations
 
-This section covers integrations between OCUDU and third-party components commonly used in 5G network deployments.
+Integrations between OCUDU and the third-party components used in a 5G deployment.
 
 <DocCardList />
