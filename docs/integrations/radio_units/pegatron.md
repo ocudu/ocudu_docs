@@ -94,7 +94,7 @@ Below are the most critical values to be configured on the RU side, and the ones
 * `TDD Pattern` : The TDD pattern should match the DU's `tdd_ul_dl_cfg`. With the configuration above (period 10, 7 DL slots + 6 DL symbols, 2 UL slots + 4 UL symbols), this corresponds to a DDDDDDDSUUU pattern.
 * `PTP Synchronization` : Ensure PTP is configured and locked before starting the DU. The RU must have a stable PTP lock for correct fronthaul timing.
 
-### DPDK and SR-IOV Configuration
+### DPDK and SR-IOV configuration
 
 :::info
 The specific CPU core isolations, EAL arguments, and SR-IOV configurations shown below are highly dependent on specific server hardware and OS environment. They are provided as a working example rather than a strict requirement for the RU itself.
@@ -119,7 +119,7 @@ hal:
 When deploying on Kubernetes (e.g. StarlingX), the SR-IOV VF is typically allocated via the SR-IOV Device Plugin and the PCI address is injected into the pod at runtime. The `enable_promiscuous: true` and `check_link_status: false` settings are necessary in this scenario.
 :::
 
-### CPU Affinity and Threading
+### CPU affinity and threading
 
 For optimal real-time performance, the DU should be configured with appropriate CPU affinity:
 
@@ -170,7 +170,13 @@ Cell pci=0, bw=100 MHz, 4T4R, dl_arfcn=650000 (n78), dl_freq=3750.0 MHz, dl_ssb_
 Type <t> to view trace
 ```
 
-### Troubleshooting
+### Connecting to the network
+
+You can now connect a UE to the network. This can be done using e.g. a COTS UE. See the main RU guide for details on this.
+
+---
+
+## Troubleshooting
 
 If the DU fails to connect to the RU, check the following:
 
@@ -180,13 +186,9 @@ If the DU fails to connect to the RU, check the following:
 * **Compression settings**: The Pegatron RU uses static compression headers. Make sure both `enable_ul_static_compr_hdr` and `enable_dl_static_compr_hdr` are set to `true`.
 * **DPDK driver**: Verify the SR-IOV VF is correctly bound and the iavf PMD drivers are loaded.
 
-### Connecting to the network
-
-You can now connect a UE to the network. This can be done using e.g. a COTS UE. See the main RU guide for details on this.
-
 ---
 
-## Kubernetes / Helm Deployment
+## Kubernetes and Helm deployment
 
 This RU has also been tested with the OCUDU Helm chart for Kubernetes-based deployments (e.g. on StarlingX). Key Helm values for this setup include:
 
@@ -197,3 +199,12 @@ This RU has also been tested with the OCUDU Helm chart for Kubernetes-based depl
 * Host network disabled (using SR-IOV VFs instead)
 
 Refer to the OCUDU Helm chart documentation for full details on Kubernetes deployment.
+
+---
+
+## Known restrictions
+
+- The verified configuration is 4x4 MIMO at 100 MHz on band n78, on a PR1450-78I running firmware v1.0.2.4p1.
+- The RU uses static compression headers, so `enable_ul_static_compr_hdr` and `enable_dl_static_compr_hdr` must both be set to `true` on the DU side.
+- The DPDK, SR-IOV, EAL, and CPU affinity values in this guide are a working example from one server and operating system. They are not requirements of the RU itself.
+- This guide names the PR2850 alongside the PR1450, but no separate result is recorded for the PR2850.

@@ -14,7 +14,7 @@ The switch must be connected to an external clock source to ensure the PTP grand
 
 To do this, navigate to the FalconRX configuration GUI and go to *Configuration > Timing > SyncCenter* and select `GPS` as the `Sync Source Type`. Once this is done, wait for the GPS to lock and synchronize correctly. The SyncCenter will display green once it has successfully locked to the GPS signal. This is shown in the above image.
 
-## PTP Clocks
+## PTP clocks
 
 Once the PTP grandmaster is successfully synchronized it must be configured correctly for use with the DU and RU.
 

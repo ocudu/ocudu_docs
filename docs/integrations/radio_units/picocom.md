@@ -2,7 +2,7 @@
 description: "Connecting a Picocom O-RAN radio unit to OCUDU over the split 7.2 Open Fronthaul interface."
 ---
 
-# Picocom
+# Picocom PC802SCB
 
 :::warning
 This document is intended to be used as a guide. Variances in firmware and software versions in local setups may require the sample configuration files provided to be changed. As a result please closely follow the specific users guides of your RU in conjunction with this guide.
@@ -89,7 +89,7 @@ it can be configured and connected to the CU/DU and OFH packets can be sent betw
 This configuration is relevant to firmware v3.0.0. Other firmware versions may require different configurations. For more information on this reference the relevant documentation from Picocom.
 :::
 
-#### Configuration
+#### RU configuration
 
 The RU must first be configured so that the relevant values match across the DU and RU.
 
@@ -431,3 +431,12 @@ Once the RU is started and it detects the PTP, a CSV file is created in  */home/
 ### Connecting to the network
 
 You can now connect a UE to the network. This can be done using e.g. a COTS UE. See the main RU guide for details on this.
+
+---
+
+## Known restrictions
+
+- The PC802SCB is a development board rather than a deployment-ready commercial O-RU, although commercial O-RUs are based on the PC802 platform.
+- The board is capable of up to 100 MHz 4T4R. The configuration in this guide creates a 20 MHz cell on band n78.
+- The RU-side configuration applies to firmware v3.0.0. Other firmware versions may require different configuration.
+- This guide covers the PC802SCB only. The Picocom RDB X2 (PC805 based) is not documented here.

@@ -143,3 +143,15 @@ the RU actually counts for uplane packets as well. This has been fixed in later 
 ### Connecting to the network
 
 You can now connect a UE to the network. This can be done using e.g. a COTS UE. See the main RU guide for details on this.
+
+---
+
+## Known restrictions
+
+- Tested from 20 MHz to 100 MHz, in SISO, 2x2, and 4x4 modes. 256-QAM is supported in both directions, and maximum data rate is achievable in a conducted setup.
+- Best signal quality is at 90 MHz (`RRH_MAX_PRB` set to 245), because of filter roll-off in the RU.
+- `RRH_DL_IQ_SCALING` is present only in newer firmware versions such as v3.1.15q.551v0706, and has been tested with 2T2R only.
+- `RRH_SRC_MAC_ADDR` is usually not read from the configuration file. It is auto-set to the MAC address of the 10G interface at boot.
+- The `err_total` counter also counts U-plane packets, despite its name. Later firmware releases correct this.
+- The RU configuration file location moved from `/home/root/sdcard/` to `/home/root` in more recent firmware versions.
+- The sample DU configuration is specific to firmware v3_1_13q_551p1.

@@ -145,3 +145,14 @@ An example Amarisoft UE configuration file can be found below:
 - [UE configuration (2x2 MIMO configuration with 20 MHz bandwidth)](assets/amariUE_R550_20mhz_2x2.cfg).
 
 This configuration was tested with a R550 and a **specific** Amarisoft UE version (`lteue-linux-2023-09-08`), whilst using a cabled setup with RF splitters and 30 dB attenuation between the Rx ports of the SDR cards and the R550 antenna ports.
+
+
+---
+
+## Known restrictions
+
+- The verified configuration is 4x2 MIMO at 100 MHz on band n78. Other parameter combinations are untested and have caused problems with these RUs.
+- Short PRACH format is recommended. The earlier long PRACH format examples have been withdrawn, and all default configurations now use short PRACH.
+- Not every RU parameter can be set from `/etc/ru_config.cfg`. Refer to the Benetel User Guide for the remainder.
+- The sample DU configurations are specific to the RU firmware versions listed in the Overview.
+- The Amarisoft UE example was tested against a RAN550 with `lteue-linux-2023-09-08`, in a cabled setup using RF splitters and 30 dB attenuation.

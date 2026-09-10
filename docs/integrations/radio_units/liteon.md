@@ -4,6 +4,10 @@ description: "Connecting a LITEON FlexFi O-RAN radio unit to OCUDU over the spli
 
 # LITEON FlexFi
 
+:::warning
+This document is intended to be used as a guide. Variances in firmware and software versions in local setups may require the sample configuration files provided to be changed. As a result please closely follow the specific users guides of your RU in conjunction with this guide.
+:::
+
 ## Overview
 
 This guide provides further details on connecting the OCUDU CU/DU to an RU using the the O-RAN 7.2 split. Specifically, the [LITEON FlexFi](https://www.liteon.com/en-us/product/714).
@@ -76,6 +80,8 @@ Note that at this stage the DU is not generating any traffic.
 
 ---
 
+## Initializing and connecting to the network
+
 ### Initializing the network
 
 The following steps should be taken to initialize the network:
@@ -134,3 +140,12 @@ Verify that the the values in the `RX_ON_TIME`, `RX_ON_TIME_C` and `TX_TOTAL` co
 ### Connecting to the network
 
 You can now connect a UE to the network. This can be done using e.g. a COTS UE. See the main RU guide for details on this.
+
+---
+
+## Known restrictions
+
+- Firmware 02.00.09 or later is required. Older firmware versions do not work correctly.
+- The verified configuration is a 2T1R 100 MHz cell on band n78, so the second Rx antenna is not exercised.
+- With a single Rx port, the DU reports that the PRACH detector will not meet the performance requirements for the configuration `{Format B4, ZCZ 0, SCS 30kHz, Rx ports 1}`.
+- The RU must be power-cycled after configuration changes before it can be used.
