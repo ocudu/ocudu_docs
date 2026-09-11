@@ -74,6 +74,7 @@ module.exports = {
               label: '5G Cores',
               collapsed: true,
               items: [
+		'integrations/5g_cores/amarisoft/index',
                 'integrations/5g_cores/ella_core/index',
               ],
             },
