@@ -778,6 +778,115 @@ pci rnti  cqi  mcs  brate   ok  nok  (%) | pusch  mcs  brate   ok  nok  (%)    b
 
 ---
 
+## The RRC Inactive Functionality
+
+OCUDU supports suspending an NR SA UE into RRC Inactive and resuming the UE starting with `release v26.04`. 
+
+This section uses the Amarisoft NR Core because the AMF must provide `Core Network Assistance Information For Inactive` to the gNB for this procedure. Open5GS currently does not support the RRC Inactive procedure. See the [issue tracker](https://github.com/open5gs/open5gs/issues/4319) for more information.
+
+Configure the Amarisoft core by following the [Amarisoft NR core integration guide](../../integrations/5g_cores/amarisoft/index.md).
+
+### Enable Core Network Assistance Information
+
+Set [cn_assistance_info_support](https://tech-academy.amarisoft.com/ltemme.doc#prop.cn_assistance_info_support) in the Amarisoft NR core configuration file:
+```c
+cn_assistance_info_support: true,
+```
+This setting forces the AMF to provide `Core Network Assistance Information` during the NGAP initial context setup procedure.
+
+### Enable RRC Inactive support in AmariUE
+
+Add the following parameter to the NR UE entry in the `ue_list` block:
+
+```c
+rrc_inactive_support: true,
+```
+This parameter configures AmariUE to advertise support for RRC Inactive.
+
+### Enable RRC Inactive in OCUDU
+
+Configure the OCUDU CU-CP as shown below:
+```yml
+cu_cp:
+  inactivity_timer: 10 
+  enable_rrc_inactive: true
+  ran_paging_cycle: 32
+  t380: 5  
+``` 
+The `inactivity_timer` parameter triggers the transition from `RRC_CONNECTED` to `RRC_INACTIVE`.
+
+### Test RRC Inactive
+
+Start the components in the following order:
+
+#### Amarisoft NR Core
+Run this command directly from the `ltemme` release folder:
+```shell
+./ltemme config/mme.ocudu.rrcinactive.cfg
+```
+
+#### OCUDU
+Run this command from the build folder:
+```shell
+sudo ./apps/gnb/gnb -c gnb_rf_x310_tdd_n78_40mhz_rrcinactive.yml
+```
+
+#### Amarisoft UE
+Run this command from the `lteue` release folder:
+```shell
+/root/lteue-linux-2025-09-19/lteue /root/lteue-linux-2025-09-19/config/ue-nr-sa-tdd-n78-x310-single-ue-rrcinactive.cfg
+```
+After starting the UE and attaching to the core network, the UE `RRC_STATE` shows `running` (Connected state):
+```shell
+(ue) ue 1
+        # UE_ID CL RNTI    RRC_STATE               EMM_STATE #ERAB IP_ADDR
+  NR          1  0 4601      running              registered     1 192.168.4.2 CID 0
+```
+After the inactivity timer expires, the UE state changes to inactive. In the terminal, this is shown as below:
+```shell
+(ue) ue 1
+        # UE_ID CL RNTI    RRC_STATE               EMM_STATE #ERAB IP_ADDR
+  NR          1  0 4601     inactive              registered     1 192.168.4.2 CID 0
+```
+Wait one RNA update period (5 minutes). Execute the ping command using the `pdn0` TUN interface of the UE to generate uplink traffic:
+```bash
+ip netns exec ue1 ping 192.168.4.1 -I pdn0
+PING 192.168.4.1 (192.168.4.1) from 192.168.4.2 pdn0: 56(84) bytes of data.
+64 bytes from 192.168.4.1: icmp_seq=1 ttl=64 time=76.4 ms
+64 bytes from 192.168.4.1: icmp_seq=2 ttl=64 time=34.1 ms
+64 bytes from 192.168.4.1: icmp_seq=3 ttl=64 time=33.0 ms
+64 bytes from 192.168.4.1: icmp_seq=4 ttl=64 time=32.0 ms
+```
+The UE resumes the RRC connection, and the UE switches back from `RRC_INACTIVE` to `RRC_CONNECTED` state.
+
+#### Verify Core Network Assistance Information
+
+Below shows the `CoreNetworkAssistanceInformationForInactive` IE inside `InitialContextSetupRequest` in the NGAP packet capture in Wireshark. The image below confirms that the AMF has provided the assistance information required by the OCUDU gNB.
+
+![CoreNetworkAssistanceInformationForInactive](assets/core-network-assistance-information-for-inactive.png)
+
+#### Verify UE Capability for RRC Inactive
+
+The UE Capability Information message in MAC packet capture should report inactive supported, which indicates the UE can support RRC Inactive operation.
+
+![UECapabilityInformationInactiveStateSupported](assets/ue-capability-rrc-inactive-support.png)
+
+#### Verify the Transition to RRC Inactive
+
+The `RRCRelease` message should contain the `suspendConfig` IE, which includes the information required by the UE to resume the suspended connection.
+
+![RRCReleasewSuspendConfig](assets/rrc-release-suspend-config.png)
+
+#### Verify the RRC Resume Procedure
+
+Inspect the MAC packet capture in Wireshark. The image below shows the RRC messages exchanged during the emulation:
+
+![RRCResumeProcedure](assets/rrc-resume-procedure.png)
+
+The RRC connection establishment procedure creates a UE context first. The inactivity timer (10 s) fires next. This releases the RRC connection and transitions the UE from `RRC_CONNECTED` to `RRC_INACTIVE`. The RNA update procedure resumes the RRC connection after T380 period (5 minutes). The gNB immediately releases the RRC connection again for the `RRCResumeRequest`. This returns the UE to the `RRC_INACTIVE` state. Finally, the `ping` command generates uplink data to resume the RRC connection.
+
+---
+
 ## Troubleshooting
 
 ### ZMQ setup
