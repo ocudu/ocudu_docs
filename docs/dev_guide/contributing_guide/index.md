@@ -299,6 +299,35 @@ For files implementing 3GPP specifications the following file header shall be us
 // Portions of this file may implement 3GPP specifications, which may be subject to additional licensing requirements.
 ```
 
+### Copyright Headers and CONTRIBUTORS.md
+
+OCUDU follows the approach recommended in the Linux Foundation blog post [Copyright Notices in Open Source Software Projects](https://www.linuxfoundation.org/blog/blog/copyright-notices-in-open-source-software-projects): a `CONTRIBUTORS.md` file at the repository root names the copyright holders, and file headers carry a generic contributor copyright line rather than growing a new line per individual contributor. Not every OCUDU repository has adopted this pattern yet. Check whether the repository you are contributing to has a `CONTRIBUTORS.md` file before following this section; if it does not, feel free to create an MR following header conventions explained below.
+
+Note that most files in the OCUDU organization still carry only the original Software Radio Systems Limited copyright line, since SRS provided the seed code for OCUDU. Add the `OCUDU contributors` line only to files you author or substantially extend; leave files you have not touched as they are.
+
+Where `CONTRIBUTORS.md` exists, it lists every organization that holds copyright in the repository's source, in alphabetical order with no ranking implied. When you author or substantially extend a file on behalf of an organization other than the file's original copyright holder, add your organization to `CONTRIBUTORS.md` if it is not already listed, and add a second `SPDX-FileCopyrightText` line to that file's header:
+
+```
+SPDX-FileCopyrightText: Copyright (C) <year> OCUDU contributors
+```
+
+Keep the original copyright line unchanged and place the new line directly below it.
+
+This approach was introduced first in the [`ocudu_o1_adapter`](https://gitlab.com/ocudu/ocudu_elements/ocudu_oran_apps/ocudu_o1_adapter) repository. For example, `src/ru_controller.py` carries:
+
+```python
+# SPDX-FileCopyrightText: Copyright (C) 2021-2026 Software Radio Systems Limited
+# SPDX-FileCopyrightText: Copyright (C) 2026 OCUDU contributors
+# SPDX-License-Identifier: BSD-3-Clause-Open-MPI
+```
+
+and its `CONTRIBUTORS.md` lists both organizations that hold copyright in the codebase:
+
+```
+- Cognitive Network Solutions, Inc.
+- Software Radio Systems Limited
+```
+
 ### Sign Your Commits
 
 You sign-off by adding the following to your commit messages. Your sign-off must
