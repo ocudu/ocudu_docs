@@ -53,4 +53,4 @@ Protocol components express their threading requirements through their construct
 
 - The threading model can be reconfigured without touching any protocol code.
 - Unit tests can inject a synchronous (inline) executor, making async code testable without threads.
-- The architecture team can reason about thread budgets and priorities centrally, in the wiring layer, rather than hunting for thread creation scattered across the codebase.
+- The developers can reason about thread budgets and priorities centrally, in the wiring layer, rather than hunting for thread creation scattered across the codebase.
