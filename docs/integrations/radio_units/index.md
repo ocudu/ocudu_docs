@@ -13,11 +13,13 @@ The tables on this page score support separately for each Open Fronthaul plane: 
 
 ### CUS-plane support status
 
+The CU-plane in OCUDU is directly implemented within the main OCUDU repo, speficially in the OFH layer. S-plane is provided through a third-party software stack like linuxptp.
+
 | | Status | Meaning |
 | --- | --- | --- |
-| 🟢 | Very good | Confirmed working without issues for all tested configuration. Achieves full rate for DL and UL in conducted mode or under ideal conditions over the air. RF settings and output power have been calibrated with RF measurement equipment. |
-| 🟡 | Good | Confirmed to attach a COTS UE, with some restriction on performance, e.g. not achieving the maximum rate or not RF calibrated. It could also be that the RU requires a specific config or doesn't support a tested feature, e.g. TDD pattern. |
-| 🟠 | Not working | Confirmed downlink transmission. Uplink, for data and/or PRACH, is still missing. |
+| 🟢 | Very good | Confirmed working without issues for all tested configuration. Achieves full rate for DL and UL in conducted mode and/or under ideal conditions over the air. RF settings and output power have been calibrated with RF measurement equipment. |
+| 🟡 | Good | Confirmed to attach a commercial UE, with some restriction on performance, e.g. not achieving the maximum rate or not RF calibrated. It could also be that the RU requires a specific config or doesn't support a tested feature, e.g. TDD pattern. |
+| 🟠 | Partly supported | Confirmed downlink transmission. Uplink, for data and/or PRACH, is still missing. |
 | ⚪ | Unknown | Not tested. |
 
 
@@ -25,10 +27,17 @@ The tables on this page score support separately for each Open Fronthaul plane: 
 
 M-plane is the separate NETCONF-based management interface, and not every device or integration uses it.
 
+Typically an RU integration starts with CUS-plane interop testing using a static RU config that is written over a config file or web interface, depending on the vendor.
+M-plane integration typically comes later and is important for deployment use-cases.
+
+Within the OCUDU community, specifically within the [O1 Adapter repo](https://gitlab.com/ocudu/ocudu_elements/ocudu_oran_apps/ocudu_o1_adapter) there is currently a lot
+of development happening towards advanced M-plane support. Listing the exact support status for each RU is beyond the scope of this document. Our intention is
+to collect finer grained details within per-RU discussion/issue topics. 
+
 | | Status | Meaning |
 | --- | --- | --- |
 | 🟢 | Very good | Configuration management (CM), fault management (FM) and performance management (PM) verified. |
-| 🟡 | Good | Configuration management (CM) has been tested. |
+| 🟡 | Good | At least Configuration management (CM) has been tested. |
 | ⚪ | Unknown | Not tested. |
 
 
