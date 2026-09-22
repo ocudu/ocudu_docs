@@ -56,6 +56,7 @@ An RU is a radio unit built for indoor or outdoor operation with an internal or 
 | Lions RANathon RS8602 | Outdoor | 🟡 | ⚪ | SRS | FW: 1.0.4.016 |
 | MTI G21RRH-46-01B FDD | Outdoor | 🟡 | 🟡 | SRS | FW: 12.20.01 |
 | [Pegatron PR1450-78I](pegatron.md) | Indoor | 🟢 | ⚪ | Community |  |
+| Sera Network ORU-NM4400 24dBm | Outdoor | 🟢 | ⚪ | Community |  |
 | Solid Band7 FDD DAS | n/a | 🟡 | ⚪ | Community |  |
 | [VVDN n78 indoor RU](vvdn.md) | Indoor | 🟡 | ⚪ | SRS | |
 
