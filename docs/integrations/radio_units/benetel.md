@@ -46,25 +46,26 @@ ru_ofh:
   t1a_min_up: 294
   ta4_max: 200
   ta4_min: 0
-  is_prach_cp_enabled: true            # Configures if Control-Plane messages should be used to receive PRACH messages.
-  compr_method_ul: bfp                 # Uplink compression method.
-  compr_bitwidth_ul: 9                 # Uplink IQ samples bitwidth after compression.
-  compr_method_dl: bfp                 # Downlink compression method.
-  compr_bitwidth_dl: 9                 # Downlink IQ samples bitwidth after compression.
-  compr_method_prach: bfp              # PRACH compression method.
-  compr_bitwidth_prach: 9              # PRACH IQ samples bitwidth after compression.
-  enable_ul_static_compr_hdr: false    # Configures if the compression header is present for uplink User-Plane messages (false) or not present (true).
-  enable_dl_static_compr_hdr: false    # Configures if the compression header is present for downlink User-Plane messages (false) or not present (true).
-  iq_scaling: 20                       # IQ samples scaling factor applied before compression.
+  is_prach_cp_enabled: true
+  compr_method_ul: bfp
+  compr_bitwidth_ul: 9
+  compr_method_dl: bfp
+  compr_bitwidth_dl: 9
+  compr_method_prach: bfp
+  compr_bitwidth_prach: 9
+  enable_ul_static_compr_hdr: false
+  enable_dl_static_compr_hdr: false
+  ru_reference_level_dBFS: -12
+  subcarrier_rms_backoff_dB: 0
   cells:
-    - network_interface: enp1s0f0      # Ethernet interface name used to communicate with the RU.
-      ru_mac_addr: 70:b3:d5:e1:5b:06   # RU MAC address.
-      du_mac_addr: 80:61:5f:0d:df:aa   # DU MAC address.
-      vlan_tag_cp: 5                   # VLAN tag value for CP.
-      vlan_tag_up: 5                   # VLAN tag value for UP.
-      prach_port_id: [4, 5]            # PRACH eAxC port value.
-      dl_port_id: [0, 1, 2, 3]         # Downlink eAxC port values.
-      ul_port_id: [0, 1]               # Uplink eAxC port values.
+    - network_interface: enp1s0f0
+      ru_mac_addr: 70:b3:d5:e1:5b:06
+      du_mac_addr: 80:61:5f:0d:df:aa
+      vlan_tag_cp: 5
+      vlan_tag_up: 5
+      prach_port_id: [4, 5]
+      dl_port_id: [0, 1, 2, 3]
+      ul_port_id: [0, 1]
 cell_cfg:
   prach:
     prach_root_sequence_index: 1
