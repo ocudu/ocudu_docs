@@ -4,6 +4,11 @@ sidebar_label: Running on Kubernetes
 
 # Deploying OCUDU on Kubernetes
 
+:::info
+Before you deploy, see [Using container images](../container_images/index.md). It shows how to pick the right OCUDU
+image for your component, radio front-end and CPU, and how to verify its signature, SBOM and vulnerability report.
+:::
+
 ## Overview
 
 This tutorial outlines the steps required to deploy the OCUDU gNB for a split 7.2 architecture using

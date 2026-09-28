@@ -37,7 +37,7 @@ DPDK, USRP, BBDEV, Tuning`"]
     UR --> OR["`**O-RAN**
 CU/DU split, Near-RT RIC`"]
     OR --> DT["`**Deployment and tools**
-Kubernetes, MATLAB`"]
+Container images, Kubernetes, MATLAB`"]
     PE --> DT
 ```
 
@@ -120,9 +120,12 @@ Tune throughput and latency with kernel-bypass I/O, hardware offload, and host t
 
 ## Deployment and tools
 
-Containerised deployment and supporting tooling. The Kubernetes tutorial needs a cluster.
+Container images, containerised deployment, and supporting tooling. The Kubernetes tutorial needs a cluster.
 
 <section className="row">
+  <article className="col col--6 margin-bottom--lg">
+    <DocCard item={{type: 'link', href: '/tutorials/container_images/', label: 'Using container images', description: 'Find the published OCUDU container images and verify their signature, SBOM, and vulnerability report.'}} />
+  </article>
   <article className="col col--6 margin-bottom--lg">
     <DocCard item={{type: 'link', href: '/tutorials/k8s/', label: 'Running on Kubernetes', description: 'Deploy OCUDU as Kubernetes pods in a split 7.2 configuration, with containerised CU, DU, and fronthaul components.'}} />
   </article>
