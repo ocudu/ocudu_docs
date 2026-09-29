@@ -37,8 +37,9 @@ OCUDU requires these dependencies:
 - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - [mbedTLS](https://www.trustedfirmware.org/projects/mbed-tls/)
 - [A FFT library](#fft-library)
-- Optional requirement: [googletest](https://github.com/google/googletest/)
-  - GoogleTest is only mandatory when building with tests. You can enable test building by using the cmake option -DBUILD_TESTING=On.
+- Optional requirement: 
+  - [Eigen library](https://libeigen.gitlab.io/) is required for enabling the DOA estimation features (disabled by default);
+  - [GoogleTest](https://github.com/google/googletest/) is only mandatory when building with tests. You can enable test building by using the cmake option -DBUILD_TESTING=On.
 
 Install build tools and dependencies:
 
@@ -50,7 +51,7 @@ sudo apt-get install cmake make gcc g++ pkg-config libmbedtls-dev libsctp-dev li
   </TabItem>
   <TabItem value="fedora" label="Fedora">
 ```bash
-sudo yum install cmake make gcc gcc-c++ lksctp-tools-devel yaml-cpp-devel mbedtls-devel gtest-devel
+sudo dnf install cmake make gcc gcc-c++ lksctp-tools-devel yaml-cpp-devel mbedtls-devel gtest-devel
 ```
   </TabItem>
   <TabItem value="arch" label="Arch Linux">
@@ -86,7 +87,7 @@ sudo apt-get install libfftw3-dev
   </TabItem>
   <TabItem value="fedora" label="Fedora">
 ```bash
-sudo yum install fftw-devel
+sudo dnf install fftw-devel
 ```
   </TabItem>
   <TabItem value="arch" label="Arch Linux">
@@ -145,6 +146,36 @@ module load armpl/24.10.0_gcc
 ```
   </TabItem>
 </Tabs>
+
+---
+
+## Eigen
+
+:::note
+The Eigen library is only required if you plan to enable the DOA estimation feature, disabled by default. If DOA is not needed, you may skip this step.
+:::
+
+OCUDU relies on the [Eigen library](https://libeigen.gitlab.io/) for linear algebra computations in the DOA (direction of arrival) estimator. The library is available from most distro repositories.
+
+<Tabs>
+  <TabItem value="ubuntu" label="Ubuntu 22.04 (or later)" default>
+```bash
+sudo apt update && sudo apt install libeigen3-dev
+```
+  </TabItem>
+  <TabItem value="fedora" label="Fedora">
+```bash
+sudo dnf install eigen3-devel
+```
+  </TabItem>
+  <TabItem value="arch" label="Arch Linux">
+```bash
+sudo pacman -S eigen
+```
+  </TabItem>
+</Tabs>
+
+---
 
 ## RF-drivers
 
