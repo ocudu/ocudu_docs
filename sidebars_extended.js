@@ -79,6 +79,7 @@ module.exports = {
               items: [
 		'integrations/5g_cores/amarisoft/index',
                 'integrations/5g_cores/ella_core/index',
+                'integrations/5g_cores/free5gc/index',
               ],
             },
             {

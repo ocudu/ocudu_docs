@@ -12,6 +12,7 @@ displayed_sidebar: userDocsSidebar
 | Core | Notes |
 | --- | --- |
 | [Ella Core](ella_core/index.md) | Single binary for private networks. The guide covers a co-hosted deployment with OCUDU. |
+| [free5GC](free5gc/index.md) | Open-source 5G Core from NYCU's WireLab, now a Linux Foundation project. The guide covers deployment with `free5gc-compose`. |
 | Open5GS | Recommended in [Running OCUDU](../../user_manual/running/running.md) and used as the core throughout the [tutorials](../../tutorials/index.md). No dedicated guide yet. |
 
 **Where to look.** A core name that is a link has a guide, and that guide is the authoritative record for it; where a guide and this table disagree, the guide is correct and the table needs fixing.
