@@ -125,8 +125,6 @@ The following steps should be taken to initialize the network:
 If the DU connects to the RU successfully, you will see the following output:
 
 ```bash
-The PRACH detector will not meet the performance requirements with the configuration {Format 0, ZCZ 0, SCS 1.25kHz, Rx ports 1}.
-
 --== OCUDU gNB (commit 2c67c80) ==--
 
 Connecting to AMF on 127.0.0.5:38412

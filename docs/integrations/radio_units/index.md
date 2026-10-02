@@ -61,6 +61,7 @@ An RU is a radio unit built for indoor or outdoor operation with an internal or 
 | Sera Network ORU-NM4400 24dBm | Outdoor | 🟢 | ⚪ | Community |  |
 | Solid Band7 FDD DAS | n/a | 🟡 | ⚪ | Community |  |
 | [VVDN n78 indoor RU](vvdn.md) | Indoor | 🟡 | ⚪ | SRS | |
+| WNC R1220 | Indoor | 🟡 | ⚪ | Community | |
 
 **What was tested.** Typical testing covers Open Fronthaul integration for CUS-plane, a UE attach in SISO mode at 100 MHz, then two and four downlink MIMO layers. Known gaps and restrictions are in the individual RU guide or notes column.
 
