@@ -94,6 +94,22 @@ obj.method(a, b, /*enable_X=*/true, /*options=*/nullptr);
   for debug printing, use `#if 0` and `#endif`. These nest
   properly and are better behaved in general than C-style comments.
 
+- Overridden methods are documented in the interface they come from, so do not repeat the documentation block. Instead,
+  precede the declaration with the normal comment `// See interface for documentation.`. This tells the reader where to
+  look, and avoids keeping two copies of the same documentation that can easily diverge.
+
+```c++
+class mac_impl : public mac_interface
+{
+public:
+  // See interface for documentation.
+  void handle_rx_data_indication(const mac_rx_data_indication& msg) override;
+
+  // See interface for documentation.
+  void handle_crc(const mac_crc_indication_message& msg) override;
+};
+```
+
 ### File Headers
 
 Every source file of the project should have a copyright header and a short description of the basic purpose of the file. The standard header looks like
@@ -180,6 +196,120 @@ Use C++ library header files in C++ files instead of using the C library headers
 
 As a final note, `clang-format` will lexicographically sort all includes files automatically for you.
 
+## Forward declarations
+
+In a header file (`.h`), **if a type is used in a way that does not need its complete definition, forward declare it
+instead of including its header**. Include the full header in the `.cpp` file, where the type is actually used.
+
+**Rationale**
+
+- **Faster builds**: every `#include` in a header propagates to every file that includes that header. Fewer includes mean
+  less to recompile when something changes.
+- **Weaker coupling**: changing a header does not force a rebuild of every file that only mentions the types it defines.
+- **No circular dependencies**: two classes that refer to each other cannot include each other's headers. Forward
+  declarations break the cycle.
+- **Clearer dependencies**: the header shows which types are truly required and which are only referenced.
+
+**Use a forward declaration** when the header only uses `T` as:
+
+- A pointer or reference: `T*`, `T&`, `const T&`, `std::shared_ptr<T>` or `std::weak_ptr<T>`.
+- A `std::unique_ptr<T>` member, provided that the destructor of the owning class is defined in the `.cpp` file (where
+  `T` is complete).
+- A parameter or return type in a function declaration, even by value.
+- A `friend` declaration, a `using` alias, or an `extern` declaration.
+
+**Include the header** when the header file:
+
+- Has a member of type `T` held **by value**.
+- **Inherits** from `T`.
+- Calls methods or reads members of `T`, e.g., in an inline function.
+- Uses `sizeof(T)` or creates an instance of `T`.
+- Uses a nested type (`T::inner`) or an alias declared in that header.
+- Uses an enum of any kind (enum or enum class, with or without a fixed underlying type). Do not forward declare enums:
+  include the header that defines them.
+- Uses a type from the **standard library** or from a **third-party library**. Forward declaring `std` types is undefined
+  behavior, and third-party declarations may change without notice.
+
+List forward declarations right after the includes, **sorted alphabetically, classes first and then structs**. **Do not
+forward declare enums**: include the header that defines them.
+
+**Example**
+
+```cpp
+// Bad: mac_cell_processor.h
+
+#pragma once
+
+#include "mac_config.h"                // Needed: member held by value.
+#include "ocudu/mac/mac_cell_result.h" // Not needed: only used by reference.
+#include "ocudu/support/timers.h"      // Not needed: only used through a pointer.
+#include "rlc_entity.h"                // Not needed: only held through a unique_ptr.
+#include <memory>
+
+namespace ocudu {
+
+class mac_cell_processor
+{
+public:
+  mac_cell_processor(const mac_config& cfg, timer_manager& timers);
+  ~mac_cell_processor() = default;
+
+  void handle_slot_result(const mac_cell_result& result);
+
+private:
+  mac_config                  cfg;
+  timer_manager*              timers;
+  std::unique_ptr<rlc_entity> rlc;
+};
+
+} // namespace ocudu
+```
+
+```cpp
+// Good: mac_cell_processor.h
+
+#pragma once
+
+#include "mac_config.h"
+#include <memory>
+
+namespace ocudu {
+
+class rlc_entity;
+class timer_manager;
+struct mac_cell_result;
+
+class mac_cell_processor
+{
+public:
+  mac_cell_processor(const mac_config& cfg, timer_manager& timers);
+  // Defined in the .cpp file, where rlc_entity is complete.
+  ~mac_cell_processor();
+
+  void handle_slot_result(const mac_cell_result& result);
+
+private:
+  mac_config                  cfg;
+  timer_manager*              timers;
+  std::unique_ptr<rlc_entity> rlc;
+};
+
+} // namespace ocudu
+```
+
+```cpp
+// mac_cell_processor.cpp
+
+#include "mac_cell_processor.h"
+#include "rlc_entity.h"
+#include "ocudu/mac/mac_cell_result.h"
+#include "ocudu/support/timers.h"
+
+using namespace ocudu;
+
+mac_cell_processor::~mac_cell_processor() = default;
+```
+
 ---
 
 ## Language and compiler aspects
@@ -203,7 +333,8 @@ In general, use auto when it makes the code more readable and easier to maintain
 Some examples:
 
 ```cpp
-auto *p = std::unique_ptr<int>(new int);  // good: easy to infer that p is an int*
+auto p = std::make_unique<int>(0);        // good: easy to infer that p is a std::unique_ptr<int>
 auto i = my_map.begin();                  // good, easy to see it is an iterator and avoids writing std::unordered_map<std::string, int>::iterator
 auto a = my_func();                       // bad: what type does my_func return?
+auto b = static_cast<unsigned>(value);    // good: easy to infer since it is cast to the expected type in the same line
 ```

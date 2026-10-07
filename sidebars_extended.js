@@ -207,6 +207,7 @@ module.exports = {
             'dev_guide/code_guide/recommendations',
             'dev_guide/code_guide/self_generating_docs',
             'dev_guide/code_guide/commit_formatting',
+            'dev_guide/code_guide/cpp_good_practices',
           ],
         },
         'dev_guide/logging_guide/index',

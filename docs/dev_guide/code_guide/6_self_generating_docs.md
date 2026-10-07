@@ -41,6 +41,14 @@ class example2;
 All code entities should be documented when declared. It is not required (actually, it is discouraged) to repeat the documentation block when defining
 the code entity. In particular, virtual methods are only documented when declaring the interface/base class and the documentation is not repeated when
 defining the implementation.
+There will be two possible options:
+1. Instead of repeating the comment precede the declaration with the normal comment `// See interface for documentation.`.
+   This tells the reader where to  look, and avoids keeping two copies of the same.
+2. Just avoid writing any comment at all.
+
+The intention is to keep consistency in each file, so the decision about choosing between those two options will be based
+on what is actually used in the current file.
+documentation that can easily diverge.
 
 Other general recommendations are as follows
 
