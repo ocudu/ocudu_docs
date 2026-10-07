@@ -9,18 +9,31 @@ Radio units, test equipment, and reference platforms that have been integrated w
 
 ## Support status
 
-The tables on this page score support separately for each Open Fronthaul plane: **C** (Control), **U** (User), **S** (Synchronization), and **M** (Management). C, U, and S together make up the **CUS**-plane interface.
+The tables on this page score support separately for each Open Fronthaul plane: **C** (Control), **U** (User), **S** (Synchronization), and **M** (Management). S-plane is assumed a prerequisite, typically implemented
+by a third-party stack such as linuxptp, and is therefore not listed explicitly. C, U and S together make up the **CUS**-plane interface. The **RF** column scores the RF calibration of the RU separately.
 
 ### CUS-plane support status
 
-In OCUDU, the C-plane and U-plane are implemented directly in the OFH layer of the main repo. The S-plane is provided by a third-party stack such as linuxptp.
+In OCUDU, the C-plane and U-plane are implemented directly in the OFH layer of the main repo.
 
 | | Status | Meaning |
 | --- | --- | --- |
-| 🟢 | Very good | Confirmed working without issues for all tested configurations. Achieves full rate for DL and UL in conducted mode and/or under ideal conditions over the air. RF settings and output power have been calibrated with RF measurement equipment. |
-| 🟡 | Good | Confirmed to attach a COTS UE, with some restriction on performance, e.g. not achieving the maximum rate or not RF calibrated. It could also be that the RU requires a specific config or doesn't support a tested feature, e.g. TDD pattern. |
-| 🟠 | Partly supported | Confirmed downlink transmission. Uplink, for data and/or PRACH, is still missing. |
-| ⚪ | Unknown | Not tested. |
+| 🟢 | Very good | Confirmed working without issues and without vendor-specific options for all tested configurations. Achieves full rate for DL and UL in conducted mode and/or under ideal conditions over the air.[^cu-reference] |
+| 🟡 | Good | Confirmed to attach a COTS UE, with some restriction on performance, e.g. not achieving the maximum rate. It could also be that the RU requires a specific config or doesn't support a tested feature, e.g. TDD pattern. |
+| ⚪ | Unknown | Not tested, or tested without reaching a stable attach. The notes column says what was achieved. |
+
+
+[^cu-reference]: A 🟢 CUS-plane status also requires the working configuration to be public: either a dedicated integration guide on this site, or a known reference configuration, for example attached to a public OCUDU issue or work item.
+
+### RF calibration status
+
+The RF status records how well the downlink output power, and with it `ssb_block_power_dbm`, is known for the RU. A wrong SSB block power makes UEs misjudge the path loss, which affects uplink power control and PRACH. See the [integration guide](integration_guide.md#rf-calibration) for how each level is reached.
+
+| | Status | Meaning |
+| --- | --- | --- |
+| 🟢 | Very good | SSB block power verified and calibrated with RF measurement equipment for different bandwidths and MIMO configurations. |
+| 🟡 | Good | Output power of the RU is known, and the `ssb_block_power_dbm` approximation has been computed for the RU reference configuration. |
+| ⚪ | Unknown | Not calibrated. |
 
 ### M-plane support status
 
@@ -42,26 +55,26 @@ To test M-plane with an O-RU, see [Testing M-plane with an O-RU](mplane_testing.
 
 An RU is a radio unit built for indoor or outdoor operation with an internal or external antenna.
 
-| Device | Placement | CUS | M | Verified by | Notes |
-| --- | --- | --- | --- | --- | --- |
-| [Benetel RAN550](benetel.md) | Indoor | 🟢 | ⚪ | SRS |  |
-| [Benetel RAN650](benetel.md) | Outdoor | 🟢 | ⚪ | SRS |  |
-| CGI SC-703 (Airspan AV2700) | Indoor | 🟡 | 🟡 | SRS | No manual config, M-plane only, 3.6 to 3.8 GHz, FW: ST70R01B003 |
-| Comba RRU-3510F28A | Outdoor | 🟡 | ⚪ | Community | FW: CT.A06.01.002.06.07.10 |
-| CommScope ERA DAS | n/a | 🟠 | ⚪ | Vendor | DL working, PRACH detection failed. Likely LTE UL frequency shift. |
-| Eridan ER2035 Gen1 40 MHz | Outdoor | 🟡 | ⚪ | Vendor | |
-| [Foxconn RPQN-4800E](foxconn.md) | Indoor | 🟢 | ⚪ | SRS |  |
-| [Foxconn RPQN-7801I](foxconn.md) | Indoor | 🟢 | ⚪ | SRS |  |
-| Fujitsu/1Finity Tri-band FDD | Outdoor | 🟡 | 🟡 | Community |  |
-| Fujitsu/1Finity TDD | Outdoor | 🟡 | 🟡 | Community |  |
-| [LITEON FlexFi FF-RFI078I4](liteon.md) | Indoor | 🟡 | ⚪ | SRS | |
-| Lions RANathon RS8602 | Outdoor | 🟡 | ⚪ | SRS | FW: 1.0.4.016 |
-| MTI G21RRH-46-01B FDD | Outdoor | 🟡 | 🟡 | SRS | FW: 12.20.01 |
-| [Pegatron PR1450-78I](pegatron.md) | Indoor | 🟢 | ⚪ | Community |  |
-| Sera Network ORU-NM4400 24dBm | Outdoor | 🟢 | ⚪ | Community |  |
-| Solid Band7 FDD DAS | n/a | 🟡 | ⚪ | Community |  |
-| [VVDN n78 indoor RU](vvdn.md) | Indoor | 🟡 | ⚪ | SRS | |
-| WNC R1220 | Indoor | 🟡 | ⚪ | Community | |
+| Device | Placement | CUS | RF | M | Verified by | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| [Benetel RAN550](benetel.md) | Indoor | 🟢 | 🟡 | ⚪ | SRS |  |
+| [Benetel RAN650](benetel.md) | Outdoor | 🟢 | 🟡 | ⚪ | SRS |  |
+| CGI SC-703 (Airspan AV2700) | Indoor | 🟡 | ⚪ | 🟡 | SRS | No manual config, M-plane only, 3.6 to 3.8 GHz, FW: ST70R01B003 |
+| Comba RRU-3510F28A | Outdoor | 🟡 | ⚪ | ⚪ | Community | FW: CT.A06.01.002.06.07.10 |
+| CommScope ERA DAS | n/a | ⚪ | ⚪ | ⚪ | Vendor | DL working, PRACH detection failed. Likely LTE UL frequency shift. |
+| Eridan ER2035 Gen1 40 MHz | Outdoor | 🟡 | ⚪ | ⚪ | Vendor | |
+| [Foxconn RPQN-4800E](foxconn.md) | Indoor | 🟡 | 🟡 | ⚪ | SRS | Vendor-specific OFH config required. |
+| [Foxconn RPQN-7801I](foxconn.md) | Indoor | 🟡 | 🟡 | ⚪ | SRS | Vendor-specific OFH config required. |
+| Fujitsu/1Finity Tri-band FDD | Outdoor | 🟡 | ⚪ | 🟡 | Community |  |
+| Fujitsu/1Finity TDD | Outdoor | 🟡 | ⚪ | 🟡 | Community |  |
+| [LITEON FlexFi FF-RFI078I4](liteon.md) | Indoor | 🟡 | ⚪ | ⚪ | SRS | |
+| Lions RANathon RS8602 | Outdoor | 🟡 | ⚪ | ⚪ | SRS | FW: 1.0.4.016 |
+| MTI G21RRH-46-01B FDD | Outdoor | 🟡 | ⚪ | 🟡 | SRS | FW: 12.20.01 |
+| [Pegatron PR1450-78I](pegatron.md) | Indoor | 🟢 | 🟡 | ⚪ | Community |  |
+| Sera Network ORU-NM4400 24dBm | Outdoor | 🟡 | 🟡 | ⚪ | Community |  |
+| Solid Band7 FDD DAS | n/a | 🟡 | ⚪ | ⚪ | Community |  |
+| [VVDN n78 indoor RU](vvdn.md) | Indoor | 🟡 | ⚪ | ⚪ | SRS | |
+| WNC R1220 | Indoor | 🟡 | ⚪ | ⚪ | Community | |
 
 **What was tested.** Typical testing covers Open Fronthaul integration for CUS-plane, a UE attach in SISO mode at 100 MHz, then two and four downlink MIMO layers. Known gaps and restrictions are in the individual RU guide or notes column.
 
@@ -87,11 +100,11 @@ Test equipment (TE) is test and measurement equipment that presents an O-RAN CUS
 
 A reference platform (REF) implements an RU for development and evaluation purposes but is not a shipping RU product.
 
-| Device | Firmware | CUS | M | Verified by | Notes |
-| --- | --- | --- | --- | --- | --- |
-| AMD ZCU670 | v2.1 | 🟠 | ⚪ | SRS | DL only, PRACH FFT size fixed |
-| [Picocom PC802SCB](picocom.md) | v3.0.0 | 🟡 | ⚪ | SRS | Up to 100 MHz 4T4R, wired, no power amplifier |
-| Picocom RDB X2 (PC805) | RU 7.0.0 | 🟡 | ⚪ | Community | ORANIC high-PHY, not covered by the PC802SCB guide |
+| Device | Firmware | CUS | RF | M | Verified by | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| AMD ZCU670 | v2.1 | ⚪ | ⚪ | ⚪ | SRS | DL only, PRACH FFT size fixed |
+| [Picocom PC802SCB](picocom.md) | v3.0.0 | 🟡 | ⚪ | ⚪ | SRS | Up to 100 MHz 4T4R, wired, no power amplifier |
+| Picocom RDB X2 (PC805) | RU 7.0.0 | 🟡 | ⚪ | ⚪ | Community | ORANIC high-PHY, not covered by the PC802SCB guide |
 
 ## Report an integration
 

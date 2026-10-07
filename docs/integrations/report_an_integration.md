@@ -40,6 +40,14 @@ Fronthaul and cell configuration
   Compression:      for example BFP 9-bit
   NIC and driver:   for example Intel E810, DPDK or raw socket
 
+RF calibration      RU only, leave out for other device types
+  Output power:     rated maximum per port, for example 24 dBm
+  Reference level:  ru_reference_level_dBFS used
+  SSB block power:  ssb_block_power_dbm used, and whether it was
+                    approximated | measured
+  Measured for:     bandwidths and MIMO configurations it was measured or
+                    calibrated with, for example 100 MHz 4x2 and 40 MHz 2x2
+
 What worked
   For example: UE attach in SISO at 100 MHz, downlink at maximum rate.
 
@@ -58,6 +66,7 @@ The overview tables carry a short summary of this: the device, its firmware, who
 - **Verified by.** `SRS` for a result from the SRS lab, `Vendor` where the device maker verified its own unit, `Community` for anyone else.
 - **OCUDU version.** Releases up to 25.10 are srsRAN Project releases and 26.04 onwards are OCUDU releases; either is a valid reference point. State which one you used.
 - **Where the record lives.** A device's own guide is the authoritative record for that device; the category overview tables summarise the guides. If you find a table row that disagrees with a guide, fix the table.
+- **RF calibration.** This sets the RU's RF status. An SSB block power approximated from the rated output power for one reference configuration is 🟡; one verified with RF measurement equipment across several bandwidths and MIMO configurations is 🟢. See [RF calibration](radio_units/integration_guide.md#rf-calibration) in the RU integration guide.
 - **Configuration files.** These are the most valuable part of a report. A sample gNB YAML that is known to work against a specific firmware version answers most of the questions a later reader will have.
 
 ## How to submit

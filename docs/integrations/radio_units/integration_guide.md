@@ -23,20 +23,21 @@ An integration moves through a series of milestones. Each one maps onto a suppor
 
 | Step | Milestone | Status you can report |
 | --- | --- | --- |
-| 1. [Prepare](#1-prepare) | RU details and lab setup collected | Not listed yet |
-| 2. [S-plane](#2-s-plane) | DU and RU locked to the same time reference | Not listed yet |
-| 3. [CU-plane](#3-cu-plane) | RU transmits the cell, SSB visible | CUS 🟠 |
-| | PRACH detected, COTS UE attaches and passes traffic | CUS 🟡 |
-| 4. [Features and RF](#4-features-and-rf) | Full rate reached, RF calibrated with measurement equipment | CUS 🟢 |
+| 1. [Prepare](#1-prepare) | RU details collected, lab set up, DU and RU synchronized | |
+| 2. [CU-plane](#2-cu-plane) | COTS UE attaches and passes DL and UL traffic | CUS 🟡 |
+| 3. [Features](#3-features) | Bandwidths, MIMO configurations, compression and other features tested, full rate reached, configuration public | CUS 🟢 |
+| 4. [RF](#4-rf) | SSB block power computed or measured | RF 🟡 or 🟢 |
 | 5. [M-plane](#5-m-plane) | RU configured and monitored over NETCONF | M 🟡 or 🟢 |
 | 6. [Contribute](#6-contribute-the-result) | Table row and guide merged | Listed |
 
-Steps 2 to 4 have to be done in order, since each one depends on the previous. The M-plane is independent and is usually done last; many lab integrations never get to it, and a CUS-only integration is a complete result
+Steps 1 to 3 have to be done in order, since each one depends on the previous. In particular, the integration itself only starts once the DU and RU are synchronized at the end of step 1. The RF step is an extra on top of a working integration and is scored in its own column. The M-plane is independent and is usually done last; many lab integrations never get to it, and a CUS-only integration is a complete result
 as long as there is a way to configure the RU via a config file, command line or web interface.
 
-You do not have to finish the full path before contributing. A table row with 🟠 and a note on what is missing is useful to the next person who picks up the same RU.
+You do not have to finish the full path before contributing. Even if the RU does not reach 🟡 yet, a table row with a note on what works and what is missing is useful to the next person who picks up the same RU.
 
 ## 1. Prepare
+
+This step covers everything that has to be in place before the actual integration starts: the RU details, the lab, and a working S-plane. The later steps assume that the DU and RU are synchronized; if they are not, every CU-plane problem looks like a timing problem.
 
 ### Collect the RU details
 
@@ -73,7 +74,7 @@ Both configurations use the same RAN server, switch, and GPS-based synchronizati
   <TabItem value="conduted" label="Conducted setup">
 ![conducted setup](assets/oran7dot2_conducted_setup.svg)
 
-A conducted setup, with the RU connected to the UE and/or measurement equipment through cables and attenuators, makes every later step easier to debug and is required for a full 🟢 result.
+A conducted setup, with the RU connected to the UE and/or measurement equipment through cables and attenuators, makes every later step easier to debug and is required for an RF 🟢 result.
 
 :::warning
 Never connect RU TX ports directly to a UE or measurement equipment without enough attenuation. Check the maximum input power of every device in the chain.
@@ -82,6 +83,31 @@ E.g. for an anylyzer supporting up to 0dBm input power and an indoor RU with +24
   </TabItem>
 </Tabs>
 
+
+### Synchronize the DU and RU (S-plane)
+
+The S-plane provides frequency and phase synchronization between the DU and the RU. OCUDU does not implement PTP itself; the host is synchronized using a third-party stack such as [linuxptp](https://linuxptp.sourceforge.net//). See [Switches and timing](../switches_and_timing/index.md) for devices that have been used as grandmaster or boundary clock.
+
+#### Synchronization topology
+
+We recommend onboarding a new RU in LLS-C3 mode in which common PTP grandmaster provides sync to both the DU and RU, both acting as slaves.
+Confirm the PTP profile (typically ITU-T G.8275.1, L2 multicast) and the domain number match on the grandmaster, switch, DU and RU.
+
+#### Verify the DU clock
+
+1. Start `ptp4l` on the fronthaul NIC and `phc2sys` to steer the system clock. [This](../../tutorials/oranru/index.md) tutorial provides a sample.
+2. Confirm `ptp4l` reports the port in `SLAVE` state and the master offset stays within **±25 ns**.
+3. Confirm `phc2sys` reports an offset within **±25 ns**.
+
+#### Verify the RU clock
+
+1. Check the RU's own sync status (vendor CLI, web interface, or the `o-ran-sync` YANG model over the M-plane).
+2. The RU should report a locked state, for example `LOCKED` in `o-ran-sync:sync/sync-status`.
+3. Record the time it takes the RU to lock after boot. Some RUs will not start transmitting until locked.
+
+:::info
+Some RUs also require SyncE to be enabled and active in the network before locking PTP.
+:::
 
 ### Keep a record as you go
 
@@ -92,38 +118,15 @@ The final contribution is much easier to write if you collect these from the sta
 - DU console output and logs, including the [OFH metrics](../../user_manual/outputs/outputs.md#ofh-metrics), for each milestone.
 - What did not work, and what you changed to get past it.
 
-## 2. S-plane
+### Ready to start when
 
-The S-plane provides frequency and phase synchronization between the DU and the RU. OCUDU does not implement PTP itself; the host is synchronized using a third-party stack such as [linuxptp](https://linuxptp.sourceforge.net//). See [Switches and timing](../switches_and_timing/index.md) for devices that have been used as grandmaster or boundary clock.
-
-### Synchronization topology
-
-We recommend onboarding a new RU in LLS-C3 mode in which common PTP grandmaster provides sync to both the DU and RU, both acting as slaves.
-Confirm the PTP profile (typically ITU-T G.8275.1, L2 multicast) and the domain number match on the grandmaster, switch, DU and RU.
-
-### Verify the DU clock
-
-1. Start `ptp4l` on the fronthaul NIC and `phc2sys` to steer the system clock. [This](../../tutorials/oranru/index.md) tutorial provides a sample.
-2. Confirm `ptp4l` reports the port in `SLAVE` state and the master offset stays within **±25 ns**.
-3. Confirm `phc2sys` reports an offset within **±25 ns**.
-
-### Verify the RU clock
-
-1. Check the RU's own sync status (vendor CLI, web interface, or the `o-ran-sync` YANG model over the M-plane).
-2. The RU should report a locked state, for example `LOCKED` in `o-ran-sync:sync/sync-status`.
-3. Record the time it takes the RU to lock after boot. Some RUs will not start transmitting until locked.
-
-:::info
-Some RUs also require SyncE to be enabled and active in the network before locking PTP.
-:::
-
-### Done when
-
+- [ ] The RU details above are known, or marked as unknown.
+- [ ] The lab is set up and the configuration and logs of each test are being recorded.
 - [ ] DU and RU are both locked to the same grandmaster.
 - [ ] Offsets are stable over e.g. one hour.
-- [ ] There are no holdover or free-run events during the following steps.
+- [ ] There are no holdover or free-run events. Keep checking this during the following steps.
 
-## 3. CU-plane
+## 2. CU-plane
 
 The C-plane and U-plane are implemented in the OFH library and configured through the `ru_ofh` section of the DU configuration. See the [configuration reference](../../user_manual/config_reference/config_reference.mdx) for all parameters.
 
@@ -158,7 +161,7 @@ The DL windows (`t1a_*`) can only be calibrated by watching the RU: it is the RU
 
 Before you start:
 
-- Confirm the [S-plane](#2-s-plane) is locked on both the DU and the RU. Timing calibration on an unsynchronized setup gives meaningless results.
+- Confirm the [S-plane](#synchronize-the-du-and-ru-s-plane) is locked on both the DU and the RU. Timing calibration on an unsynchronized setup gives meaningless results.
 - Find where the RU reports its reception counters, for example `RX_ON_TIME`, `RX_EARLY` and `RX_LATE` for the U-plane and `RX_ON_TIME_C`, `RX_EARLY_C` and `RX_LATE_C` for the C-plane on a Benetel RU. See [RU late or early packets](../../user_manual/troubleshooting/troubleshooting.md#ru-late-or-early-packets) for an example.
 - Restart the DU after every change and let it run for several reporting periods before reading the counters. One or two intermittent early or late packets are normal; a sustained count is not.
 - For this calibration it is very handy to use the built-in testmode do stimulate the RU and generate constant downlink and uplink OFH traffic. Check the [testmode tutorial](../../tutorials/testmode/index.md).
@@ -183,10 +186,9 @@ Then move on to the next pair. With the C-plane done first, any remaining early 
 
 #### Step 4: UL window at the DU
 
-1. Run UL traffic, or at least let the RU send UL U-plane data for every UL symbol.
+1. Run UL traffic, or at least let the RU send UL U-plane data for every UL symbol. If you're using _testmode_ this is the case by default.
 2. Check the DU [OFH metrics](../../user_manual/outputs/outputs.md#ofh-metrics) for the cell. `received_packets.late` and `rx_window_stats.nof_missed_uplink_symbols` should stay at zero.
-3. `received_packets.earliest_msg_us` and `received_packets.latest_msg_us` give the arrival times of the earliest and latest UL message after the over-the-air time, at symbol granularity. Set `ta4_min` below the earliest and `ta4_max` above the latest, with some margin.
-4. If late packets remain, increase `ta4_max`.
+3. If late packets remain, increase `ta4_max`.
 
 #### Quick troubleshooting
 
@@ -205,13 +207,14 @@ Once the timing has been calibrated we can continue by looking at the DL signal.
 * If you're not running with _testmode_ you'll only see the SSB transmission approxmately every 20ms as well as a wide band sparse signal which is the cell specific reference signal (CSI-RS).
 
 A UE scanner should now also see the cell at the expected frequency with the configured PCI.
-Once the RU reports no sustained early or late packets and the cell is visible at the expected frequency and PCI, the RU can be reported as CUS 🟠.
+Once the RU reports no sustained early or late packets and the cell is visible at the expected frequency and PCI, move on to the uplink.
 
-### Uplink and attach
+### Uplink
 
-1. **UL U-plane.** Check the DU [OFH metrics](../../user_manual/outputs/outputs.md#ofh-metrics): `received_packets.late` and `rx_window_stats.nof_missed_uplink_symbols` should stay at zero. If not, adjust `ta4_*` as described in [step 4 of the calibration procedure](#step-4-ul-window-at-the-du).
-2. **PRACH.** Trigger a UE attach and confirm PRACH detection in the DU log. If PRACH packets arrive but are dropped, check `is_prach_cp_enabled`, `cplane_prach_fft_len`, `ignore_prach_start_symbol` and `prach_port_id`.
-3. **Attach and traffic.** Attach a COTS UE, then run DL and UL iperf in SISO, then with two and four DL MIMO layers if the RU supports them. See [UE attach failure](../../user_manual/troubleshooting/troubleshooting.md#ue-attach-failure) if the UE sees the cell but does not attach.
+Since the OFH window has already been calibrate we also assume perfect timing for the UL.
+
+1. **PRACH.** Trigger a UE attach and confirm PRACH detection in the DU log (enable `log --phy.level=info`). Check the `rx_window_stats.nof_missed_prach_occasions` in the [OFH metrics](../../user_manual/outputs/outputs.md#ofh-metrics). The counter should be zero.
+2. **Attach and traffic.** Attach a COTS UE, then run DL and UL iperf in SISO, then with two and four DL MIMO layers if the RU supports them. See [UE attach failure](../../user_manual/troubleshooting/troubleshooting.md#ue-attach-failure) if the UE sees the cell but does not attach.
 
 ### Done when
 
@@ -221,52 +224,24 @@ Once the RU reports no sustained early or late packets and the cell is visible a
 
 At this point the RU can be reported as CUS 🟡. Note any restriction, such as an unsupported TDD pattern or a rate below the expected peak, in the report.
 
-## 4. Features and RF
+## 3. Features
 
-This step turns a working integration into a characterised one. It is what separates 🟡 from 🟢, and it is what makes the guide useful to someone choosing an RU.
+This step turns a working integration into a characterised one, and it is what makes the guide useful to someone choosing an RU. It takes the RU from CUS 🟡 to 🟢.
 
-### Features
+### Configurations to cover
 
-Cover the configurations the RU supports and record the result for each:
+Cover the configurations the RU supports, such as the different bandwidths, MIMO configurations and compression settings, and record the result for each:
 
 | Feature | Parameters | Tested values |
 | --- | --- | --- |
 | Duplex and TDD pattern | `cell_cfg.tdd_ul_dl_cfg` | DDDDDDDSUU and DDDSU |
 | Bandwidth | `cell_cfg.channel_bandwidth_MHz` | 20, 40, 80 and 100 MHz for TDD, 10 and 20 MHz for FDD|
 | Numerology | `cell_cfg.common_scs` | 15kHz for FDD, 30kHz for TDD |
-| Compression | `compr_method_*`, `compr_bitwidth_*` | **TODO** |
-| Static compression header | `enable_ul_static_compr_hdr`, `enable_dl_static_compr_hdr` | **TODO** |
-| PRACH format | `cell_cfg.prach.prach_config_index` | **TODO** |
-| MIMO layers / antenna ports | `cell_cfg.nof_antennas_dl`, `cell_cfg.nof_antennas_ul` | **TODO** |
-| Multiple cells or carriers | `cells` list | **TODO** |
-
-### Output power calibration
-
-1. Configure the RU for its maximum rated output power per port.
-2. Set `ru_reference_level_dBFS` (or `iq_scaling`) and `subcarrier_rms_backoff_dB` so that a fully loaded carrier reaches the rated power without DPD saturation. See [RU power and DPD saturation](../../user_manual/troubleshooting/troubleshooting.md#ru-power-and-dpd-saturation).
-3. Measure channel power per port with a spectrum analyzer and record the offset from the rated power.
-4. Set `cell_cfg.ssb.ssb_block_power_dbm` to the measured SSB EPRE so that UE path loss estimates are correct.
-
-### Transmitter quality
-
-Measure per port, at full load, with the modulation used in the throughput tests:
-
-| Measurement | Target | Measured |
-| --- | --- | --- |
-| Channel power | Rated power ±**TODO** dB | |
-| EVM (256QAM) | < 3.5 % (3GPP TS 38.104) | |
-| ACLR | **TODO** per TS 38.104 | |
-| Frequency error | < ±0.05 ppm | |
-| Occupied bandwidth | Within channel | |
-| TDD on/off transient | **TODO** | |
-
-### Receiver
-
-| Measurement | Method | Measured |
-| --- | --- | --- |
-| UL SNR at given input level | DU PUSCH metrics | |
-| Reference sensitivity | **TODO**: signal generator or UE with calibrated attenuation | |
-| PRACH detection | Detection rate at low UL input level | |
+| Compression | `compr_method_*`, `compr_bitwidth_*` | uncompressed (none), bfp9, bfp14 |
+| Static compression header | `enable_ul_static_compr_hdr`, `enable_dl_static_compr_hdr` | true or false |
+| PRACH format | `cell_cfg.prach.prach_config_index` | short (e.g. 159) or long PRACH (e.g. 16) configs |
+| MIMO layers / antenna ports | `cell_cfg.nof_antennas_dl`, `cell_cfg.nof_antennas_ul` | 1, 2, 4 or 8 antennas |
+| Multiple cells or carriers | `cells` list | One or more component carrier (CC) |
 
 ### Throughput
 
@@ -274,24 +249,69 @@ Record the achieved throughput against the theoretical peak for the configuratio
 
 | Configuration | DL expected | DL measured | UL expected | UL measured |
 | --- | --- | --- | --- | --- |
-| **TODO**: e.g. TDD 100 MHz, SISO | | | | |
-| **TODO**: e.g. TDD 100 MHz, 2 layers | | | | |
-| **TODO**: e.g. TDD 100 MHz, 4 layers | | | | |
+| FDD 20 MHz, 2T2R | | | | |
+| TDD 100 MHz, 4T4R, DDDSU | | | | |
 
-**TODO**: optionally, over-the-air tests and long-duration stability runs.
+Optionally, do over-the-air tests and long-duration stability runs.
 
 ### Done when
 
-- [ ] Full DL and UL rate reached for the tested configurations.
-- [ ] Output power calibrated and transmitter quality measured with RF measurement equipment.
+- [ ] The configurations above are tested and full DL and UL rate is reached for each of them.
+- [ ] The working configuration is public, either as an [RU guide](#6-contribute-the-result) on this site or as a reference configuration in a public OCUDU issue or work item.
 
 At this point the RU can be reported as CUS 🟢.
+
+## 4. RF
+
+The RF step is an extra on top of a working integration. It does not change the CUS status; it is scored in its own RF column.
+
+### RF calibration
+
+`cell_cfg.ssb.ssb_block_power_dbm` tells the UE the transmitted energy per resource element (EPRE) of the SSB. The UE uses it to estimate the path loss, which drives uplink power control and PRACH power ramping. If it is wrong, the uplink of every UE is off by the same amount. The RF status records how well this value is known.
+
+#### Approximate the SSB block power (RF 🟡)
+
+1. Get the RU's maximum rated output power per port from the datasheet, and configure the RU for it.
+2. Use a reference configuration, for example the RU's main bandwidth and MIMO configuration, with `ru_reference_level_dBFS` set so that a fully loaded carrier reaches the rated power without DPD saturation. See [RU power and DPD saturation](../../user_manual/troubleshooting/troubleshooting.md#ru-power-and-dpd-saturation).
+3. With the default `subcarrier_rms_backoff_dB: auto`, the power is spread evenly over all subcarriers of the carrier, so the SSB EPRE is approximately:
+
+   `ssb_block_power_dbm ≈ P_max_port − 10·log10(N_RB × 12)`
+
+   For example, a 100 MHz carrier at 30 kHz SCS has 273 PRBs, or 3276 subcarriers, which is 35.2 dB. An RU with 24 dBm per port then gives about −11 dBm, and one with 37 dBm about 2 dBm.
+   There is an online tool [here](https://5g-tools.com/5g-nr-ssb-sss-epre-power-calculator/) that can be used to calculate the value. 
+4. Set `ssb_block_power_dbm` to this value and record the reference configuration it was computed for.
+
+#### Measure and calibrate (RF 🟢)
+
+This needs the conducted setup and RF measurement equipment.
+
+1. For each bandwidth and MIMO configuration you report, measure the channel power per port with a spectrum analyzer and record the offset from the rated power.
+2. Measure the SSB EPRE directly (sometimes called SS-RSRP) and set `ssb_block_power_dbm` to the measured value.
+3. Record the calibrated `ru_reference_level_dBFS` and `ssb_block_power_dbm` for each configuration in the guide.
+
+### Transmitter quality
+
+The following transmitter measurements are optional and do not affect the RF status. 
+If you have the equipment, adding some of them to the guide makes it more useful to someone choosing an RU.
+For example, measured per port at full load with the modulation used in the throughput tests:
+- Channel power, compared with the rated output power.
+- EVM at 256QAM, with a 3GPP TS 38.104 limit of 3.5%.
+
+:::info
+A full RF characterization of the RU, especially for the receiver, for example conformance testing against 3GPP TS 38.141,
+is out of scope of this guide and remains the responsibility of the RU vendor.
+:::
+
+### Done when
+
+- [ ] Output power known and `ssb_block_power_dbm` computed for the reference configuration. Report RF 🟡.
+- [ ] `ssb_block_power_dbm` measured and calibrated with RF measurement equipment for different bandwidths and MIMO configurations. Report RF 🟢.
 
 ## 5. M-plane
 
 The M-plane is the NETCONF/YANG management interface defined in O-RAN WG4. In OCUDU, M-plane support is developed in the [O1 Adapter repo](https://gitlab.com/ocudu/ocudu_elements/ocudu_oran_apps/ocudu_o1_adapter). If you skip the M-plane and configure the RU statically, record the M-plane status as untested.
 
-If the RU can only be configured over the M-plane, the start-up and CM parts of this step have to be done before step 3.
+If the RU can only be configured over the M-plane, the start-up and CM parts of this step have to be done before step 2, after the S-plane is up.
 
 ### Start-up
 
@@ -347,8 +367,8 @@ An integration only extends the list of supported RUs once it is recorded. Contr
 
 | Contribution | When | Where |
 | --- | --- | --- |
-| Table row | As soon as you reach 🟠. Update it at each later milestone. | `docs/integrations/radio_units/index.md` |
-| RU guide | Once you have a repeatable working configuration, usually at 🟡. | A new page beside this one, see [Adding a new integration guide](../../dev_guide/contributing_guide/contributing_docs.md#adding-a-new-integration-guide) |
+| Table row | As soon as you reach 🟡, or earlier with a note on what is missing. Update it at each later milestone. | `docs/integrations/radio_units/index.md` |
+| RU guide | Once you have a repeatable working configuration. | A new page beside this one, see [Adding a new integration guide](../../dev_guide/contributing_guide/contributing_docs.md#adding-a-new-integration-guide) |
 | Configuration files | With the guide: the DU YAML and the RU configuration for each tested setup. | The `assets/` directory beside the guide |
 | Sample DU configuration | Optionally, for an RU expected to be widely used. | The `configs/` directory of the [OCUDU repository](https://gitlab.com/ocudu/ocudu), named like the existing `gnb_ru_*.yml` files |
 | Issues and fixes | Anything you found under [When the RU does not interoperate](#when-the-ru-does-not-interoperate). | The [OCUDU issue tracker](https://gitlab.com/ocudu/ocudu/-/issues) |
@@ -361,8 +381,8 @@ Use the [Benetel guide](benetel.md) as a model. At a minimum, a guide for a new 
 - The DU `ru_ofh` and `cell_cfg` excerpt, with the values that differ from the defaults explained.
 - The RU-side settings, or a link to the RU configuration file in `assets/`.
 - The S-plane topology used.
-- The tested configurations from [step 4](#features), and any known restrictions.
-- The measured values from [step 4](#4-features-and-rf), if RF calibration was done.
+- The tested configurations from [step 3](#3-features), and any known restrictions.
+- The measured values from [step 4](#4-rf), if RF calibration was done.
 
 ### Keep it current
 

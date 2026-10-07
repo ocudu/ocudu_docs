@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1260" viewBox="0 0 1600 1260" role="img" aria-labelledby="title desc">
+<title id="title">GPS-synchronized RAN architecture</title>
+<desc id="desc">A GPS satellite sends a signal to a GPS antenna connected to a switch with a PTP grandmaster. The switch connects to a radio unit and a RAN server through links labeled OFH + PTP. The radio unit has a wireless connection to user equipment, labeled UE.</desc>
+<defs>
+ <linearGradient id="screen" x2="0" y2="1"><stop stop-color="#7999ef"/><stop offset="1" stop-color="#5274cf"/></linearGradient>
+ <linearGradient id="metal" x2="0" y2="1"><stop stop-color="#eef0f4"/><stop offset="1" stop-color="#c9cdd4"/></linearGradient>
+ <marker id="gpsArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#ba835e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<style>
+ text {font-family:Arial,Helvetica,sans-serif;fill:#303640;font-size:36px}
+ .label {font-weight:600}
+ .link {fill:none;stroke:#969da7;stroke-width:8;stroke-linejoin:round;stroke-linecap:round}
+</style>
+<rect width="1600" height="1260" fill="#f5f7fa"/>
+<!-- Wired links -->
+<path class="link" d="M275 615 H770 V760"/>
+<path class="link" d="M1110 760 V535 H1230"/>
+<path class="link" d="M888 875 V1100 H728"/>
+<text x="1090" y="653" text-anchor="end" font-size="32">OFH + PTP</text>
+<text x="912" y="1005" font-size="32">OFH + PTP</text>
+<!-- GPS satellite -->
+<g transform="translate(510 174) rotate(-31)">
+ <path d="M-90 0 H90" stroke="#8b96ad" stroke-width="9"/>
+ <g fill="#41639e" stroke="#8299bf" stroke-width="1.5">
+  <rect x="-91" y="-12" width="63" height="24"/><rect x="28" y="-12" width="63" height="24"/>
+  <path d="M-77 -12 V12 M-62 -12 V12 M-47 -12 V12 M43 -12 V12 M58 -12 V12 M73 -12 V12"/>
+ </g>
+ <rect x="-19" y="-20" width="38" height="40" rx="4" fill="#e4bd42" stroke="#c5a13a" stroke-width="2"/>
+</g>
+<text class="label" x="480" y="312">GPS satellite</text>
+<path d="M438 268 L326 397" fill="none" stroke="#ba835e" stroke-width="4" stroke-dasharray="10 14" stroke-linecap="round" marker-end="url(#gpsArrow)"/>
+<!-- GPS antenna -->
+<g stroke="#83a9bc" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M132 451 Q249 500 367 451 Q253 622 132 451Z" fill="#c0e6fb" stroke-width="3"/>
+ <path d="M250 536 L299 423" fill="none" stroke-width="6"/>
+ <circle cx="299" cy="419" r="10" fill="#83a9bc" stroke-width="2"/>
+ <path d="M249 538 V615 M208 615 H290" fill="none" stroke-width="12"/>
+</g>
+<text class="label" x="249" y="692" text-anchor="middle">GPS antenna</text>
+<!-- User equipment -->
+<g transform="translate(1220 68)">
+ <rect width="106" height="192" rx="24" fill="#27334f" stroke="#8b94a9" stroke-width="3"/>
+ <rect x="11" y="20" width="84" height="147" rx="5" fill="url(#screen)"/>
+ <circle cx="53" cy="180" r="5" fill="#9ca9ca"/>
+ <g fill="#fff"><rect x="27" y="125" width="9" height="16" rx="2"/><rect x="43" y="112" width="9" height="29" rx="2"/><rect x="59" y="99" width="9" height="42" rx="2"/><rect x="75" y="85" width="9" height="56" rx="2" opacity=".65"/></g>
+</g>
+<text class="label" x="1360" y="183">UE</text>
+<path d="M1294 277 L1373 405" fill="none" stroke="#65ac82" stroke-width="4" stroke-dasharray="11 15" stroke-linecap="round"/>
+<!-- Radio unit -->
+<rect x="1230" y="422" width="315" height="234" rx="39" fill="#fff" stroke="#cbd0d8" stroke-width="3"/>
+<circle cx="1387" cy="453" r="6" fill="#61ae7a"/>
+<rect x="1256" y="621" width="263" height="20" rx="10" fill="#e3e6eb"/>
+<text class="label" x="1387" y="724" text-anchor="middle">Radio Unit</text>
+<!-- Switch with PTP grandmaster -->
+<path d="M608 774 L640 741 H1188 L1156 774Z" fill="#59606b"/>
+<rect x="608" y="774" width="548" height="103" rx="4" fill="#292d34" stroke="#7c828b" stroke-width="2"/>
+
+<rect x="634" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="665" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="696" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="727" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="758" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="789" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="820" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="851" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="882" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="913" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="944" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="975" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="634" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="665" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="696" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="727" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="758" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="789" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="820" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="851" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="882" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="913" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="944" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="975" y="821" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
+<rect x="1025" y="791" width="23" height="48" rx="1" fill="#161a1e" stroke="#a06c50" stroke-width="2"/>
+<rect x="1056" y="791" width="23" height="48" rx="1" fill="#161a1e" stroke="#a06c50" stroke-width="2"/>
+<rect x="1087" y="791" width="23" height="48" rx="1" fill="#161a1e" stroke="#a06c50" stroke-width="2"/>
+<rect x="1118" y="791" width="23" height="48" rx="1" fill="#161a1e" stroke="#a06c50" stroke-width="2"/>
+<circle cx="645" cy="856" r="4" fill="#58a364"/>
+<circle cx="708" cy="856" r="4" fill="#58a364"/>
+<circle cx="771" cy="856" r="4" fill="#58a364"/>
+<circle cx="834" cy="856" r="4" fill="#bd903e"/>
+<circle cx="1035" cy="856" r="4" fill="#58a364"/>
+<circle cx="1098" cy="856" r="4" fill="#58a364"/>
+<text class="label" x="1186" y="847">Switch + PTP GM</text>
+<!-- RAN server -->
+<path d="M80 1041 L113 1005 H770 L737 1041Z" fill="#d5d9df" stroke="#b6bcc5" stroke-width="2"/>
+<rect x="80" y="1041" width="657" height="117" rx="5" fill="url(#metal)" stroke="#b6bcc5" stroke-width="2"/>
+<rect x="112" y="1043" width="594" height="113" fill="#292d34"/>
+<circle cx="97" cy="1100" r="5" fill="#9aa2ad"/>
+<circle cx="720" cy="1100" r="5" fill="#9aa2ad"/>
+
+<rect x="128" y="1054" width="103" height="44" rx="3" fill="#404651"/><rect x="136" y="1062" width="10" height="28" rx="2" fill="#58b3c5"/>
+<rect x="243" y="1054" width="103" height="44" rx="3" fill="#404651"/><rect x="251" y="1062" width="10" height="28" rx="2" fill="#58b3c5"/>
+<rect x="358" y="1054" width="103" height="44" rx="3" fill="#404651"/><rect x="366" y="1062" width="10" height="28" rx="2" fill="#58b3c5"/>
+<rect x="473" y="1054" width="103" height="44" rx="3" fill="#404651"/><rect x="481" y="1062" width="10" height="28" rx="2" fill="#58b3c5"/>
+<rect x="128" y="1106" width="103" height="44" rx="3" fill="#404651"/><rect x="136" y="1114" width="10" height="28" rx="2" fill="#58b3c5"/>
+<rect x="243" y="1106" width="103" height="44" rx="3" fill="#404651"/><rect x="251" y="1114" width="10" height="28" rx="2" fill="#58b3c5"/>
+<rect x="358" y="1106" width="103" height="44" rx="3" fill="#404651"/><rect x="366" y="1114" width="10" height="28" rx="2" fill="#58b3c5"/>
+<rect x="473" y="1106" width="103" height="44" rx="3" fill="#404651"/><rect x="481" y="1114" width="10" height="28" rx="2" fill="#58b3c5"/>
+<rect x="599" y="1063" width="20" height="10" rx="3" fill="#506cd1"/>
+<rect x="631" y="1063" width="20" height="10" rx="3" fill="#506cd1"/>
+<circle cx="677" cy="1068" r="6" fill="#58a364"/>
+<path d="M599 1107 H686 M599 1123 H686 M599 1139 H686" stroke="#454c56" stroke-width="3"/>
+<text class="label" x="409" y="1230" text-anchor="middle">RAN server</text>
+</svg>
