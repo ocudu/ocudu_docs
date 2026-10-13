@@ -43,7 +43,7 @@ An RU integration typically starts with CUS-plane interop testing, using a stati
 
 The OCUDU community is actively building out M-plane support in the [O1 Adapter repo](https://gitlab.com/ocudu/ocudu_elements/ocudu_oran_apps/ocudu_o1_adapter). This page does not attempt to track feature-level M-plane status per device; that detail belongs in a discussion or issue, not a table cell. If you are working on M-plane for a device listed here, or want to see one added, we would like to hear from you: open a discussion or issue in the O1 Adapter repo, or [report the result](../report_an_integration.md) here.
 
-To test M-plane with an O-RU, see [Testing M-plane with an O-RU](mplane_testing.md).
+To test M-plane with an O-RU, see the [M-plane step](integration_guide.md#5-m-plane) of the onboarding guide.
 
 | | Status | Meaning |
 | --- | --- | --- |
