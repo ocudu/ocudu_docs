@@ -51,7 +51,7 @@ Get the following from the RU vendor or the RU documentation before setting anyt
 | Delay profile: `T2a_min/max`, `Ta3_min/max` or the equivalent `T1a`/`Ta4` windows | Needed to derive the OCUDU transmit and receive windows. |
 | Supported compression methods and bit widths, static or dynamic compression header | Must match `compr_method_*`, `compr_bitwidth_*` and `enable_*_static_compr_hdr`. |
 | PRACH handling: C-plane type 3 support, FFT size, start-symbol behaviour | Most early PRACH failures come from here. |
-| Maximum output power per port and the IQ reference level | Needed for RF calibration. |
+| Maximum output power per port, the IQ reference level and the IQ full-scale convention (16-bit or O-RAN FS_Offset) | Needed for the [IQ sample scaling](#iq-sample-scaling) and RF calibration. |
 | S-plane configuration: LLS-C1/C2/C3, PTP profile, domain number, transport | Must match the grandmaster and switch. |
 | M-plane support: NETCONF version, YANG models, call-home or static IP | Decides whether the RU needs a config file or an M-plane client to start at all. Some RUs can only be configured over the M-plane. |
 
@@ -132,6 +132,83 @@ The C-plane and U-plane are implemented in the OFH library and configured throug
 
 Start from the sample configuration of the closest listed RU, or from the tutorial if there is none, and change one thing at a time.
 
+### IQ sample scaling
+
+The RU maps the power of the IQ samples it receives, in dBFS, to RF output power. For the output power to be right, OCUDU and the RU have to agree on two things:
+
+- **The full scale**, i.e., which IQ value is 0 dBFS.
+- **The reference level**, i.e., which IQ power the RU maps to its maximum output power, and whether the bandwidth is normalized by OCUDU or by the RU.
+
+RU implementations follow one of two full-scale conventions. Ask the RU vendor which one the RU uses before setting any power related parameter. With BFP9, the two differ by about 48 dB, so a mismatch either leaves the cell barely visible or drives the RU into saturation.
+
+:::danger
+Set up the IQ sample scaling before the first transmission, and in particular before running _testmode_, which transmits a fully loaded carrier on every symbol. If OCUDU uses the O-RAN full scale while the RU expects the 16-bit one, the BFP exponents overflow the RU's 16-bit samples and the RU can transmit a distorted signal at up to its full output power, which can saturate the power amplifier and damage the RU or the equipment connected to it. The opposite mismatch is harmless, as the signal is only about 48 dB too weak. If in doubt, leave `fs_offset_dl` unset, start with a reference level below the default, for example −20 dBFS, use the conducted setup with enough attenuation, and raise the level in steps while watching the output power.
+:::
+
+| | FlexRAN-style (16-bit) | O-RAN compliant |
+| --- | --- | --- |
+| Full scale | 16-bit full scale of I or Q, independent of the compression. The RU decompresses BFP into 16-bit samples. | 24-bit full scale with an default FS_offset=0 for bfp9. |
+| FS_Offset equivalent | 2 · (m − 1) for an m-bit BFP mantissa, e.g., 16 for BFP9. 0 without compression. | Configured in the RU, 0 by default. One step is 3.01 dB. |
+| Typical RUs | RUs developed against Intel FlexRAN-based DUs. | RUs that implement the O-RAN power definitions, often with M-plane support. |
+| OCUDU setting | `fs_offset_dl` and `fs_offset_ul` not set (default). | `fs_offset_dl` and `fs_offset_ul` set to the FS_Offset of the RU. |
+
+Without compression, both conventions use the full scale of the IQ bit width, so they only differ for BFP.
+
+:::note
+Not setting `fs_offset_dl` is not the same as setting it to 0. Unset keeps the OCUDU native 16-bit full scale. A value of 0 selects the O-RAN default full scale, which for BFP9 is 48 dB above it.
+:::
+
+Configure the scaling for the convention the RU uses:
+
+<Tabs>
+  <TabItem value="flexran" label="FlexRAN-style RU" default>
+
+The RU expects the IQ data relative to the 16-bit full scale. This is the OCUDU default, so the FS_Offset parameters stay unset:
+
+```yaml
+ru_ofh:
+  compr_method_dl: bfp
+  compr_bitwidth_dl: 9
+  compr_method_ul: bfp
+  compr_bitwidth_ul: 9
+  # fs_offset_dl and fs_offset_ul not set: 16-bit full scale (FS_Offset 16 for BFP9)
+  ru_reference_level_dBFS: -12
+  subcarrier_rms_backoff_dB: auto
+```
+
+Some of these RUs document their expected input level as a 16-bit IQ level or a DL scaling value. Use it as the starting point for `ru_reference_level_dBFS`, and see the existing RU guides for examples.
+
+**Bandwidth normalization.** O-RAN places the bandwidth normalization in the DU: the power summed over all subcarriers must not exceed the reference level (clause 8.1.3.3). OCUDU does this with `subcarrier_rms_backoff_dB: auto`, which spreads the reference level over all 12 · N_RB subcarriers, so the output power stays the same for every bandwidth.
+
+Some FlexRAN-style RUs normalize the gain to the configured bandwidth themselves, which is not O-RAN compliant. Normalizing in both places changes the output power with the bandwidth. For these RUs, set a fixed back-off as given in the RU documentation, and calibrate it per bandwidth in the [RF calibration](#rf-calibration):
+
+```yaml
+ru_ofh:
+  ru_reference_level_dBFS: -12
+  subcarrier_rms_backoff_dB: <value>  # From the RU documentation, the same for all bandwidths
+```
+
+  </TabItem>
+  <TabItem value="oran" label="O-RAN compliant RU">
+
+The RU interprets the IQ data relative to the O-RAN full scale and its configured FS_Offset. Set both FS_Offset parameters to the values configured in the RU, which are 0 unless the RU configuration or the M-plane says otherwise:
+
+```yaml
+ru_ofh:
+  compr_method_dl: bfp
+  compr_bitwidth_dl: 9
+  compr_method_ul: bfp
+  compr_bitwidth_ul: 9
+  fs_offset_dl: 0                  # FS_Offset of the RU TX endpoints
+  fs_offset_ul: 0                  # FS_Offset of the RU RX endpoints, also used for PRACH
+  ru_reference_level_dBFS: -12     # Raise towards the RU Reference_Level, 0 dBFS by default
+  subcarrier_rms_backoff_dB: auto
+```
+
+With the scales aligned, `ru_reference_level_dBFS` corresponds to the O-RAN Reference_Level: the IQ power that the RU maps to its maximum output power, according to the DL gain configured in the RU (clause 8.1.3.2.2). If the RU does not configure a Reference_Level, it is 0 dBFS. Start below it, for example with the default of −12 dBFS, and raise it while watching the output power and the RU's DPD status.
+  </TabItem>
+</Tabs>
+
 ### Transport
 
 Match these on both sides before starting the DU:
@@ -164,7 +241,7 @@ Before you start:
 - Confirm the [S-plane](#synchronize-the-du-and-ru-s-plane) is locked on both the DU and the RU. Timing calibration on an unsynchronized setup gives meaningless results.
 - Find where the RU reports its reception counters, for example `RX_ON_TIME`, `RX_EARLY` and `RX_LATE` for the U-plane and `RX_ON_TIME_C`, `RX_EARLY_C` and `RX_LATE_C` for the C-plane on a Benetel RU. See [RU late or early packets](../../user_manual/troubleshooting/troubleshooting.md#ru-late-or-early-packets) for an example.
 - Restart the DU after every change and let it run for several reporting periods before reading the counters. One or two intermittent early or late packets are normal; a sustained count is not.
-- For this calibration it is very handy to use the built-in testmode do stimulate the RU and generate constant downlink and uplink OFH traffic. Check the [testmode tutorial](../../tutorials/testmode/index.md).
+- For this calibration it is very handy to use the built-in testmode do stimulate the RU and generate constant downlink and uplink OFH traffic. Check the [testmode tutorial](../../tutorials/testmode/index.md). Only do this after setting up the [IQ sample scaling](#iq-sample-scaling).
 
 Calibrate the windows in this order, one at a time:
 
@@ -206,7 +283,7 @@ Once the timing has been calibrated we can continue by looking at the DL signal.
 * If you're runnning with _testmode_ and have a spectrum analyzer you should see a fully allocated DL signal.
 * If you're not running with _testmode_ you'll only see the SSB transmission approxmately every 20ms as well as a wide band sparse signal which is the cell specific reference signal (CSI-RS).
 
-A UE scanner should now also see the cell at the expected frequency with the configured PCI.
+A UE scanner should now also see the cell at the expected frequency with the configured PCI. If the signal is far weaker than expected, for example by about 48 dB with BFP9, or the RU reports saturation, check the [IQ sample scaling](#iq-sample-scaling).
 Once the RU reports no sustained early or late packets and the cell is visible at the expected frequency and PCI, move on to the uplink.
 
 ### Uplink
@@ -264,6 +341,8 @@ At this point the RU can be reported as CUS 🟢.
 ## 4. RF
 
 The RF step is an extra on top of a working integration. It does not change the CUS status; it is scored in its own RF column.
+
+It builds on the [IQ sample scaling](#iq-sample-scaling) set up in the CU-plane step.
 
 ### RF calibration
 
