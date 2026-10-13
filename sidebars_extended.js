@@ -65,6 +65,7 @@ module.exports = {
               items: [
                 'integrations/radio_units/benetel',
                 'integrations/radio_units/foxconn',
+                'integrations/radio_units/lions',
                 'integrations/radio_units/liteon',
                 'integrations/radio_units/pegatron',
                 'integrations/radio_units/picocom',
