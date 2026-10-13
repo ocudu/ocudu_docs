@@ -569,7 +569,7 @@ IETF interfaces: ietf-interfaces is not writable for role hybrid-odu (O-RAN WG4 
 
 ### Software and lifecycle management
 
-**TODO**: software download and activation, reset, and supervision (`o-ran-supervision` watchdog).
+Software download and activation are not supported by the O1 adapter yet. Use the vendor tools to update the RU software, and record the software version in the report.
 
 ### Done when
 
