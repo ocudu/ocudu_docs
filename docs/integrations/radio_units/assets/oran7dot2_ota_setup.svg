@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1260" viewBox="0 0 1600 1260" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1196" viewBox="62 51 1500 1196" role="img" aria-labelledby="title desc">
 <title id="title">GPS-synchronized RAN architecture</title>
 <desc id="desc">A GPS satellite sends a signal to a GPS antenna connected to a switch with a PTP grandmaster. The switch connects to a radio unit and a RAN server through links labeled OFH + PTP. The radio unit has a wireless connection to user equipment, labeled UE.</desc>
 <defs>
@@ -7,11 +7,11 @@
  <marker id="gpsArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#ba835e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
 <style>
- text {font-family:Arial,Helvetica,sans-serif;fill:#303640;font-size:36px}
+ text {font-family:Arial,Helvetica,sans-serif;fill:#737c8c;font-size:36px}
+ .device {fill:#303640}
  .label {font-weight:600}
  .link {fill:none;stroke:#969da7;stroke-width:8;stroke-linejoin:round;stroke-linecap:round}
 </style>
-<rect width="1600" height="1260" fill="#f5f7fa"/>
 <!-- Wired links -->
 <path class="link" d="M275 615 H770 V760"/>
 <path class="link" d="M1110 760 V535 H1230"/>
@@ -53,6 +53,7 @@
 <text class="label" x="1387" y="724" text-anchor="middle">Radio Unit</text>
 <!-- Switch with PTP grandmaster -->
 <path d="M608 774 L640 741 H1188 L1156 774Z" fill="#59606b"/>
+<path d="M1156 774 L1188 741 V844 L1156 877Z" fill="#3b4049" stroke="#7c828b" stroke-width="2" stroke-linejoin="round"/>
 <rect x="608" y="774" width="548" height="103" rx="4" fill="#292d34" stroke="#7c828b" stroke-width="2"/>
 
 <rect x="634" y="792" width="23" height="18" rx="1" fill="#15191e" stroke="#525861" stroke-width="1.5"/>
@@ -89,9 +90,10 @@
 <circle cx="834" cy="856" r="4" fill="#bd903e"/>
 <circle cx="1035" cy="856" r="4" fill="#58a364"/>
 <circle cx="1098" cy="856" r="4" fill="#58a364"/>
-<text class="label" x="1186" y="847">Switch + PTP GM</text>
+<text class="label" x="1210" y="847">Switch + PTP GM</text>
 <!-- RAN server -->
 <path d="M80 1041 L113 1005 H770 L737 1041Z" fill="#d5d9df" stroke="#b6bcc5" stroke-width="2"/>
+<path d="M737 1041 L770 1005 V1122 L737 1158Z" fill="#aeb4bd" stroke="#b6bcc5" stroke-width="2" stroke-linejoin="round"/>
 <rect x="80" y="1041" width="657" height="117" rx="5" fill="url(#metal)" stroke="#b6bcc5" stroke-width="2"/>
 <rect x="112" y="1043" width="594" height="113" fill="#292d34"/>
 <circle cx="97" cy="1100" r="5" fill="#9aa2ad"/>
