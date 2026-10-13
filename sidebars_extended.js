@@ -64,6 +64,7 @@ module.exports = {
               link: { type: 'doc', id: 'integrations/radio_units/index' },
               items: [
                 'integrations/radio_units/mplane_testing',
+                'integrations/radio_units/integration_guide',
                 'integrations/radio_units/benetel',
                 'integrations/radio_units/foxconn',
                 'integrations/radio_units/lions',
