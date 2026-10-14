@@ -27,7 +27,7 @@ In OCUDU, the C-plane and U-plane are implemented directly in the OFH layer of t
 
 ### RF calibration status
 
-The RF status records how well the downlink output power, and with it `ssb_block_power_dbm`, is known for the RU. A wrong SSB block power makes UEs misjudge the path loss, which affects uplink power control and PRACH. See the [integration guide](integration_guide.md#rf-calibration) for how each level is reached.
+The RF status records how well the downlink output power, and therefore the `ssb_block_power_dbm`, is known for the RU. A wrong SSB block power makes UEs misjudge the path loss, which affects uplink power control and PRACH. See the [integration guide](integration_guide.md#rf-calibration) for how each level is reached.
 
 | | Status | Meaning |
 | --- | --- | --- |
