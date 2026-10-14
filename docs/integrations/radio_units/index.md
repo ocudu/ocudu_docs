@@ -68,7 +68,7 @@ An RU is a radio unit built for indoor or outdoor operation with an internal or 
 | Fujitsu/1Finity Tri-band FDD | Outdoor | 🟡 | ⚪ | 🟡 | Community |  |
 | Fujitsu/1Finity TDD | Outdoor | 🟡 | ⚪ | 🟡 | Community |  |
 | [LITEON FlexFi FF-RFI078I4](liteon.md) | Indoor | 🟡 | ⚪ | ⚪ | SRS | |
-| Lions RANathon RS8602 | Outdoor | 🟡 | ⚪ | ⚪ | SRS | FW: 1.0.4.016 |
+| [Lions RANathon](lions.md) | Outdoor | 🟢 | 🟡 | ⚪ | Vendor | |
 | MTI G21RRH-46-01B FDD | Outdoor | 🟡 | ⚪ | 🟡 | SRS | FW: 12.20.01 |
 | [Pegatron PR1450-78I](pegatron.md) | Indoor | 🟢 | 🟡 | ⚪ | Community |  |
 | Sera Network ORU-NM4400 24dBm | Outdoor | 🟡 | 🟡 | ⚪ | Community |  |
