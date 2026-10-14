@@ -58,27 +58,27 @@ Get the following from the RU vendor or the RU documentation before setting anyt
 ### Check the list first
 
 Search the [RU tables](index.md#radio-units) and the [community discussions](https://gitlab.com/ocudu/community/discussions) for the same RU or a close relative from the same vendor. An RU that shares a platform with a listed one often takes the same timing windows and PRACH settings, and the existing guide is a better starting point than the defaults. The [Metanoia reference design](https://metanoia-comm.com/products/5g/cobra/) for example is a popular base for
-new vendors. So far all tested models have worked out of the box without much tweeking.
+new vendors. So far all tested models have worked out of the box without much tweaking.
 
 ### Set up the lab
 
 The lab setup allows two testing configurations: over-the-air (OTA) testing with a commercial off-the-shelf (COTS) UE, and conducted testing with a spectrum analyzer.
-The OTA setup is usually sufficant to get a "working" config and allows verification of downlink and uplink traffic.
-The conducted setup is prefered for RF troubleshooting and for proper downlink power calibration.
+The OTA setup is usually sufficient to get a "working" config and allows verification of downlink and uplink traffic.
+The conducted setup is preferred for RF troubleshooting and for proper downlink power calibration.
 Both configurations use the same RAN server, switch, and GPS-based synchronization setup.
 
 <Tabs>
   <TabItem value="ota" label="Over-the-air setup" default>
 ![Over-the-air lab setup](assets/oran7dot2_ota_setup.svg)
   </TabItem>
-  <TabItem value="conduted" label="Conducted setup">
+  <TabItem value="conducted" label="Conducted setup">
 ![conducted setup](assets/oran7dot2_conducted_setup.svg)
 
 A conducted setup, with the RU connected to the UE and/or measurement equipment through cables and attenuators, makes every later step easier to debug and is required for an RF 🟢 result.
 
 :::warning
 Never connect RU TX ports directly to a UE or measurement equipment without enough attenuation. Check the maximum input power of every device in the chain.
-E.g. for an anylyzer supporting up to 0dBm input power and an indoor RU with +24dBm output power 30dB attenuators are fine.
+E.g. for an analyzer supporting up to 0dBm input power and an indoor RU with +24dBm output power 30dB attenuators are fine.
 :::
   </TabItem>
 </Tabs>
@@ -86,11 +86,11 @@ E.g. for an anylyzer supporting up to 0dBm input power and an indoor RU with +24
 
 ### Synchronize the DU and RU (S-plane)
 
-The S-plane provides frequency and phase synchronization between the DU and the RU. OCUDU does not implement PTP itself; the host is synchronized using a third-party stack such as [linuxptp](https://linuxptp.sourceforge.net//). See [Switches and timing](../switches_and_timing/index.md) for devices that have been used as grandmaster or boundary clock.
+The S-plane provides frequency and phase synchronization between the DU and the RU. OCUDU does not implement PTP itself; the host is synchronized using a third-party stack such as [linuxptp](https://linuxptp.sourceforge.net/). See [Switches and timing](../switches_and_timing/index.md) for devices that have been used as grandmaster or boundary clock.
 
 #### Synchronization topology
 
-We recommend onboarding a new RU in LLS-C3 mode in which common PTP grandmaster provides sync to both the DU and RU, both acting as slaves.
+We recommend onboarding a new RU in LLS-C3 mode, in which a common PTP grandmaster provides sync to both the DU and RU, both acting as slaves.
 Confirm the PTP profile (typically ITU-T G.8275.1, L2 multicast) and the domain number match on the grandmaster, switch, DU and RU.
 
 #### Verify the DU clock
@@ -191,6 +191,10 @@ ru_ofh:
   </TabItem>
   <TabItem value="oran" label="O-RAN compliant RU">
 
+:::note
+`fs_offset_dl` and `fs_offset_ul` are available on the dev branch and in releases after 26.10. Release 26.10 does not support them.
+:::
+
 The RU interprets the IQ data relative to the O-RAN full scale and its configured FS_Offset. Set both FS_Offset parameters to the values configured in the RU, which are 0 unless the RU configuration or the M-plane says otherwise:
 
 ```yaml
@@ -220,7 +224,7 @@ Match these on both sides before starting the DU:
 
 ### Timing windows
 
-For the front haul to work we need to set and calibrate eight timing window parameter. Have a look at ORAN WG4
+For the fronthaul to work we need to set and calibrate eight timing window parameters. Have a look at O-RAN WG4
 for a detailed explanation. All values are in microseconds before (for `t1a_*`) or after (for `ta4_*`) the over-the-air time of the symbol.
 
 | OCUDU parameter | Meaning |
@@ -241,7 +245,7 @@ Before you start:
 - Confirm the [S-plane](#synchronize-the-du-and-ru-s-plane) is locked on both the DU and the RU. Timing calibration on an unsynchronized setup gives meaningless results.
 - Find where the RU reports its reception counters, for example `RX_ON_TIME`, `RX_EARLY` and `RX_LATE` for the U-plane and `RX_ON_TIME_C`, `RX_EARLY_C` and `RX_LATE_C` for the C-plane on a Benetel RU. See [RU late or early packets](../../user_manual/troubleshooting/troubleshooting.md#ru-late-or-early-packets) for an example.
 - Restart the DU after every change and let it run for several reporting periods before reading the counters. One or two intermittent early or late packets are normal; a sustained count is not.
-- For this calibration it is very handy to use the built-in testmode do stimulate the RU and generate constant downlink and uplink OFH traffic. Check the [testmode tutorial](../../tutorials/testmode/index.md). Only do this after setting up the [IQ sample scaling](#iq-sample-scaling).
+- For this calibration it is very handy to use the built-in testmode to stimulate the RU and generate constant downlink and uplink OFH traffic. Check the [testmode tutorial](../../tutorials/testmode/index.md). Only do this after setting up the [IQ sample scaling](#iq-sample-scaling).
 
 Calibrate the windows in this order, one at a time:
 
@@ -281,7 +285,7 @@ Then move on to the next pair. With the C-plane done first, any remaining early 
 Once the timing has been calibrated we can continue by looking at the DL signal.
 
 * If you're runnning with _testmode_ and have a spectrum analyzer you should see a fully allocated DL signal.
-* If you're not running with _testmode_ you'll only see the SSB transmission approxmately every 20ms as well as a wide band sparse signal which is the cell specific reference signal (CSI-RS).
+* If you're not running with _testmode_ you'll only see the SSB transmission every `cell_cfg.ssb.ssb_period` (10ms by default) as well as a wide band sparse signal, which is the channel state information reference signal (CSI-RS).
 
 A UE scanner should now also see the cell at the expected frequency with the configured PCI. If the signal is far weaker than expected, for example by about 48 dB with BFP9, or the RU reports saturation, check the [IQ sample scaling](#iq-sample-scaling).
 Once the RU reports no sustained early or late packets and the cell is visible at the expected frequency and PCI, move on to the uplink.
@@ -290,7 +294,7 @@ Once the RU reports no sustained early or late packets and the cell is visible a
 
 Since the OFH window has already been calibrate we also assume perfect timing for the UL.
 
-1. **PRACH.** Trigger a UE attach and confirm PRACH detection in the DU log (enable `log --phy.level=info`). Check the `rx_window_stats.nof_missed_prach_occasions` in the [OFH metrics](../../user_manual/outputs/outputs.md#ofh-metrics). The counter should be zero.
+1. **PRACH.** Trigger a UE attach and confirm PRACH detection in the DU log (enable `log --phy_level=info`). Check the `rx_window_stats.nof_missed_prach_occasions` in the [OFH metrics](../../user_manual/outputs/outputs.md#ofh-metrics). The counter should be zero.
 2. **Attach and traffic.** Attach a COTS UE, then run DL and UL iperf in SISO, then with two and four DL MIMO layers if the RU supports them. See [UE attach failure](../../user_manual/troubleshooting/troubleshooting.md#ue-attach-failure) if the UE sees the cell but does not attach.
 
 ### Done when
@@ -489,7 +493,7 @@ The adapter configures the RU only. Keep the gNB configuration consistent with t
 .venv/bin/python src/o1_adapter.py \
   --profile ru \
   --ru_supervise --ru_callhome \
-  --ru_provision_config provision.yaml --ru_pm \
+  --ru_provision_config provision.yaml \
   --ru_netconf_username <sudo-user> --ru_netconf_password <sudo-password> \
   --rpc_log rpc.log --loglevel DEBUG
 ```
@@ -536,6 +540,10 @@ O-RU active-alarm-list: faults [<fault-id>]; retiring none
 ```
 
 ### Performance management (PM)
+
+:::note
+PM collection needs the `--ru_pm` adapter option, which is not merged yet ([o1_adapter!86](https://gitlab.com/ocudu/ocudu_elements/ocudu_oran_apps/ocudu_o1_adapter/-/merge_requests/86)). Once it is available, add `--ru_pm` to the adapter command line.
+:::
 
 1. The adapter reads the measurement capabilities of the RU and requests only the objects it advertises. No `rpc-error` appears.
 2. Notifications arrive every `notification_interval` seconds. Check the interval against the `eventTime` of each `measurement-result-stats` notification in `rpc.log`, since the adapter log timestamps include processing delay.
