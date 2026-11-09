@@ -1,0 +1,45 @@
+# SPDX-FileCopyrightText: Copyright (C) 2021-2026 Software Radio Systems Limited
+# SPDX-License-Identifier: BSD-3-Clause-Open-MPI
+
+# Sample OCUDU gNB-DU configuration for QCore F1 mode (QCore as combined core + gNB-CU).
+# Run QCore with --f1-mode --no-dhcp, then run the OCUDU `odu` DU app with this file.
+# The core plane is radio-agnostic; the ru_sdr block below is a generic example.
+
+f1ap:
+  cu_cp_addr: 127.0.0.1       # QCore F1-C (SCTP 38472, the F1AP default)
+  bind_addr: 127.0.0.2
+
+f1u:
+  socket:
+    - bind_addr: 127.0.0.2    # DU F1-U (GTP-U); the CU-UP endpoint is learned over F1AP
+
+ru_sdr:
+  device_driver: uhd          # generic example; use your own front-end here
+  device_args: type=b200
+  clock: internal
+  srate: 23.04
+  tx_gain: 80
+  rx_gain: 40
+
+cell_cfg:
+  dl_arfcn: 640000            # 3600.00 MHz, n78
+  band: 78
+  channel_bandwidth_MHz: 20
+  common_scs: 30
+  plmn: "00101"
+  tac: 1
+  pci: 101
+  tdd_ul_dl_cfg:
+    dl_ul_tx_period: 4
+    nof_dl_slots: 2
+    nof_dl_symbols: 6
+    nof_ul_slots: 1
+    nof_ul_symbols: 4
+
+log:
+  filename: /tmp/du.log
+  all_level: info
+
+pcap:
+  f1ap_enable: enable
+  f1ap_filename: /tmp/du_f1ap.pcap

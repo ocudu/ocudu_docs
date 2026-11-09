@@ -1,0 +1,49 @@
+# SPDX-FileCopyrightText: Copyright (C) 2021-2026 Software Radio Systems Limited
+# SPDX-License-Identifier: BSD-3-Clause-Open-MPI
+
+# Sample OCUDU gNB configuration for a co-hosted QCore 5G Core.
+# The core plane is radio-agnostic; the ru_sdr block below is a generic example.
+# Replace it with the configuration for your own RF front-end.
+
+cu_cp:
+  amf:
+    addrs: 127.0.0.1          # QCore N2 (NGAP/SCTP) address, from --local-ip
+    port: 38412
+    bind_addrs: 127.0.0.1     # co-hosted: CU-CP binds on loopback too
+    supported_tracking_areas:
+      - tac: 1
+        plmn_list:
+          - plmn: "00101"     # test PLMN, matches QCore --mcc 001 --mnc 01
+            tai_slice_support_list:
+              - sst: 1
+
+ru_sdr:
+  device_driver: uhd          # generic example; use your own front-end here
+  device_args: type=b200
+  clock: internal
+  srate: 23.04
+  tx_gain: 80
+  rx_gain: 40
+
+cell_cfg:
+  dl_arfcn: 640000            # 3600.00 MHz, n78
+  band: 78
+  channel_bandwidth_MHz: 20
+  common_scs: 30
+  plmn: "00101"
+  tac: 1
+  pci: 101
+  tdd_ul_dl_cfg:
+    dl_ul_tx_period: 4
+    nof_dl_slots: 2
+    nof_dl_symbols: 6
+    nof_ul_slots: 1
+    nof_ul_symbols: 4
+
+log:
+  filename: /tmp/gnb.log
+  all_level: info
+
+pcap:
+  ngap_enable: enable
+  ngap_filename: /tmp/gnb_ngap.pcap
