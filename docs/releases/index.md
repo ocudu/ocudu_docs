@@ -48,7 +48,7 @@ The first public release, v26.04, shipped in April 2026. The project follows a p
       <li>QAM-256, 4x4 MIMO DL and UL</li>
       <li>Optimised LDPC/Polar codecs for ARM Neon and x86 AVX2/AVX512</li>
       <li>SSB-based and CSI-RS-based radio link monitoring</li>
-      <li>NTN GEO support</li>
+      <li>NTN Release 17 support</li>
     </ul>
   </div>
   <div className="col col--4">
