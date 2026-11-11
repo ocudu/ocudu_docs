@@ -66,6 +66,22 @@ int foo(char *s) { // Mismatch between "const char *" and "char *"
 The above code snippet will add a new overload of ocudu::foo instead of providing a definition of the existing function declared in the header.
 To make things a bit worse, this error will be detected by the linker towards the end of the build, instead of being detected instantly by the compiler.
 
+Do not use redundant namespace qualifiers. If a name is already visible from the current scope (because the code is inside that namespace, or
+the .cpp file has a `using namespace` directive for it), remove the qualifier: it adds noise without adding information.
+This does not apply to the out-of-line definitions described above, where the qualifier is required to match the declaration.
+
+```cpp
+namespace ocudu {
+
+// Bad: redundant ocudu.
+void foo(ocudu::ocudu_type);
+
+// Good: ocudu namespace is not needed.
+void foo(ocudu_type);
+
+} // namespace ocudu
+```
+
 A final word about namespace qualification: when you need to call a C library or system function like `read()`, `socket()`, etc,
 you should prefix the calls with `::` such as `::socket()`, this will avoid potential name clashes and unexpected behavior.
 
@@ -274,13 +290,20 @@ particular:
   `emplace`/`push_back` arguments and nested members.
 - **List every member**, even those whose default value is the one you want. A member you leave out silently takes its
   default member initializer (or is value-initialized), and the reader cannot tell whether that was intended or forgotten.
+- **Avoid intermediate variables**: if a member's value is easy to write directly in the initializer (e.g., a call to
+  a conversion function), write it there instead of storing it first in a local variable that is then copied or moved
+  into the initializer.
 - **Computed values are not an excuse**: values that need conditions or arithmetic (`if`, `switch`, optional handling,
-  etc.) go into helper variables or helper functions first, and then into the initializer. Containers filled by a loop
-  follow the same approach: build the container first, then pass it to the initializer.
+  etc.) go into helper functions, lambdas or, when needed, helper variables, and then into the initializer. Containers
+  filled by a loop follow the same approach: build the container in a helper function, then pass it to the initializer.
 
 **Exceptions**
 
-- Types that are not aggregates, i.e., classes with constructors.
+- Types that are not aggregates, i.e., classes with constructors. The goal of the rule still applies to them: if a
+  constructor sets the members you need, create the object with that constructor, e.g.,
+  `return nr_cell_global_id_t(plmn_id, nci);`, instead of default-constructing it and assigning its members afterward.
+  Only fall back to assigning members after construction when no constructor sets them. When calling a constructor, 
+  prefer parenthesis `()` over braces `{}`. 
 - Members that can only be set through a method, such as ASN.1 choice types (`*_c`) and enumerated wrappers (`*_e`),
   which are set with `set_*()` or by assigning the enumerator.
 
@@ -297,6 +320,14 @@ particular:
 
 - Designators must appear in the same order as the members are declared.
 - Use braces `{}`, not parentheses `()`. Designated initializers only work with brace initialization.
+- **Always write the name of the created type** in front of the braces, e.g., `my_type{.field_1 = 1, .field_2 = 2}`
+  instead of `{.field_1 = 1, .field_2 = 2}`. This is mandatory everywhere a designated initializer is used: `return`
+  statements, function arguments, `emplace`/`push_back` arguments and nested members. Without it, the reader has to
+  look up the return type, the function signature or the member declaration to know which type is being built. When
+  declaring a variable, the type name in the declaration already satisfies this rule (e.g.,
+  `my_type t{.field_1 = 1, .field_2 = 2}`).
+- If the expression for a member is too complex to be written directly in the initializer, hide the complexity in a
+  lambda (or helper function), or in an intermediate variable.
 
 **Example: basic usage**
 
@@ -323,6 +354,24 @@ const foo f{.unsigned_value = 1, .integer_value = 2, .flag = false};
 const foo f{.unsigned_value = 1, .integer_value = 2, .flag = false, .optional_value = std::nullopt};
 ```
 
+**Example: naming the created type**
+
+```cpp
+// Bad: the type being created is not visible at the point of construction.
+foo build_foo()
+{
+  return {.unsigned_value = 1, .integer_value = 2, .flag = false, .optional_value = std::nullopt};
+}
+foos.push_back({.unsigned_value = 1, .integer_value = 2, .flag = false, .optional_value = std::nullopt});
+
+// Good: the type name is written in front of the braces.
+foo build_foo()
+{
+  return foo{.unsigned_value = 1, .integer_value = 2, .flag = false, .optional_value = std::nullopt};
+}
+foos.push_back(foo{.unsigned_value = 1, .integer_value = 2, .flag = false, .optional_value = std::nullopt});
+```
+
 **Example: computed values**
 
 ```cpp
@@ -340,6 +389,98 @@ const bool                    flag           = is_feature_enabled(cfg);
 const std::optional<unsigned> optional_value = flag ? std::optional<unsigned>{cfg.threshold} : std::nullopt;
 
 const foo f{.unsigned_value = 1, .integer_value = 2, .flag = flag, .optional_value = optional_value};
+```
+
+**Example: avoiding intermediate variables**
+
+```cpp
+// Bad: every member is first computed into an intermediate variable, even when it could be written directly in the
+// initializer.
+inline e1ap_drb_to_setup_item_ng_ran
+asn1_to_e1ap_drb_to_setup_item(const asn1::e1ap::drb_to_setup_item_ng_ran_s& asn1_drb_to_setup_item)
+{
+  // Fill cell group info.
+  std::vector<e1ap_cell_group_info_item> cell_group_info =
+      e1ap_asn1_to_cell_group_info(asn1_drb_to_setup_item.cell_group_info);
+
+  // Fill QoS flow info to be setup.
+  slotted_id_vector<qos_flow_id_t, e1ap_qos_flow_qos_param_item> qos_flow_info_to_be_setup =
+      e1ap_asn1_to_flow_map_info(asn1_drb_to_setup_item.qos_flow_info_to_be_setup);
+
+  // Fill DRB data forwarding info request.
+  std::optional<e1ap_data_forwarding_info_request> drb_data_forwarding_info_request;
+  if (asn1_drb_to_setup_item.drb_data_forwarding_info_request_present) {
+    drb_data_forwarding_info_request =
+        e1ap_asn1_to_data_forwarding_info_request(asn1_drb_to_setup_item.drb_data_forwarding_info_request);
+  }
+
+  // Fill DRB inactivity timer.
+  std::optional<std::chrono::seconds> drb_inactivity_timer;
+  if (asn1_drb_to_setup_item.drb_inactivity_timer_present) {
+    drb_inactivity_timer = std::chrono::seconds(asn1_drb_to_setup_item.drb_inactivity_timer);
+  }
+
+  // Fill PDCP SN status info.
+  std::optional<e1ap_pdcp_sn_status_info> pdcp_sn_status_info;
+  if (asn1_drb_to_setup_item.pdcp_sn_status_info_present) {
+    pdcp_sn_status_info = e1ap_asn1_to_pdcp_sn_status_info(asn1_drb_to_setup_item.pdcp_sn_status_info);
+  }
+
+  return e1ap_drb_to_setup_item_ng_ran{.drb_id          = uint_to_drb_id(asn1_drb_to_setup_item.drb_id),
+                                       .sdap_cfg        = e1ap_asn1_to_sdap_config(asn1_drb_to_setup_item.sdap_cfg),
+                                       .pdcp_cfg        = e1ap_asn1_to_pdcp_config(asn1_drb_to_setup_item.pdcp_cfg),
+                                       .cell_group_info = std::move(cell_group_info),
+                                       .qos_flow_info_to_be_setup        = std::move(qos_flow_info_to_be_setup),
+                                       .drb_data_forwarding_info_request = std::move(drb_data_forwarding_info_request),
+                                       .drb_inactivity_timer             = drb_inactivity_timer,
+                                       .pdcp_sn_status_info              = std::move(pdcp_sn_status_info)};
+}
+
+// Good: simple values are written directly in the initializer, and the optional handling is hidden in lambdas.
+inline e1ap_drb_to_setup_item_ng_ran
+asn1_to_e1ap_drb_to_setup_item(const asn1::e1ap::drb_to_setup_item_ng_ran_s& asn1_drb_to_setup_item)
+{
+  auto create_drb_data_forwarding_info_request = [](bool                                              is_present,
+                                                    const asn1::e1ap::data_forwarding_info_request_s& request)
+      -> std::optional<e1ap_data_forwarding_info_request> {
+    if (!is_present) {
+      return std::nullopt;
+    }
+
+    return std::make_optional<e1ap_data_forwarding_info_request>(e1ap_asn1_to_data_forwarding_info_request(request));
+  };
+
+  auto create_drb_inactivity_timer = [](bool is_present, uint16_t timer) -> std::optional<std::chrono::seconds> {
+    if (!is_present) {
+      return std::nullopt;
+    }
+
+    return std::make_optional<std::chrono::seconds>(timer);
+  };
+
+  auto create_pdcp_sn_status_info =
+      [](bool is_present, const asn1::e1ap::pdcp_sn_status_info_s& info) -> std::optional<e1ap_pdcp_sn_status_info> {
+    if (!is_present) {
+      return std::nullopt;
+    }
+
+    return std::make_optional<e1ap_pdcp_sn_status_info>(e1ap_asn1_to_pdcp_sn_status_info(info));
+  };
+
+  return e1ap_drb_to_setup_item_ng_ran{
+      .drb_id                    = uint_to_drb_id(asn1_drb_to_setup_item.drb_id),
+      .sdap_cfg                  = e1ap_asn1_to_sdap_config(asn1_drb_to_setup_item.sdap_cfg),
+      .pdcp_cfg                  = e1ap_asn1_to_pdcp_config(asn1_drb_to_setup_item.pdcp_cfg),
+      .cell_group_info           = e1ap_asn1_to_cell_group_info(asn1_drb_to_setup_item.cell_group_info),
+      .qos_flow_info_to_be_setup = e1ap_asn1_to_flow_map_info(asn1_drb_to_setup_item.qos_flow_info_to_be_setup),
+      .drb_data_forwarding_info_request =
+          create_drb_data_forwarding_info_request(asn1_drb_to_setup_item.drb_data_forwarding_info_request_present,
+                                                  asn1_drb_to_setup_item.drb_data_forwarding_info_request),
+      .drb_inactivity_timer = create_drb_inactivity_timer(asn1_drb_to_setup_item.drb_inactivity_timer_present,
+                                                          asn1_drb_to_setup_item.drb_inactivity_timer),
+      .pdcp_sn_status_info  = create_pdcp_sn_status_info(asn1_drb_to_setup_item.pdcp_sn_status_info_present,
+                                                        asn1_drb_to_setup_item.pdcp_sn_status_info)};
+}
 ```
 
 **Example: containers and nested aggregates**

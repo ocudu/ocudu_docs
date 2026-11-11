@@ -92,12 +92,20 @@ C++ references have a simpler syntax than pointers and always refer to a valid o
 Pointers are very useful when the pointed object may optionally be *nullptr*, however managing this case may require adding additional checks
 to manage this situation.
 
+This section is about choosing between a pointer and a reference for objects that are **not** cheap to cope. Cheap
+types (fundamental types, enums, strong types, small trivially-copyable structs, etc.) are always passed by value, see
+[Passing input parameters: by value or by `const` reference](8_cpp_good_practices.md#passing-input-parameters-by-value-or-by-const-reference).
+
 ```cpp
+// foo is big or not trivially copyable (e.g. a config, a message, a type that owns memory).
 static bool check_objects_are_equal(foo *left, foo *right);              // Bad, left or right may be nullptr, prefer references.
-static bool check_objects_are_equal(foo left, foo right);                // Bad, copies objects.
 static bool check_objects_are_equal(foo &left, foo &right);              // Bad, missing const, checking the objects should not modify them.
 static bool check_objects_are_equal(const foo &left, const foo &right);  // Good.
 static void fill_optional_object(foo *x);                                // Good, x is optional, function checks for nullptr.
+
+// bar is small and trivially copyable (e.g. s_nssai_t, rnti_t).
+static bool check_objects_are_equal(const bar &left, const bar &right);  // Bad, a reference to a small type adds an indirection for no gain.
+static bool check_objects_are_equal(bar left, bar right);                // Good, pass small types by value.
 ```
 
 ## Const Correctness
@@ -284,6 +292,8 @@ void my_function(span<int> fnct_out, std::vector<int>& my_vector, const std::vec
 **Exceptions**
 - If there is a parameter with a default value, keep it with the default value and in the last position of the function
   signature.
+- `ocudulog::basic_logger&` parameters go last, after the inputs and any configuration struct. A logger is a dependency,
+  not an output.
 
 ## Class Layout Example
 
