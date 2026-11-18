@@ -6,7 +6,7 @@ description: "Connecting OCUDU to Ella Core, an open-source single-binary 5G Cor
 
 ## Overview
 
-[Ella Core](https://github.com/ellanetworks/core) is an open-source 5G Core designed for private networks. It ships as a single binary, supports both amd64 and arm64 architectures, and leverages eBPF for high-performance packet processing. Ella Core includes a built-in UI and HTTP API for management and monitoring. OCUDU can either be co-hosted with Ella Core for an all-in-one 5G network, or installed on a different machine. This guide outlines how-to co-host OCUDU and Ella Core.
+[Ella Core](https://github.com/ellanetworks/core) is an open-source 5G Core designed for private networks. It ships as a single binary, supports both amd64 and arm64 architectures, and leverages eBPF for high-performance packet processing. Ella Core includes a built-in UI and HTTP API for management and monitoring. OCUDU can either be co-hosted with Ella Core for an all-in-one 5G network, or installed on a different machine. This guide outlines how to co-host OCUDU and Ella Core.
 
 ![OCUDU and Ella Core co-hosted network architecture](assets/co_host_network.svg)
 
@@ -49,10 +49,6 @@ Install Ella Core:
 
 ```shell
 sudo snap install ella-core
-sudo snap connect ella-core:network-control
-sudo snap connect ella-core:process-control
-sudo snap connect ella-core:system-observe
-sudo snap connect ella-core:firewall-control
 ```
 
 :::note
@@ -69,11 +65,11 @@ logging:
   audit:
     output: "stdout"
 db:
-  path: "core.db"
+  path: "/var/snap/ella-core/common/data/ella.db"
 interfaces:
   n2:
     name: "n3-upf-veth"
-    port: 38412
+    ngap-port: 38412
   n3:
     name: "n3-upf-veth"
   n6:
@@ -81,14 +77,14 @@ interfaces:
   api:
     address: "0.0.0.0"
     port: 5002
-xdp:
-  attach-mode: "generic"
+datapath:
+  attach-mode: "tcx"
 telemetry:
   enabled: false
 ```
 
 :::note
-If your host's NICs support XDP, edit the XDP attach-mode to `native` for better performance.
+If your host's NICs support native XDP, set the datapath attach-mode to `xdp-native` for better performance.
 :::
 
 Start Ella Core:
@@ -116,9 +112,9 @@ In the OCUDU configuration file, use the addresses we defined when creating the 
 ```yaml {3,5,9,19,33}
 cu_cp:
   amf:
-    addr: 10.202.0.3
+    addrs: 10.202.0.3
     port: 38412
-    bind_addr: 10.202.0.5
+    bind_addrs: 10.202.0.5
     supported_tracking_areas:
       - tac: 1
         plmn_list:
