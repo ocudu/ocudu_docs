@@ -115,7 +115,7 @@ To generate the test vectors for all PHY components the following code needs to 
 runOCUDUunittest('all', 'testvector')
 ```
 
-This will generate a `.h` file, with the vector descriptions, and a `.tar.gz` file, with the actual test vectors, for each of the PHY components and place them in the folder `~/ocudu-matlab/testvector_outputs`.
+This will generate a `.h` file, with the vector descriptions, and a `.tar.gz` file, with the actual test vectors, for each of the PHY components and place them in the folder `~/ocudu-matlab/testvectorOutputs`.
 
 The test vectors for a single PHY component can also be generated. This is done by replacing `all` with the name of the desired
 component, as per its declaration in `~/ocudu/include/ocudu/`. For example, the test vectors for the channel estimator,
@@ -126,11 +126,11 @@ generated with the following command:
 runOCUDUunittest('port_channel_estimator', 'testvector')
 ```
 
-Once the test vectors have been generated, the pairs of `.h` and `tar.gz` files in the `testvector_outputs` folder
+Once the test vectors have been generated, the pairs of `.h` and `tar.gz` files in the `testvectorOutputs` folder
 should be transferred to the `ocuduVectorTests` folder with the MATLAB command:
 
 ```matlab
-ocuduTest.copyOCUDUtestvectors('testvector_outputs', 'ocuduVectorTests')
+ocuduTest.copyOCUDUtestvectors('testvectorOutputs', 'ocuduVectorTests')
 ```
 
 By default, executing `runOCUDUunittest` will always generate the same test vectors. To generate a random set of vectors,
