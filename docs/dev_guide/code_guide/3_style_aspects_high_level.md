@@ -28,7 +28,29 @@ interface with unnecessary dependencies reducing recompilations.
 
 ## Use of `namespace`
 
-Avoid opening namespace blocks inside a .cpp file that spans for the complete file.
+In a .cpp file, prefer a `using namespace` directive (e.g., `using namespace ocudu;`), placed just after the include list, over
+opening a namespace block (`namespace ocudu { ... }`) that wraps the code of the file. A namespace block spanning the complete file adds an
+extra level of scope that the reader has to keep in mind, and it hides mismatches between declarations and definitions (see below).
+
+```cpp
+// Good.
+#include "foo.h"
+
+using namespace ocudu;
+
+// Code here...
+```
+
+```cpp
+// Bad.
+#include "foo.h"
+
+namespace ocudu {
+
+// Code here...
+
+} // namespace ocudu
+```
 
 When adding a free function implementation in a .cpp file, avoid opening namespace blocks. Instead, use the namespace qualifier to ensure that the
 function definition matches the new declaration.
